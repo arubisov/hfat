@@ -1,0 +1,8 @@
+"B" -- 66 -- Add buy order
+"S" -- 83 -- Add sell order
+"E" -- 69 -- Execute outstanding order in part
+"C" -- 67 -- Cancel outstanding order in part
+"F" -- 70 -- Execute outstanding order in full
+"D" -- 68 -- Delete outstanding order in full
+"X" -- 88 -- Bulk volume for the cross event
+"T" -- 84 -- Execute non-displayed order
