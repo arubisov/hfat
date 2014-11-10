@@ -1,0 +1,373 @@
+HMM trained on ORCL 2013-05-15, 3 hidden states, 3 bins, 10s averaging intervals. 
+
+Transition matrix initial guess systematically generated as previously described, using intervals of 0.001, 1-100, therefore from 0.999 to 0.900 on the diagonals.
+
+values 0.001 - 0.030:
+Transition Matrix (up to reordering)
+    0.6105    0.3579    0.0316
+    0.0972    0.7679    0.1349
+    0.0120    0.2307    0.7572
+
+Emission Matrix (up to reordering)
+    0.0000    0.0779    0.9221
+    0.0181    0.9819    0.0000
+    0.9827    0.0147    0.0027
+
+values 0.031 - 0.100:
+Transition Matrix (up to reordering)
+    0.7565    0.2357    0.0078
+    0.1362    0.7843    0.0795
+    0.0211    0.3296    0.6493
+
+Emission Matrix (up to reordering)
+    0.9803    0.0186    0.0011
+    0.0154    0.9626    0.0219
+    0.0000    0.0734    0.9266
+
+For 3 hidden states, 3 bins, 1s averaging intervals:
+
+values 0.001 - 0.059:
+Transition Matrix (up to reordering)
+    0.9362    0.0595    0.0044
+    0.0412    0.9291    0.0297
+    0.0073    0.0965    0.8962
+
+Emission Matrix (up to reordering)
+    0.9943    0.0054    0.0003
+    0.0038    0.9934    0.0028
+    0.0012    0.0073    0.9915
+
+values 0.060 - 0.068:
+Transition Matrix (up to reordering)
+    0.9808    0.0096    0.0096
+    0.1017    0.8705    0.0278
+    0.1017    0.0278    0.8705
+
+Emission Matrix (up to reordering)
+    0.4064    0.5920    0.0016
+    0.0000    0.0135    0.9865
+    0.0000    0.0135    0.9865
+
+values 0.069 - 0.100:
+Transition Matrix (up to reordering)
+    0.9291    0.0412    0.0297
+    0.0593    0.9363    0.0044
+    0.0965    0.0073    0.8962
+
+Emission Matrix (up to reordering)
+    0.0038    0.9934    0.0028
+    0.9943    0.0054    0.0003
+    0.0012    0.0073    0.9914
+
+
+
+CTMC Cross-Validation
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 3, averaging time (ms) = 100
+CTMC generator matrix G:
+   -0.1071    0.1028    0.0043
+    0.0705   -0.1238    0.0534
+    0.0120    0.1625   -0.1745
+
+Calculated power n such that A^n converges: 172
+Corresponding timestep size of omitted interval: 13629 steps, or 0.0582 of entire series.
+Total error: 0.020345
+Per cell in G, error ranges between 50.6456% and 464.5007% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 3, averaging time (ms) = 500
+CTMC generator matrix G:
+   -0.0868    0.0815    0.0053
+    0.0573   -0.0979    0.0406
+    0.0081    0.1306   -0.1387
+
+Calculated power n such that A^n converges: 150
+Corresponding timestep size of omitted interval: 2982 steps, or 0.0637 of entire series.
+Total error: 0.012794
+Per cell in G, error ranges between 37.2846% and 330.5342% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 3, averaging time (ms) = 1000
+CTMC generator matrix G:
+   -0.0741    0.0686    0.0055
+    0.0478   -0.0817    0.0338
+    0.0089    0.1101   -0.1190
+
+Calculated power n such that A^n converges: 120
+Corresponding timestep size of omitted interval: 1412 steps, or 0.0603 of entire series.
+Total error: 0.010105
+Per cell in G, error ranges between 32.8501% and 264.3599% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 3, averaging time (ms) = 2000
+CTMC generator matrix G:
+   -0.0616    0.0580    0.0035
+    0.0383   -0.0665    0.0282
+    0.0096    0.0894   -0.0990
+
+Calculated power n such that A^n converges: 121
+Corresponding timestep size of omitted interval: 866 steps, or 0.0740 of entire series.
+Total error: 0.006786
+Per cell in G, error ranges between 26.7996% and 185.2382% of the entry values.
+
+*** Beginning Cross-Validation ***
+Number of bins = 3, averaging time (ms) = 3000
+CTMC generator matrix G:
+   -0.0538    0.0506    0.0032
+    0.0330   -0.0565    0.0235
+    0.0073    0.0789   -0.0862
+
+Calculated power n such that A^n converges: 129
+Corresponding timestep size of omitted interval: 715 steps, or 0.0917 of entire series.
+Total error: 0.005877
+Per cell in G, error ranges between 24.4149% and 213.5125% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 3, averaging time (ms) = 5000
+CTMC generator matrix G:
+   -0.0422    0.0396    0.0026
+    0.0246   -0.0420    0.0174
+    0.0070    0.0614   -0.0684
+
+Calculated power n such that A^n converges: 114
+Corresponding timestep size of omitted interval: 497 steps, or 0.1062 of entire series.
+Total error: 0.004026
+Per cell in G, error ranges between 15.0061% and 153.6266% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 3, averaging time (ms) = 10000
+CTMC generator matrix G:
+   -0.0270    0.0255    0.0015
+    0.0150   -0.0250    0.0100
+    0.0038    0.0401   -0.0439
+
+Calculated power n such that A^n converges: 134
+Corresponding timestep size of omitted interval: 476 steps, or 0.2034 of entire series.
+Total error: 0.001945
+Per cell in G, error ranges between 7.4747% and 84.3012% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 3, averaging time (ms) = 20000
+CTMC generator matrix G:
+   -0.0184    0.0179    0.0006
+    0.0087   -0.0139    0.0052
+    0.0027    0.0263   -0.0290
+
+Calculated power n such that A^n converges: 167
+Corresponding timestep size of omitted interval: 492 steps, or 0.4205 of entire series.
+Total error: 0.001326
+Per cell in G, error ranges between 5.5230% and 33.0445% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 5, averaging time (ms) = 100
+CTMC generator matrix G:
+   -0.1486    0.1186    0.0238    0.0049    0.0013
+    0.0746   -0.2078    0.1206    0.0103    0.0023
+    0.0089    0.1084   -0.2142    0.0910    0.0059
+    0.0043    0.0138    0.1596   -0.2498    0.0722
+    0.0029    0.0147    0.0456    0.2067   -0.2700
+
+Calculated power n such that A^n converges: 53
+Corresponding timestep size of omitted interval: 2509 steps, or 0.0107 of entire series.
+Total error: 0.140246
+Per cell in G, error ranges between 96.4259% and 7418.5796% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 5, averaging time (ms) = 500
+CTMC generator matrix G:
+   -0.1209    0.0948    0.0183    0.0065    0.0013
+    0.0580   -0.1648    0.0939    0.0097    0.0032
+    0.0090    0.0849   -0.1669    0.0681    0.0049
+    0.0024    0.0133    0.1251   -0.1930    0.0522
+    0.0052    0.0090    0.0396    0.1570   -0.2108
+
+Calculated power n such that A^n converges: 46
+Corresponding timestep size of omitted interval: 554 steps, or 0.0118 of entire series.
+Total error: 0.034655
+Per cell in G, error ranges between 65.7401% and 1035.0417% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 5, averaging time (ms) = 1000
+CTMC generator matrix G:
+   -0.1038    0.0803    0.0166    0.0058    0.0011
+    0.0478   -0.1375    0.0754    0.0113    0.0029
+    0.0085    0.0687   -0.1380    0.0573    0.0036
+    0.0031    0.0137    0.1051   -0.1623    0.0404
+    0.0031    0.0115    0.0331    0.1224   -0.1701
+
+Calculated power n such that A^n converges: 40
+Corresponding timestep size of omitted interval: 289 steps, or 0.0124 of entire series.
+Total error: 0.023179
+Per cell in G, error ranges between 63.3869% and 910.8521% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 5, averaging time (ms) = 2000
+CTMC generator matrix G:
+   -0.0837    0.0642    0.0133    0.0052    0.0011
+    0.0385   -0.1112    0.0617    0.0092    0.0018
+    0.0058    0.0557   -0.1093    0.0442    0.0037
+    0.0012    0.0152    0.0779   -0.1232    0.0290
+    0.0033    0.0107    0.0320    0.0920   -0.1379
+
+Calculated power n such that A^n converges: 37
+Corresponding timestep size of omitted interval: 168 steps, or 0.0144 of entire series.
+Total error: 0.012056
+Per cell in G, error ranges between 52.2812% and 1440.7188% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 5, averaging time (ms) = 3000
+CTMC generator matrix G:
+   -0.0730    0.0546    0.0142    0.0039    0.0003
+    0.0313   -0.0925    0.0518    0.0078    0.0015
+    0.0054    0.0475   -0.0931    0.0375    0.0027
+    0.0023    0.0095    0.0694   -0.1030    0.0218
+    0.0018    0.0089    0.0230    0.0780   -0.1117
+
+Calculated power n such that A^n converges: 38
+Corresponding timestep size of omitted interval: 137 steps, or 0.0176 of entire series.
+Total error: 0.009366
+Per cell in G, error ranges between 44.3021% and Inf% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 5, averaging time (ms) = 5000
+CTMC generator matrix G:
+   -0.0533    0.0410    0.0097    0.0026         0
+    0.0202   -0.0690    0.0402    0.0080    0.0006
+    0.0042    0.0347   -0.0683    0.0279    0.0015
+    0.0025    0.0125    0.0473   -0.0783    0.0160
+         0    0.0077    0.0193    0.0551   -0.0821
+
+Calculated power n such that A^n converges: 32
+Corresponding timestep size of omitted interval: 93 steps, or 0.0199 of entire series.
+Total error: 0.006778
+Per cell in G, error ranges between 41.2077% and 528.5930% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 5, averaging time (ms) = 10000
+CTMC generator matrix G:
+   -0.0378    0.0280    0.0076    0.0020    0.0003
+    0.0135   -0.0442    0.0256    0.0050         0
+    0.0017    0.0229   -0.0434    0.0175    0.0013
+    0.0017    0.0057    0.0359   -0.0508    0.0076
+         0    0.0063    0.0163    0.0325   -0.0550
+
+Calculated power n such that A^n converges: 37
+Corresponding timestep size of omitted interval: 83 steps, or 0.0355 of entire series.
+Total error: 0.003355
+Per cell in G, error ranges between 27.5540% and Inf% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 5, averaging time (ms) = 20000
+CTMC generator matrix G:
+   -0.0248    0.0192    0.0044    0.0008    0.0004
+    0.0063   -0.0271    0.0167    0.0041         0
+    0.0015    0.0129   -0.0230    0.0080    0.0005
+    0.0007    0.0062    0.0186   -0.0290    0.0035
+         0    0.0016    0.0097    0.0210   -0.0323
+
+Calculated power n such that A^n converges: 29
+Corresponding timestep size of omitted interval: 56 steps, or 0.0479 of entire series.
+Total error: 0.002009
+Per cell in G, error ranges between 23.0442% and Inf% of the entry values.
+
+
+*** Beginning Cross-Validation ***
+Number of bins = 5, averaging time (ms) = 30000
+CTMC generator matrix G:
+   -0.0176    0.0126    0.0041    0.0009         0
+    0.0038   -0.0182    0.0118    0.0023    0.0003
+    0.0012    0.0089   -0.0165    0.0058    0.0006
+         0    0.0046    0.0155   -0.0211    0.0010
+         0    0.0022    0.0044    0.0200   -0.0267
+
+Calculated power n such that A^n converges: 29
+Corresponding timestep size of omitted interval: 53 steps, or 0.0679 of entire series.
+Total error: 0.001533
+Per cell in G, error ranges between 20.6026% and Inf% of the entry values.
+
+
+===========================================================================================================
+Ran CTMC on 2-D data, to include price change as well. 
+    % 1 = bin 1, <0
+    % 2 = bin 2, <0
+    % 3 = bin 3, <0
+    % 4 = bin 1, 0
+    % 5 = bin 2, 0
+    % 6 = bin 3, 0
+    % 7 = bin 1, >0
+    % 8 = bin 2, >0
+    % 9 = bin 3, >0
+
+imbalance avg = 1000ms
+price change = 100ms
+
+G_binbid =
+
+   -1.0000         0         0    0.3095    0.5952    0.0952         0         0         0
+         0   -1.0000         0    0.2500    0.6250    0.1250         0         0         0
+         0         0   -1.0000    0.2000         0    0.8000         0         0         0
+    0.0047    0.0001         0   -0.0757    0.0654    0.0048    0.0005    0.0003         0
+    0.0004    0.0009    0.0002    0.0469   -0.0832    0.0329         0    0.0016    0.0003
+         0    0.0014    0.0008    0.0079    0.1065   -0.1212         0    0.0003    0.0044
+         0         0         0    0.2500    0.2500    0.5000   -1.0000         0         0
+         0         0         0    0.1667    0.5417    0.2083         0   -0.9167         0
+         0         0         0    0.1579    0.5263    0.3158         0         0   -1.0000
+
+
+G_binask =
+
+   -1.0000         0         0    0.2353    0.6471    0.1176         0         0         0
+         0   -1.0000         0    0.2632    0.4737    0.2632         0         0         0
+         0         0   -1.0000    0.2000         0    0.8000         0         0         0
+    0.0035    0.0001         0   -0.0749    0.0658    0.0048    0.0006         0         0
+    0.0005    0.0010    0.0001    0.0469   -0.0828    0.0327         0    0.0013    0.0003
+         0    0.0016    0.0011    0.0076    0.1057   -0.1213         0    0.0003    0.0049
+         0         0         0    0.2000    0.4000    0.4000   -1.0000         0         0
+         0         0         0    0.1111    0.5556    0.2778         0   -0.9444         0
+         0         0         0    0.1905    0.5238    0.2381         0    0.0476   -1.0000
+
+
+imbalance avg = 1000ms
+price change = 500ms
+
+G_binbid =
+
+   -0.9928    0.0217         0    0.2826    0.5870    0.0870         0    0.0145         0
+    0.0118   -0.9647         0    0.1412    0.5882    0.2000         0    0.0118    0.0118
+         0    0.0909   -1.0000         0    0.3636    0.5455         0         0         0
+    0.0146    0.0005         0   -0.0792    0.0562    0.0034    0.0036    0.0006    0.0003
+    0.0016    0.0052    0.0003    0.0435   -0.0897    0.0300         0    0.0080    0.0011
+    0.0003    0.0025    0.0022    0.0053    0.0919   -0.1277         0    0.0017    0.0237
+         0    0.0345         0    0.4138    0.4138    0.1034   -1.0000    0.0345         0
+    0.0179    0.0179         0    0.2232    0.5536    0.1250    0.0089   -0.9732    0.0268
+    0.0094    0.0189         0    0.1132    0.5189    0.3113         0    0.0094   -0.9811
+
+
+G_binask =
+
+   -0.9915    0.0169         0    0.2881    0.5678    0.1017         0    0.0169         0
+    0.0106   -0.9681         0    0.1277    0.5638    0.2340         0    0.0213    0.0106
+         0    0.0588   -1.0000         0    0.2941    0.5882         0         0    0.0588
+    0.0121    0.0005         0   -0.0775    0.0580    0.0034    0.0027    0.0005    0.0003
+    0.0016    0.0058    0.0002    0.0448   -0.0898    0.0297         0    0.0065    0.0011
+    0.0003    0.0025    0.0039    0.0059    0.0907   -0.1311         0    0.0008    0.0270
+         0    0.0476         0    0.1905    0.5714    0.1429   -1.0000    0.0476         0
+         0    0.0440         0    0.1319    0.6374    0.1429         0   -0.9890    0.0330
+    0.0085    0.0254    0.0085    0.0847    0.5169    0.3220         0    0.0169   -0.9831
+

@@ -1,0 +1,165 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+% Set the margins
+%
+\setlength{\textheight}{8.5in}
+\setlength{\headheight}{.25in}
+\setlength{\headsep}{.25in}
+\setlength{\topmargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros
+
+% Math Macros.  It would be better to use the AMS LaTeX package,
+% including the Bbb fonts, but I'm showing how to get by with the most
+% primitive version of LaTeX.  I follow the naming convention to begin
+% user-defined macro and variable names with the prefix "my" to make it
+% easier to distiguish user-defined macros from LaTeX commands.
+%
+\newcommand{\myfunction}[3] {${#1} : {#2} \rightarrow {#3}$ }
+\newcommand{\myzrfunction}[1] {\myfunction{#1}{{\myZ}}{{\myR}}}
+\renewcommand{\iff}{\Leftrightarrow}
+
+% Formating Macros %
+
+\newcommand{\myheader}[4] {\vspace*{-0.5in} \noindent{#1} \hfill {#2} \newline \noindent{#3} \hfill {#4} \noindent \rule[8pt]{\textwidth}{1pt} \vspace{1ex} }  % end \myheader 
+
+\newcommand{\myalgsheader}[0] {\myheader{MASc Research Weekly Update}{UTIAS SRG}{Anton Rubisov}{September 14, 2014}} 
+
+% Running head (goes at top of each page, beginning with page 2.
+% Must precede by \pagestyle{myheadings}.
+\newcommand{\myrunninghead}[2] {\markright{{\it {#1}, {#2}}}}
+
+\newcommand{\myrunningalgshead}[2] {\myrunninghead{MAT315S Number Theory}{{#1}}}
+
+\newcommand{\myrunninghwhead}[1] {\myrunningalgshead{Solutions to Tutorial Problems {#1}}}
+
+\newcommand{\mytitle}[1] {\begin{center} {\large {\bf {#1}}} \end{center}}
+
+\newcommand{\myhwtitle}[1] {\begin{center} {\large {\bf Weekly Update {#1}}} \end{center}}
+
+\newcommand{\mysection}[1] {\noindent {\bf {#1}}}
+
+\newcommand\mat[1]{\boldsymbol{#1}}
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\myalgsheader
+\pagestyle{plain}
+%\myhwtitle{1}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Framework}
+Our goal is to use the dynamics of the Limit Order Book (LOB) as an indicator for
+high-frequency stock price movement, thus enabling statistical arbitrage. Formally, 
+we will the study limit order book imbalance process, $I(t)$, and the stock price process,
+$S(t)$, and attempt to establish a stochastic relationship $\dot{S} = f(S,I,t)$.
+
+LOB imbalance, the ratio of limit order volumes between the bid and ask sides, is calculated
+as $I(t) = \dfrac{V_b(t) - V_a(t)}{V_b(t) + V_a(t)} \in [-1,1]$. 
+
+\section*{Modeling $I(t)$: Continuous Time Markov Chain}
+Instead of modeling imbalance directly, an alternative approach is to discretize imbalance
+into subintervals (called bins), and model a stochastic process that tracks which
+bin $I(t)$ falls into. A naive model that can be employed is a continuous-time Markov chain (CTMC).
+
+Let $Z(t)$ be a CTMC taking values in $\left\lbrace 1,\dots , K \right\rbrace$, and having
+infinitessimal generator matrix $\mat{G}$.\footnote{Define the terms 
+$P_{ij}(t) = P \lbrace Z(t) = j | Z(0) = i \rbrace$. Then the matrices 
+$\mat{P}(t) = \lbrace P_{ij}(t) \rbrace$ and $\mat{G}$ satisfy
+$\dot{\mat{P}}(t) = \mat{G} \cdot \mat{P}(t)$, and hence $\mat{P}(t) = e^{\mat{G}t}$} 
+Conditional on being in some regime $k$, the arrival of buy and sell market orders follow
+independent Poisson processes with intensities $\lambda_k^\pm$ (and are hence Markov-modulated
+Poisson processes), where $\lambda_k^+$ ($\lambda_k^-$) is the rate of arrivals of market sells (buys).
+
+Given a set of observations of buy/sell market orders and regime switches, we previously derived a
+maximum likelihood estimation (MLE) for both the entries of $\mat{G}$ and the values $\lambda_k^\pm$. 
+Where $\mat{G} = \lbrace q_{ij} \rbrace \in \mathbb{R}^{K \times K}$, the $q_{ij}$ represent the
+transition rates from bin $i$ to $j$ for $i \neq j$, and $q_{ii} = - \sum_{j \neq i} q_ij$ such
+that the rows sum to $0$. We found that:
+$$ \hat{q}_{ij} = \dfrac{N_{ij}(T)}{H_i(T)} $$
+where
+\begin{align*} 
+N_ij(T) & \equiv \text{number of transitions from bin $i$ to $j$ up to time $T$} \\
+H_i(T) & \equiv \text{holding time in bin $i$ up to time $T$}
+\end{align*}
+
+Similarly, for the Poisson process intensities $\lambda_k^\pm$, we found:
+$$ \hat{\lambda}_k^\pm = \dfrac{N_k^\pm(T)}{H_k(T)} $$
+where
+\begin{align*} 
+N_ij(T) & \equiv \text{number of market orders in bin $k$ up to time $T$} \\
+H_i(T) & \equiv \text{holding time in bin $k$ up to time $T$}
+\end{align*}
+
+\subsection*{Calibrating a CTMC}
+We estimated parameters for a CTMC on a day's worth of LOB data.
+Using these parameters, we generated sample paths of the imbalance bins as well as arrival of market orders,
+and re-estimated parameters along the sample paths. By doing this for 10,000 paths we obtained histograms for
+the parameters (the individual entires of $\mat{G}$ as well as the intensities $\lambda_k^\pm$). 
+
+Using data for \texttt{ORCL} from 2013-05-15, averaging imbalances over a 100ms window, and taking the number
+of bins $K=3$, we obtained the following mean values for the parameters:
+
+$$ \mat{G} = \begin{pmatrix} -0.112 & 0.098 & 0.0122 \\
+							0.099 & -0.21 & 0.111 \\
+							0.0115 & 0.112 & -0.1235 \end{pmatrix}$$ \\
+$$ \mat{\lambda} = \bordermatrix{  & k=1    & k=2   & k=3   \cr
+								+ & 0.121  & 0.081 & 0.048 \cr
+								- & 0.0263 & 0.062 & 0.153 } $$			
+
+\section*{Modeling $I(t)$: Hidden Markov Model}
+Knowing that trading intensity varies over the course of a day, and suspecting possible other sources
+of double-stochasticity, we tried to fit a Hidden Markov Model (HMM) to the imbalance process $I(t)$.
+An HMM is specified with the following parameters:
+\begin{itemize}
+\item Underlying hidden states $S = \lbrace S_1, \dots, S_N \rbrace$
+\item Observation symbols $V = \lbrace v_1, \dots, v_M \rbrace$ (a discrete alphabet)
+\item State transition probabilities $\mat{A} = \lbrace a_{ij} \rbrace$, where $a_{ij} = P \lbrace q_{t+1} = S_j \;| \; q_t = S_i \rbrace$
+\item Observation symbol probability distribution $\mat{B} = \lbrace b_j (k) \rbrace$, \\
+where $b_{j} (k) = P \lbrace v_k \mbox{ at time } t \; | \; q_t = S_j \rbrace$
+\item Initial state distribution $\mat{\pi} = \lbrace \pi_i \rbrace$
+\end{itemize}
+
+A short-hand for the parameter space is $\lambda = (\mat{A},\mat{B},\mat{\pi})$. \\
+
+Fitting an HMM to an observation sequence $O = O_1 O_2 \dots O_T$ can be achieved via the Baum-Welch
+algorithm (or equivalently the Expectation-Modification algorithm), which seeks to adjust $\lambda$ 
+to maximize $P(O \; | \; \lambda)$. There is no analytical solution for an optimal $\lambda$, and in
+fact no way of estimating $\lambda$ given a finite $O$. However, the Baum-Welch algorithm allows us
+to \underline{locally} optimize $P(O \; | \; \lambda)$.
+
+\subsection*{Calibrating an HMM}
+We ran the Baum-Welch algorithm (using the pre-packaged \texttt{hmmtrain} function in MATLAB) on the
+same data that was used for the CTMC calibration. Using either 2 or 3 hidden states, and between 3 
+and 5 imbalance bins, the HMM training algorithm would converge in {\raise.17ex\hbox{$\scriptstyle\sim$}}13
+steps, and yield a matrix $\mat{A}$ (hidden state transitions) with values 
+{\raise.17ex\hbox{$\scriptstyle\sim$}}1 on the diagonals and {\raise.17ex\hbox{$\scriptstyle\sim$}}0 
+on the off-diagonals. 
+
+We discovered that increasing the imbalance averaging time (which affects the observation data fed to the
+training algorithm) has reducing the diagonal values away from 1. As the averaging time approached 60s, the
+diagonal values converged to about 0.85.
+
+\section*{Next Steps}
+\begin{enumerate}
+\item Run cross-validation on the old CTMC imbalance model, also varying the averaging time.
+\item Check for a unit root in the imbalance time series using the augmented Dickey-Fuller test, after transforming the data using the logit function.
+\item Instead of running a HMM where the hidden state informs the observable imbalance, try having the hidden state affect the transition matrix between imbalance states. 
+\item Consider a CTMC where the state is actually the pair $(I_{k-1}, I_k)$, with a $k^2 \times k^2$ transition matrix. Cross-validate and compare with regular CTMC.
+\item Same as above but with HMM. 
+\end{enumerate}
+
+%%% End solution and document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

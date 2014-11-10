@@ -1,0 +1,274 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{color}
+
+% Set the margins
+%
+\setlength{\textheight}{8.5in}
+\setlength{\headheight}{.25in}
+\setlength{\headsep}{.25in}
+\setlength{\topmargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+
+% Set table floating
+% use \begin{table}[H] to fix its position.
+\restylefloat{table}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Macros
+
+% Math Macros.  It would be better to use the AMS LaTeX package,
+% including the Bbb fonts, but I'm showing how to get by with the most
+% primitive version of LaTeX.  I follow the naming convention to begin
+% user-defined macro and variable names with the prefix "my" to make it
+% easier to distiguish user-defined macros from LaTeX commands.
+%
+\newcommand{\myfunction}[3] {${#1} : {#2} \rightarrow {#3}$ }
+\newcommand{\myzrfunction}[1] {\myfunction{#1}{{\myZ}}{{\myR}}}
+\renewcommand{\iff}{\Leftrightarrow}
+
+
+
+% Formating Macros %
+
+% header
+\newcommand{\myheader}[4] {\vspace*{-0.5in} \noindent{#1} \hfill {#2} \newline \noindent{#3} \hfill {#4} \noindent \rule[8pt]{\textwidth}{1pt} \vspace{1ex} }
+\newcommand{\myalgsheader}[0] {\myheader{MASc Research Weekly Update}{UTIAS SRG}{Anton Rubisov}{\today}} 
+% end header
+
+\newcommand\undermat[2]{% http://tex.stackexchange.com/a/102468/5764
+  \makebox[0pt][l]{$\smash{\underbrace{\phantom{%
+    \begin{smallmatrix}#2\end{smallmatrix}}}_{\text{$#1$}}}$}#2}
+    
+\newcommand\overmat[2]{%
+  \makebox[0pt][l]{$\smash{\overbrace{\phantom{%
+    \begin{smallmatrix}#2\end{smallmatrix}}}^{\text{$#1$}}}$}#2}
+    
+    
+\newcommand\mat[1]{\boldsymbol{#1}}
+
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\myalgsheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf Limit Order Book Dynamics}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+Our goal is to use the dynamics of the Limit Order Book (LOB) as an indicator for
+high-frequency stock price movement, thus enabling statistical arbitrage. Formally, we will the study limit order book imbalance process, $I(t)$, and the stock price process, $S(t)$, and attempt to establish a stochastic relationship $\dot{S} = f(S,I,t)$. We will then attempt to derive an optimal trading strategy based on the observed relationship.
+\end{quote}
+
+\section*{Recap Next Steps}
+\begin{enumerate}
+\item Validate previous CTMC cross-validation results. In particular, to calculate the invariant distribution use $\mat{A} = e^{\Delta t \mat{G} n}$, where $\Delta t$ is the size of the timestep and $n$ is the number of steps to the invariant.
+\item Check for a unit root in the imbalance time series using the augmented Dickey-Fuller test, after transforming the data using the logit function.
+\item Consider a CTMC where the state is actually the pair $(I_{k-1}, I_k)$, with a $k^2 \times k^2$ transition matrix. Cross-validate and compare with regular CTMC.
+\item Same as above but with HMM. 
+\item Calibrate HMM for the joint distribution $(I_k, \Delta S_k)$. 
+\item Extra Reading: Bellman Equations, MDP, Partially Observable MDP
+\end{enumerate}
+
+\section*{Cross-validation of CTMC}
+This is following up on the cross-validation results from last time. In those results, in order to obtain the invariant distribution for the Markov chain, we calculated a transition probability matrix $\mat{A}$ for the embedded discrete-time Markov chain and took matrix powers $\mat{A}^n$ until it converged, and then observed the average number of timesteps that it took to see $n$ transitions in the data.
+
+In these results, we instead use the relationship $\dot{\mat{P}} (t) = \mat{P}(t)\mat{G} \; \Rightarrow \; \mat{P}(t) = e^{t\mat{G}}$. Thus we calculate the invariant distribution using the averaging time $\Delta t$ and the number of such timesteps $n$ and observe when $e^{\Delta t\mat{G}n}$ converges. This value $n$ immediately tells us the timewindow size to remove for cross-validation.
+
+\begin{table}[H]
+\small
+\centering
+\caption{Previous results, convergence threshold 1e-04}
+\vspace*{2.5mm}
+\begin{tabular}{c|c|c|c|c}
+\hline
+\bf num bins & & & & \\ averaging time & stationary $n$ & Timewindow size & $err$ & $\mat{Err}$ \\
+\hline\hline
+3 bins, 100ms & 172 & 13629 steps (5.8\% of series) & 0.020345 & 50\% - 464\% \\
+\hline
+3 bins, 500ms & 150 & 2982 steps (6.4\% of series) & 0.012794 & 37\% - 331\% \\
+\hline
+3 bins, 1000ms & 120 & 1412 steps (6.0\% of series) & 0.010105 & 33\% - 264\% \\
+\hline
+3 bins, 2000ms & 121 & 866 steps (7.4\% of series) & 0.006786 & 27\% - 185\% \\
+\hline
+3 bins, 3000ms & 129 & 715 steps (9.2\% of series) & 0.005877 & 24\% - 214\% \\
+\hline
+3 bins, 5000ms & 114 & 497 steps (10.5\% of series) & 0.004026 & 15\% - 154\% \\
+\hline
+3 bins, 10000ms & 134 & 476 steps (20.3\% of series) & 0.001945 & 7\% - 84\% \\
+\hline
+3 bins, 20000ms & 167 & 492 steps (42\% of series) & 0.001326 & 5\% - 33\% \\
+\hline
+\hline
+5 bins, 100ms & 53 & 2509 steps (1.1\% of series) & 0.140246 & 96\% - 7419\% \\
+\hline
+5 bins, 500ms & 46 & 554 steps (1.18\% of series) & 0.034655 & 66\% - 1035\% \\
+\hline
+5 bins, 1000ms & 40 & 289 steps (1.24\% of series) & 0.023179 & 63\% - 911\% \\
+\hline
+5 bins, 2000ms & 37 & 168 steps (1.44\% of series)  & 0.012056 & 52\% - 1441\% \\
+\hline
+5 bins, 3000ms & 38 & 137 steps (1.76\% of series) &  0.009366 & 44\% - Inf\% \\
+\hline
+5 bins, 5000ms & 32 & 93 steps (1.99\% of series) & 0.006778 & 41\% - 529\% \\
+\hline
+5 bins, 10000ms & 37 & 83 steps (3.55\% of series) & 0.003355 & 28\% - Inf\% \\
+\hline
+5 bins, 20000ms & 29 & 56 steps (4.79\% of series) & 0.002009 & 23\% - Inf\% \\
+\hline
+5 bins, 30000ms & 29 & 53 steps (6.79\% of series) & 0.001533 & 21\% - Inf\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\small
+\centering
+\caption{New results, convergence threshold 1e-05}
+\vspace*{2.5mm}
+\begin{tabular}{c|c|c|c|c}
+\hline
+\bf num bins & & & & \\ averaging time & stationary $n$ & Timewindow size & $err$ & $\mat{Err}$ \\
+\hline\hline
+3 bins, 100ms & 478 & 47.8s (0.2\% of series) & 0.356402 & 644\% - 11371\% \\
+\hline
+3 bins, 500ms & 144 & 72s (0.3\% of series) & 0.087631 & 236\% - 985\% \\
+\hline
+3 bins, 1000ms & 89 & 89s (0.4\% of series) &  0.050605 & 150\% - 480\% \\
+\hline
+3 bins, 2000ms & 57 & 114s (0.5\% of series) & 0.032076 & 122\% - 725\% \\
+\hline
+3 bins, 3000ms & 45 & 135s (0.6\% of series) & 0.023662 & 98\% - 552\% \\
+\hline
+3 bins, 5000ms & 35 & 175s (0.75\% of series) & 0.014182 & 70\% - 514\% \\
+\hline
+3 bins, 10000ms & 29 & 290s (1.2\% of series) & 0.007361 & 52\% - 496\% \\
+\hline
+3 bins, 20000ms & 22 & 440s (1.9\% of series) & 0.004447 & 43\% - 1698\% \\
+\hline
+\hline
+5 bins, 100ms & 546 & 54.6s (0.2\% of series) & 0.162690 & 452\% - 6785\% \\
+\hline
+5 bins, 500ms & 162 & 81s (0.3\% of series) &  0.046204 & 187\% - 2590\% \\
+\hline
+5 bins, 1000ms & 100 & 100s (0.4\% of series) & 0.029900 & 136\% - 2962\% \\
+\hline
+5 bins, 2000ms & 65 & 130s (0.6\% of series)  & 0.017340 & 86\% - 2141\% \\
+\hline
+5 bins, 3000ms & 52 & 156s (0.7\% of series) &  0.012505 & 87\% - Inf\% \\
+\hline
+5 bins, 5000ms & 42 & 210s (0.9\% of series) & 0.008035 & 66\% - 978\% \\
+\hline
+5 bins, 10000ms & 31 & 310s (1.3\% of series) & 0.004563 & 45\% - Inf\% \\
+\hline
+5 bins, 20000ms & 25 & 500s (2.1\% of series) & 0.002485 & 42\% - Inf\% \\
+\hline
+\end{tabular}
+\end{table}
+
+The large errors seen in the error matrix $\mat{Err}$ are attributable to the corner elements: in the case of 3 bins, this would be $G_{13}$ and $G_{31}$. Or, for example, the error matrices for 5 bins at 100ms and at 20000ms looked like:
+
+$$\mat{Err}_{100ms} = \begin{bmatrix}
+    6.86 &   8.48 &   5.92 &   9.68 &  11.02\\
+    7.57 &   6.82 &   8.80 &  67.58 &   8.31\\
+    6.33 &   5.08 &   4.52 &   8.55 &  16.79\\
+   14.64 &  54.50 &   8.12 &   6.41 &   7.77\\
+    6.82 &  36.76 &   5.47 &   5.86 &   5.04
+\end{bmatrix}$$
+
+$$\mat{Err}_{20000ms} = \begin{bmatrix}
+    0.79 &   0.99 &   3.63 &  20.23 &    Inf\\
+    1.10 &   0.44 &   0.82 &   1.36 &    NaN\\
+    2.07 &   0.64 &   0.42 &   0.88 &   3.83\\
+    3.64 &   1.66 &   0.85 &   0.57 &   2.81\\
+     NaN &    Inf &   1.42 &   1.08 &   0.87
+\end{bmatrix}$$
+
+\section*{2-dimensional CTMC}
+Next we considered a CTMC for the joint distribution $(I(t), \Delta S(t))$ where $I(t)$ is the bin corresponding to imbalance averaged over the interval $[t-\Delta t_I, t]$, and $\Delta S(t) = \text{sign}(S(t+\Delta t_S)-S(t))$, considered individually for the best bid and best ask prices. For 3 bins, this was encoded into one dimension $Z(t)$ as follows:
+
+\begin{table}[H]
+\small
+\centering
+\vspace*{2.5mm}
+\begin{tabular}{c|c|c}
+\hline
+$Z(t)$ & Bin $I(t)$ & $\Delta S(t)$ \\
+\hline\hline
+1 & Bin 1 & $<0$ \\
+\hline
+2 & Bin 2 & $<0$ \\
+\hline
+3 & Bin 3 & $<0$ \\
+\hline
+4 & Bin 1 & $0$ \\
+\hline
+5 & Bin 2 & $0$ \\
+\hline
+6 & Bin 3 & $0$ \\
+\hline
+7 & Bin 1 & $>0$ \\
+\hline
+8 & Bin 2 & $>0$ \\
+\hline
+9 & Bin 3 & $>0$ \\
+\hline
+\end{tabular}
+\end{table}
+
+Generator matrices $\mat{G}_{bid}$ and $\mat{G}_{ask}$ were estimated for the resulting timeseries. These were converted to one-step probability matrices $\mat{P}_{bid}$ and $\mat{P}_{ask}$ using the formula $\mat{P} = e{\mat{G}\Delta t}$, where $\Delta t$ is the imbalance averaging period. What this matrix encodes are the conditional one-step transition probabilities - for each entry $\mat{P}_{ij}$ we have:
+\begin{align*}
+\mat{P}_{ij} & = \mathbb{P} \left[Z_n \in j \; | \; Z_{n-1} \in i \right] \\
+&= \mathbb{P}\left[(\rho_n, \Delta S_n) \in j \; | \; (\rho_{n-1}, \Delta S_{n-1}) \in i \right]
+\end{align*}
+
+The aim is to use these $\mat{P}$ matrices to compute conditional probabilities of price changes. For example, we can ask: if we are currently in imbalance bin 1, and previous were also in bin 1 and saw a negative price change, what is the probability of again seeing a negative price change?
+
+Since each state $(\rho_n, \Delta S_n) \in j$ is actually comprised of two states, say $\rho_n \in k, \Delta S_n \in m$, we can re-write these entries of $\mat{P}$ as being:
+\begin{align*}
+& \mathbb{P}\left[ \rho_n \in i, \Delta S_n \in j \; | \; \rho_{n-1} \in k, \Delta S_{n-1} \in m \right] \\
+=\;  & \mathbb{P}\left[ \rho_n \in i, \Delta S_n \in j \; | \; B \right]
+\end{align*}
+where we're using the shorthand $B = (\rho_{n-1} \in k, \Delta S_{n-1} \in m)$ to represent the states in the previous timestep. Using Bayes' Rule, we can write:
+$$ \mathbb{P}\left[ \Delta S_n \in j \; | \; B, \rho_n \in i \right] = \dfrac{\mathbb{P}\left[ \rho_n \in i, \Delta S_n \in j \; | \; B \right]}{\mathbb{P}\left[ \rho_n \in i \; | \; B \right]} $$
+The left-hand-side value is exactly the conditional probability in price change that we're interested in finding, the numerator is each individual entry of the one-step probability matrix $\mat{P}$, and the denominator can be computed as:
+$$\mathbb{P}\left[ \rho_n \in i \; | \; B \right] = \sum\limits_j \mathbb{P}\left[ \rho_n \in i,  \Delta S_n \in j \; | \; B \right]$$
+
+Using 3 bins, 1000ms imbalance averaging, and 500ms price change, we computed $\mat{P}_{bid}$:
+
+$$  \begin{smallmatrix}
+    \Delta S_n < 0 \rightarrow \\
+    \Delta S_n = 0 \rightarrow \\
+    \Delta S_n > 0 \rightarrow
+  \end{smallmatrix}
+  \left [
+    \begin{smallmatrix}
+\overmat{\rho_n = 1}{.67 & .05 & .04 & .01 & .03 & .04 & .00 & .05 & .05} & \overmat{\rho_n = 2}{.02 & .50 & .12 & .01 & .00 & .02 & .05 & .01 & .02} & 
+\overmat{\rho_n = 3}{.00 & .00 & .52 & .00 & .01 & .00 & .00 & .00 & .00} \\
+.33 & .95 & .96 & .99 & .97 & .96 & .41 & .93 & .95 & .96 & .49 & .87 & .98 & .99 & .97 & .91 & .48 & .96 & .98 & .95 & .47 & .95 & .96 & .93 & .98 & .88 & .34 \\ \undermat{\Delta S_{n-1} < 0}{.00 & .00 & .00} & 
+\undermat{}{.00 & .00 & .00} & 
+\undermat{\Delta S_{n-1} > 0}{.58 & .02 & .00} & 
+\undermat{}{.02 & .01 & .00} & 
+\undermat{\Delta S_{n-1} = 0}{.01 & .01 & .01} & 
+\undermat{}{.05 & .51 & .01} & 
+\undermat{}{.02 & .04 & .01} & 
+\undermat{}{.05 & .03 & .02} & 
+\undermat{}{.02 & .12 & .66}
+    \end{smallmatrix}
+  \right ]
+$$
+
+%%% End solution and document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
