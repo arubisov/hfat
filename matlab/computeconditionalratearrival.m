@@ -91,7 +91,7 @@ function [lambda] = computeconditionalratearrival(data, dt, num_bins, cond_type)
         MO(:,6) = sign(bidchgseries(max(MO(:,3)-1,1)));
         
         lambda = zeros(2,num_bins,num_bins,3);
-        roll_sum=0;
+        
         for bin_t = 1 : num_bins
             for bin_t_1 = 1 : num_bins
                 for ds = -1 : 1
