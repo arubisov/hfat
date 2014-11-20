@@ -139,8 +139,13 @@ function [G] = estimateCTMC2D(series, num_bins, dt_avg)
     end
 
     for row = 1 : num_bins*3
-        G(row,:) = G(row,:) / (sum(series==row) * dt_avg / 1000);
-        G(row,row) = -sum(G(row,:));
+        total_occur = sum(series==row);
+        if total_occur > 0
+            G(row,:) = G(row,:) / (total_occur * dt_avg / 1000);
+            G(row,row) = -sum(G(row,:));
+        else
+            G(row,:) = zeros(1,num_bins*3);
+        end
     end
         
         

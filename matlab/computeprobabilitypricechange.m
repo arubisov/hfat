@@ -4,7 +4,7 @@
 % num_bins          number of bins to cast the imbalances into
 % dt_prive_chg      time increment over which to measure price change
 
-function [P_bid, P_ask] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg)
+function [P_bid, P_ask, binseries, bidchgseries, G_binbid, N_bid] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg)
 
     if exist('data','var') == 0
         load('./data/ORCL_20130515.mat');
@@ -16,17 +16,20 @@ function [P_bid, P_ask] = computeprobabilitypricechange(data, dt_imbalance_avg, 
     end
     
     if exist('num_bins','var') == 0
-        num_bins = 3;
+        num_bins = 5;
     end
     
     if exist('dt_price_chg','var') == 0
         dt_price_chg = 500;
     end
     
-    [~, ~, ~, ~, G_binbid, G_binask] = getbinpricetimeseries(data, dt_imbalance_avg, num_bins, dt_price_chg);
+    [t, binseries, bidchgseries, askchgseries, G_binbid, G_binask]= getbinpricetimeseries(data, dt_imbalance_avg, num_bins, dt_price_chg);
     
     P_bid = calculateP(G_binbid, dt_imbalance_avg, num_bins);
     P_ask = calculateP(G_binask, dt_imbalance_avg, num_bins);
+    
+    N_bid = calculateN(binseries, bidchgseries, num_bins);
+    N_ask = calculateN(binseries, askchgseries, num_bins);
     
     
 function P = calculateP(G, dt_imbalance_avg, num_bins)
@@ -50,7 +53,8 @@ function P = calculateP(G, dt_imbalance_avg, num_bins)
     % ok so remember: in G and in P_onestep, element (ij) is transitioning
     % FROM i TO j. This is what we call a right-stochastic matrix.
     
-    P = zeros(num_bins, num_bins*3);
+    % (curr price change, previous B, curr bin)
+    P = zeros(3,num_bins*3,num_bins);
     
     % variables will be named in terms of what we're solving.
     % we want probability = numerator / denominator
@@ -70,8 +74,26 @@ function P = calculateP(G, dt_imbalance_avg, num_bins)
                 numer = P_onestep(B , rho_n + num_bins * (dS_n+1));
                 
                 prob = numer / denom;
-                P(dS_n+2, (rho_n - 1)*num_bins*3 + B) = prob;
+                if numer > 0 || denom > 0
+                    P(dS_n+2, B, rho_n) = prob;
+                else
+                    P(dS_n+2, B, rho_n) = 0;
+                end
             end
         end
     end
     
+function N = calculateN(binseries, chgseries, num_bins)
+
+    % convert to 1D series by encoding.
+    series = [binseries(1:end-1) sign(chgseries)];
+    series(:,2) = series(:,2) + 1;
+    series = series * [1;num_bins];
+
+    N = zeros(3,num_bins*3,num_bins);
+    
+    for rho_n = 1 : num_bins
+        for B = 1 : num_bins*3
+            N(:, B, rho_n) = sum((series==B) .* (binseries(2:end) == rho_n));
+        end
+    end
