@@ -4,7 +4,7 @@
 % num_bins          number of bins to cast the imbalances into
 % dt_prive_chg      time increment over which to measure price change
 
-function [P_bid, P_ask, binseries, bidchgseries, G_binbid] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg)
+function [P_bid, P_ask, binseries, bidchgseries, G_binbid, N_bid] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg)
 
     if exist('data','var') == 0
         load('./data/ORCL_20130515.mat');
@@ -27,6 +27,9 @@ function [P_bid, P_ask, binseries, bidchgseries, G_binbid] = computeprobabilityp
     
     P_bid = calculateP(G_binbid, dt_imbalance_avg, num_bins);
     P_ask = calculateP(G_binask, dt_imbalance_avg, num_bins);
+    
+    N_bid = calculateN(binseries, bidchgseries, num_bins);
+    N_ask = calculateN(binseries, askchgseries, num_bins);
     
     
 function P = calculateP(G, dt_imbalance_avg, num_bins)
@@ -80,3 +83,17 @@ function P = calculateP(G, dt_imbalance_avg, num_bins)
         end
     end
     
+function N = calculateN(binseries, chgseries, num_bins)
+
+    % convert to 1D series by encoding.
+    series = [binseries(1:end-1) sign(chgseries)];
+    series(:,2) = series(:,2) + 1;
+    series = series * [1;num_bins];
+
+    N = zeros(3,num_bins*3,num_bins);
+    
+    for rho_n = 1 : num_bins
+        for B = 1 : num_bins*3
+            N(:, B, rho_n) = sum((series==B) .* (binseries(2:end) == rho_n));
+        end
+    end
