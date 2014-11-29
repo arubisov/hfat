@@ -1,0 +1,61 @@
+Slide 3:
+
+The question we're looking at is what discussions are going on regarding how neural netorks represent memory?
+
+- HUGELY dependent on choice of model
+
+- convergence to attractor versus transient dynamics
+
+- mean field approach
+
+- role of inhibition
+
+- role of chaotic dynamics
+
+- what to do about background noise
+
+
+Slide 4: polish up. bold face for matrices, and add image of network and iff arrows. 
+
+Slide 5: keep
+
+Slide 6: replace with different models, talk about importance of spiking models
+
+Slide 7: attractor dynamics versus transient dynamics
+- attractor networks begin with the work of Hopfield wherein a system settles onto a steady state, and that represents convergence to and recall of a memory. it's an intuitive idea, nice to work with because attractors are "objects" in state space
+- on the other hand, transient dynamics. Rabinovitch suggests that it's not a plausible way of viewing memory recall...brain processes are happening on the scale of microseconds, so convergence (as t->inf) isn't a realistic way of characterizing what's happening. Rabinovitch says that memory recall is following a transient (or phase curve or orbit), in particular transients such as a heteroclinic chain between metastable states. 
+- transient dynamics are an exciting idea, but leaves the question of what those metastable states themselves represent
+
+Slide 8: mean field approach (pioneered by Amari 1972)
+- borrowed from physics. instead of analysing actiity of a huge number of neurons, aim to model the neural activity at a scale that integrates the effect of all of them. 
+- in order to use this approach, we need to generalize the behavior of the neurons...ie set weights constant, or more commonly done, set weights to random variable with known distribution. 
+- then complex behaviors between neurons reduce to behaviors between populations of neurons, and we can derive a first-order mean-field equation for the behavior of the population.
+- in particular, for a population of neurons, we can write out equations for the avg value of Va, the variance of V, and covar C of Va and Vb. then examining the stationary equations of mu, v, and C, see saddle node bifurcations that indicate bistability. 
+- pros: able to abstract high level behaviors, system bifurcations due to parameters.
+- cons: assume same type of neuron. need to assume #neurons->inf. need to have a random distribution for weights. and in mean field, you find examples where the mean and variance are zero, so exhibit nice behavior, but where looking at the individual fluctuations you get chaos. therefore mean field has limit to usefulness, and field fluctuations could reveal effects that would be overlooked. 
+
+Slide 9: interactions between neurons
+might want to see how neuron A affects B, so we would apply a signal to A only and check the effect on B (c.f. no signal from A). but when doing so, it turns out it's important what Va is, cos if it's already at the high pt of activation, then the signal gets muted. so it's complex behavior. leads to the idea of constructing "susceptibility plots" that look different from the connectivity matrix...and the plot depends on the frequency of the external signal
+- therefore must consider together the topology (connectivity) AND the non-linear dynamics to get a clear picture. 
+- to comlement this idea, (Nathan Wilson MIT) describes two types of inhibitory cells: PV and SOM. The SOM cell connects to other neurons peripherally, and when they're excited, the SOM cells subtracts a bit of the excitation. PV, however, connects to the cell body itself, and if it's really excited brings it down a lot, but if a little excited then brings it down a little. 
+- leads to work of Izhikevich: 20 types of neuronal activities identified for different types of neurons. (2003). compares different models and which behaviors they're able to mimic (2004). Izhy concludes: never use I&F.
+
+Slide 10: chaotic dynamics
+independent discussion between Freeman and "Japanese Gang of Five" regarding the role of chaos in the brain. beginning with Freeman's work showing the olfactory bulb in rabbits behaved chaotically, he postulated that chaos is required for memory. interestingly, virtually all papers derive results of chaotic behavior by introducing certain features into the model (e.g. refraction), so it does seem to be present...but unclear to what extent it actually means anything. Ott, Grebogi Yorke suggest it's very flexible, given density of periodic orbits, we can stabilize any one that we can identify...but hard to imagine the brain operating like this. 
+
+Slide 11: working memory
+-defined by Baddeley (1992) as “a brain system that provides temporary storage and manipulation of the information necessary for such complex cognitive tasks as language comprehension, learning, and reasoning.” Information is stored actively and is kept active for some period of time.
+-implicated through lesioning studies that working memory is a requirement for long term memories, therefore understanding working mem seems like a precursor for episodic, semantic, etc. 
+-identified with delayed-response task...lesions in PFC show deficit in that task, so identify the two.
+- it's believed that the sustained activation can be achieved either through "cell assemblies" (clusters), synfire chains, or cellular bistability.
+-Miller (1952) published a paper: The magic number seven, plus or minus two: some limits on our capacity for the processing of information
+-many papers, at least 5 at most recent conference in paris, are trying to deduce this result from the model. Amit (2003) used IF to show storage of 6, Rolls (2013) used IF + stochasticity and a process called "synaptic facilitation" to show storage of 9. 
+- a Johnson et al (2013) showed that a neural network with a stochastic firing rule and clustering of neurons can retain stored patterns for short periods of time without synaptic modification. 
+
+GAPS: omg.
+- no focus on the physical, tangible brain. models abstract neurons to nodes, volumeless points, with connection strengths...ignoring sizes, densities, distribution, distances... one approach may be a model in 3-D space that accounts for the size and distances. 
+- very little work done on non-uniform composition of network, ie multiple types of neurons beyond inhibitory or excitatory. 
+- stochasticity due to neurotransmitter loss. 
+- process of neurotransmitters: what does bursting actually accomplish? 
+
+
