@@ -1,15 +1,10 @@
-function [cash,P_bid] = naivetradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg)
-
-    tic;
+function [cash,P_bid,bookvalues] = naivetradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg)
 
     T1 = 9.5 * 3600000;
     T2 = 16 * 3600000;
     t = [T1 + dt_imbalance_avg : dt_imbalance_avg : T2];    % these are the endpoints of avging intervals
     
     time_ctr = find(data.Event(:,1) >= T1, 1, 'first');
-
-    % create bins for CTMC
-    rho = [-1 : 1/(num_bins/2) : 1]';
     
     [P_bid, ~, binseries, bidchgseries, ~] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg);
     
@@ -19,12 +14,9 @@ function [cash,P_bid] = naivetradingstrategy(data, dt_imbalance_avg, num_bins, d
     
     cash = 0;
     asset = 0;
-    
-    h = waitbar(0,'Backtesting naive trading strategy...');
+    bookvalues = zeros(length(t),1);
     
     for timestep = 2 : length(t)
-        
-        waitbar(timestep / length(t), h, sprintf('Backtesting naive trading strategy...\nEstimated time remaining: %d', round(toc * (length(t)/timestep - 1) )));
         
         % imbalance over last two averaging period
         IB_curr = binseries(timestep);
@@ -58,6 +50,8 @@ function [cash,P_bid] = naivetradingstrategy(data, dt_imbalance_avg, num_bins, d
             fprintf(fid, '[%d] {%d, %d, %d}.   Buy at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash);
             
         end
+        
+        bookvalues(timestep) = computebookvalue(data, time_ctr, cash, asset);
 
     end
     
@@ -75,5 +69,17 @@ function [cash,P_bid] = naivetradingstrategy(data, dt_imbalance_avg, num_bins, d
     end
     fprintf(fid, '[%d] Final cash: %.2f.\n', t(timestep), cash);
     fclose(fid);
-    close(h);
+    
+    f = figure(1);
+    plot(t/3600000, bookvalues);
+    title('Naive Trading Strategy')
+    xlabel('Time (h)') % x-axis label
+    xlim([9.5 16]);
+    ylabel('Book Value $$$') % y-axis label
+end
+
+function value = computebookvalue(data, time_ctr, cash, asset)
+    mid_price = (data.BuyPrice(time_ctr,1) + data.SellPrice(time_ctr,1))/20000;
+    value = cash + asset*mid_price;
+end
     
