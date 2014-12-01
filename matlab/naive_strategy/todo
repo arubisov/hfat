@@ -1,0 +1,10 @@
+2.39 to pete
+
+for each ticker:
+run calibration to get optimal params, save results
+run naive trading, save plot, cash, asset, normalized EOD book val.
+plot histobookval, save plot
+
+MMM: 800, 3, 800
+[57600000] Final cash: 72.85.
+[57600000] Normalized Final cash: 0.66.

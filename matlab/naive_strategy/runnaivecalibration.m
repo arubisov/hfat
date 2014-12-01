@@ -1,3 +1,5 @@
+% Determine optimal bin/imb/ds for a particular set of data, by maxmizing
+% probability of trade.
 function fitnessmat = runnaivecalibration(data)
 
     bin_min = 3;
@@ -17,7 +19,8 @@ function fitnessmat = runnaivecalibration(data)
     
     fitnessmat = zeros(length(bin_array), length(imb_array), length(ds_array));
 
-    h = waitbar(0,'Running calibration and fitness testing...');
+    fprintf('Running calibration and fitness testing...\n');
+    reversestr = '';
     tic;
     for bin = bin_array
         for imb = imb_array
@@ -33,13 +36,18 @@ function fitnessmat = runnaivecalibration(data)
                 
                 iter = ds_ctr + (imb_ctr-1)*length(ds_array) + (bin_ctr-1)*length(imb_array)*length(ds_array);
                 total_iter = (length(imb_array) * length(bin_array) * length(ds_array));
-                %fprintf('Estim Time Remaining: %d seconds\n', toc * (total_iter/iter - 1)); 
-                waitbar(iter / total_iter, h, sprintf('Running calibration and fitness testing...\n Estimated time remaining: %d seconds', round(toc * (total_iter/iter - 1))));
+
+                msg = sprintf('Estimated time remaining: %d seconds\n', round(toc * (total_iter/iter - 1)));
+                fprintf([reversestr, msg]);
+                reversestr = repmat('\b', 1, length(msg));
             end
         end
     end
+    fprintf(reversestr);
     
-    close(h);
+    [~, maxindex] = max(fitnessmat(:));
+    [bin,imb,ds] = ind2sub(size(fitnessmat),maxindex);
+    fprintf('Fitness maximized at bin=%d, dt_imbalance=%d, dt_price=%d\n',bin_array(bin),imb_array(imb),ds_array(ds));
 
 
 function fitness = evalfitness(P_bid, N_bid)

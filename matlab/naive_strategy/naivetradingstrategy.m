@@ -6,6 +6,8 @@ function [cash,P_bid,bookvalues] = naivetradingstrategy(data, dt_imbalance_avg, 
     
     time_ctr = find(data.Event(:,1) >= T1, 1, 'first');
     
+    opening_mid = (data.BuyPrice(time_ctr,1) + data.SellPrice(time_ctr,1))/20000;
+    
     [P_bid, ~, binseries, bidchgseries, ~] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg);
     
     log_name = sprintf('naive_trading_%s.log', datestr(now,'yyyymmdd_HHMMSS'));
@@ -68,6 +70,7 @@ function [cash,P_bid,bookvalues] = naivetradingstrategy(data, dt_imbalance_avg, 
         fprintf(fid, '[%d] Closing short position %d shares at %.2f (%d).\n', t(timestep), asset, price, price_time);
     end
     fprintf(fid, '[%d] Final cash: %.2f.\n', t(timestep), cash);
+    fprintf(fid, '[%d] Normalized Final cash: %.2f.\n', t(timestep), cash/opening_mid);
     fclose(fid);
     
     f = figure(1);
