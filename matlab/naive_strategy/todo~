@@ -1,11 +1,5 @@
 2.39 to pete
 
-for each ticker:
-run calibration to get optimal params, save results
-run naive trading, save plot, cash, asset, normalized EOD book val.
-plot histobookval, save plot
-
-
 AAPL - rerun
 Fitness maximized at bin=3, dt_imbalance=100, dt_price=100, E[X]=5296.47
 [57600000] Closing long position 328 shares at 428.91 (57600000).

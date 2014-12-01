@@ -1,0 +1,7 @@
+To change start-up directory, edit:
+/usr/local/MATLAB/R2013a_Student/toolbox/local/startup.m
+
+To edit global userpath, edit:
+/usr/local/MATLAB/R2013a_Student/toolbox/local/pathdef.m
+
+

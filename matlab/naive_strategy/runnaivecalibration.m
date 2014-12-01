@@ -1,6 +1,6 @@
 % Determine optimal bin/imb/ds for a particular set of data, by maxmizing
 % probability of trade.
-function fitnessmat = runnaivecalibration(data)
+function [fitnessmat,bin,imb,ds] = runnaivecalibration(data)
 
     bin_min = 3;
     bin_max = 9;
@@ -45,9 +45,12 @@ function fitnessmat = runnaivecalibration(data)
     end
     fprintf(reversestr);
     
-    [~, maxindex] = max(fitnessmat(:));
+    [maxval, maxindex] = max(fitnessmat(:));
     [bin,imb,ds] = ind2sub(size(fitnessmat),maxindex);
-    fprintf('Fitness maximized at bin=%d, dt_imbalance=%d, dt_price=%d\n',bin_array(bin),imb_array(imb),ds_array(ds));
+    bin = bin_array(bin);
+    imb = imb_array(imb);
+    ds = ds_array(ds);
+    fprintf('Fitness maximized at bin=%d, dt_imbalance=%d, dt_price=%d, E[X]=%.2f\n',bin,imb,ds,maxval);
 
 
 function fitness = evalfitness(P_bid, N_bid)

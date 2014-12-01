@@ -1,4 +1,4 @@
-function [cash,P_bid,bookvalues] = naivetradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg)
+function [cash,P_bid,bookvalues] = naivetradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg, ticker)
 
     T1 = 9.5 * 3600000;
     T2 = 16 * 3600000;
@@ -10,7 +10,7 @@ function [cash,P_bid,bookvalues] = naivetradingstrategy(data, dt_imbalance_avg, 
     
     [P_bid, ~, binseries, bidchgseries, ~] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg);
     
-    log_name = sprintf('naive_trading_%s.log', datestr(now,'yyyymmdd_HHMMSS'));
+    log_name = sprintf('naive_strategy/naive_trading_%s.log', datestr(now,'yyyymmdd_HHMMSS'));
     fid = fopen(log_name,'w');
     fprintf(fid, '[timestamp] {imbalance_prev, dS_prev, imbalance_curr}. Buy/Sell price (timestamp). [Asset, Cash]\n');
     
@@ -75,10 +75,11 @@ function [cash,P_bid,bookvalues] = naivetradingstrategy(data, dt_imbalance_avg, 
     
     f = figure(1);
     plot(t/3600000, bookvalues);
-    title('Naive Trading Strategy')
+    title(sprintf('Naive Trading Strategy - %s', ticker));
     xlabel('Time (h)') % x-axis label
     xlim([9.5 16]);
     ylabel('Book Value $$$') % y-axis label
+    saveas(f, sprintf('naive_strategy/fig-bookvals-%s.jpg',ticker));
 end
 
 function value = computebookvalue(data, time_ctr, cash, asset)
