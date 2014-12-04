@@ -1,9 +1,0 @@
-% calibrate for a ticker
-
-ticker = 'AAPL';
-
-[fitnessmat,bin,imb,ds] = runnaivecalibration(data);
-
-[cash,P_bid,bookvalues] = naivetradingstrategy(data, imb, bin, ds);
-
-plothistobookval(data, bookvalues, 15*60*1000/imb);
