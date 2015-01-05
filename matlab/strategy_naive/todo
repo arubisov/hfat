@@ -11,6 +11,8 @@ Fitness maximized at bin=4, dt_imbalance=100, dt_price=100, E[X]=137.60
 [57600000] Closing long position 20 shares at 35.92 (57599848).
 [57600000] Final cash: -5.10.
 [57600000] Normalized Final cash: -0.15.
+Sum of normalized daily returns: -25.47
+Sum of normalized mid price moves: 0.28
 
 GOOG:
 Fitness maximized at bin=3, dt_imbalance=100, dt_price=100, E[X]=2806.57
@@ -23,6 +25,8 @@ Fitness maximized at bin=4, dt_imbalance=100, dt_price=100, E[X]=158.02
 (No position held at end)
 [57600000] Final cash: -3.29.
 [57600000] Normalized Final cash: -0.14.
+Sum of normalized daily returns: -11.06
+Sum of normalized mid price moves: 0.16
 
 MMM:
 Fitness maximized at bin=3, dt_imbalance=800, dt_price=800, E[X]=966.11

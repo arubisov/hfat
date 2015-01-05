@@ -1,34 +1,23 @@
 %% Plot a histogram of book value changes over specified intrevals.
-% bookvalue - output of the naive trading strategy run
-% book_interval - number of time steps to compute over. 
-% eg if dt_imb_avg is 800 and we want 15min intervals, then book interval =
-% 15 * 60 * 1000 / 800
+% interval_chgs - returns that we want to plot
+% book_interval - e.g. '15min', title for plot
+% ticker        - e.g. 'FARO', title for plot
+% save_comment  - any additional comment for filename to save.
 
-function plothistobookval(data, bookvalues, book_interval, ticker)
-
-    bookvalues = normalizebookvals(data, bookvalues);
-    
-    num_intervals = floor(length(bookvalues) / book_interval);
-    
-    interval_chgs = zeros(num_intervals,1);
-    
-    for int = 1 : num_intervals
-        start = (int-1)*book_interval;
-        if start == 0, start = 1; end;
-        interval_chgs(int) = bookvalues(int*book_interval) - bookvalues(start);
-    end
-    
+function plothistobookval(interval_chgs, book_interval, ticker, save_comment)
+   
+    f = figure(102);
     edge_int = 0.05;
-    edge_min = floor(min(interval_chgs)/edge_int)*edge_int;
-    edge_max = ceil(max(interval_chgs)/edge_int)*edge_int;
+    edge_min = floor(min(interval_chgs(:))/edge_int)*edge_int;
+    edge_max = ceil(max(interval_chgs(:))/edge_int)*edge_int;
     edge = max(abs(edge_min), edge_max);
     edges = [-edge: edge_int : edge];
-    N = histc(interval_chgs, edges);
-    fig = bar(edges,N,'histc');
+    N = histc(interval_chgs(:), edges);
+    bar(edges,N,'histc');
     
-    title(sprintf('Naive Trading Strategy - 15min Interval Histogram - %s', ticker));
-    xlabel('Chg in Book Val over 15min') % x-axis label
+    title(sprintf('Naive Trading Strategy - %s Interval Histogram - %s', book_interval, ticker));
+    xlabel(sprintf('Chg in Book Val over %s', book_interval)) % x-axis label
     xlim([-edge, edge]);
     ylabel('# Occurences');
     
-    saveas(fig, sprintf('naive_strategy/fig-15minhist-%s.jpg',ticker));
+    saveas(f, sprintf('strategy_naive/fig-%s-%s-hist%s.jpg',ticker,book_interval,save_comment));
