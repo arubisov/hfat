@@ -20,8 +20,8 @@ function [cash,P_bid,bookvalues] = naiveplusplustradingstrategy(data, dt_imbalan
     % column 8: buy (-1) sell (+1) indicator
     MO = MO(:,[1 8]);
     MO = removeillegaltimes(MO);
-    MO(:,3) = match_mapping(t,MO(:,1));
-    MO(:,4) = match_mapping(data.Event(:,1),MO(:,1));
+    MO(:,3) = match_to_timestep(t,MO(:,1));     % all trades arriving between this timestep and the next.
+    MO(:,4) = match_to_timestep(data.Event(:,1),MO(:,1));  % to get most recent mid-price.
     
     log_name = sprintf('strategy_naive_plus/naive++_trading_%s.log', datestr(now,'yyyymmdd_HHMMSS'));
     fid = fopen(log_name,'w');
@@ -35,7 +35,7 @@ function [cash,P_bid,bookvalues] = naiveplusplustradingstrategy(data, dt_imbalan
     LO_sell_posted = 0;
     
     for timestep = 2 : length(t)
-        
+              
         % imbalance over last two averaging period
         IB_curr = binseries(timestep);
         IB_prev = binseries(timestep-1);
@@ -50,25 +50,6 @@ function [cash,P_bid,bookvalues] = naiveplusplustradingstrategy(data, dt_imbalan
         end
         time_ctr = time_ctr-1;
         
-        trades = MO((MO(:,3) == timestep), :);
-        for i = 1 : size(trades,1)
-            if trades(i,2) == 1 && LO_buy_posted
-                % market order sell, so we buy
-                asset = asset + 1;
-                price = data.SellPrice(trades(i,4))/10000;
-                price_time = data.Event(trades(i,4),1);
-                cash = cash - price;
-                fprintf(fid, '[%d] {%d, %d, %d}. MO sell arrived. Buy at %.2f (%d). [%d, %.2f].\n', trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash);
-            elseif trades(i,2) == -1 && LO_sell_posted
-                % market order buy, so we sell
-                asset = asset - 1;
-                price = data.BuyPrice(trades(i,4))/10000;
-                price_time = data.Event(trades(i,4),1);
-                cash = cash + price;
-                fprintf(fid, '[%d] {%d, %d, %d}. MO buy arrived. Sell at %.2f (%d). [%d, %.2f].\n',  trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash);
-            end
-        end
-
         if P_bid(1,B,IB_curr) > 0.5
             % price expected to go down. remove the buy LO.
             LO_buy_posted = 0;
@@ -81,8 +62,28 @@ function [cash,P_bid,bookvalues] = naiveplusplustradingstrategy(data, dt_imbalan
             
         elseif P_bid(2,B,IB_curr) > 0.5
             % no price change expected, maintain LOs. 
-            LO_buy_posted = 1;
-            LO_sell_posted = 1;
+            LO_buy_posted = 0;
+            LO_sell_posted = 0;
+        end
+        
+        % now check all trades arriving between this timestep and the next.
+        trades = MO((MO(:,3) == timestep), :);
+        for i = 1 : size(trades,1)
+            if trades(i,2) == 1 && LO_buy_posted
+                % market order sell, so we buy
+                asset = asset + 1;
+                price = data.BuyPrice(trades(i,4))/10000;
+                price_time = data.Event(trades(i,4),1);
+                cash = cash - price;
+                fprintf(fid, '[%d] {%d, %d, %d}. MO sell arrived. Buy at %.2f (%d). [%d, %.2f].\n', trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash);
+            elseif trades(i,2) == -1 && LO_sell_posted
+                % market order buy, so we sell
+                asset = asset - 1;
+                price = data.SellPrice(trades(i,4))/10000;
+                price_time = data.Event(trades(i,4),1);
+                cash = cash + price;
+                fprintf(fid, '[%d] {%d, %d, %d}. MO buy arrived. Sell at %.2f (%d). [%d, %.2f].\n',  trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash);
+            end
         end
         
         bookvalues(timestep) = computebookvalue(data, time_ctr, cash, asset);
@@ -107,7 +108,7 @@ function [cash,P_bid,bookvalues] = naiveplusplustradingstrategy(data, dt_imbalan
     
     f = figure(1);
     plot(t/3600000, bookvalues);
-    title(sprintf('Naive+ Trading Strategy - %s', ticker));
+    title(sprintf('Naive++ Trading Strategy - %s', ticker));
     xlabel('Time (h)') % x-axis label
     xlim([9.5 16]);
     ylabel('Book Value $$$') % y-axis label
