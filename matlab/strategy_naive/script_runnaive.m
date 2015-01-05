@@ -1,7 +1,7 @@
 %%% For a given ticker, calibrate on 1-day, backtest entire year.
 % We have full-year data for: INTC, NTAP, ORCL, SMH
 
-ticker = 'INTC';
+ticker = 'NTAP';
 
 listing = dir(sprintf('data-more/%s*',ticker));
 
@@ -16,7 +16,7 @@ fprintf('Running in-sample backtesting...\n');
 reversestr = '';
 tic;
     
-[cash,~,bookvalues,midprices] = naivetradingstrategy(data, imb, bin, ds, ticker, 0, 0);
+[~,~,bookvalues,midprices] = naivetradingstrategy(data, imb, bin, ds, ticker, 0, 0);
 
 [bookvalues,midprices] = normalizebookvals(bookvalues,midprices);
 
@@ -59,7 +59,7 @@ for file = 2 : numel(listing)
     
     if all(size(data) == [1 1]) == 0, data = data{1,1}; end;
 
-    [cash,~,bookvalues,midprices] = naivetradingstrategy(data, imb, bin, ds, ticker, 0, early_close);
+    [~,~,bookvalues,midprices] = naivetradingstrategy(data, imb, bin, ds, ticker, 0, early_close);
     [bookvalues,midprices] = normalizebookvals(bookvalues,midprices);
     year_bookvals(file,1:numel(bookvalues)) = bookvalues;
     year_midprices(file,1:numel(midprices)) = midprices;

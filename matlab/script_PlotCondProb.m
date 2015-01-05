@@ -2,7 +2,7 @@
 %%% of the imbalanced LOB, whether it dictates where the mid will be
 %%% moving.
 
-rho = [-1 : 1/11 : 1]';
+rho = [-1 : 1/2 : 1]';
 
 % imbalance at all events
 idx = (data.Event(:,1) >= 9.5*3600000 & data.Event(:,1) <= 16*3600000);

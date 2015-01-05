@@ -1,4 +1,4 @@
-function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg, ticker)
+function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg, ticker, display, early_close)
 % Backtest Naive+ Trading Strategy
 %   Extending the naive trading strategy, if we anticipate no change then 
 %   we'll additionally keep limited orders posted at the touch, front of
@@ -6,7 +6,13 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
 %   repost.
 
     T1 = 9.5 * 3600000;
-    T2 = 16 * 3600000;
+    
+    if early_close
+        T2 = 13 * 3600000;
+    else
+        T2 = 16 * 3600000;
+    end
+    
     t = [T1 + dt_imbalance_avg : dt_imbalance_avg : T2];    % these are the endpoints of avging intervals
     
     time_ctr = find(data.Event(:,1) >= T1, 1, 'first');
@@ -15,17 +21,19 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
     
     [P_bid, ~, binseries, bidchgseries, ~] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg);
     
+    if display
+        log_name = sprintf('strategy_naive_plus/naive+_trading_%s_%s.log', datestr(now,'yyyymmdd_HHMMSS'),ticker);
+        fid = fopen(log_name,'w');
+        fprintf(fid, '[timestamp] {imbalance_prev, dS_prev, imbalance_curr}. Buy/Sell price (timestamp). [Asset, Cash]\n');
+    end
+    
     MO = ExtractMOs(data);
     % column 1: time of event
     % column 8: buy (-1) sell (+1) indicator
     MO = MO(:,[1 8]);
     MO = removeillegaltimes(MO);
-    MO(:,3) = match_mapping(t,MO(:,1));
-    MO(:,4) = match_mapping(data.Event(:,1),MO(:,1));
-    
-    log_name = sprintf('strategy_naive_plus/naive+_trading_%s.log', datestr(now,'yyyymmdd_HHMMSS'));
-    fid = fopen(log_name,'w');
-    fprintf(fid, '[timestamp] {imbalance_prev, dS_prev, imbalance_curr}. Buy/Sell price (timestamp). [Asset, Cash]\n');
+    MO(:,3) = match_to_timestep(t,MO(:,1));     % all trades arriving between this timestep and the next.
+    MO(:,4) = match_to_timestep(data.Event(:,1),MO(:,1));  % to get most recent mid-price.
     
     cash = 0;
     asset = 0;
@@ -58,14 +66,14 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
                     price = data.SellPrice(trades(i,4))/10000;
                     price_time = data.Event(trades(i,4),1);
                     cash = cash - price;
-                    fprintf(fid, '[%d] {%d, %d, %d}. MO sell arrived. Buy at %.2f (%d). [%d, %.2f].\n', trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash);
+                    if display, fprintf(fid, '[%d] {%d, %d, %d}. MO sell arrived. Buy at %.2f (%d). [%d, %.2f].\n', trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
                 elseif trades(i,2) == -1
                     % market order buy, so we sell
                     asset = asset - 1;
                     price = data.BuyPrice(trades(i,4))/10000;
                     price_time = data.Event(trades(i,4),1);
                     cash = cash + price;
-                    fprintf(fid, '[%d] {%d, %d, %d}. MO buy arrived. Sell at %.2f (%d). [%d, %.2f].\n',  trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash);
+                    if display, fprintf(fid, '[%d] {%d, %d, %d}. MO buy arrived. Sell at %.2f (%d). [%d, %.2f].\n',  trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
                 end
             end
         end                
@@ -77,7 +85,7 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
             price = data.BuyPrice(time_ctr,1)/10000;
             price_time = data.Event(time_ctr,1);
             cash = cash + price;
-            fprintf(fid, '[%d] {%d, %d, %d}. Sell at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash);
+            if display, fprintf(fid, '[%d] {%d, %d, %d}. Sell at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
             
         elseif P_bid(3,B,IB_curr) > 0.5
             % buy asset
@@ -86,7 +94,7 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
             price = data.SellPrice(time_ctr,1)/10000;
             price_time = data.Event(time_ctr,1);
             cash = cash - price;
-            fprintf(fid, '[%d] {%d, %d, %d}.   Buy at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash);
+            if display, fprintf(fid, '[%d] {%d, %d, %d}.   Buy at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
             
         elseif P_bid(2,B,IB_curr) > 0.5
             LO_posted = 1;
@@ -101,24 +109,27 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
         price = data.BuyPrice(time_ctr,1)/10000;
         price_time = data.Event(time_ctr,1);
         cash = cash + asset * price;
-        fprintf(fid, '[%d] Closing long position %d shares at %.2f (%d).\n', t(timestep), asset, price, price_time);
+        if display, fprintf(fid, '[%d] Closing long position %d shares at %.2f (%d).\n', t(timestep), asset, price, price_time); end;
     elseif asset < 0
         price = data.SellPrice(time_ctr,1)/10000;
         price_time = data.Event(time_ctr,1);
         cash = cash + asset * price;
-        fprintf(fid, '[%d] Closing short position %d shares at %.2f (%d).\n', t(timestep), asset, price, price_time);
+        if display, fprintf(fid, '[%d] Closing short position %d shares at %.2f (%d).\n', t(timestep), asset, price, price_time); end;
     end
-    fprintf(fid, '[%d] Final cash: %.2f.\n', t(timestep), cash);
-    fprintf(fid, '[%d] Normalized Final cash: %.2f.\n', t(timestep), cash/opening_mid);
-    fclose(fid);
     
-    f = figure(1);
-    plot(t/3600000, bookvalues);
-    title(sprintf('Naive+ Trading Strategy - %s', ticker));
-    xlabel('Time (h)') % x-axis label
-    xlim([9.5 16]);
-    ylabel('Book Value $$$') % y-axis label
-    saveas(f, sprintf('strategy_naive_plus/naive+-fig-bookvals-%s.jpg',ticker));
+    if display
+        fprintf(fid, '[%d] Final cash: %.2f.\n', t(timestep), cash);
+        fprintf(fid, '[%d] Normalized Final cash: %.2f.\n', t(timestep), cash/opening_mid);
+        fclose(fid);
+
+        f = figure(1);
+        plot(t/3600000, bookvalues);
+        title(sprintf('Naive+ Trading Strategy - %s', ticker));
+        xlabel('Time (h)') % x-axis label
+        xlim([9.5 16]);
+        ylabel('Book Value $$$') % y-axis label
+        saveas(f, sprintf('strategy_naive_plus/naive+-fig-bookvals-%s.jpg',ticker));
+    end
 end
 
 function value = computebookvalue(data, time_ctr, cash, asset)

@@ -1,5 +1,5 @@
-function [cash,P_bid,bookvalues,midprices] = naivetradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg, ticker, display, early_close)
-% Backtest Naive Trading Strategy
+function [cash,P_bid,bookvalues,midprices] = naiveminustradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg, ticker, display, early_close)
+% Backtest Naive Minus Trading Strategy
 %   Using the conditional probabilities obtained from the P_bid matrix,
 %   execute a buy/sell market order if the probability of a price change in
 %   the right direction is > 0.5
@@ -18,10 +18,12 @@ function [cash,P_bid,bookvalues,midprices] = naivetradingstrategy(data, dt_imbal
     
     opening_mid = (data.BuyPrice(time_ctr,1) + data.SellPrice(time_ctr,1))/20000;
     
-    [P_bid, ~, binseries, bidchgseries, ~] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg);
+    [~, ~, binseries, bidchgseries, ~] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg);
+    
+    P_bid = naiveminusprobabilities(binseries, bidchgseries, num_bins);
     
     if display
-        log_name = sprintf('strategy_naive/naive_trading_%s_%s.log', datestr(now,'yyyymmdd_HHMMSS'),ticker);
+        log_name = sprintf('naive_strategy/naive_trading_%s.log', datestr(now,'yyyymmdd_HHMMSS'));
         fid = fopen(log_name,'w');
         fprintf(fid, '[timestamp] {imbalance_prev, dS_prev, imbalance_curr}. Buy/Sell price (timestamp). [Asset, Cash]\n');
     end
@@ -97,6 +99,32 @@ function [cash,P_bid,bookvalues,midprices] = naivetradingstrategy(data, dt_imbal
         xlabel('Time (h)') % x-axis label
         xlim([9.5 16]);
         ylabel('Book Value $$$') % y-axis label
-        saveas(f, sprintf('strategy_naive/fig-%s-bookvals-%s.jpg',ticker,datestr(now,'yyyymmdd_HHMMSS')));
+        saveas(f, sprintf('naive_strategy/fig-bookvals-%s.jpg',ticker));
     end
+
+end
+
+
+function P_bid = naiveminusprobabilities(binseries, bidchgseries, num_bins)
+
+    series = [binseries(1:end-1) sign(bidchgseries)];
+    
+    % encode the 2d array into one: add 1 to the $chg, changing it from
+    % [-1,0,1] to [0,1,2]. Then multiply by the 2x1 matrix [1;3] to get a
+    % unique value in range [1,...,9]
+    series(:,2) = series(:,2) + 1;
+    series = series * [1;num_bins];
+    
+    P_bid = zeros(3,num_bins);
+
+    % count number of occurences
+    for rho = 1 : num_bins
+        denom = sum(binseries == rho) / length(binseries);
+        for ds = 0 : 2
+            encoded = rho + ds*num_bins;
+            numer = sum(series == encoded) / length(binseries);
+            P_bid(ds+1,rho) = numer / denom;
+        end
+    end
+        
 end
