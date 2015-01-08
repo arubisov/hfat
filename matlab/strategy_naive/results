@@ -9,6 +9,7 @@ Fitness maximized at bin=4, dt_imbalance=100, dt_price=100, E[X]=137.60
 [57600000] Closing long position 20 shares at 35.92 (57599848).
 [57600000] Final cash: -5.10.
 [57600000] Normalized Final cash: -0.15.
+Fitness maximized at bin=4, dt_imbalance=1000, dt_price=1000, Intra-day Sharpe=0.02
 Sum of normalized daily returns: -25.47
 Sum of normalized mid price moves: 0.28
 
@@ -23,6 +24,7 @@ Fitness maximized at bin=4, dt_imbalance=100, dt_price=100, E[X]=158.02
 (No position held at end)
 [57600000] Final cash: -3.29.
 [57600000] Normalized Final cash: -0.14.
+Fitness maximized at bin=4, dt_imbalance=1000, dt_price=1000, Intra-day Sharpe=0.02
 Sum of normalized daily returns: -11.06
 Sum of normalized mid price moves: 0.16
 
@@ -37,15 +39,24 @@ Fitness maximized at bin=3, dt_imbalance=100, dt_price=100, E[X]=727.48
 [57600000] Closing short position -37 shares at 36.23 (57599951).
 [57600000] Final cash: -22.98.
 [57600000] Normalized Final cash: -0.64.
+Fitness maximized at bin=4, dt_imbalance=900, dt_price=900, Intra-day Sharpe=0.01
+Sum of normalized daily returns: -33.09
+Sum of normalized mid price moves: 0.56
 
 ORCL:
 Fitness maximized at bin=4, dt_imbalance=400, dt_price=400, E[X]=241.87
 [57600000] Closing long position 10 shares at 33.97 (57599975).
 [57600000] Final cash: -4.75.
 [57600000] Normalized Final cash: -0.14.
+Fitness maximized at bin=4, dt_imbalance=600, dt_price=600, Intra-day Sharpe=0.01
+Sum of normalized daily returns: -16.59
+Sum of normalized mid price moves: 0.26
 
 SMH:
 Fitness maximized at bin=3, dt_imbalance=600, dt_price=600, E[X]=142.44
 [57600000] Closing short position -42 shares at 38.68 (57599868).
 [57600000] Final cash: -1.44.
 [57600000] Normalized Final cash: -0.04.
+Fitness maximized at bin=4, dt_imbalance=800, dt_price=800, Intra-day Sharpe=0.01
+Sum of normalized daily returns: -21.07
+Sum of normalized mid price moves: 0.13

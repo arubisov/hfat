@@ -2,7 +2,7 @@
 % For a given ticker, calibrate on 1-day, backtest entire year.
 % We have full-year data for: INTC, NTAP, ORCL, SMH
 
-ticker = 'NTAP';
+ticker = 'ORCL';
 
 listing = dir(sprintf('data-more/%s*',ticker));
 
@@ -38,11 +38,11 @@ year_bookvals_naive_plus_plus = NaN(numel(listing),numel(bookvalues));
 year_midprices(1,1:numel(normedmidprices)) = normedmidprices;
 year_bookvals_naive(1,1:numel(bookvalues)) = bookvalues;
 
-[~,~,bookvalues] = naiveplustradingstrategy(data, imb, bin, ds, ticker, 0, early_close);
+[~,~,bookvalues] = naiveplustradingstrategy(data, imb, bin, ds, ticker, 0, 0);
 [bookvalues,~] = normalizebookvals(bookvalues,midprices);
 year_bookvals_naive_plus(1,1:numel(bookvalues)) = bookvalues;
 
-[~,~,bookvalues] = naiveplusplustradingstrategy(data, imb, bin, ds, ticker, 0, early_close);
+[~,~,bookvalues] = naiveplusplustradingstrategy(data, imb, bin, ds, ticker, 0, 0);
 [bookvalues,~] = normalizebookvals(bookvalues,midprices);
 year_bookvals_naive_plus_plus(1,1:numel(bookvalues)) = bookvalues;
 
@@ -88,7 +88,7 @@ end
 
 T1 = 9.5 * 3600000;
 T2 = 16 * 3600000;
-t = [T1 + imb_int : imb_int : T2]; 
+t = [T1 + imb : imb : T2]; 
 
 avg_naive = nanmean(year_bookvals_naive,1);
 avg_naive_plus = nanmean(year_bookvals_naive_plus,1);
