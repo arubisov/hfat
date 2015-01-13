@@ -8,7 +8,10 @@
 \usepackage{float}
 \usepackage{color}
 \usepackage{multicol}
-
+\usepackage{graphicx}
+\usepackage{subfig}
+\DeclareGraphicsExtensions{.jpg}
+\graphicspath{ {/home/anton/documents/masc/ml/matlab/strategy_naive/} }
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 
@@ -113,8 +116,6 @@ Immediately evident from $\mat{P_C}$ is that in most cases we are expecting no p
 
 $$ \mathbb{P} \left[ \Delta S_{curr} = \Delta S_{prev} \; | \; \rho_{prev} = \rho_{curr} \right] > 0.5 $$
 
-We backtested a number of naive trading strategies, outlined below, based on this observation.
-
 \begin{algorithm}
 \caption{Naive Trading Strategy}
 \begin{algorithmic}[1]
@@ -122,17 +123,17 @@ We backtested a number of naive trading strategies, outlined below, based on thi
 \State $asset = 0$
 \For{$t=2 \; : \; \texttt{length}(timeseries)$}
 	\If {$\mathbb{P} \left[ \Delta S_{curr} < 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{prev} \right] > 0.5$}
-	\State $cash \pluseq data.BuyPrice(\textit{t})$
-	\State $asset \mineq 1$
+		\State $cash \pluseq data.BuyPrice(\textit{t})$
+		\State $asset \mineq 1$
 	\ElsIf {$\mathbb{P} \left[ \Delta S_{curr} > 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{prev} \right] > 0.5$}
-	\State $cash \mineq data.SellPrice(\textit{t})$	
-	\State $asset \pluseq 1$
+		\State $cash \mineq data.SellPrice(\textit{t})$	
+		\State $asset \pluseq 1$
 	\EndIf
 \EndFor
 \If {$asset > 0$} 
-\State $cash \pluseq asset \times data.BuyPrice(\textit{t})$
+	\State $cash \pluseq asset \times data.BuyPrice(\textit{t})$
 \ElsIf {$asset < 0$} 
-\State $cash \pluseq asset \times data.SellPrice(\textit{t})$	
+	\State $cash \pluseq asset \times data.SellPrice(\textit{t})$	
 \EndIf
 \end{algorithmic}
 \end{algorithm}
@@ -142,13 +143,30 @@ We backtested a number of naive trading strategies, outlined below, based on thi
 \begin{algorithmic}[1]
 \State $cash = 0$
 \State $asset = 0$
+\State $LO_{posted} = \texttt{False}$
 \For{$t=2 \; : \; \texttt{length}(timeseries)$}
+	\If {$LO_{posted}$}
+		\For{$MO \in ArrivedMarketOrders(t)$}		
+			\If {$MO == Sell$}
+				\State $cash \mineq data.SellPrice(\textit{t})$	
+				\State $asset \pluseq 1$
+			\ElsIf {$MO == Buy$}
+				\State $cash \pluseq data.BuyPrice(\textit{t})$
+				\State $asset \mineq 1$
+			\EndIf
+		\EndFor
+	\EndIf
+
 	\If {$\mathbb{P} \left[ \Delta S_{curr} < 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{prev} \right] > 0.5$}
-	\State $cash \pluseq data.BuyPrice(\textit{t})$
-	\State $asset \mineq 1$
+		\State $cash \pluseq data.BuyPrice(\textit{t})$
+		\State $asset \mineq 1$
+		\State $LO_{posted} = \texttt{False}$
 	\ElsIf {$\mathbb{P} \left[ \Delta S_{curr} > 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{prev} \right] > 0.5$}
-	\State $cash \mineq data.SellPrice(\textit{t})$	
-	\State $asset \pluseq 1$
+		\State $cash \mineq data.SellPrice(\textit{t})$	
+		\State $asset \pluseq 1$
+		\State $LO_{posted} = \texttt{False}$
+	\ElsIf {$\mathbb{P} \left[ \Delta S_{curr} = 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{prev} \right] > 0.5$}
+		\State $LO_{posted} = \texttt{True}$
 	\EndIf
 \EndFor
 \If {$asset > 0$} 
@@ -159,7 +177,128 @@ We backtested a number of naive trading strategies, outlined below, based on thi
 \end{algorithmic}
 \end{algorithm}
 
+\begin{algorithm}
+\caption{Naive++ Trading Strategy}
+\begin{algorithmic}[1]
+\State $cash = 0$
+\State $asset = 0$
+\State $LOBuy_{posted} = \texttt{False}$
+\State $LOSell_{posted} = \texttt{False}$
+\For{$t=2 \; : \; \texttt{length}(timeseries)$}
+	\For{$MO \in ArrivedMarketOrders(t)$}		
+		\If {$MO == Sell \; \land \; LOBuy_{posted}$}
+			\State $cash \mineq data.SellPrice(\textit{t})$	
+			\State $asset \pluseq 1$
+		\ElsIf {$MO == Buy \; \land \; LOSell_{posted}$}
+			\State $cash \pluseq data.BuyPrice(\textit{t})$
+			\State $asset \mineq 1$
+		\EndIf
+	\EndFor
 
+	\If {$\mathbb{P} \left[ \Delta S_{curr} < 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{prev} \right] > 0.5$}
+		\State $LOBuy_{posted} = \texttt{False}$
+		\State $LOSell_{posted} = \texttt{True}$
+	\ElsIf {$\mathbb{P} \left[ \Delta S_{curr} > 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{prev} \right] > 0.5$}
+		\State $LOBuy_{posted} = \texttt{True}$
+		\State $LOSell_{posted} = \texttt{False}$
+	\ElsIf {$\mathbb{P} \left[ \Delta S_{curr} = 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{prev} \right] > 0.5$}
+		\State $LOBuy_{posted} = \texttt{False}$
+		\State $LOSell_{posted} = \texttt{False}$
+	\EndIf
+\EndFor
+\If {$asset > 0$} 
+\State $cash \pluseq asset \times data.BuyPrice(\textit{t})$
+\ElsIf {$asset < 0$} 
+\State $cash \pluseq asset \times data.SellPrice(\textit{t})$	
+\EndIf
+\end{algorithmic}
+\end{algorithm}
+
+We backtested a number of naive trading strategies, outlined here, based on this key observation. In plain terms, the Naive trading strategies can be interpreted as follows:
+
+\paragraph{Naive Trading Strategy}  Using the conditional probabilities obtained from $\mat{P_C}$, we will execute a buy (resp. sell) market order if the probability of an upward (resp. downward) price change is $> 0.5$.
+
+\paragraph{Naive+ Trading Strategy} Extending the naive trading strategy, if we anticipate no change then we'll additionally keep limited orders posted at the touch, front of the queue. We'll track MO arrival, assume we always get excuted, and immediately repost the limit orders.
+
+\paragraph{Naive++ Trading Strategy} We won't execute market orders or keep limit orders at the touch. Using the conditional probabilities obtained from $\mat{P_C}$, if we expect a downward (resp. upward) price change then we'll add a limit order to the sell (resp. buy) side, and hopefully pick up an agent who is executing a market order going against the price change momentum. 
+
+\paragraph{Naive- Trading Strategy} We additionally considered a trading strategy, for benchmark purposes, which used only current imbalance to predict future price change. But actually this predicted $\mathbb{P} \left[ \Delta S_{curr} = 0 \right] > 0.5$ at all times, so we could not run a strategy off it. \\ \\
+Backtesting these trading strategies required a choice of parameters for $\Delta t_S$, the price change observation period, $\Delta t_I$, the imbalance averaging period, and $\#_{bins}$, the number of imbalance bins. Through a brute force calibration technique we found that $\#_{bins} = 4$ provided the highest expected number of successful trades for most tickers, so this was chosen as a constant. Similarly, we empirically saw that calibration always yielded $\Delta t_S = \Delta t_I$, so this was taken as a given. Then each backtest consisted of first calibrating the value $\Delta t_I$ from one day of data by maximizing the intra-day Sharpe ratio, then using the calibrated parameters to backtest the entire year.
+
+
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{fig-FARO-year-bookvals}
+  \caption{FARO: Bookvalue against time of trading day.}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{fig-FARO-15min-hist} \\
+  \caption{FARO: Histogram of 15min bookvalue changes.}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{fig-INTC-year-bookvals}
+  \caption{INTC: Bookvalue against time of trading day.}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{fig-INTC-15min-hist} \\
+  \caption{INTC: Histogram of 15min bookvalue changes.}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{fig-NTAP-year-bookvals}
+  \caption{NTAP: Bookvalue against time of trading day.}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{fig-NTAP-15min-hist} \\
+  \caption{NTAP: Histogram of 15min bookvalue changes.}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{fig-ORCL-year-bookvals}
+  \caption{ORCL: Bookvalue against time of trading day.}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{fig-ORCL-15min-hist} \\
+  \caption{ORCL: Histogram of 15min bookvalue changes.}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{fig-SMH-year-bookvals}
+  \caption{SMH: Bookvalue against time of trading day.}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\textwidth]{fig-SMH-15min-hist} \\
+  \caption{SMH: Histogram of 15min bookvalue changes.}
+\end{figure}
+
+
+\begin{figure}[h]
+  \centering
+  \begin{tabular}{cc}
+  	\includegraphics[width=0.45\textwidth]{fig-strategycompare-FARO} & \includegraphics[width=0.45\textwidth]{fig-strategycompare-INTC} \\
+  	FARO & INTC \\
+  	\includegraphics[width=0.45\textwidth]{fig-strategycompare-NTAP} & \includegraphics[width=0.45\textwidth]{fig-strategycompare-ORCL} \\
+  	  	NTAP & ORCL \\
+    \multicolumn{2}{c}{\includegraphics[width=0.45\textwidth]{fig-strategycompare-SMH} }\\
+    \multicolumn{2}{c}{SMH}  	
+  \end{tabular}
+  \caption{Comparison of Naive (red), Naive+ (blue), and Naive++ (green) trading strategies, with benchmark Midprice (black). Plotted are bookvalues against time of trading day, averaged across trading year.}
+  \label{fig:comp}
+\end{figure}
+
+\section*{Conclusions from Naive Trading Strategies}
+
+As seen in Figure \ref{fig:comp}, the Naive trading strategy on average underperformed the average mid price, was even further underperformed by the Naive+ strategy which added at-the-touch limit orders when no change was predicted, while the Naive++ strategy of adversely selecting agents that traded against the price change momentum was the only strategy to on average outperform the midprice, even if slightly. 
+
+\paragraph{Question 1} Why is the Naive strategy producing, on average, normalized losses? Especially so when considering that we are \underline{in-sample backtesting}. On calibration, we see that our intra-day sharpe ratio is around 0.01 or 0.02 when we choose our optimal parameters, so at the very least on the calibration date the strategy produces positive returns. The remainder of the calendar days are out-of-sample, as the parameters are (likely) not optimal. This suggests non-stationary data, and in particular not every day can be modelled by the same Markov chain. The problem may be exaggerated by the fact that we're calibrating on the first trading day of the calendar year, when we might expect reduced, or at least non-representative, trading activity. Further, we're currently obtaining the $\mat{P_C}$ probability matrix using only bid-side data, not sell-side or mid, and we're ignoring the bid-ask spread. Thus predicting a ``price change'' may be insufficient when considering a monetizable opportunity, as we won't be able to profit off a predicted increase followed by a predicted decrease unless the interim mid-price move is greater than the bid-ask spread (assuming constant spread. This suggests a potential straightforward modification to the strategy.
+
+\paragraph{Question 2} Why is the Naive+ strategy underperforming the Naive strategy? Obviously this reduces to: why does maintaining limit orders posted at the touch produce, on average, negative returns when we are predicting no price change. In writing this summary I discovered a code error: I was transacting using the wrong bid/ask prices, which drastically alters all results. Fortunately the Naive++ strategy was did not suffer the same fate. 
 %%% End solution and document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{document}

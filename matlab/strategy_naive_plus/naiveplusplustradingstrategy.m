@@ -78,16 +78,16 @@ function [cash,P_bid,bookvalues] = naiveplusplustradingstrategy(data, dt_imbalan
         trades = MO((MO(:,3) == timestep), :);
         for i = 1 : size(trades,1)
             if trades(i,2) == 1 && LO_buy_posted
-                % market order sell, so we buy
+                % market order sell, so we buy at BID (buy) price
                 asset = asset + 1;
-                price = data.BuyPrice(trades(i,4))/10000;
+                price = data.BuyPrice(trades(i,4),1)/10000;
                 price_time = data.Event(trades(i,4),1);
                 cash = cash - price;
                 if display, fprintf(fid, '[%d] {%d, %d, %d}. MO sell arrived. Buy at %.2f (%d). [%d, %.2f].\n', trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
             elseif trades(i,2) == -1 && LO_sell_posted
-                % market order buy, so we sell
+                % market order buy, so we sell at ASK (sell) price
                 asset = asset - 1;
-                price = data.SellPrice(trades(i,4))/10000;
+                price = data.SellPrice(trades(i,4),1)/10000;
                 price_time = data.Event(trades(i,4),1);
                 cash = cash + price;
                 if display, fprintf(fid, '[%d] {%d, %d, %d}. MO buy arrived. Sell at %.2f (%d). [%d, %.2f].\n',  trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;

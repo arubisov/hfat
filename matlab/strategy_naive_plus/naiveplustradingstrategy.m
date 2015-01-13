@@ -32,7 +32,7 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
     % column 8: buy (-1) sell (+1) indicator
     MO = MO(:,[1 8]);
     MO = removeillegaltimes(MO);
-    MO(:,3) = match_to_timestep(t,MO(:,1));     % all trades arriving between this timestep and the next.
+    MO(:,3) = match_to_timestep(t,MO(:,1));   % all trades arriving between this timestep and the next.
     MO(:,4) = match_to_timestep(data.Event(:,1),MO(:,1));  % to get most recent mid-price.
     
     cash = 0;
@@ -57,29 +57,8 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
         end
         time_ctr = time_ctr-1;
         
-        if LO_posted
-            trades = MO((MO(:,3) == timestep), :);
-            for i = 1 : size(trades,1)
-                if trades(i,2) == 1
-                    % market order sell, so we buy
-                    asset = asset + 1;
-                    price = data.SellPrice(trades(i,4))/10000;
-                    price_time = data.Event(trades(i,4),1);
-                    cash = cash - price;
-                    if display, fprintf(fid, '[%d] {%d, %d, %d}. MO sell arrived. Buy at %.2f (%d). [%d, %.2f].\n', trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
-                elseif trades(i,2) == -1
-                    % market order buy, so we sell
-                    asset = asset - 1;
-                    price = data.BuyPrice(trades(i,4))/10000;
-                    price_time = data.Event(trades(i,4),1);
-                    cash = cash + price;
-                    if display, fprintf(fid, '[%d] {%d, %d, %d}. MO buy arrived. Sell at %.2f (%d). [%d, %.2f].\n',  trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
-                end
-            end
-        end                
-        
         if P_bid(1,B,IB_curr) > 0.5
-            % sell asset
+            % sell asset at BID (buy) price
             LO_posted = 0;
             asset = asset - 1;
             price = data.BuyPrice(time_ctr,1)/10000;
@@ -88,7 +67,7 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
             if display, fprintf(fid, '[%d] {%d, %d, %d}. Sell at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
             
         elseif P_bid(3,B,IB_curr) > 0.5
-            % buy asset
+            % buy asset at ASK (sell) price
             LO_posted = 0;
             asset = asset + 1;
             price = data.SellPrice(time_ctr,1)/10000;
@@ -99,6 +78,27 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
         elseif P_bid(2,B,IB_curr) > 0.5
             LO_posted = 1;
         end
+        
+        if LO_posted
+            trades = MO((MO(:,3) == timestep), :);
+            for i = 1 : size(trades,1)
+                if trades(i,2) == 1
+                    % market order sell, so we buy at BID (buy) price
+                    asset = asset + 1;
+                    price = data.BuyPrice(trades(i,4))/10000;
+                    price_time = data.Event(trades(i,4),1);
+                    cash = cash - price;
+                    if display, fprintf(fid, '[%d] {%d, %d, %d}. MO sell arrived. Buy at %.2f (%d). [%d, %.2f].\n', trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
+                elseif trades(i,2) == -1
+                    % market order buy, so we sell at ASK (sell) price
+                    asset = asset - 1;
+                    price = data.SellPrice(trades(i,4))/10000;
+                    price_time = data.Event(trades(i,4),1);
+                    cash = cash + price;
+                    if display, fprintf(fid, '[%d] {%d, %d, %d}. MO buy arrived. Sell at %.2f (%d). [%d, %.2f].\n',  trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
+                end
+            end
+        end     
         
         bookvalues(timestep) = computebookvalue(data, time_ctr, cash, asset);
 
