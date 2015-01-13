@@ -145,18 +145,6 @@ $$ \mathbb{P} \left[ \Delta S_{curr} = \Delta S_{prev} \; | \; \rho_{prev} = \rh
 \State $asset = 0$
 \State $LO_{posted} = \texttt{False}$
 \For{$t=2 \; : \; \texttt{length}(timeseries)$}
-	\If {$LO_{posted}$}
-		\For{$MO \in ArrivedMarketOrders(t)$}		
-			\If {$MO == Sell$}
-				\State $cash \mineq data.SellPrice(\textit{t})$	
-				\State $asset \pluseq 1$
-			\ElsIf {$MO == Buy$}
-				\State $cash \pluseq data.BuyPrice(\textit{t})$
-				\State $asset \mineq 1$
-			\EndIf
-		\EndFor
-	\EndIf
-
 	\If {$\mathbb{P} \left[ \Delta S_{curr} < 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{prev} \right] > 0.5$}
 		\State $cash \pluseq data.BuyPrice(\textit{t})$
 		\State $asset \mineq 1$
@@ -167,6 +155,17 @@ $$ \mathbb{P} \left[ \Delta S_{curr} = \Delta S_{prev} \; | \; \rho_{prev} = \rh
 		\State $LO_{posted} = \texttt{False}$
 	\ElsIf {$\mathbb{P} \left[ \Delta S_{curr} = 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{prev} \right] > 0.5$}
 		\State $LO_{posted} = \texttt{True}$
+	\EndIf
+	\If {$LO_{posted}$}
+		\For{$MO \in ArrivedMarketOrders(t,t+1)$}		
+			\If {$MO == Sell$}
+				\State $cash \mineq data.BuyPrice(\textit{t})$	
+				\State $asset \pluseq 1$
+			\ElsIf {$MO == Buy$}
+				\State $cash \pluseq data.SellPrice(\textit{t})$
+				\State $asset \mineq 1$
+			\EndIf
+		\EndFor
 	\EndIf
 \EndFor
 \If {$asset > 0$} 
@@ -185,16 +184,6 @@ $$ \mathbb{P} \left[ \Delta S_{curr} = \Delta S_{prev} \; | \; \rho_{prev} = \rh
 \State $LOBuy_{posted} = \texttt{False}$
 \State $LOSell_{posted} = \texttt{False}$
 \For{$t=2 \; : \; \texttt{length}(timeseries)$}
-	\For{$MO \in ArrivedMarketOrders(t)$}		
-		\If {$MO == Sell \; \land \; LOBuy_{posted}$}
-			\State $cash \mineq data.SellPrice(\textit{t})$	
-			\State $asset \pluseq 1$
-		\ElsIf {$MO == Buy \; \land \; LOSell_{posted}$}
-			\State $cash \pluseq data.BuyPrice(\textit{t})$
-			\State $asset \mineq 1$
-		\EndIf
-	\EndFor
-
 	\If {$\mathbb{P} \left[ \Delta S_{curr} < 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{prev} \right] > 0.5$}
 		\State $LOBuy_{posted} = \texttt{False}$
 		\State $LOSell_{posted} = \texttt{True}$
@@ -205,6 +194,16 @@ $$ \mathbb{P} \left[ \Delta S_{curr} = \Delta S_{prev} \; | \; \rho_{prev} = \rh
 		\State $LOBuy_{posted} = \texttt{False}$
 		\State $LOSell_{posted} = \texttt{False}$
 	\EndIf
+
+	\For{$MO \in ArrivedMarketOrders(t,t+1)$}		
+		\If {$MO == Sell \; \land \; LOBuy_{posted}$}
+			\State $cash \mineq data.BuyPrice(\textit{t})$	
+			\State $asset \pluseq 1$
+		\ElsIf {$MO == Buy \; \land \; LOSell_{posted}$}
+			\State $cash \pluseq data.SellPrice(\textit{t})$
+			\State $asset \mineq 1$
+		\EndIf
+	\EndFor
 \EndFor
 \If {$asset > 0$} 
 \State $cash \pluseq asset \times data.BuyPrice(\textit{t})$
