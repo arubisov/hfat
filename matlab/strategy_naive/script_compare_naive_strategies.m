@@ -107,4 +107,4 @@ xlabel('Time (h)') % x-axis label
 xlim([9.5 16]);
 ylabel('Book Value $$$') % y-axis label
 legend([curve_mid,curve_avg_naive,curve_avg_naive_plus,curve_avg_naive_plus_plus],'Mid','Naive','Naive+','Naive++')
-saveas(f, sprintf('strategy_naive/fig-strategycompare-%s.jpg',ticker));
+saveas(f, sprintf('strategy_naive/fig-strategycompare-fixed-%s.jpg',ticker));
