@@ -1,4 +1,4 @@
-function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg, ticker, display, early_close)
+function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg, ticker, display, early_close, ib_avg_method)
 % Backtest Naive+ Trading Strategy
 %   Extending the naive trading strategy, if we anticipate no change then 
 %   we'll additionally keep limited orders posted at the touch, front of
@@ -19,7 +19,7 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
     
     opening_mid = (data.BuyPrice(time_ctr,1) + data.SellPrice(time_ctr,1))/20000;
     
-    [P_bid, ~, binseries, bidchgseries, ~] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg);
+    [P_bid, ~, binseries, bidchgseries, ~] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method);
     
     if display
         log_name = sprintf('strategy_naive_plus/naive+_trading_%s_%s.log', datestr(now,'yyyymmdd_HHMMSS'),ticker);
@@ -60,20 +60,20 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
         if P_bid(1,B,IB_curr) > 0.5
             % sell asset at BID (buy) price
             LO_posted = 0;
-            asset = asset - 1;
-            price = data.BuyPrice(time_ctr,1)/10000;
-            price_time = data.Event(time_ctr,1);
-            cash = cash + price;
-            if display, fprintf(fid, '[%d] {%d, %d, %d}. Sell at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
+%             asset = asset - 1;
+%             price = data.BuyPrice(time_ctr,1)/10000;
+%             price_time = data.Event(time_ctr,1);
+%             cash = cash + price;
+%             if display, fprintf(fid, '[%d] {%d, %d, %d}. Sell at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
             
         elseif P_bid(3,B,IB_curr) > 0.5
             % buy asset at ASK (sell) price
             LO_posted = 0;
-            asset = asset + 1;
-            price = data.SellPrice(time_ctr,1)/10000;
-            price_time = data.Event(time_ctr,1);
-            cash = cash - price;
-            if display, fprintf(fid, '[%d] {%d, %d, %d}.   Buy at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
+%             asset = asset + 1;
+%             price = data.SellPrice(time_ctr,1)/10000;
+%             price_time = data.Event(time_ctr,1);
+%             cash = cash - price;
+%             if display, fprintf(fid, '[%d] {%d, %d, %d}.   Buy at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
             
         elseif P_bid(2,B,IB_curr) > 0.5
             LO_posted = 1;

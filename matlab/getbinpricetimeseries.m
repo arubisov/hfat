@@ -4,7 +4,7 @@
 % num_bins          number of bins to cast the imbalances into
 % dt_prive_chg      time increment over which to measure price change
 
-function [t, binseries, bidchgseries, askchgseries, G_binbid, G_binask] = getbinpricetimeseries(data, dt_imbalance_avg, num_bins, dt_price_chg)
+function [t, binseries, bidchgseries, askchgseries, G_binbid, G_binask, mu_IB] = getbinpricetimeseries(data, dt_imbalance_avg, num_bins, dt_price_chg, avg_method)
     
     if exist('data','var') == 0
         load('./data/ORCL_20130515.mat');
@@ -24,10 +24,10 @@ function [t, binseries, bidchgseries, askchgseries, G_binbid, G_binask] = getbin
     end
    
     % Imbalance Timeseries
-    [t, mu_IB] = computeavgimbalance(data, dt_imbalance_avg);
+    [t, mu_IB] = computeavgimbalance(data, dt_imbalance_avg, avg_method);
 
     % create bins for CTMC
-    rho = [-1 : 1/(num_bins/2) : 1]';
+    rho = createbins(num_bins, mu_IB, 2);
 
     [bin_count, binseries] = histc(mu_IB, rho);
     
@@ -40,9 +40,24 @@ function [t, binseries, bidchgseries, askchgseries, G_binbid, G_binask] = getbin
     G_binbid = estimateCTMC2D(binbidseries, num_bins, dt_imbalance_avg);
     G_binask = estimateCTMC2D(binaskseries, num_bins, dt_imbalance_avg);
     
- 
-function [t, mu_IB] = computeavgimbalance(data, dt)
-    IB = ( data.BuyVolume(:,1) - data.SellVolume(:,1) ) ./ ( data.BuyVolume(:,1) + data.SellVolume(:,1) );
+function rho = createbins(num_bins, mu_IB, type)
+    switch type
+        case 1
+            % create even interval bins
+            rho = [-1 : 1/(num_bins/2) : 1]';
+            rho(1) = -1.1;
+        case 2
+            % create even distribution bins (by percentiles)
+            rho = NaN(num_bins + 1, 1);
+            rho(1) = -1.1;
+            rho(num_bins + 1) = 1.1;
+            for bin = 1 : num_bins - 1
+                rho(bin+1) = prctile(mu_IB, bin * 100 / num_bins);
+            end
+    end
+        
+    
+function [t, mu_IB] = computeavgimbalance(data, dt, avg_method)
 
     T1 = 9.5 * 3600000;
     T2 = 16 * 3600000;
@@ -51,6 +66,19 @@ function [t, mu_IB] = computeavgimbalance(data, dt)
     mu_IB = zeros(length(t),1);
     
     ctr = find(data.Event(:,1) >= T1, 1, 'first');
+    
+    switch avg_method
+        case num2cell(1:3)
+            num = avg_method;
+            weights = ones(num,1);
+        case num2cell(4:5)
+            num = avg_method - 2;
+            weights = exp(0.5*[0:-1:-(num-1)])';
+    end
+       
+    IB = (data.BuyVolume(:,1:num) * weights - data.SellVolume(:,1:num) * weights) ./ (data.BuyVolume(:,1:num) * weights + data.SellVolume(:,1:num) * weights);
+
+    
 
     for k = 1 : length(t)
 

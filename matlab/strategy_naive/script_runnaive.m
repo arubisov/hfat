@@ -10,7 +10,7 @@ datafile = sprintf('./data-more/%s',listing(1).name);
 load(datafile);
 if all(size(data) == [1 1]) == 0, data = data{1,1}; end;
 
-[fitnessmat,bin,imb,ds] = runnaivecalibration(data);
+[fitnessmat,bin,imb,ds] = runnaivecalibration(data, 1);
 
 fprintf('Running in-sample backtesting...\n');
 reversestr = '';
