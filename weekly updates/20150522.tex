@@ -1,0 +1,121 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header. 
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf Limit Order Book Dynamics}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to use the dynamics of the Limit Order Book (LOB) as an indicator for
+high-frequency stock price movement, thus enabling statistical arbitrage. Formally, I will the study limit order book imbalance process, $I(t)$, and the stock price process, $S(t)$, and attempt to establish a stochastic relationship $\dot{S} = f(S,I,t)$. I will then solve the stochastic control problem to derive an optimal trading strategy based on the observed relationship.
+\end{quote}
+
+\section*{For Our Readers in the Middle East...}
+Welcome, first and foremost, to this Weekly Update series, just another amongst the many weekly update series that we've gone through in our short but storied friendship. There's been the Biz weekly, the Daily Fix weekly (oxymoron, but that's just life isn't it, you can't bill ALL your working hours to e-mail composition), the Shabbat weekly ... and so why not throw in there into the mix some dry as fuck academic shit that no one cares about? Therefore, we welcome you to the next 16 weeks: The Masters Weekly. 
+
+Second and still pretty foremost, in writing these, my tradition is to copy/paste the previous file, change the filename date, and rewrite the content. The shocker came when I discovered that my MOST RECENT WEEKLY UPDATE HAD BEEN 20150122. Teddy ... I haven't done \textit{anything} for four months!!!
+
+Other than that I can tell you this is already a tradition I'm fucking all for embracing with everything wide open - arms, mouth, butt - because I'm set up at the local bux, pounding bevvies while glancing at the occasional chiquitas scuffling to and fro, and thinking yeah this is pretty alright. A 5 minute walk from here are like thirty different cafes in Kensington that I will know intimately well by the time I'm a true Master. And so, as they say at all the ski resorts: tits up.
+
+To wrap up this intro, I'll just mention that I'm fully aware that the short abstract sounds like it was written by a turd that has no idea what he's talking about. You're also probably now one step ahead in guessing that that's exactly who it was written by. It's due for a re-write\footnote{Actually the first thing I did on opening this file was to change all the wording from ``our goal'' and ``we will study'' to ``my'' and ``I''. Royal We to Royal Anton. All part of taking ownership and taking pride in what you're doing. ... but like obviously baby steps, can't jump the gun on the pride part you know?}, and it'll get one in due time, I just can't be bothered at the moment. 
+
+\section*{The Academic Week in Review}
+The goal for the past week has been to get my balls swinging with the acceptable academic periodicity, but in other words to re-familiarize myself with the project and reacquaint myself with the tools we're using\footnote{Basically just take stock of the sort of shit sandwich that we're really dealing with here.}. And so here's the SITREP. There're three things standing between right now and Masterdom:
+\begin{enumerate}
+\item The STA4505 Exam (Jun 15th)
+\item The STA4505 Course Project (Aug 31th)
+\item The Dissertation (Sep 15th)
+\end{enumerate}
+That's not exactly the pecking order of importance but it's pretty close. The exam material is crucial to getting anything done for the project and dissertation; the course project is likely to become a small section of the dissertation; and completing the course project is effectively a dry run of doing the dissertation research, with a lot of potential hand-holding.
+
+Okay, but seriously, what're we dealing with here.
+
+\section*{Exam Topics}
+\begin{enumerate}
+\item Dynamic programming principle and the dynamic programming equation (for the diffusive case)
+\item Optimal execution: the classical case, and with order-flow
+\item Basics of Pairs Trading
+\item Bonus surprises topic that we'll all fail anyway.
+\end{enumerate}
+
+\section*{The Course Project}
+For the course project, each student was assigned a chapter of the textbook to work out on their own and present. I'm working on chapter 12, Order Imbalance, where the goal is to optimally liquidate an initial number of shares using only limit orders. The principal difference from previous chapters is that whereas previously the rate of arrival of buy/sell market orders ($\lambda^{\pm}$) was constant, it now depends on $\rho$, the measure of order imbalance. The project is broken down into two steps:
+\paragraph{Step 1} Re-derive and thereby check the coupled system of PDEs that solves the optimization problem.
+\paragraph{Step 2} Implement (numerical integration) the solution to the equation, using the truncated version where $\delta \geq 0$. i.e. reproduce the plot in the top left of pg 309.
+\paragraph{Step 3} Implement the simulation. i.e. reproduce the plot in the top right of pg 309.
+
+\section*{The Dissertation}
+The dissertation goal is to maximize some `performance criteria', e.g. wealth at the end of the trading day, using market orders and limit orders, and utilizing observed probabilities of stock price increases/decreases based on order imbalance. The steps here are:
+\paragraph{Step 1} Establish relevant models - cash stream, wealth, market orders, fill probabilities of limit orders, etc.
+\paragraph{Step 2} Choose one or several cases of possible performance criteria.
+\paragraph{Step 3} Derive dynamic programming equations for the above cases.
+\paragraph{Step 4} Solve the resulting PDEs/SDEs.
+\paragraph{Step 5} Implement numerical solutions and simulations to plot results.
+\paragraph{Step 6} Backtest the solutions on historical data to assess their performance.
+\paragraph{Step 7} Write up everything into a 50-page dissertation.
+\paragraph{Step 8} Explore cool ways to tie this into cryptocurrencies.
+\paragraph{Step 9} Graduate, buy one-way ticket to never never land with my chosen friends and family, start a business with Ted where the sun is always shining and the air smells like warm root beer -- wait a minute, maybe Albuquerque?
+
+\section*{Back to the Academic Week in Review}
+This week I've worked exclusively on the course project, from which out of necessity also came some exam review. Here's where we're at.
+
+An agent wants to liquidate a position by time $T$ using limit orders (LOs) posted at an arbitrary depth $\delta$. The following processes are at play:
+
+\begin{align*}
+\text{Order Imbalance} \quad & Z = (Z_t)_{0 \leq t \leq T} \quad \text{a Markov chain with generator } G \\
+& Z_t \in \{ -1, 0, +1 \} \\
+\text{Arrival of MOs} \quad & M^{\pm} = (M^{\pm}_t)_{0 \leq t \leq T} \quad \text{Poisson processes} \\
+& \text{with intensities } \lambda^{\pm}(Z_t) \\
+\text{Arrival of LOB Shuffling} \quad & J^{\pm} = (J^{\pm}_t)_{0 \leq t \leq T} \quad \text{Poisson processes} \\
+& \text{with intensities } \gamma^{\pm}(Z_t) \\
+\text{Price Jumps when MOs arrive} \quad & \{ \epsilon^\pm_{0,k}, \epsilon^\pm_{1,k}, \dots \} \sim F^\pm_k \quad \text{i.i.d. with k in \{ -1,0,1 \} } \\
+\text{Price Jumps when LOB shuffled} \quad & \{ \eta^\pm_{0,k}, \eta^\pm_{1,k}, \dots \} \sim L^\pm_k \quad \text{i.i.d. with k in \{ -1,0,1 \} } \\
+\text{Midprice} \quad & S = (S_t)_{0 \leq t \leq T} \\
+& \d S_t = \epsilon^+_{M^+_{t^-},Z_{t^-}} \d M^+_t - \epsilon^-_{M^-_{t^-},Z_{t^-}} \d M^-_t + \eta^+_{J^+_{t^-},Z_{t^-}} \d J^+_t - \eta^-_{J^-_{t^-},Z_{t^-}} \d J^-_t\\
+\text{LO posted depth} \quad & \delta = (\delta_t)_{0 \leq t \leq T} \\
+\text{LO fill count} \quad & N^{\delta} = (N^{\delta}_t)_{0 \leq t \leq T} \\
+\text{Cash} \quad & X^{\delta} = (X^{\delta}_t)_{0 \leq t \leq T} \\
+& \d X^{\delta}_t = (S_t + \delta_t) \d N^{\delta}_t \\
+\text{Inventory} \quad & Q_t = Q_0 - N_t^\delta \\
+\end{align*}
+
+Note that $N^{\delta}_t$ is NOT a Poisson process - it is a jump process satisfying the relationship
+\[ \P [\d N_t = 1 \, | \, \d M^+_t = 1] = e^{-\kappa \delta_t} \]
+ie if at time $t$ we have a limit order posted at a depth $\delta_t$, then our fill probability is $e^{-\kappa \delta_t}$ conditional on a buy market order arriving. 
+
+For our liquidation optimization problem, we stop trading either when we liquidate all our shares, or the trading day ends. Therefore, our stopping time $\tau$ can be expressed as 
+\[ \tau = T \wedge \min \{ t: Q_t^\delta = 0 \} \]
+
+We measure the performance of our LO posting strategy $\delta$ according to the \textit{performance criteria function} $H^\delta$:
+\begin{align*}
+H^\delta (t,x,s,z,q) & = \E [ X_\tau^\delta + Q_\tau^\delta(S_\tau - \alpha Q_\tau^\delta) - \varphi \int_t^\tau (Q_s^\delta) \ds \, | \, X_{t^-}^\delta = x, S_{t^-}^\delta = s, Z_{t^-} = z, Q_{t^-}^\delta = q] \\
+& = \E_{t,x,s,z,q} [ X_\tau^\delta + Q_\tau^\delta(S_\tau - \alpha Q_\tau^\delta) - \varphi \int_t^\tau (Q_s^\delta) \ds ]
+\end{align*} 
+
+We seek to maximize this performance criteria, and thereby attain the \textit{value function} $H$:
+\[ H(t,x,s,z,q) = \sup_{\delta \in \cA} H^\delta (t,x,s,z,q) \]
+where $cA$ is the set of $\mathcal{F}$-predictable, bounded from below processes -- note I actually have no idea what this means.
+
+So what's up. I've derived so far that we can apply the dynamic programming principle (DPP) to express $H$ as:
+\[ H(t,x,s,z,q) = \sup_{\delta \in \cA} \E_{t,x,s,z,q} \left[ -\varphi \int_t^{t+h} Q_s^\delta \ds + H(t+h, X_{t+h}^\delta, S_{t+h}^\delta, Z_{t+h}, Q_{t+h}^\delta) \right] \]
+
+Splendid. Now we need to go from this DPP to the DPE, which amounts to just looking at the DPP in infinitesimal form. In order to do this, I need to apply Ito's lemma to my function $H$, which is to say, to express $\d H$ in terms of $\dt$ and $\d$ a bunch of stochastic stuff. From there I need to isolate the $\dt$ component, called the infinitesimal generator of the processes, and setting a bunch of things equal to zero I'll have re-derived the coupled system of PDEs that solves the optimization problem. 
+
+In short, I'm half-way through \textbf{Step 1} of the course project. 
+
+\section*{Looking Ahead}
+I've got Sebastian's blessing to meet with him once a week, ad hoc rather than scheduled, to run through questions, which is great because that basically means I can probably meet with him twice a week whenever shit really gets dire. I've also got Daddy locked in for Sunday mornings. I've got you locked in for the Masters Weekly special. And so really, all's well that ends well, and I'm positive this is going to end well. 
+
+Over the weekend I'm going to lay out some milestones, timelines, goals, aspirations, ambitions, figure out how many chicks I've banged, other noble things like that, and really lay out the summer. This can be done, gangsta. I'm an educated nigga with a DREAM.
+
+Ok fuck this shit I'm out.
+
+\end{document}
