@@ -1,0 +1,43 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header. 
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf Limit Order Book Dynamics}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to use the dynamics of the Limit Order Book (LOB) as an indicator for
+high-frequency stock price movement, thus enabling statistical arbitrage. Formally, I will the study limit order book imbalance process, $I(t)$, and the stock price process, $S(t)$, and attempt to establish a stochastic relationship $\dot{S} = f(S,I,t)$. I will then solve the stochastic control problem to derive an optimal trading strategy based on the observed relationship.
+\end{quote}
+
+\section*{For Our Readers in the Sunshine State...}
+Here we have it, your shaken-not-stirred edition of the one and only, the hit new series, The Masters Weekly. Owing you as we do an explanation for my we're a day late, I suppose I'll launch straight into it. I'll also note that beside me there's two dudes on laptops sharing a table, let's call them in their late 20s (oh wait, that's us too...), and I just noticed they're both bald. Like pale-bald, like unhealthy-looking pale-bald, and it also just dawned on me that they look very similar, and are likely brothers, and man we should've made the silk garment wager with blokes like these. Right, where were we. So yesterday I effectively had to take the day off because it was D-day for the stand-down (end of training year, summer off) BBQ for the 32 Combat Engineer Regiment, and as you recall I've been tasked co-responsibility for organizing this thing. My co-organizer is my buddy Ryan Mascarenhas. He's a great guy, very genuine, a little bit naive about things. To give you a couple examples, at some point a sergeant told him that if he receives an e-mail from them he can acknowledge its receipt by replying with "Ack". So for the next two months every e-mail from him I was ever cc'd on would start with "Ack Sergeant," and then launch into his response. The true usage of ack, as you can imagine, is a one-liner response, kind of like "working from home EOM". I mean the EOM makes it explicit that that's the end, but it's kind of the same thing with Ack, you're just acknowledging receipt, it's like the analog version of the e-mail "read receipts" that never really fell into fashion (I wonder why?). There's another table to my 10 o'clock with three girls, with long equine faces, all dressed in summer black dresses, probably escaping from the Forest Hill shul only minutes earlier, and they're all have this dumb fucking attitude that makes them terribly unattractive despite all genetic (they're obvi jewish) and societal (and pretty fit) influences at play (oh well). Maybe they're sisters too. This sibling theory is really contributing nothing to either of the two cases, I'll admit. Okay well so, other example from Ryan, we received written orders some months ago about how the BBQ is supposed to go. In one of the sub-notes it was mentioned all the food we cook on the BBQ has to be pre-cooked, because without military cooks we're not authorized to be "cooking" food, only re-heating it. And Ryan sprung this on me last week. I was like dude... they're probably just writing that to cover their asses on the legal requirements, there's no fucking way they're \textit{actually} expecting pre-cooked hot dogs and burgers. Ryan was pretty adamant, arguing why else would they write it in the orders, orders are sacred etc. So I checked with the folks upstairs and obviously it's a requirement and obviously they never adhere to it because that would just be silly. Ryan's mind was blown by this. Next, I don't really want to go count, but I would estimate I've received in the neighborhood of 50-75 emails from Ryan about this BBQ since returning from Israel - most not directly to me, but to other people tangentially involved in this. About 90\% of those have been superfluous. Each one is written as if composed by a neural network text generator that's been fed only official military documents. Haha man I just thought of that descriptor, and it's fucking spot on. So anyway, that's Ryan. In general working with him annoys me only slightly because he's really not good at sharing work, he gets really excited and wants to do everything himself, but on the whole I'd rather him than any of the other bags of hammers that I've come to identify within the other folks I've joined up with. Anyway, BBQ, had a ball of a day, as of 1pm I was in and out of the armory coordinating things, and wrapped up only by 1am. Long day. But man, the BBQ itself, major success. Two things really made it so: 1) at the last minute, the 32 Service Battalion came through and we got two trained military cooks from them. These guys have BBQs down to an art and a science, classic Arts \& Science. 2) I did the Costco shop that afternoon (\$394 dollars worth of BBQ!) and had two moments of divine inspiration, straying from the planned ingredient list, that really made it: picked up 2kg of bacon (should have doubled/tripled, in retrospect), and 60 dollars worth of seasoned chicken wings. The crowd went wild. Apparently they're used to just shitty hamburgers (I selected the premium sirloin 1/3lb burgers) and shitty hot dogs (Italian sausage, hot and mild, they got mixed up so it was a choose your own adventure meal), so we earned ourselves some serious accolades. 
+
+Okay I guess that's about as long as I can really write to you about BBQs eh. Anyway, for our impatient readers that skipped that last paragraph, the short story is that I was busy yesterday and hence this is coming to you a day late. 
+
+\section*{The Academic Week in Review}
+\subsection*{Exam}
+Right so we've got the STA4505 exam in two days time. This week was really just spent studying for it, and I've covered all the topics. A couple things to note... one is that the integration can get fucking complicated man, like eg $\int \frac{1}{k\varphi - x^2} \dx$, you have to do a bunch of ugly factoring and substitutions, partial fractions, use log identities, re-arrange like a madman... it's a solid two sheets of scribbles. Anway, that's that. Pairs trading is cool stuff. I'll just be reviewing over the weekend, then that's that, moving on to dissertation full time!
+
+\subsection*{The Dissertation}
+Very little done on this. Here we go though. As you recall, we were going to call $Z_t$ the imbalance at time $t$, $\xi_t = Z_{t-s}$ the imbalance a little bit earlier, at time $t-s$, and $\Delta_{t} = S_t - S_{t-s}$ the price change over that time interval $s$. So the thing is, this isn't exactly how I had set up my exploratory data analysis from last year... there, we had done something a bit different: we had $Z_t$ as a two-dimensional continuous-time Markov chain, where dimension one was imbalance, and dimension two was price change. So the set up there was:
+\begin{align}
+Z_t & = (\rho_t, \Delta_t) \\
+\rho_t & = \pi^1(Z_t) && \text{is the imbalance at time $t$} \\
+\Delta_t & = \pi^2(Z_t) = S_t - S_{t-s} && \text{is the price change}
+\end{align}
+So the way this differs relative to the set-up from last week is two-fold: one, $\xi_t = \pi^1(Z_{t-s})$, and two, and most notably, the evolution of the $\Delta_t$ under the Markov chain actually \textit{determines} the evolution of the midprice: it can be determined by integrating $S_t = \int\limits_{t_0}^t \Delta_u \du$. But in last week's set-up, we had $\d S_t = \eta \d K$. Point is, $S$ can't be determined simultaneously by the Markov chain and by this Poisson process of shuffling in the LOB. So if I want to relate this to what I was doing before, I gotta stick with the Markov chain set-up. I think. In any case, this'll be something to run by Sebastian asap. 
+
+The other question to run by Sebastian will be how to relate $\dZ_t$ and $\dZ_{t-s}$... basically how to deal with the fact that we're somewhat making this non-Markovian via the temporal difference $t-s$. 
+
+\section*{Looking Ahead}
+I had some great hummus yesterday at an Israeli place called Baba Ganoush, right across from the armoury, and actually on DK's suggestion. Top notch. Tonight we're gathering for more of the same at Fat Pasha. 
+\end{document}
