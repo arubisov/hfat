@@ -1,0 +1,133 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to use the dynamics of the Limit Order Book (LOB) as an indicator for
+high-frequency stock price movement, thus enabling statistical arbitrage. Formally, I will the study limit order book imbalance process, $I(t)$, and the stock price process, $S(t)$, and attempt to establish a stochastic relationship $\dot{S} = f(S,I,t)$. I will then solve the stochastic control problem to derive an optimal trading strategy based on the observed relationship.
+\end{quote}
+
+\section*{Progress Timeline}
+\begin{table}[H]
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\fooo}{\color{LightSteelBlue3}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{9cm} !{\fooo} >{\raggedright\arraybackslash}p{5cm}} 
+\multicolumn{1}{@{\,}r <{\hskip 9pt}}{DATE} & \multicolumn{1}{l}{THESIS} & \multicolumn{1}{l}{STA4505} \\
+\hline
+\st{Dec 2014} & \st{Complete CTMC calibration} \\
+\st{Dec 2014} & \st{Backtest naive strategies based on CTMC} & \\
+\st{Jan-May} & \st{Study stochastic controls: ECE1639, STA4505} & \\
+\st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
+Jun 12 & Establish performance criteria & Exam Study \\
+Jun 15 & Derive DPP/DPE & EXAM \\
+Jun 19 & Derive DPP/DPE & \\
+Jun 26 & Derive DPE/Solve PDEs & \\
+Jul 3 & Solve PDEs & \\
+Jul 10 & Solve PDEs and implement numerical solution & Numerical solution \\
+Jul 31 & Backtest solution on historical data & Implement simulations \\
+Aug 15 & Dissertation Writeup & Project Writeup \\
+\end{tabular}
+\end{table}
+
+\newpage
+
+\section*{For Our Readers in the Middle East...}
+A full week spent on exam review -- by which I mean about 20h total, but it's funny how the time goes by isn't it? On the plus side I had a sweet weekend gymnastics competition in North Bay during which I fainted (morning of the comp), a nice rock climbing date with a girl I don't really like, a couple gymnastics training sessions, and a really shitty time doing volunteer cooking at Harvest Noon. Don't even know what to say about that last one. I haven't gone there in a while so I was suppose I was a bit out of sorts wrt the whole thing, but I just felt completely useless in that kitchen, and the girl running it would keep taking over the tasks she had just given me to do, which was extremely fucking annoying. I resolved to not go back on her shifts ever again, the other dude Moe is way more laid back and we jive well. Other thing to consider, though, is maybe it's time to return to the women's shelter. In fact, yes it is. I'll send out a feeler this afternoon!
+
+In other news my supervisor Gabe had surgery without my even knowing. Just shows what sort of relationship we're maintaining these days. I sent him an e-mail suggesting we meet up at a cafe in his home area, though... seems like the right thing to do and all... But actually I mention UTIAS in the first place because I might have to go there for a visit to pick up Old Faithful the IBM laptop: I think I want him at home after all. In any case, the probability of getting any use out of him would increase exponentially, though probability of usage for porn would also increase, which might be a non-net-wash, in fact a net major problem ... but hey, good thing I don't have internet. 
+
+Look not much else to report. It's been sunny almost every single day since I got back from Israel, but in the back of my mind I'm just \textit{waiting} for the torrential downpour that will last weeks. Kind of similarly, I was walking on campus admiring the vivid greenery when a feeling of impermanence overcame me, when a vision flashed before me of the exact same view but in the bleak winter with not a hint of green and snow piled on either side of the walkway...and it made me really sad man, the fact that it was all fleeting, it wouldn't last, nothing in life truly lasts. There's your daily dose of angst. 
+
+\section*{The Academic Week in Review}
+\subsection*{Exam Review}
+We've now crossed off a bunch of topics from the exam review:
+\begin{enumerate}[noitemsep, topsep=0pt]
+\item the Dynamic Programming Principle;
+\item the Hamilton-Jacobi-Bellman equation;
+\item Optimal Execution (classical).
+\end{enumerate}
+What we've got ahead:
+\begin{enumerate}[noitemsep, topsep=0pt]
+\item Optimal Execution (with order flow);
+\item Basics of Pairs Trading;
+\item Some surprise topic that I guess I can't really prepare for.
+\end{enumerate}
+
+For your benefit and for mine, I'm not going to type up anything on the optimal execution stuff that I studied this week. It's 12 pages of notes in my lab book, the typesetting would be a fucking nightmare, the typed notes wouldn't be directly useful for my thesis, and so I'm going back to what you said - don't waste time with this stuff. But I will summarize basically what I've learned this week, which IS directly useful for my thesis. Here's the basic approach to solving one of those optimality problems:
+
+\begin{enumerate}[noitemsep, topsep=0pt]
+\item Write out the models.
+\item Write out the value function $H$.
+\item Find the infinitesimal generator $\cL_t$ by solving for $\d H$
+\item Write out the HJB equation.
+\item Solve for the optimal control (in feedback form) in the $\sup$ or $\inf$ of the HJB by setting the derivative equal to 0.
+\item Plug the optimal control back into the HJB and simplify.
+\item Conjure up an ansatz for the value function.
+\item Plug into the HJB and simplify. 
+\item Conjure up yet more ansatzes (separation of variables perhaps?)
+\item Plug in again and simplify.
+\item Eventually: integrate and solve for that value function. 
+\item Go back and resolve for the optimal control (as function of time).
+\item Solve for the optimal inventory path by integrating. 
+\end{enumerate}
+
+This week I had to learn how to work with ODEs again. Earlier I had seen a box of up-for-grabs, unused textbooks sitting in the math lounge area. I headed down there, found one on ODEs, and took a seat in the lounge chairs. Read through the first 100 pages and decided ok I've got the gist of it. Got back upstairs, sure enough, pretty much got the gist of it. 
+
+\subsection*{Thesis}
+On the agenda for this week was figuring out what models we're working with for the thesis. Unsurprisingly they're similar to what we looked at a couple weeks ago for the course project.
+
+All processes indexed by $t$ are defined for $0 \leq t \leq T$
+
+\begin{tabular}{lll}
+Order Imbalance & $Z_t \in \{ \#bins \} $ & CTMC with generator $G$ \\
+Midprice & $S_t$ & doubly-stochastic process \\
+Previous Imbalance & $\zeta_t = Z_{t-s}$ & $s$ a pre-determined interval \\
+Midprice Change & $\Delta_t = S_t - S_{t-s}$ & $s$ a pre-determined interval \\
+Bid-ask spread & $\pi_t$ & constant? \\
+LOB Shuffling & $N_t$ & Poisson with rate $\lambda(Z_t, \zeta_t, \Delta_t)$ \\
+$\Delta\text{Price:}$ LOB shuffled & $\{ \eta_{0,k,l,m}, \eta_{1,k,l,m}, \dots \} \sim F_{k,l,m}$ & i.i.d. with $k,l \in \{ \#bins \}, m \in \{ \Delta \$ \}$ \\
+Other Agent MOs & $K^{\pm}_t$ & Poisson with rate $\mu^{\pm}(Z_t)$ \\
+LO posted depth & $\delta^{\pm}_t$ & our controlled processes \\
+Our LO fill count & $L^{\pm}_t$ & $\mathcal{F}$-predictable, non-Poisson \\
+Our MOs & $M^{\pm}_t$ & our controlled process \\
+Cash & $X^{O, \delta}_t$ & \\
+Inventory & $Q^{O, \delta}_t$ & \\
+\end{tabular}
+
+$L^{\pm}_t$ are NOT Poisson processes - they are jump processes satisfying the relationship that if at time $t$ we have a sell limit order posted at a depth $\delta^{-}_t$, then our fill probability is $e^{-\kappa \delta^{-}_t}$ conditional on a buy market order arriving; namely:
+\[ \P [\d L^{-}_t = 1 \, | \, \d K^+_t = 1] = e^{-\kappa \delta^{-}_t} \]
+\[ \P [\d L^{+}_t = 1 \, | \, \d K^{-}_t = 1] = e^{-\kappa \delta^{+}_t} \]
+
+The midprice jump size $\eta$, as well as the rate of arrival $\lambda$ of the jumps, depend on the current and previous imbalances, as well as the previously observed price change. This Poisson process will be inclusive of jumps due to market orders arriving. Thus the stock midprice $S_t$ evolves according to the SDE:
+\begin{equation}\label{eq:stockprocess}
+\d S_t = \eta_{L_{t^-},Z_{t^-},\zeta_{t^-},\Delta_{t^-}} \d N_t
+\end{equation}
+
+
+Our cash process evolves according to:
+\begin{equation}\label{eq:cashprocess}
+\begin{split}
+\d X^{O, \delta}_t = 	&\underbrace{(S_t + \pi_t + \delta^{-}_t) \d L^{-}_t}_{\text{sell limit order}} - \underbrace{(S_t - \pi_t - \delta^{+}_t) \d L^{+}_t}_{\text{buy limit order}} \\
+						&+ \underbrace{(S_t - \pi_t) \d M^{-}_t}_{\text{sell market order}} - \underbrace{(S_t + \pi_t) \d M^{+}_t}_{\text{buy market order}}
+\end{split}
+\end{equation} 
+
+(As a side note: this is all being done in continuous-time and with continuous variables. Once that's all done, it may be very well worth looking at this problem in discrete time and with discrete variables and seeing what result we get and how they compare.)
+
+\section*{Looking Ahead}
+Ok well aside from the shitshow that is the army tonight, the weekend's looking pretty sweet. Doing a little workout with the ol CIBC boys on Sat, following that up with the Mac \& Cheese festival in Liberty Village, drinks at gymnastics Amy's house, drinks with Atta at the Dodger, and on Sunday we've got volunteering at a kid's camp in the morning then chilling at their pool, and rock climbing (with the girl I like but don't want to bang) in the afternoon, and fit in some family time in the evening. Like, man, can't go wrong I think.
+
+\end{document}
