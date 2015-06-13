@@ -103,8 +103,8 @@ Other Agent MOs & $K^{\pm}_t$ & Poisson with rate $\mu^{\pm}(Z_t)$ \\
 LO posted depth & $\delta^{\pm}_t$ & our controlled processes \\
 Our LO fill count & $L^{\pm}_t$ & $\mathcal{F}$-predictable, non-Poisson \\
 Our MOs & $M^{\pm}_t$ & our controlled process \\
-Cash & $X^{O, \delta}_t$ & \\
-Inventory & $Q^{O, \delta}_t$ & \\
+Cash & $X^{M, \delta}_t$ & \\
+Inventory & $Q^{M, \delta}_t$ & \\
 \end{tabular}
 
 $L^{\pm}_t$ are NOT Poisson processes - they are jump processes satisfying the relationship that if at time $t$ we have a sell limit order posted at a depth $\delta^{-}_t$, then our fill probability is $e^{-\kappa \delta^{-}_t}$ conditional on a buy market order arriving; namely:
@@ -120,7 +120,7 @@ The midprice jump size $\eta$, as well as the rate of arrival $\lambda$ of the j
 Our cash process evolves according to:
 \begin{equation}\label{eq:cashprocess}
 \begin{split}
-\d X^{O, \delta}_t = 	&\underbrace{(S_t + \pi_t + \delta^{-}_t) \d L^{-}_t}_{\text{sell limit order}} - \underbrace{(S_t - \pi_t - \delta^{+}_t) \d L^{+}_t}_{\text{buy limit order}} \\
+\d X^{M, \delta}_t = 	&\underbrace{(S_t + \pi_t + \delta^{-}_t) \d L^{-}_t}_{\text{sell limit order}} - \underbrace{(S_t - \pi_t - \delta^{+}_t) \d L^{+}_t}_{\text{buy limit order}} \\
 						&+ \underbrace{(S_t - \pi_t) \d M^{-}_t}_{\text{sell market order}} - \underbrace{(S_t + \pi_t) \d M^{+}_t}_{\text{buy market order}}
 \end{split}
 \end{equation} 
