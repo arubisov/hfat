@@ -1,0 +1,68 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to establish and solve the stochastic optimal control problem that 
+captures the momentum and order imbalance dynamics of the Limit Order Book 
+(LOB). The solution will yield an optimal trading strategy that will permit
+statistical arbitrage of the underlying stock, which will then be backtested on
+historical data.
+\end{quote}
+
+\section*{Progress Timeline}
+\begin{table}[H]
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\fooo}{\color{LightSteelBlue3}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{9cm} !{\fooo} >{\raggedright\arraybackslash}p{5cm}} 
+\multicolumn{1}{@{\,}r <{\hskip 9pt}}{DATE} & \multicolumn{1}{l}{THESIS} & \multicolumn{1}{l}{STA4505} \\
+\hline
+\st{Dec 2014} & \st{Complete CTMC calibration} \\
+\st{Dec 2014} & \st{Backtest naive strategies based on CTMC} & \\
+\st{Jan-May} & \st{Study stochastic controls: ECE1639, STA4505} & \\
+\st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
+\st{Jun 12} & \st{Establish performance criteria} & \st{Exam Study} \\
+Jun 15 & Derive DPP/DPE & \st{EXAM} \\
+Jun 19 & Derive DPP/DPE & \\
+Jun 26 & Derive DPE/Solve PDEs & \\
+Jul 3 & Solve PDEs & \\
+Jul 10 & Solve PDEs and implement numerical solution & Numerical solution \\
+Jul 31 & Backtest solution on historical data & Implement simulations \\
+Aug 15 & Dissertation Writeup & Project Writeup \\
+\end{tabular}
+\end{table}
+
+\newpage
+
+\section*{For Our Readers in the Middle East...}
+4 cups of coffee later: mi amigo, I have written the last exam that this Master's degree will throw my way. Whether I scored well, or poorly, or in between - quite literally, no matter the outcome, I can tell you that I sat in that classroom fucking \textit{belonging}, no impostor of any sort. Which, cast in other terms, is that my friend, I fucking made it. This course was just about the hardest thing I could have taken in my Master's, and I learned a shit fucking ton, taken directly from that list of things that I always wished I'd properly learned: integration, differential equations, stochastic calculus. Whether I use it ever in the future is another thing, but I manned up and crossed those things off the list, so for that alone this whole Master's thing has been worthwhile. 
+
+\section*{The Academic Week in Review}
+\subsection*{The Dissertation}
+Oh, sidenote, I solved everything, wrote up a 10-pg article and submitted it for peer review in a publication called the Anals of Time.
+
+\section*{Looking Ahead}
+A nice lil' week up ahead, which'll include my first shabbat dinner in god knows how long, since Army Fridays are suspended until September -- I'll be hitting up the local Moishe House with its selection of local Talent, and fingers crossed, will be making mitzvahs all night long.
+
+In other news I've hired a cleaning lady for Friday morning. My first foray into it. Except of course that we lived with two cleaning ladies once upon a time ... I remember thinking that I should ask Peter and Janet who they used, but then I remembered you at some point telling me that they actually don't like either of those cleaning ladies, that they're bitter women who won't even wash bloody duvets, and briefly considered the irony of it all because I actually know more people who continue to use cleaning services they're dissatisfied with, than those in the other camp. 
+
+Lastly, I was reading some self-help shit on the internet on finding your calling in life, depressing I know but work with me here, one of the gems was that it suggested reflecting on what your childhood interests were, noting that largely people keep those interests, though obviously they evolve in form with age. I thought of a few:
+\paragraph{1. Motorcycles} Oddly enough, in the time before we'd left Russia, my parents had us do some sort of family photo shoot thing - I'll have to get the details on that later cause now that I mention it I'm not really sure what the deal with that all was... - and I elected to pose seated on a toy motorcycle. That's where it all began. My grandpa used to ride too, and once told me how he lugged his bike up a flight of stairs into his apartment, and disassembled/repaired/reassembled his entire engine on his kitchen table overnight. Then obviously I got my first ride when I was 16, before even getting a G1. Like, for some reason, I was pretty dead set on the whole thing, in some inexplicable inherent way. 
+\paragraph{2. Lego} I think I spent more time on this than anything else in my childhood. My sister and I used to play together all the time, and it was a heartbreaking day (some time around grade 4 or 5) when she said she didn't feel like it that day, and that was the last we ever played it together, it was a solo endeavour from then on. I used to read the Lego magazine every month, and would try to build and submit really shitty things for the reader submission competitions (there's photo trace of these too, I'm pretty sure). 
+\paragraph{3. Astaria} The next time suck following my Lego days, upon discovery of the computer and the world wide webs, and which got me through till probably grade 12 at least, was MUDs. The whole thing. Both being a player, and being a developer on one that I helped start. I think this had me hooked more than anything else I can recall, the HOURS spent on that game, sneaking downstairs at night back in the old days trying to prevent the modem from dialing up too loudly, later playing while doing shrooms and dying repeatedly and not having a great time, all those pretty potent memories. I think THIS alone is where my fascination with the computer comes from, and is also the reason I use Linux... firing up a terminal is just a step away from telnet'ing. 
+
+Anyway, no conclusions per se, but it was a neat exercise, although I do want to propose that we go into electric motorcycles, like the Tesla equivalent but in the bikes world. And look at Tesla, they're doing the whole PowerWall thing, if we'd gone into electric motorcycles we could've made our way in that direction too you know? Like in a one thing leads to another sense. 
+\end{document}
