@@ -1,0 +1,186 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+\newtheorem{theorem}{Theorem}
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to establish and solve the stochastic optimal control problem that 
+captures the momentum and order imbalance dynamics of the Limit Order Book 
+(LOB). The solution will yield an optimal trading strategy that will permit
+statistical arbitrage of the underlying stock, which will then be backtested on
+historical data.
+\end{quote}
+
+\section*{Progress Timeline}
+\begin{table}[H]
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\fooo}{\color{LightSteelBlue3}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{9cm} !{\fooo} >{\raggedright\arraybackslash}p{5cm}} 
+\multicolumn{1}{@{\,}r <{\hskip 9pt}}{DATE} & \multicolumn{1}{l}{THESIS} & \multicolumn{1}{l}{STA4505} \\
+\hline
+\st{Dec 2014} & \st{Complete CTMC calibration} \\
+\st{Dec 2014} & \st{Backtest naive strategies based on CTMC} & \\
+\st{Jan-May} & \st{Study stochastic controls: ECE1639, STA4505} & \\
+\st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
+\st{Jun 12} & \st{Establish performance criteria} & \st{Exam Study} \\
+\st{Jun 15} & Derive DPP/DPE & \st{EXAM} \\
+Jun 19 & Derive DPP/DPE & \\
+Jun 26 & Derive DPE/Solve PDEs & \\
+Jul 3 & Solve PDEs & \\
+Jul 10 & Solve PDEs and implement numerical solution & Numerical solution \\
+Jul 31 & Backtest solution on historical data & Implement simulations \\
+Aug 15 & Dissertation Writeup & Project Writeup \\
+\end{tabular}
+\end{table}
+
+\newpage
+
+\section*{For Our Readers in the Middle East...}
+ 
+
+\section*{The Academic Week in Review}
+
+\subsection*{The Dissertation}
+Okay at this point I'd like to cycle back and re-jig the problem setup that we've done thus far. Largely this is due to Tue morning's meeting with Sebastian at the cafe: whereas I was convinced I was dealing with a \textbf{delayed} stochastic differential equation, which would require sifting through another textbook to understand, turns out this is far from the truth. To recap: previously I was concerned that I needed $Z_t = (\rho_t, \Delta_t) $ and $\zeta_t = Z_{t-s} = (\rho_{t-s}, \Delta_{t-s}) $ terms in my value function, because in the exploratory data analysis we had derived some conditional probabilities that informed us that \textbf{if} we had seen a price change, and the imbalance now is the same as the imbalance before, \textbf{then} we would expect another equal price change. But! These conditional probabilities are actually \textit{embedded within the CTMC generator $G$}, which is for the couplet at time $t$, it doesn't require a time-delay. Hence, we don't need this lookback/delay $\zeta_t$ term at all, and so it's smooth sailing to proceed.
+
+Below we list the processes involved in the optimization problem:
+
+\begin{tabular}{lll}
+Imbalance \& Midprice Change & $\bZ_t = (\rho_t, \Delta_t) $ & CTMC with generator $G$ \\
+Imbalance & $\rho_t = \bZ_t^{(1)}$ & LOB imbalance at time $t$ \\
+Midprice & $S_t$ & evolves according to CTMC \\
+Midprice Change & $\Delta_t = \bZ_t^{(2)} = S_t - S_{t-s}$ & $s$ a pre-determined interval \\
+Bid-Ask half-spread & $\pi_t$ & constant? \\
+LOB Shuffling & $N_t$ & Poisson with rate $\lambda(\bZ_t)$ \\
+$\Delta\text{Price:}$ LOB shuffled & $\{ \eta_{0,z}, \eta_{1,z}, \dots \} \sim F_{z}$ & i.i.d. with $z = (k,l)$, where \\
+& & $k \in \{ \text{\#bins} \}, \; l \in \{ \Delta \$ \}$ \\
+Other Agent MOs & $K^{\pm}_t$ & Poisson with rate $\mu^{\pm}(\bZ_t)$ \\
+LO posted depth & $\delta^{\pm}_t$ & our $\cF$-predictable controlled processes \\
+Our LO fill count & $L^{\pm}_t$ & $\cF$-predictable, non-Poisson \\
+Our MOs & $M^{\pm}_t$ & our controlled counting process \\
+Our MO execution times & $\btau = \{ \tau_k : k = 1, \dots, K \}$ & increasing sequence of $\cF$-stopping times \\
+Cash & $X^{\btau, \delta}_t$ & depends on our processes $M$ and $\delta$ \\
+Inventory & $Q^{\btau, \delta}_t$ & depends on our processes $M$ and $\delta$ \\
+\end{tabular}
+
+$L^{\pm}_t$ are counting processes (not Poisson) satisfying the relationship that if at time $t$ we have a sell limit order posted at a depth $\delta^{-}_t$, then our fill probability is $e^{-\kappa \delta^{-}_t}$ conditional on a buy market order arriving; namely:
+\[ \P [\d L^{-}_t = 1 \, | \, \d K^+_t = 1] = e^{-\kappa \delta^{-}_t} \]
+\[ \P [\d L^{+}_t = 1 \, | \, \d K^{-}_t = 1] = e^{-\kappa \delta^{+}_t} \]
+
+The midprice $S_t$ evolves according to the Markov chain and hence is Poisson with rate $\lambda$ and jump size $\eta$, both of which depend on the state of the Markov chain. This Poisson process is all-inclusive in the sense that it accounts for any midprice change, be it from executions, cancellations, or order modifications with the LOB. Thus, the stock midprice $S_t$ evolves according to the SDE:
+\begin{equation}\label{eq:stockprocess}
+\d S_t = \eta_{N_{t^-},Z_{t^-}} \d N_t
+\end{equation}
+and additionally satisfies:
+\begin{equation}\label{eq:stockintegral} 
+S_t = S_{t_0} + \int\limits_{t_0}^t \Delta_u \du
+\end{equation}
+
+In executing market orders, we assume that the size of the MOs is small enough to achieve the best bid/ask price, and not walk the book. Hence, our cash process evolves according to:
+\begin{equation}\label{eq:cashprocess}
+\begin{split}
+\d X^{\btau, \delta}_t = 	&\underbrace{(S_t + \pi_t + \delta^{-}_t) \d L^{-}_t}_{\text{sell limit order}} - \underbrace{(S_t - \pi_t - \delta^{+}_t) \d L^{+}_t}_{\text{buy limit order}} \\
+						&+ \underbrace{(S_t - \pi_t) \d M^{-}_t}_{\text{sell market order}} - \underbrace{(S_t + \pi_t) \d M^{+}_t}_{\text{buy market order}}
+\end{split}
+\end{equation}
+
+Based on our execution of limit and market orders, our inventory satisfies:
+\begin{equation}\label{eq:inventory}
+Q^{\btau, \delta}_0 = 0, \qquad Q^{\btau, \delta}_t = L^+_t + M^+_t - L^-_t - M^-_t
+\end{equation}
+
+We define a new variable for our net present value (NPV) at time $t$, call it $W^{\btau, \delta}_t$, and hence $W^{\btau, \delta}_T$ at terminal time $T$ is our `terminal wealth'. In algorithmic trading, we want to finish the trading day with zero inventory, and assume that at the terminal time $T$ we will submit a market order (of a possibly large volume) to liquidate remaining stock. Here we do not assume that we can receive the best bid/ask price - instead, the price achieved will be $(S - \mathrm{sign}(Q)\pi - \alpha Q)$, where $\mathrm{sign}(Q)\pi$ represents crossing the spread in the direction of trading, and $\alpha Q$ represents receiving a worse price linearly in $Q$ due to walking the book. Hence, $W^{\btau, \delta}_t$ satisfies:
+\begin{equation}
+\label{eq:terminalwealth}
+W^{\btau, \delta}_t = \underbrace{\vphantom{\left( Q^{\btau, \delta}_t) \right)}X^{\btau, \delta}_t}_{\text{cash}}+ \underbrace{Q^{\btau, \delta}_t \left( S_t - \mathrm{sign}(Q^{\btau, \delta}_t)\pi_t \right)}_{\text{book value of assets}} - \underbrace{\alpha \left( Q^{\btau, \delta}_t \right)^2}_{\text{liquidation penalty}}
+\end{equation}
+
+The set of admissible trading strategies $\cA$ is the set of all $\cF$-stopping times and $\cF$-predictable, bounded-from-below depths $\delta$. 
+
+For deriving an optimal trading strategy, I will consider three separate performance criteria, which allow us to evaluate the performance of a given strategy:
+\begin{enumerate}[noitemsep, topsep=0pt]
+\item Profit: $H^{\btau, \delta}(\cdot) = \E \left[ W_T^{\btau, \delta} \right]\vphantom{\int\limits_t^T}$
+\item Profit with risk aversion: $H^{\btau, \delta}(\cdot) = \E \left[  W_T^{\btau, \delta} - \gamma \mathbf{1}_{W_T^{\btau, \delta}<0} \cdot W_T^{\btau, \delta} \right]\vphantom{\int\limits_t^T}$
+\item Profit with running inventory penalty: $H^{\btau, \delta}(\cdot) = \E \left[  W_T^{\btau, \delta}  - \varphi \int\limits_t^T \left( Q^{\btau, \delta}_u \right)^2 \du  \right]$
+\end{enumerate}
+
+In each of the cases, the value function is given by
+\begin{equation}\label{eq:valuefunction}
+H(t,x,s,\bz,q) = \sup\limits_{\btau \in \mathcal{T}_{[t,T]}} \sup\limits_{\delta \in \cA_{[t,T]}} H^{\btau, \delta}(t,x,s,\bz,q)
+\end{equation}
+
+\subsection*{Dynamic Programming Principle for Optimal Stopping and Control}
+\begin{theorem}
+If an agent's performance criteria for a given admissible control $\bu$ and admissible stopping time $\tau$ are given by
+\[ H^{\tau, \bu}(t,\bx) = \E_{t,\bx} [ G (X^{\bu}_\tau)] \]
+and the value function is
+\[ H(t,\bx) = \sup\limits_{\tau \in \mathcal{T}_{[t,T]}} \sup\limits_{\bu \in \cA_{[t,T]}} H^{\tau, \bu}(t,\bx) \]
+then the value function satisfies the Dynamic Programming Principle
+\begin{equation}
+\label{eq:thmDPP}
+H(t,\bx) = \sup\limits_{\tau \in \mathcal{T}_{[t,T]}} \sup\limits_{\bu \in \cA_{[t,T]}} \E_{t,\bx} \left[ G (X^{\bu}_\tau) \indicator_{\tau<\theta} + H(\theta, X^{\bu}_\theta)\indicator_{\tau \geq \theta} \right]
+\end{equation}
+for all $(t,\bx) \in [0,T] \times \R^m$ and all stopping times $\theta \leq T$.
+\end{theorem}
+
+\subsection*{Dynamic Programming Equation for Optimal Stopping and Control}
+\begin{theorem}
+Assume that the value function $H(t,\bx)$ is once differentiable in $t$, all second-order derivatives in $\bx$ exist, and that \myfunction{G}{\R^m}{\R} is continuous. Then $H$ solves the quasi-variational inequality
+\begin{equation}
+\label{eq:thmDPE}
+\max \left\lbrace \partial_t H + \sup \limits_{\bu \in \cA_t} \cL^{\bu}_t H \; ; \; G - H \right\rbrace = 0
+\end{equation}
+on $\mathcal{D}$, where $\mathcal{D} = [0,T] \times \R^m$.
+\end{theorem}
+
+\subsection*{Maximizing Profit}
+Ok let's get to business. We need to solve the DPE that results from using the first performance criteria in our value function. So our $G$ function is exactly our NPV term $W$, and really the work comes from finding the infinitesimal generator for the processes. Let's get on it.
+
+The quasi-variational inequality in equation \ref{eq:thmDPE} can be interpreted as follows: the max operator is choosing between posting limit orders or executing market orders; the second term, $G-H$, is the stopping region and represents the value derived from executing a market order; and the first term is the continuation region, representing the value of posting limit orders. We'll use the shorthand $H(\cdot) = H(t,x,s,\bz,q)$ and solve for $\d H$ inside the continuation region, hence $\d M^{\pm} = 0$, in order to then extract out the infinitesimal generator.
+
+\begin{align*}
+\d H (t,x,s,\bz,q) & = \sum\limits_i \partial_{x_i} H \dx_i \\
+& = \partial_t H \dt + \partial_{K^{\pm}} H \d {K^{\pm}} + \partial_{\bZ} H \d {\bZ} \\
+& = \partial_t H \dt + \bigl\lbrace e^{ -\kappa \delta^{-}} \E \bigl[ H(t,x+(s+\pi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \bigr\rbrace \d K^+\\
+& \hphantom{{}={} \partial_t H \dt} + \bigl\lbrace e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\pi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \bigr\rbrace \d K^-\\
+& \hphantom{{}={}} + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} \E \left[ H(t,x,s+\mathrm{sign}(l)\eta_{0,\bz},\bz+(k,l),q) - H(\cdot) \right] \d Z_{\bz,(k,l)}
+\end{align*}
+Substitute in the following identities for the compensated processes
+\begin{align*} 
+\d M^{\pm} & = \d \tilde{K}^{\pm} + \mu^{\pm}(\bz) \dt \\
+\d Z_{\bz,(k,l)}  & = \d \tilde{Z}_{\bz,(k,l)}  + G_{\bz,(k,l)} \dt 
+\end{align*}
+\begin{align*}
+{}\phantom{\d H (t,x,s,\bz,q)} & = \partial_t H \dt + \biggl\lbrace \mu^+(\bz) e^{ -\kappa \delta^{-}} \E \bigl[ H(t,x+(s+\pi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \\
+& \hphantom{{}={} \partial_t H \dt +} + \mu^-(\bz) e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\pi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \\
+& \hphantom{{}={}} + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \E \left[ H(t,x,s+\mathrm{sign}(l)\eta_{0,\bz},\bz+(k,l),q) - H(\cdot) \right]  \biggr\rbrace \dt \\
+& \hphantom{{}={} \partial_t H \dt} + \bigl\lbrace e^{ -\kappa \delta^{-}} \E \bigl[ H(t,x+(s+\pi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \bigr\rbrace \d \tilde{K}^+\\
+& \hphantom{{}={} \partial_t H \dt} + \bigl\lbrace e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\pi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \bigr\rbrace \d \tilde{K}^-\\
+& \hphantom{{}={}} + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} \E \left[ H(t,x,s+\mathrm{sign}(l)\eta_{0,\bz},\bz+(k,l),q) - H(\cdot) \right] \d \tilde{Z}_{\bz,(k,l)}\
+\end{align*}
+From which we can see that the infinitesimal generator is given by
+\begin{equation}
+\begin{split}
+\cL^{\delta}_t H & = \mu^+(\bz) e^{ -\kappa \delta^{-}} \E \bigl[ H(t,x+(s+\pi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \\
+& \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\pi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \E \left[ H(t,x,s+\mathrm{sign}(l)\eta_{0,\bz},\bz+(k,l),q) - H(\cdot) \right] 
+\end{split}
+\end{equation}
+
+
+\section*{Looking Ahead}
+
+\end{document}

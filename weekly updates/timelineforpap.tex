@@ -1,0 +1,49 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to establish and solve the stochastic optimal control problem that 
+captures the momentum and order imbalance dynamics of the Limit Order Book 
+(LOB). The solution will yield an optimal trading strategy that will permit
+statistical arbitrage of the underlying stock, which will then be backtested on
+historical data.
+\end{quote}
+
+\section*{Progress Timeline}
+\begin{table}[H]
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\fooo}{\color{LightSteelBlue3}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{9cm} !{\fooo} >{\raggedright\arraybackslash}p{5cm}} 
+\multicolumn{1}{@{\,}r <{\hskip 9pt}}{DATE} & \multicolumn{1}{l}{THESIS} & \multicolumn{1}{l}{STA4505} \\
+\hline
+\st{Dec 2014} & \st{Complete CTMC calibration} \\
+\st{Dec 2014} & \st{Backtest naive strategies based on CTMC} & \\
+\st{Jan-May} & \st{Study stochastic controls: ECE1639, STA4505} & \\
+\st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
+\st{Jun 12} & \st{Establish performance criteria} & \st{Exam Study} \\
+Jun 15 & Derive DPP/DPE & \st{EXAM} \\
+Jun 19 & Derive DPP/DPE & \\
+Jun 26 & Derive DPE/Solve PDEs & \\
+Jul 3 & Solve PDEs & \\
+Jul 10 & Solve PDEs and implement numerical solution & Numerical solution \\
+Jul 31 & Backtest solution on historical data & Implement simulations \\
+Aug 15 & Dissertation Writeup & Project Writeup \\
+\end{tabular}
+\end{table}
+
+
+\end{document}
