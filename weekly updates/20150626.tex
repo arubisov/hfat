@@ -1,0 +1,185 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+\newtheorem{theorem}{Theorem}
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to establish and solve the stochastic optimal control problem that 
+captures the momentum and order imbalance dynamics of the Limit Order Book 
+(LOB). The solution will yield an optimal trading strategy that will permit
+statistical arbitrage of the underlying stock, which will then be backtested on
+historical data.
+\end{quote}
+
+\section*{Progress Timeline}
+\begin{table}[H]
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\fooo}{\color{LightSteelBlue3}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{9cm} !{\fooo} >{\raggedright\arraybackslash}p{5cm}} 
+\multicolumn{1}{@{\,}r <{\hskip 9pt}}{DATE} & \multicolumn{1}{l}{THESIS} & \multicolumn{1}{l}{STA4505} \\
+\hline
+\st{Dec 2014} & \st{Complete CTMC calibration} \\
+\st{Dec 2014} & \st{Backtest naive strategies based on CTMC} & \\
+\st{Jan-May} & \st{Study stochastic controls: ECE1639, STA4505} & \\
+\st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
+\st{Jun 12} & \st{Establish performance criteria} & \st{Exam Study} \\
+\st{Jun 15} & \st{Derive DPP/DPE} & \st{EXAM} \\
+\st{Jun 19} & \st{Derive DPP/DPE} & \\
+Jun 26 & Derive DPE/Solve PDEs & \\
+Jul 3 & Solve PDEs & \\
+Jul 10 & Solve PDEs and implement numerical solution & Numerical solution \\
+Jul 31 & Backtest solution on historical data & Implement simulations \\
+Aug 15 & Dissertation Writeup & Project Writeup \\
+\end{tabular}
+\end{table}
+
+\newpage
+
+\section*{For Our Readers in the Middle East...}
+
+
+\section*{The Academic Week in Review}
+
+\subsection*{The Dissertation}
+Recall that we're working on solving the DPE:
+
+\begin{equation}\label{eq:DPEmaxprofit}
+\begin{split}
+\max \biggl\lbrace \partial_t H + \sup \limits_{\delta \in \cA} \cL^{\delta}_t H \; ; \; & H(t,x-(s+\pi), s, \bz, q+1) - H(\cdot) \; ; \\
+&  H(t,x+(s-\pi), s, \bz, q-1) - H(\cdot) \biggr\rbrace = 0
+\end{split}
+\end{equation}
+with boundary conditions
+\begin{align}
+H(T, x, s, \bz, q) & = x + q(s - \mathrm{sgn}(q)\pi) - \alpha q^2 \\
+H(T, x, s, \bz, 0) & = x
+\end{align}
+and where the infitesimal generator is given by
+\begin{equation}
+\label{eq:infgen}
+\begin{split}
+\cL^{\delta}_t H & = \mu^+(\bz) e^{ -\kappa \delta^{-}} \E \bigl[ H(t,x+(s+\pi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \\
+& \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\pi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \E \left[ H(t,x,s+l\eta_{0,\bz},\bz+(k,l),q) - H(\cdot) \right] 
+\end{split}
+\end{equation}
+We introduced the ansatz $H(\cdot) = x + q(s - \mathrm{sgn}(q)\pi) + h(t,\bz,q)$ with boundary conditions $h(T, \bz, q)  = - \alpha q^2$ and $h(T, \bz, 0)  = 0$, and substituted it into infinitesimal generator. So now we proceed...
+\begin{align*}
+\cL^{\delta}_t H & = \mu^+(\bz) e^{ -\kappa \delta^{-}} \bigl[ \delta^- + \pi [ 1 + \mathrm{sgn}(q-1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q-1) ) ] + h(t,\bz,q-1) - h(t,\bz,q) \bigr] \\
+& \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} \bigl[ \delta^+ + \pi [ 1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) ) ] + h(t,\bz,q+1) - h(t,\bz,q) \bigr] \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \left[ ql \E \left[ \eta_{0,\bz} \right] + h(t,(k,l),q) - h(t,\bz,q) \right] 
+\end{align*}
+In the DPE, the first term requires finding the supremum over all $\delta^\pm$ of the infinitesimal generator. For this we can set the partial derivatives with respect to both $\delta^+$ and $\delta^-$ equal to zero to solve for the optimal posting depth. For $\delta^+$ we get:
+\begin{align*}
+0 & = \partial_{\delta^+} \biggl[ e^{ -\kappa \delta^{+}} \bigl[ \delta^+ + \pi [ 1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) ) ] + h(t,\bz,q+1) - h(t,\bz,q) \bigr] \biggr] \\
+& = -\kappa e^{ -\kappa \delta^{+}} \bigl[ \delta^+ + \pi [ 1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) ) ] + h(t,\bz,q+1) - h(t,\bz,q) \bigr] + e^{ -\kappa \delta^{+}} \\
+& = e^{ -\kappa \delta^{+}} \bigl[ -\kappa \bigl( \delta^+ + \pi [ 1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) ) ] + h(t,\bz,q+1) - h(t,\bz,q) \bigr) + 1 \bigr] \\
+\intertext{Since $e^{ -\kappa \delta^{+}}>0$, the term inside the square braces must be equal to zero:}
+0 & = -\kappa \bigl( \delta^+ + \pi [ 1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) ) ] + h(t,\bz,q+1) - h(t,\bz,q) \bigr) + 1 \\
+{\delta^+}^* & = \frac{1}{\kappa} - \pi [ 1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) ) ] - h(t,\bz,q+1) + h(t,\bz,q) 
+\end{align*}
+We can further simplify the factor of $\pi$.
+\begin{align*}
+1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) )  & = 
+1 - (- \indicator_{q \leq -2} + \indicator_{q \geq 0}) +  \indicator_{q = -1} \\
+& = 1 + ( \indicator_{q \leq -1} -  \indicator_{q \geq 0} )\\
+& = 2 \cdot \indicator_{q \leq -1}
+\end{align*}
+Thus, we find that the optimal buy limit order posting depth can be written in feedback form as
+\begin{equation}
+\label{eq:optbuydepthfeedback}
+{\delta^+}^* = \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \leq -1} - h(t,\bz,q+1) + h(t,\bz,q) 
+\end{equation}
+We can follow similar steps to solve for the optimal sell limit order posting depth
+\begin{equation}
+\label{eq:optselldepthfeedback}
+{\delta^-}^* = \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \geq 1} - h(t,\bz,q-1) + h(t,\bz,q) 
+\end{equation}
+Turning our attention to the stopping regions of the DPE, we can use the ansatz to simplify the expressions:
+\begin{align*}
+H(t,x-(s+\pi), s, \bz, q+1) - H(\cdot) & = x - s - \pi + (q+1)(s - \sgn(q+1)\pi) + h(t, \bz, q+1) \\
+& \quad - \bigl[ x + q(s - q\sgn(q)\pi) + h(t,\bz,q) \bigr] \\
+& = -\pi \bigl[ (q+1)\sgn(q+1) - q\sgn(q) + 1 \bigr] + h(t, \bz, q+1) - h(t,\bz,q)  \\
+& = - 2 \pi \cdot \indicator_{q \geq 0} + h(t, \bz, q+1) - h(t,\bz,q) \\
+\intertext{and}
+H(t,x+(s-\pi), s, \bz, q-1) - H(\cdot) & = x + s - \pi + (q-1)(s - \sgn(q-1)\pi) + h(t, \bz, q-1)\\
+& \quad - \bigl[ x + q(s - q\sgn(q)\pi) + h(t,\bz,q) \bigr] \\
+& = - \pi \bigl[ (q-1)\sgn(q-1) - q\sgn(q) + 1 \bigr] + h(t, \bz, q-1) - h(t,\bz,q)  \\
+& = -2 \pi \cdot \indicator_{q \leq 0} + h(t, \bz, q-1) - h(t,\bz,q) \\ 
+\end{align*}
+Substituting all these results into the DPE, we find that $h$ satisfies
+\begin{equation}\label{eq:PDEcase1}
+\begin{split}
+0 = \max \biggl\lbrace & \partial_t h + \mu^+(\bz) \frac{1}{\kappa} e^{ -\kappa \left( \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \geq 1} - h(t,\bz,q-1) + h(t,\bz,q)  \right)} \\
+& \quad + \mu^-(\bz) \frac{1}{\kappa} e^{ -\kappa \left( \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \leq -1} - h(t,\bz,q+1) + h(t,\bz,q) \right)} \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \left[ ql \E \left[ \eta_{0,\bz} \right] + h(t,(k,l),q) - h(t,\bz,q) \right] \; ; \\
+& -2 \pi \cdot \indicator_{q \geq 0} + h(t, \bz, q+1) - h(t,\bz,q)   \; ; \\
+& -2 \pi \cdot \indicator_{q \leq 0} + h(t, \bz, q-1) - h(t,\bz,q)  \biggr\rbrace
+\end{split}
+\end{equation}
+Looking at the simplified feedback form in the stopping region, we see that a buy market order will be executed at time $\tau^+_q$ whenever
+\begin{equation}
+\label{eq:buyMOfeedback}
+h(\tau^+_q, \bz, q+1) - h(\tau^+_q,\bz,q) = 2 \pi \cdot \indicator_{q \geq 0}
+\end{equation}
+In particular, with negative inventory, we will execute a buy market order so long as it does not change our value function; and with zero or positive inventory, only if it increases the value function by the value of the spread. The opposite holds for sell market orders. Together, these indicate a penchant for using market orders to drive inventory levels back toward zero when it has no effect on value, and using them to gain extra value only when the expected gain is equal to the size of the spread. This is reminiscent of what we saw in the exploratory data analysis: if a stock is worth $S$, we can purchase it at $S+\pi$ and immediately be able to sell it at $S-\pi$, at a loss of $2 \pi$; this was the most significant source of loss in the naive trading market order strategy. Hence we need to expect our value to increase by at least $2\pi$ when executing market orders for gain.
+
+When we are in the continuation region, the equality above is replaced with a $\leq$. Noting the feedback form of our optimal buy limit order depth given in equation \ref{eq:optbuydepthfeedback}, we thereby obtain a lower bound on $\delta^+$ given by
+\begin{align*}
+{\delta^+}^* & = \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \leq -1} - h(t,\bz,q+1) + h(t,\bz,q) \\
+& \geq \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \leq -1} - 2 \pi \cdot \indicator_{q \geq 0} \\
+& = \frac{1}{\kappa} - 2 \pi
+\end{align*}
+Thus, if we impose that $\delta^\pm \geq 0$, we should also have that $\frac{1}{\kappa} \geq 2 \pi$.
+
+\subsection*{Case 2: Max Terminal Wealth with Risk Aversion}
+Our second possible performance criteria was given by:
+\begin{enumerate}[noitemsep, topsep=0pt]
+\item[2.] Profit with risk aversion: $H^{\btau, \delta}(\cdot) = \E \left[  W_T^{\btau, \delta} - \gamma \cdot \indicator_{W_T^{\btau, \delta}<0} \cdot W_T^{\btau, \delta} \right]$
+\end{enumerate}
+In this case, the DPE (\ref{eq:DPEmaxprofit}) is unchanged, but our boundary conditions must now reflect the risk aversion. Using as before the wealth notation $W(x,t,s,\bz,q) = x + q( s - \sgn(q)\pi) - \alpha q^2$, our new boundary conditions are:
+\begin{align}
+H(T, x, s, \bz, q) & = W(T, x, s, \bz, q) \left( 1 - \gamma \cdot \indicator_{W(T, x, s, \bz, q) < 0} \right) \\
+H(T, x, s, \bz, 0) & = x\left( 1 - \gamma \cdot \indicator_{x < 0} \right) 
+\end{align}
+Our ansatz now too needs to reflect this risk aversion. 
+
+\subsection*{Case 3: Max Terminal Wealth with Running Inventory Penalty}
+\begin{enumerate}[noitemsep, topsep=0pt]
+\item[3.] Profit with running inventory penalty: $H^{\btau, \delta}(\cdot) = \E \left[  W_T^{\btau, \delta}  - \varphi \int\limits_t^T \left( Q^{\btau, \delta}_u \right)^2 \du  \right]$
+\end{enumerate}
+In this case, our boundary conditions are unchanged, but a $-\varphi q^2$ term does percolate down to the DPE. Hence, our value function $H$ is now the solution to
+\begin{equation}
+\label{eq:DPEcase3}
+\begin{split}
+\max \biggl\lbrace \partial_t H - \varphi q^2 + \sup \limits_{\delta \in \cA} \cL^{\delta}_t H \; ; \; & H(t,x-(s+\pi), s, \bz, q+1) - H(\cdot) \; ; \\
+&  H(t,x+(s-\pi), s, \bz, q-1) - H(\cdot) \biggr\rbrace = 0
+\end{split}
+\end{equation}
+It can easily be verified that the analysis otherwise proceeds unchanged using the same ansatz as in the first case, and we produce the same optimal posting depths and MO execution criteria. In turn, we find that $h$ satisfies the quasi-variational inequality
+\begin{equation}\label{eq:PDEcase1}
+\begin{split}
+0 = \max \biggl\lbrace & \partial_t h -\varphi q^2 + \mu^+(\bz) \frac{1}{\kappa} e^{ -\kappa \left( \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \geq 1} - h(t,\bz,q-1) + h(t,\bz,q)  \right)} \\
+& \quad + \mu^-(\bz) \frac{1}{\kappa} e^{ -\kappa \left( \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \leq -1} - h(t,\bz,q+1) + h(t,\bz,q) \right)} \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \left[ ql \E \left[ \eta_{0,\bz} \right] + h(t,(k,l),q) - h(t,\bz,q) \right] \; ; \\
+& -2 \pi \cdot \indicator_{q \geq 0} + h(t, \bz, q+1) - h(t,\bz,q)   \; ; \\
+& -2 \pi \cdot \indicator_{q \leq 0} + h(t, \bz, q-1) - h(t,\bz,q)  \biggr\rbrace
+\end{split}
+\end{equation}
+
+\section*{Looking Ahead}
+
+\end{document}

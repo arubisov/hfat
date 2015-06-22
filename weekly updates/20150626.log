@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.12.29)  19 JUN 2015 14:06
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.12.29)  22 JUN 2015 17:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**20150619.tex
-(./20150619.tex
+**20150626.tex
+(./20150626.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, dumylang, nohyphenation, lo
 aded.
@@ -885,8 +885,8 @@ Package: soul 2003/11/17 v2.4 letterspacing/underlining (mf)
 \SOUL@ulht=\dimen223
 )
 \c@theorem=\count175
- (./20150619.aux)
-\openout1 = `20150619.aux'.
+ (./20150626.aux)
+\openout1 = `20150626.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
 LaTeX Font Info:    ... okay on input line 10.
@@ -1009,9 +1009,9 @@ LaTeX Info: Redefining \ref on input line 10.
 LaTeX Info: Redefining \pageref on input line 10.
 LaTeX Info: Redefining \nameref on input line 10.
 
-(./20150619.out) (./20150619.out)
+(./20150626.out) (./20150626.out)
 \@outlinefile=\write4
-\openout4 = `20150619.out'.
+\openout4 = `20150626.out'.
 
 LaTeX Font Info:    Try loading font information for U+msa on input line 31.
 
@@ -1032,45 +1032,49 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 34.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-Overfull \hbox (22.9732pt too wide) in paragraph at lines 76--93
-[][] 
- []
-
-[4]
-LaTeX Font Info:    Try loading font information for U+dsrom on input line 149.
-
- (/usr/share/texlive/texmf-dist/tex/latex/doublestroke/Udsrom.fd
-File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
-) [5]
-[6]
-Overfull \hbox (4.30847pt too wide) in paragraph at lines 222--222
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (4.30847pt too wide) in paragraph at lines 84--84
 [] 
  []
 
-[7]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 228.
- [8]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 228.
- (./20150619.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 228.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 228.
-Package rerunfilecheck Info: File `20150619.out' has not changed.
+
+Overfull \hbox (15.61755pt too wide) in paragraph at lines 93--93
+[] 
+ []
+
+[2]
+LaTeX Font Info:    Try loading font information for U+dsrom on input line 100.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/doublestroke/Udsrom.fd
+File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
+)
+Overfull \hbox (30.9562pt too wide) in paragraph at lines 122--122
+[] 
+ []
+
+[3] [4]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 185.
+ [5]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 185.
+ (./20150626.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 185.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 185.
+Package rerunfilecheck Info: File `20150626.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
 
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 228.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 185.
  ) 
 Here is how much of TeX's memory you used:
- 24827 strings out of 495059
- 521091 string characters out of 3182029
- 679145 words of memory out of 3000000
- 27470 multiletter control sequences out of 15000+200000
- 13213 words of font info for 50 fonts, out of 3000000 for 9000
+ 24809 strings out of 495059
+ 520927 string characters out of 3182029
+ 679088 words of memory out of 3000000
+ 27464 multiletter control sequences out of 15000+200000
+ 12866 words of font info for 49 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 65i,22n,74p,2906b,609s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 65i,19n,74p,907b,609s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texl
@@ -1084,13 +1088,13 @@ ublic/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
 6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/doublestroke/dsrom12.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on 20150619.pdf (8 pages, 199950 bytes).
+/usr/share/texlive/texmf-dist/fonts/type1/public/doublestroke/dsrom12.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/doublestroke/dsrom8.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on 20150626.pdf (5 pages, 160186 bytes).
 PDF statistics:
- 150 PDF objects out of 1000 (max. 8388607)
- 121 compressed objects within 2 object streams
- 36 named destinations out of 1000 (max. 500000)
+ 127 PDF objects out of 1000 (max. 8388607)
+ 101 compressed objects within 2 object streams
+ 25 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
