@@ -1,7 +1,7 @@
 % LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[12pt]{article}
-\input{/home/anton/documents/latex/LaTeXHeader.tex} % put hard path to header.
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
 \usepackage{soul}
 \newtheorem{theorem}{Theorem}
 
@@ -37,46 +37,68 @@ historical data.
 \st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
 \st{Jun 12} & \st{Establish performance criteria} & \st{Exam Study} \\
 \st{Jun 15} & \st{Derive DPP/DPE} & \st{EXAM} \\
-\st{Jun 19} & \st{Derive DPP/DPE} & \\
-Jun 26 & Derive DPE/Solve PDEs & \\
-Jul 3 & Solve PDEs & \\
-Jul 10 & Solve PDEs and implement numerical solution & Numerical solution \\
-Jul 31 & Backtest solution on historical data & Implement simulations \\
-Aug 15 & Dissertation Writeup & Project Writeup \\
+\st{Jun 19} & \st{Derive DPP/DPE} &  \\
+\st{Jun 26} & \st{Derive continuous-time equations} & \\
+Jul 3 & Derive discrete-time equations & \\
+Jul 10 & Set up MATLAB numerical integration &  \\
+Jul 17 & Integrate functions and plot dynamics & Integrate and analyze too! \\
+Jul 24 & More dynamics, and calib/choose parameters & \\
+Jul 31 & Backtest on historical data & Simulate results \\
+Aug 7 & More backtesting, comparing with previous & \\
+Aug 14 & Dissertation writeup / buffer & Project writeup \\
+Aug 21 & Dissertation writeup / buffer &  \\
+Aug 28 & Dissertation writeup & Presentation \\
 \end{tabular}
 \end{table}
 
 \newpage
 
 \section*{For Our Readers in the Middle East...}
+wellll it's that time of the week again! it's interesting that in so few as 6 short weeks - wow, though has it actually been that long already? - i've come to look forward to this Friday pow-wow so much. okay wait up wait up. i've got the radio on in the background with Radio One. they've asked four kids from the national high school debate team to split into pairs and debate whether high should be mandatory. and i just can't write anything else until i walk over and forcefully make them shut the fuck up.
 
+right, where were we. oh yeah, sweet, this again!
+
+look so i already spilled the beans, the carefully overnight soaked beans, regarding events from earlier this week. tonight i would've -- nah i can't mope man, okay, so instead i'm going with my navy friend Julia, this chick who does recreational poledancing, we're going over to the drop-in flying trapeze class. pretty excited, this could be the next big thing that i dive head first into, although it almost doesn't qualify because circus can be a team thing. well, big ol TBD on that one.
+
+ted yesterday i got down to the bottom of things regarding espresso and just wanted to distill that information for you because i know we've kind of posed this question before and never had a satisfying answer. What Is Espresso. if you already know this stop here and give yourself a pat on the back, then a little tsk of the finger for not sharing this with me earlier. okay here we go. it is a drink in a tiny little cup made by passing near boiling water at high pressure through coffee grounds, and results in a higher concentration of caffeine and a little crema on top. statistically with P>0.5 it's got less total caffeine than a cup of coffee. literally any bean and any roast can be used to make espresso. chocolate covered espresso beans are therefore a lie because it's just a coffee bean. and chocolate. when we see "espresso roast" it just means dark roast because that's what the italians preferred and they got their way. hm there was one more important thing. oh generally about bean composition, it's usually a blend of highland arabica and lowland robusta, but that's neither here nor there. ok so take home message: "espresso roast" beans are just beans that are well-suited in flavor profile to making espresso but you can do whatever the fuck you want with them including wrapping them in chocolate. literally anything can be used to make espresso: other roasts, other beans, kidney beans, hitler's moustache. and the whole thing is a marketing ploy. the other thing i learned from the snobs online is that unless you spent $>\$1000$ on your home espresso machine, chances are it doesn't provide sufficient pressure to live up to the espresso name. that stovetop espresso is really not espresso, though it uses pressure. and that the aeropress is really not espresso either, though it too uses pressure and also produces a generally stronger cup. anyway. look it was a big day for me yesterday.
+
+okay i gotta say, Pushbullet is really doing it for me. it really just does make interfacing between phone and pc so much fucking easier. they've done a good thing.
+
+speaking about doing good things, but more in the Good Thing sense, here's my next idea to supplant the 2-in-1 washer dryer idea. this picks up on the theme of finding things that are done in really old school ways and just democratizing the fuck out of them. okay so this comes to you care of lost animals. you know those one-pagers you see stapled around neighborhoods... lost, reward, my pooch is scared, friendly but will probably bite, please return... like that is the most archaic way of doing it. here's what i'm proposing: LostAndFound.com. a streamlined system for you to upload photo, details and key words regarding what's been lost or about what you've found. and it's essentially a match-making service, which becomes the de facto way of posting a notice of something lost, or if you've found an animal or an earring or whatever, you automatically think to go to lostandfound.com because that's where you would expect there to be a lost notice. cause currently, you find something ... well, there might be a notice on a hydro pole in the nieghborhood somewhere... or maybe they thought to post on craigslist, or maybe they only use kajiji, maybe some other site you haven't even heard of? maybe they've gone old school, put an ad in a newspaper classified. anyway, we remove the doubt. BUT MORE SO. we machine learning imagine recognition the FUCK out of this website. so that uploaded lost photos are image matched against already existing founds, and vice versa, matches suggested based on image match percentage, geography, and keywords. and the whole thing is free and hosted on joesgarage.
 
 \section*{The Academic Week in Review}
 
-\subsection*{The Dissertation}
+\subsection*{Case 1: Max Terminal Wealth}
 Recall that we're working on solving the DPE:
-
-\begin{equation}\label{eq:DPEmaxprofit}
+\begin{equation}
+\label{eq:DPEmaxprofit}
 \begin{split}
-\max \biggl\lbrace \partial_t H + \sup \limits_{\delta \in \cA} \cL^{\delta}_t H \; ; \; & H(t,x-(s+\pi), s, \bz, q+1) - H(\cdot) \; ; \\
-&  H(t,x+(s-\pi), s, \bz, q-1) - H(\cdot) \biggr\rbrace = 0
+0 = \max \biggl\lbrace \partial_t H + \sup \limits_{\delta \in \cA} \cL^{\delta}_t H \; ; \; & H(t,x-(s+\pi), s, \bz, q+1) - H(\cdot) \; ; \\
+&  H(t,x+(s-\pi), s, \bz, q-1) - H(\cdot) \biggr\rbrace
 \end{split}
 \end{equation}
 with boundary conditions
+\begin{subequations}
 \begin{align}
 H(T, x, s, \bz, q) & = x + q(s - \mathrm{sgn}(q)\pi) - \alpha q^2 \\
 H(T, x, s, \bz, 0) & = x
 \end{align}
-and where the infitesimal generator is given by
+\end{subequations}
+and where the infinitesimal generator is given by
 \begin{equation}
 \label{eq:infgen}
 \begin{split}
 \cL^{\delta}_t H & = \mu^+(\bz) e^{ -\kappa \delta^{-}} \E \bigl[ H(t,x+(s+\pi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \\
 & \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\pi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \\
-& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \E \left[ H(t,x,s+l\eta_{0,\bz},\bz+(k,l),q) - H(\cdot) \right] 
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \E \left[ H(t,x,s+l\eta_{0,\bz},(k,l),q) - H(\cdot) \right] 
 \end{split}
 \end{equation}
-We introduced the ansatz $H(\cdot) = x + q(s - \mathrm{sgn}(q)\pi) + h(t,\bz,q)$ with boundary conditions $h(T, \bz, q)  = - \alpha q^2$ and $h(T, \bz, 0)  = 0$, and substituted it into infinitesimal generator. So now we proceed...
+We introduced the ansatz
+\begin{equation}
+\label{eq:ansatzHcase1}
+H(\cdot) = x + q(s - \mathrm{sgn}(q)\pi) + h(t,\bz,q)
+\end{equation} 
+with boundary conditions $h(T, \bz, q)  = - \alpha q^2$ and $h(T, \bz, 0)  = 0$, and substituted it into the infinitesimal generator. So now we proceed...
 \begin{align*}
 \cL^{\delta}_t H & = \mu^+(\bz) e^{ -\kappa \delta^{-}} \bigl[ \delta^- + \pi [ 1 + \mathrm{sgn}(q-1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q-1) ) ] + h(t,\bz,q-1) - h(t,\bz,q) \bigr] \\
 & \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} \bigl[ \delta^+ + \pi [ 1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) ) ] + h(t,\bz,q+1) - h(t,\bz,q) \bigr] \\
@@ -132,7 +154,7 @@ Substituting all these results into the DPE, we find that $h$ satisfies
 \end{equation}
 Looking at the simplified feedback form in the stopping region, we see that a buy market order will be executed at time $\tau^+_q$ whenever
 \begin{equation}
-\label{eq:buyMOfeedback}
+\label{eq:buyMOfeedbackcase1}
 h(\tau^+_q, \bz, q+1) - h(\tau^+_q,\bz,q) = 2 \pi \cdot \indicator_{q \geq 0}
 \end{equation}
 In particular, with negative inventory, we will execute a buy market order so long as it does not change our value function; and with zero or positive inventory, only if it increases the value function by the value of the spread. The opposite holds for sell market orders. Together, these indicate a penchant for using market orders to drive inventory levels back toward zero when it has no effect on value, and using them to gain extra value only when the expected gain is equal to the size of the spread. This is reminiscent of what we saw in the exploratory data analysis: if a stock is worth $S$, we can purchase it at $S+\pi$ and immediately be able to sell it at $S-\pi$, at a loss of $2 \pi$; this was the most significant source of loss in the naive trading market order strategy. Hence we need to expect our value to increase by at least $2\pi$ when executing market orders for gain.
@@ -148,14 +170,71 @@ Thus, if we impose that $\delta^\pm \geq 0$, we should also have that $\frac{1}{
 \subsection*{Case 2: Max Terminal Wealth with Risk Aversion}
 Our second possible performance criteria was given by:
 \begin{enumerate}[noitemsep, topsep=0pt]
-\item[2.] Profit with risk aversion: $H^{\btau, \delta}(\cdot) = \E \left[  W_T^{\btau, \delta} - \gamma \cdot \indicator_{W_T^{\btau, \delta}<0} \cdot W_T^{\btau, \delta} \right]$
+\item[2.] Profit with risk aversion: $H^{\btau, \delta}(\cdot) = \E \left[ - e^{-\gamma W_T^{\btau, \delta}} \right] $
 \end{enumerate}
-In this case, the DPE (\ref{eq:DPEmaxprofit}) is unchanged, but our boundary conditions must now reflect the risk aversion. Using as before the wealth notation $W(x,t,s,\bz,q) = x + q( s - \sgn(q)\pi) - \alpha q^2$, our new boundary conditions are:
+Note how this performance criteria behaves: for large terminal wealth, we have $H \rightarrow 0^-$. In contrast, with negative wealth, we have $H \rightarrow -\infty$. Hence, this performance criteria disproportionately penalizes negative terminal wealth. In this case, the DPE (\ref{eq:DPEmaxprofit}) is unchanged, but the boundary conditions are now given by
+\begin{subequations}
 \begin{align}
-H(T, x, s, \bz, q) & = W(T, x, s, \bz, q) \left( 1 - \gamma \cdot \indicator_{W(T, x, s, \bz, q) < 0} \right) \\
-H(T, x, s, \bz, 0) & = x\left( 1 - \gamma \cdot \indicator_{x < 0} \right) 
+H(T, x, s, \bz, q) & = -e^{-\gamma(x + q(s - \mathrm{sgn}(q)\pi) -\alpha q^2)} \\
+H(T, x, s, \bz, 0) & = -e^{-\gamma x}
 \end{align}
-Our ansatz now too needs to reflect this risk aversion. 
+\end{subequations}
+We introduce a modified ansatz in order to solve this DPE:
+\begin{equation}
+\label{eq:ansatzHcase2}
+H(\cdot) = -e^{-\gamma(x + q(s - \mathrm{sgn}(q)\pi) + h(t,\bz,q))}
+\end{equation}
+where, as before, $h(T,\bz,q) = -\alpha q^2$ and $h(T,\bz,0) = 0$.
+
+Substituting this ansatz into the DPE, we can simplify the expressions through factoring:
+\begin{align*}
+0 = \max \biggl\lbrace & \partial_t H + \sup \limits_{\delta \in \cA} \bigl\lbrace \mu^+(\bz) e^{ -\kappa \delta^{-}} \bigl[ H(t,x+(s+\pi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \\
+& \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} \bigl[ H(t,x-(s-\pi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \E \left[ H(t,x,s+l\eta_{0,\bz},(k,l),q) - H(\cdot) \right] \bigr\rbrace \; ; \\
+& H(t,x-(s+\pi), s, \bz, q+1) - H(\cdot) \; ; \\
+&  H(t,x+(s-\pi), s, \bz, q-1) - H(\cdot) \biggr\rbrace \\
+\phantom{0 {}={}} = \max \biggl\lbrace & (-H)\gamma \partial_t h + \sup \limits_{\delta \in \cA} \bigl\lbrace \mu^+(\bz) e^{ -\kappa \delta^{-}} (-H) \bigl[ 1 - e^{-\gamma(\pi + \delta^- + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q))} \bigr] \\
+& \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} (-H) \bigl[ 1 - e^{-\gamma(\pi + \delta^+ - \sgn(q)\pi + h(t,\bz,q+1) - h(t,\bz,q))} \bigr] \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} (-H) \E \left[ 1 - e^{-\gamma(ql\eta_{0,\bz} + h(t,(k,l),q) - h(t,\bz,q))} \right] \bigr\rbrace \; ; \\
+& (-H) \bigl[ 1- e^{-\gamma(-\pi - \sgn(q)\pi + h(t,\bz,q+1) - h(t,\bz,q)) } \bigr] \; ; \\
+&  (-H) \bigl[ 1- e^{-\gamma(-\pi + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q)) } \bigr] \biggr\rbrace
+\end{align*}
+Since $(-H)$ appears in every term, and $H \neq 0$, it can be divided out of the equation. We now turn to solving the supremum, in the usual way of the first-order condition:
+\begin{subequations}
+\begin{align}
+\label{eq:optdepthfeedbackcase2}
+0 & = \partial_{\delta^-}\biggl\lbrace e^{ -\kappa \delta^{-}} \bigl[ 1 - e^{-\gamma(\pi + \delta^- + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q))} \bigr] \biggr\rbrace \nonumber \\
+& = -\kappa e^{ -\kappa \delta^{-}} + e^{-\gamma(\pi + \delta^- + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q)) -\kappa \delta^-} (\gamma + \kappa) \nonumber \\
+& = -\kappa + ( \gamma + \kappa ) e^{-\gamma(\pi + \delta^- + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q))} \nonumber \\
+\intertext{by dividing through by $e^{-\kappa \delta^-}$, which is nonzero. Thus:}
+-\ln\left( \frac{\kappa}{\gamma + \kappa} \right) & = \gamma \left( \pi + \delta^- + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q) \right) \nonumber \\
+{\delta^-}^* & = \frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right) - \pi + \sgn(q)\pi + h(t,\bz,q) - h(t,\bz,q-1) \\
+\intertext{And similarly, we obtain}
+{\delta^+}^* & = \frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right) - \pi - \sgn(q)\pi + h(t,\bz,q) - h(t,\bz,q+1)
+\end{align}
+\end{subequations}
+Substituting this feedback form for the optimal depths back into the DPE, we obtain the final form of the QVI:
+\begin{equation}
+\label{eq:PDEcase2}
+\begin{split}
+0 = \max \biggl\lbrace & \gamma \partial_t h + \mu^+(\bz) e^{ -\kappa{\delta^-}^*} \bigl[ 1 - e^{-\gamma\left(\frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right) + 2\pi \sgn(q)\right)} \bigr] \\
+& \quad + \mu^-(\bz) e^{ -\kappa {\delta^+}^*} \bigl[ 1 - e^{-\gamma \left( \frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right) - 2\pi \sgn(q) \right)} \bigr] \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \E \left[ 1 - e^{-\gamma(ql\eta_{0,\bz} + h(t,(k,l),q) - h(t,\bz,q))} \right] \; ; \\
+& \bigl[ 1- e^{-\gamma(-\pi - \sgn(q)\pi + h(t,\bz,q+1) - h(t,\bz,q)) } \bigr] \; ; \\
+& \bigl[ 1- e^{-\gamma(-\pi + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q)) } \bigr] \biggr\rbrace
+\end{split}
+\end{equation}
+We see then that we enter the buy market order stopping region at time $\tau_q^+$ when $h$ satisfies the equality
+\begin{equation}
+\label{eq:buyMOfeedbackcase2}
+h(\tau^+_q, \bz, q+1) - h(\tau^+_q,\bz,q) = \pi + \sgn(q) \pi
+\end{equation}
+This is nearly identical to the condition found in the Maximum Profit case, and in fact only differs at $q=0$. Conversely, in the continuation region, the equality above becomes $\geq$, so we find that the imposed lower bound on the optimal posting depth
+\begin{align}
+{\delta^+}^* & = \frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right) - \pi - \sgn(q)\pi + h(t,\bz,q) - h(t,\bz,q+1) \nonumber \\
+& \geq \frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right)
+\end{align}
+TODO: Insert some commentary of some sort on the relevance/implication of all this.
 
 \subsection*{Case 3: Max Terminal Wealth with Running Inventory Penalty}
 \begin{enumerate}[noitemsep, topsep=0pt]
@@ -165,12 +244,12 @@ In this case, our boundary conditions are unchanged, but a $-\varphi q^2$ term d
 \begin{equation}
 \label{eq:DPEcase3}
 \begin{split}
-\max \biggl\lbrace \partial_t H - \varphi q^2 + \sup \limits_{\delta \in \cA} \cL^{\delta}_t H \; ; \; & H(t,x-(s+\pi), s, \bz, q+1) - H(\cdot) \; ; \\
-&  H(t,x+(s-\pi), s, \bz, q-1) - H(\cdot) \biggr\rbrace = 0
+0 = \max \biggl\lbrace \partial_t H - \varphi q^2 + \sup \limits_{\delta \in \cA} \cL^{\delta}_t H \; ; \; & H(t,x-(s+\pi), s, \bz, q+1) - H(\cdot) \; ; \\
+&  H(t,x+(s-\pi), s, \bz, q-1) - H(\cdot) \biggr\rbrace
 \end{split}
 \end{equation}
 It can easily be verified that the analysis otherwise proceeds unchanged using the same ansatz as in the first case, and we produce the same optimal posting depths and MO execution criteria. In turn, we find that $h$ satisfies the quasi-variational inequality
-\begin{equation}\label{eq:PDEcase1}
+\begin{equation}\label{eq:PDEcase3}
 \begin{split}
 0 = \max \biggl\lbrace & \partial_t h -\varphi q^2 + \mu^+(\bz) \frac{1}{\kappa} e^{ -\kappa \left( \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \geq 1} - h(t,\bz,q-1) + h(t,\bz,q)  \right)} \\
 & \quad + \mu^-(\bz) \frac{1}{\kappa} e^{ -\kappa \left( \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \leq -1} - h(t,\bz,q+1) + h(t,\bz,q) \right)} \\
@@ -180,6 +259,151 @@ It can easily be verified that the analysis otherwise proceeds unchanged using t
 \end{split}
 \end{equation}
 
-\section*{Looking Ahead}
+\subsection*{Discrete-Time Dynamic Programming}
+Trucking right along. Let me give you a lay of the land. A LOT of the work that I've done so far has been replicating similar steps done by the Sebster in similar contexts. What's novel here is that 1) I don't skip any steps and leave you clueless, 2) I'm including the half-spread $\sgn(q)\pi$ in the mark-to-market of the assets, and most importantly, 3) I'm considering stock price change as part of this 2-D Markov Chain. Everything else, well, nothing novel, just shows I've developed a good grasp of what's going on.
 
+So here's where we're hoping to break some ground. We're going to step away from the continuous-time formulation of the problem at tackle it in discrete time, which is something that he's never done and I don't know whether anyone's really ever doing it. Probably they are, I just haven't even attempted to do a lit survey. Who's got time for that?
+
+Discrete time is of interest to us for a couple reasons. One, fundamentally, the stock market does operate in discrete time down to the millisecond. For example, when multiple market orders arrive between two given milliseconds, they are executed simultaneously at the next nearest millisecond, though respecting their true order of arrival. It is actually often easier to simplify these problems to continuous-time, as some nice results emerge, but they can be a misrepresentation of reality. Two, some very interesting dynamics can emerge within the discrete framework, namely chaos. It will be of great interest to compare the results of the two respective frameworks to determine the similarities and differences in their dynamics. 
+
+Reminder of our processes (a little bit of abuse of notation going on):\\
+$\bz_k = (\rho_k, \Delta_k)$ - 2-D time-homogenous Markov Chain with transition probabilities $P_{ij}$, where $\rho_k \in \Gamma$ and $\Gamma$ represents the set of imbalance bins, and $\Delta_k = \sgn(s_k - s_{k-1}) \in \{-1,0,1\}$. \\
+State $\vec{x}_{k} = \begin{pmatrix}
+x_k \\
+s_k \\
+\bz_k \\
+q_k 
+\end{pmatrix} \qquad \begin{matrix}
+\text{cash} \\
+\text{stock price} \\
+\text{Markov chain state, as above} \\
+\text{inventory} \\
+\end{matrix}$ \\
+Control $\vec{u}_{k} = \begin{pmatrix}
+\delta_k^+ \\
+\delta_k^- \\
+M_k^+ \\
+M_k^-
+\end{pmatrix} \qquad \begin{matrix}
+\text{bid posting depth} \\
+\text{ask posting depth} \\
+\text{buy MO - binary control} \\
+\text{sell MO - binary control} \\
+\end{matrix}$ \\
+Random $\vec{w}_{k} = \begin{pmatrix}
+K_k^+ \\
+K_k^- \\
+\omega_k
+\end{pmatrix} \qquad \begin{matrix}
+\text{other agent buy MOs - binary} \\
+\text{other agent sell MOs - binary} \\
+\text{random variable uniformly distributed on [0,1]} \\
+\end{matrix}$ \\
+
+We'll write the evolution of the Markov chain as a function of the current state and a uniformly distributed random variable $\omega$:\footnote{Borrowed from ECE1639 notes.}
+\begin{equation}
+\bz_{k+1} = T(\bz_k, \omega_k) = \sum_{i=0}^{|\Gamma|} i \cdot \indicator_{\left( \sum_{j=0}^{i-1} P_{\bz_k,j} , \sum_{j=0}^{i} P_{\bz_k,j} \right]} (\omega_k)
+\end{equation}
+Here $\indicator_A(\omega) = \begin{cases} 1 & \text{if } \omega \in A \\
+0 & \text{if } \omega \not\in A
+\end{cases}$, and hence $Z_{k+1}$ is assigned to the value $i$ for which $\omega_k$ is in the indicated interval of probabilities.
+
+Our Markovian state evolution function $f$, given by $\vec{x}_{k+1} = f \left( \vec{x}_{k},\vec{u}_{k}, \vec{w}_{k} \right)$, can be written explicitly as
+\begin{equation}
+\label{eq:discretestateevolution}
+\begin{pmatrix}
+x_{k+1} \\
+s_{k+1} \\
+\bz_{k+1} \\
+q_{k+1} 
+\end{pmatrix} = \begin{pmatrix}
+x_k + (s_k + \pi + \delta_k^-)L_k^- - (s_k - \pi - \delta_k^+)L_k^+ + (s_k - \pi)M_k^- - (s_k + \pi)M_k^+ \\
+s_{k} + \eta_{k,\bz_k} T(\bz_k, \omega_k)^{(2)} \\
+T(\bz_k, \omega_k) \\
+q_{k} + L_k^+ - L_k^- + M_k^+ - M_k^-
+\end{pmatrix}
+\end{equation}
+Clearly, the cash process at a subsequent is equal to the cash at the previous step, plus the costs of profits of executing market or limit orders. There are two noteworthy observations regarding this formulation of the evolution function. First, note that the price paid/received for limit orders depends on the stock price at time $k$. This implies that at $k$, if the agent posts a sell limit order, and the binary random variable $L_k^-$ (which depends on the binary random variable $M_k^+$) is equal to 1, then the agent's order is filled ``between timesteps'' $k$ and $k+1$, but using the price at time $k$. Second, since the second dimension $T(\bz_k, \omega_k)^{(2)} = \Delta_{k+1} = \sgn(s_{k+1} - s_k)$ determines the directionality of the price jump between times $k$ and $k+1$, multiplying it by the random variable $\eta_{k,\bz_k}$ determines the the size of the price change.
+
+\subsection*{Case 1: Max Terminal Wealth (Discrete)}
+Following traditional dynamic programming, we introduce the value function $V_k^{\bu}$. In this first case, our objective is to maximize the value function given by
+\begin{equation}
+V_k^{\bu} (x,s,\bz,q) = \E \left[ W_T^{\bu} \right] = \E_{k,x,s,\bz,q}\left[ X_T^{\bu} + Q_T^{\bu}(S_T - \sgn(Q_T^{\bu})\pi) - \alpha {(Q_T^{\bu})}^2 \right]
+\end{equation}
+where, as before, the notation $\E_{k,x,s,\bz,q}[ \; \cdot \; ]$ represents the conditional expectation
+\[ \E [ \; \cdot \; | \; X_k = x, S_k = s, \bZ_k = \bz, Q_k = q] \]
+In this case, our dynamic programming equations (DPEs) are given by
+\begin{align}
+V_k (x,s,\bz,q) & = \sup_{\bu} \bigl\lbrace \E_{\bw} \left[ V_{k+1} (f((x,s,\bz,q),\bu,\bw_k) \right] \bigr\rbrace \\
+V_T (x,s,\bz,q) & = \sup_{\bu} \bigl\lbrace \E \left[ x + q(s-\sgn(q)\pi) - \alpha q^2 \right] \bigr\rbrace
+\end{align}
+where expectation is with respect to the random vector $\bw_k$.
+
+To simplify the DPEs, we introduce a now familiar ansatz:
+\begin{equation}
+\label{eq:ansatzHcase1discrete}
+V_k = x + q(s-\sgn(q)\pi) + h_k(\bz,q)
+\end{equation}
+with boundary condition $h_T(\bz,q) = -\alpha q^2$. Substituting this into the DPE, we obtain
+\begin{align}
+0 & = \sup_{\bu} \bigl\lbrace \E_{\bw} \left[ V_{k+1} (f((x,s,\bz,q),\bu,\bw_k) \right] \bigr\rbrace - V_k (x,s,\bz,q)  \nonumber \\
+\begin{split} & = \sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ + (s - \pi)M_k^- - (s + \pi)M_k^+ \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- + M_k^+ - M_k^-) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} \times \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- + M_k^+ - M_k^-)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- + M_k^+ - M_k^-) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- + M_k^+ - M_k^-) -  h_k(\bz,q) \biggr] \biggr\rbrace 
+\end{split}
+\end{align}
+Since our buy/sell market order controls are binary, the supremum over the control vector $\bu$ can be treated as a simultaneous supremum over $\delta^\pm$ and maximum over the four possible values for $M^\pm$. Notably, however, a quick substitution shows that the case where $M^+ = M^- = 1$ is not possible as it is always strictly $2\pi$ less in value than the case of only limit orders, where $M^+ = M^- = 0$. This should be evident, as buying and selling with market orders in a single timestep yields a guaranteed loss as the agent is forced to cross the spread. Thus, our DPE takes the form:
+\begin{align}
+\begin{split}
+0 & = \max \Biggl\lbrace 
+%%% Only Limit Orders
+\sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^-)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \biggr] \biggr\rbrace \; ;\\
+%%% Limit Orders + Market Buy
+& \hphantom{{}={} \max \biggl\lbrace } \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ - (s + \pi)\\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- +1) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- +1)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- +1) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- + 1) -  h_k(\bz,q) \biggr] \biggr\rbrace \; ; \\
+%%% Limit Orders + Market Sell
+& \hphantom{{}={} \max \biggl\lbrace } \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ + (s - \pi) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- -1) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- -1)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- -1) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- -1) -  h_k(\bz,q) \biggr] \biggr\rbrace  \Biggr\rbrace
+\end{split}
+\end{align}
+Now we proceed to solve for the optimal posting depths. As usual, this requires setting the first order partial derivatives to zero:
+
+TODO: let's pick up back here next week.
+
+\section*{Whiteboard Inspirational Quote of the Week}
+Hey man you instituted this one, now you gotta deal with it on a weekly basis.
+\begin{quote}
+\textit{A year from now you may wish you had started today.} - Karen Lamb
+\end{quote} 
+
+\section*{Looking Ahead}
+Yesterday I met with Gabe again to go over the most recent work. To a certain extent I feel like I'm just keeping him in the loop, but suddenly I saw a glimpse of how he's going to help me tremendously as this dissertation wraps up. Recall that Sebby is now bounced off to Spain for the remainder of the summer. So what I did with Gabe... and this is actually what we were trying to have me do many moons ago, but only now was I in a position to really understand what we were saying or what the implied amount of work would be... is we charted out the course for the rest of the thesis.
+
+Here's what's left:
+\begin{enumerate}
+\item Finish all discrete-time derivations.
+\item Research, figure out, and set up numerical integration schemes on MATLAB.
+\item Numerically integrate all the formulae we've ended up with.
+\item This is where Gabe comes in: determine the dynamics of those functions! Plot all sort of interesting results you get by varying the constants, plotting one variable against another, etc. Basically determine and analyze how these things behave.
+\item Choose parameters, run calibrations, and run the functions on the historical data I've been using so far.
+\item Compare results with the exploratory data analysis from last year.
+\item Write everything up, including a couple paragraphs on how this work could be extended.
+\end{enumerate}
+
+
+
+okay man I gotta go, someone special is looking for me too.
 \end{document}
