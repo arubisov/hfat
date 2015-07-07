@@ -1,0 +1,251 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+\newtheorem{theorem}{Theorem}
+\usepackage{hyperref}
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to establish and solve the stochastic optimal control problem that 
+captures the momentum and order imbalance dynamics of the Limit Order Book 
+(LOB). The solution will yield an optimal trading strategy that will permit
+statistical arbitrage of the underlying stock, which will then be backtested on
+historical data.
+\end{quote}
+
+\section*{Progress Timeline}
+\begin{table}[H]
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\fooo}{\color{LightSteelBlue3}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{9cm} !{\fooo} >{\raggedright\arraybackslash}p{5cm}} 
+\multicolumn{1}{@{\,}r <{\hskip 9pt}}{DATE} & \multicolumn{1}{l}{THESIS} & \multicolumn{1}{l}{STA4505} \\
+\hline
+\st{Dec 2014} & \st{Complete CTMC calibration} \\
+\st{Dec 2014} & \st{Backtest naive strategies based on CTMC} & \\
+\st{Jan-May} & \st{Study stochastic controls: ECE1639, STA4505} & \\
+\st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
+\st{Jun 12} & \st{Establish performance criteria} & \st{Exam Study} \\
+\st{Jun 15} & \st{Derive DPP/DPE} & \st{EXAM} \\
+\st{Jun 19} & \st{Derive DPP/DPE} &  \\
+\st{Jun 26} & \st{Derive continuous-time equations} & \\
+\st{Jul 3} & \textcolor{red}{Derive discrete-time equations} & \\
+Jul 10 & Set up MATLAB numerical integration &  \\
+Jul 17 & Integrate functions and plot dynamics & Integrate and analyze too! \\
+Jul 24 & More dynamics, and calib/choose parameters & \\
+Jul 31 & Backtest on historical data & Simulate results \\
+Aug 7 & More backtesting, comparing with previous & \\
+Aug 14 & Dissertation writeup / buffer & Project writeup \\
+Aug 21 & Dissertation writeup / buffer &  \\
+Aug 28 & Dissertation writeup & Presentation \\
+\end{tabular}
+\end{table}
+
+\newpage
+\section*{Whiteboard Inspirational Quote of the Week}
+\begin{quote}
+\textit{What you do speaks so loudly that I cannot hear what you say.} \\- Ralph Waldo Emerson
+\end{quote} 
+
+\section*{For Our Readers in the Middle East...}
+\url{http://52weeksofrejection.com}
+
+This morning I was officially out of protein powder. It's amazing because it's the sort of thing you see coming form a mile away, like it's a very steady linear decline in supply so it's really never a surprise. And yet almost every time, I don't have the resolve to order a resupply until \textit{after} I suffer at least one juice-free disappointing day. Don't worry, banana cream pie is on its way. But so today I decided I'd make the morning smoothie and substitute a green apple instead of the protein powder, having realized a long time ago that the major role of the powder isn't the nutritional punch but the delicate dousing of deliciousness. But uh ... yeah never again.
+
+Old Faithful is on life support. Multi-tabbing in Chrome is almost out of the cards. I don't really know what to do. I want a nice lightweight, 15-17", Linux-friendly machine as a replacement but I also have no disposable income anymore and I'm still somehow racking up monthly \$2000 visa bills. 
+
+Look man you asked me to record, in the moment, why I was doing it. Here's why: deep down I've got cosmic knowledge that this one isn't over, and I'm positive that if I let it go now then it WILL be. Maybe it's doomed due to timing as we said, and if so then I guess I'll know pretty soon, but regardless, what I'm doing now \textit{does} seem like throwing everything away, and fuck that, that's not how we roll, we bury shit in the sand for a first date, you know what I'm saying? And in case you don't, I guess what I'm saying is that until it's 52-weeks worthy (ok, irony that it already did make it into 52weeks isn't lost on me...) I ain't just giving up.
+
+\section*{The Academic Week in Review}
+We are trying to solve the following DPE:
+\begin{align}
+\begin{split}
+0 & = \max \Biggl\lbrace 
+%%% Only Limit Orders
+\sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^-)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \biggr] \biggr\rbrace \; ;\\
+%%% Limit Orders + Market Buy
+& \hphantom{{}={} \max \biggl\lbrace } \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ - (s + \pi)\\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- +1) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- +1)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- +1) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- + 1) -  h_k(\bz,q) \biggr] \biggr\rbrace \; ; \\
+%%% Limit Orders + Market Sell
+& \hphantom{{}={} \max \biggl\lbrace } \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ + (s - \pi) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- -1) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- -1)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- -1) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- -1) -  h_k(\bz,q) \biggr] \biggr\rbrace  \Biggr\rbrace
+\end{split}
+\end{align}
+
+We'll begin by concentrating on the first case where $M^+ = M^- = 0$. Thus, we want to solve
+\begin{equation}
+\label{eq:discretesup1}
+\begin{split}
+& \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^-)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \biggr] \biggr\rbrace
+\end{split}
+\end{equation}
+
+First, some preliminary results:
+\begin{align*}
+\P [ L_k^- = 1 | K_k^+ = 1] & = e^{-\kappa \delta^-} \\
+\P [ L_k^- = 0 | K_k^+ = 1] & = 1 - e^{-\kappa \delta^-} \\
+\P [ L_k^- = 0 | K_k^+ = n] & = (1 - e^{-\kappa \delta^-})^n \\
+\P [ L_k^- = 1 | K_k^+ = n] & = 1 - (1 - e^{-\kappa \delta^-})^n \\
+\P [ K_k^+ = n] & = \frac{e^{-\lambda \Delta t} (\lambda \Delta t)^n}{n!} \\
+\end{align*}
+
+\begin{theorem}
+$\E [ L_k^- ] = \P [ L_k^- = 1] =  1 - e^{-e^{-\kappa \delta^-} \lambda \Delta t}$
+\end{theorem}
+\begin{proof}
+\begin{align*}
+\E [ L_k^- ] & = \sum_{n=0}^\infty \P [ L_k^- = 1 | K_k^+ = n] \cdot \P[K_k^+ = n] \\
+& =  \sum_{n=0}^\infty \bigl[ 1 - (1 - e^{-\kappa \delta^-})^n \bigr] \frac{e^{-\lambda \Delta t} (\lambda \Delta t)^n}{n!} \\
+& = 1 - e^{-\lambda \Delta t} \sum_{n=0}^\infty \frac{(1 - e^{-\kappa \delta^-})^n (\lambda \Delta t)^n}{n!} \\
+& = 1 - e^{-\lambda \Delta t} \sum_{n=0}^\infty \frac{(\lambda \Delta t - e^{-\kappa \delta^-}\lambda \Delta t)^n}{n!} \\
+& = 1 - e^{-\lambda \Delta t} e^{\lambda \Delta t - e^{-\kappa \delta^-} \lambda \Delta t} \\
+& = 1 - e^{- e^{-\kappa \delta^-} \lambda \Delta t}
+\end{align*}
+\end{proof}
+
+For ease of notation, we'll write the probability of the $L_k^- = 0$ event as
+\[ p(\delta^-) = e^{- e^{-\kappa \delta^-} \lambda \Delta t} \]
+and its derivative as
+\[ d(\delta^-) = \partial_{\delta^-} p(\delta^-) = \kappa \lambda \Delta t e^{-e^{-\kappa \delta^-} \lambda \Delta t - \kappa \delta^-} \]
+
+This gives us the results:
+\begin{align*}
+\P [ L_k^- = 1] & = 1 - p(\delta^-) = \E [ L_k^-] \\
+\P [ L_k^- = 0] & = p(\delta^-) \\
+\partial_{\delta^-} \P [ L_k^- = 1]  & = -d(\delta^-) \\
+\partial_{\delta^-} \P [ L_k^- = 0] & = d(\delta^-) \\
+\end{align*}
+
+Let's pre-compute some of the terms that we'll encounter in the supremum, namely the expectations of the random variables. 
+
+\begin{align}
+\E [\sgn(q + L_k^+ - L_k^-)] & = \P[L_k^- = 1] \cdot \P[L_k^+ = 1] \cdot \sgn(q) \nonumber \\
+& \quad + \P[L_k^- = 1] \cdot \P[L_k^+ = 0] \cdot \sgn(q - 1) \nonumber \\
+& \quad +  \P[L_k^- = 0] \cdot \P[L_k^+ = 1] \cdot \sgn(q+1) \nonumber \\
+& \quad + \P[L_k^- = 0] \cdot \P[L_k^+ = 0] \cdot \sgn(q) \nonumber \\
+& = (1 - p(\delta^-))(1-p(\delta^+)) \sgn(q) \nonumber \\
+& \quad + (1 - p(\delta^-)) p(\delta^+) \sgn(q - 1) \nonumber \\
+& \quad + p(\delta^-) (1-p(\delta^+))  \sgn(q+1) \nonumber \\
+& \quad + p(\delta^-) p(\delta^+)  \sgn(q) \nonumber \\
+& = \sgn(q) \bigl[ 1 - p(\delta^+) - p(\delta^-) + 2 p(\delta^+) p(\delta^-) \bigr] \nonumber \\
+& \quad + \sgn(q-1) \bigl[ p(\delta^+)  - p(\delta^+) p(\delta^-) \bigr]  \nonumber \\
+& \quad + \sgn(q+1) \bigl[ p(\delta^-)  - p(\delta^+) p(\delta^-) \bigr]  \nonumber \\
+& = \begin{cases} 
+1 & q \geq 2 \\
+1 - p(\delta^+)(1 - p(\delta^-)) & q = 1 \\
+p(\delta^-) - p(\delta^+) & q = 0 \\
+-\bigl[ 1 - p(\delta^-)(1 - p(\delta^+)) \bigr] & q = -1 \\
+-1 & q \leq -2
+\end{cases} \\
+& = \Phi(q, \delta^+, \delta^-)
+\end{align}
+Hence, we can also compute the partial derivatives of this expectation:
+\begin{align}
+\partial_{\delta^-} \Phi(q, \delta^+, \delta^-) & =  \begin{cases} 
+0 & q \geq 2 \\
+d(\delta^-)p(\delta^+) & q = 1 \\
+d(\delta^-) & q = 0 \\
+d(\delta^-)(1 - p(\delta^+))  & q = -1 \\
+0 & q \leq -2
+\end{cases} \\
+\partial_{\delta^+} \Phi(q, \delta^+, \delta^-) & =  \begin{cases} 
+0 & q \geq 2 \\
+- d(\delta^+)(1 - p(\delta^-)) & q = 1 \\
+- d(\delta^+) & q = 0 \\
+- d(\delta^+) p(\delta^-) & q = -1 \\
+0 & q \leq -2
+\end{cases}
+\end{align}
+As it'll be required for later, we'll additionally introduce the shorthand notation
+\begin{equation}
+\frac{\partial_{\delta^-} \Phi(q, \delta^+, \delta^-)}{d(\delta^-)} = \Psi(q,\delta^+)
+\end{equation}
+\begin{equation}
+\frac{\partial_{\delta^+} \Phi(q, \delta^+, \delta^-)}{d(\delta^+)} = \Upsilon(q,\delta^-)
+\end{equation}
+If we call $\bP$ the transition matrix for the Markov Chain $\bZ$, with $\bP_{\bz, \bj} = \P[\bZ_{k+1} = \bj | \bZ_k = \bz]$, then we can also write:
+\begin{equation}
+\begin{split}
+\E[h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- )] & = \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - p(\delta^+) - p(\delta^-) + 2 p(\delta^+) p(\delta^-) \bigr]  \\
+& \hphantom{\sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q-1) \bigl[ p(\delta^+)  - p(\delta^+) p(\delta^-) \bigr]   \\
+& \hphantom{\sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q+1) \bigl[ p(\delta^-)  - p(\delta^+) p(\delta^-) \bigr] \biggr]  \\
+\end{split}
+\end{equation}
+and its partial derivatives as
+\begin{align}
+\begin{split}
+\partial_{\delta^-} \E[h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- )] & = 
+\sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ - d(\delta^-) + 2 p(\delta^+) d(\delta^-) \bigr]  \\
+& \hphantom{\sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q-1) \bigl[  - p(\delta^+) d(\delta^-) \bigr]   \\
+& \hphantom{\sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q+1) \bigl[ d(\delta^-)  - p(\delta^+) d(\delta^-) \bigr] \biggr]
+\end{split} \\
+\begin{split}
+& = d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ - 1 + 2 p(\delta^+) \bigr]  \\
+& \hphantom{d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q-1) \bigl[  - p(\delta^+) \bigr]   \\
+& \hphantom{d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q+1) \bigl[ 1  - p(\delta^+) \bigr] \biggr]
+\end{split} \\
+\begin{split}
+\partial_{\delta^+} \E[h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- )] & = 
+d(\delta^+) \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ - 1 + 2 p(\delta^-) \bigr]  \\
+& \hphantom{d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q-1) \bigl[1  - p(\delta^-) \bigr]   \\
+& \hphantom{d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q+1) \bigl[  - p(\delta^-) \bigr] \biggr]
+\end{split}
+\end{align}
+
+Now we tackle solving the supremum in equation $\ref{eq:discretesup1}$. First we consider the first-order condition on $\delta^-$, namely that the partial derivative with respect to it must be equal to zero.
+\begin{align}
+\begin{split}
+0 & = (1-p(\delta^-)) - d(\delta^-)(s+\pi+\delta^-) + d(\delta^-)\bigr(s + \E[\eta_{0,\bz}T(\bz,\omega)^{(2)}] - \Phi(q,\delta^+,\delta^-)\pi \bigl) \\
+& \quad -\partial_{\delta^-}\Phi(q,\delta^+,\delta^-)\pi \bigl( p(\delta^-) - p(\delta^+) \bigr) - q \pi \partial_{\delta^-}\Phi(q,\delta^+,\delta^-) + d(\delta^-) \sum_\bj \bP_{\bz,\bj} \\
+& \quad \times \biggl[ h_{k+1}(\bj, q) \bigl[ - 1 + 2 p(\delta^+) \bigr]  + h_{k+1}(\bj, q-1) \bigl[  - p(\delta^+) \bigr] + h_{k+1}(\bj, q+1) \bigl[ 1  - p(\delta^+) \bigr] \biggr]
+\end{split}
+\intertext{and diving through by $d(\delta^-)$, which is nonzero, we get}
+\begin{split}
+& = \frac{1-p(\delta^-)}{d(\delta^-)} -(s+\pi+\delta^-) + \bigr(s + \E[\eta_{0,\bz}T(\bz,\omega)^{(2)}] - \Phi(q,\delta^+,\delta^-)\pi \bigl) \\
+& \quad -\pi \bigl( p(\delta^-) - p(\delta^+) \bigr)\Psi(q,\delta^+) - q \pi\Psi(q,\delta^+)\\
+& \quad + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ - 1 + 2 p(\delta^+) \bigr]   + h_{k+1}(\bj, q-1) \bigl[  - p(\delta^+) \bigr] + h_{k+1}(\bj, q+1) \bigl[ 1  - p(\delta^+) \bigr] \biggr]
+\end{split}
+\end{align}
+
+
+Re-arranging and collecting terms in $\delta^-$ on the left-hand side:
+\begin{equation}
+\begin{split}
+& \frac{1-p(\delta^-)}{d(\delta^-)} + \delta^- + \pi \Phi(q,\delta^+,\delta^-) + \pi p(\delta^-)\Psi(q,\delta^+) \\
+& = \E[\eta_{0,\bz}T(\bz,\omega)^{(2)}] + \pi\left( -1 + p(\delta^+)\Psi(q,\delta^+) - q\Psi(q,\delta^+)\right) \\
+& + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ - 1 + 2 p(\delta^+) \bigr]   + h_{k+1}(\bj, q-1) \bigl[  - p(\delta^+) \bigr] + h_{k+1}(\bj, q+1) \bigl[ 1  - p(\delta^+) \bigr] \biggr]
+\end{split}
+\end{equation}
+
+\[ \frac{1-p(\delta^-)}{d(\delta^-)} = \frac{e^{\kappa \delta^-}\left( e^{\lambda \Delta t e^{-\kappa \delta^-}} \right)}{\kappa\lambda\Delta t} \]
+
+\section*{Looking Ahead}
+Look, this week has been a bit of a bust for a variety of reasons. Academically speaking, it's because I'm fucking stuck. I don't see where these derivations are going, because they're just fucking messy. When I finally came to this conclusion I immediately reached out to both Sebastian and Gabe but only the latter wrote back and said he'd look at it. I know, I've gotta be more pushy. I'll follow up with Seb again tomorrow. 
+
+There's good news, though. Realistically I don't need to do all this linearly, and I can begin looking at the numerical integration part that's due next week anyway. In fact, yes, precisely. I can just shelf this till I can get either of their help and move the fuck on. Efficiency, bitches! Equally in the good news department is that I already did a couple hours of discussion with my dad on the topic of numerical solutions, as it turns out I've never \textit{actually} done it, although I guess in a very true sense Monte Carlo sims are exactly that. Anyway, word on the street is that you can use virtually whatever fucking method you want, we've got a few contenders, probably will go with the most complicated one to get my money's worth from these 8 CPU's.
+\end{document}

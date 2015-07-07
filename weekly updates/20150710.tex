@@ -1,0 +1,251 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+\newtheorem{theorem}{Theorem}
+\usepackage{hyperref}
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to establish and solve the stochastic optimal control problem that 
+captures the momentum and order imbalance dynamics of the Limit Order Book 
+(LOB). The solution will yield an optimal trading strategy that will permit
+statistical arbitrage of the underlying stock, which will then be backtested on
+historical data.
+\end{quote}
+
+\section*{Progress Timeline}
+\begin{table}[H]
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\fooo}{\color{LightSteelBlue3}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{9cm} !{\fooo} >{\raggedright\arraybackslash}p{5cm}} 
+\multicolumn{1}{@{\,}r <{\hskip 9pt}}{DATE} & \multicolumn{1}{l}{THESIS} & \multicolumn{1}{l}{STA4505} \\
+\hline
+\st{Dec 2014} & \st{Complete CTMC calibration} \\
+\st{Dec 2014} & \st{Backtest naive strategies based on CTMC} & \\
+\st{Jan-May} & \st{Study stochastic controls: ECE1639, STA4505} & \\
+\st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
+\st{Jun 12} & \st{Establish performance criteria} & \st{Exam Study} \\
+\st{Jun 15} & \st{Derive DPP/DPE} & \st{EXAM} \\
+\st{Jun 19} & \st{Derive DPP/DPE} &  \\
+\st{Jun 26} & \st{Derive continuous-time equations} & \\
+\st{Jul 3} & \textcolor{red}{Derive discrete-time equations} & \\
+Jul 10 & Set up MATLAB numerical integration &  \\
+Jul 17 & Integrate functions and plot dynamics & Integrate and analyze too! \\
+Jul 24 & More dynamics, and calib/choose parameters & \\
+Jul 31 & Backtest on historical data & Simulate results \\
+Aug 7 & More backtesting, comparing with previous & \\
+Aug 14 & Dissertation writeup / buffer & Project writeup \\
+Aug 21 & Dissertation writeup / buffer &  \\
+Aug 28 & Dissertation writeup & Presentation \\
+\end{tabular}
+\end{table}
+
+\newpage
+\section*{Whiteboard Inspirational Quote of the Week}
+\begin{quote}
+\textit{} \\- 
+\end{quote} 
+
+\section*{For Our Readers in the Middle East...}
+
+\section*{The Academic Week in Review}
+Recall we are trying to solve the first case of the DPE, namely:
+\begin{equation}
+\label{eq:discretesup1}
+\begin{split}
+& \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^-)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \biggr] \biggr\rbrace
+\end{split}
+\end{equation}
+You might recall that things got pretty messy pretty fast. Previously we had set up the problem such that at each timestep $k$ there can be multiple other agents' market orders ($K_k^+$) arriving, and these were Poisson distributed. For each arriving order, the probability of our posted limit order being filled was $e^{-\kappa \delta^-}$. We're going to modify this slightly. Keeping the market orders as Poisson distributed, we have that $\P [ K_k^+ = 0] = \frac{e^{-\lambda \Delta t} (\lambda \Delta t)^0}{0!} = e^{-\lambda \Delta t}$, and so the probability of seeing some positive number of market orders is
+\begin{equation}
+\label{eq:discretepositiveKplus}
+\P [ K_k^+ > 0] = 1 - e^{-\lambda \Delta t}
+\end{equation}
+Now we make the simplified assumption that the \textit{aggregate} of the orders walks the limit order book to a depth of $p_k$, and if $p_k > \delta^-$, then our sell limit order is lifted. Thus we have the following preliminary results:
+\begin{align*}
+\P [ L_k^- = 1 | K_k^+ > 0] & = e^{-\kappa \delta^-} \\
+\P [ L_k^- = 0 | K_k^+ > 0] & = 1 - e^{-\kappa \delta^-} \\
+\E [ L_k^- ] & = \P [ L_k^- = 1 | K_k^+ > 0] \cdot \P[K_k^+ > 0] \\
+& = ( 1 - e^{-\lambda \Delta t} ) e^{-\kappa \delta^-} \\
+\end{align*}
+For ease of notation, we'll write the probability of the $L_k^- = 1$ event as $p(\delta^-)$. This gives us the additional results:
+\begin{align*}
+\P [ L_k^- = 1] & = p(\delta^-) = \E [ L_k^-] \\
+\P [ L_k^- = 0] & = 1 - p(\delta^-) \\
+\partial_{\delta^-} \P [ L_k^- = 1]  & = -\kappa p(\delta^-) \\
+\partial_{\delta^-} \P [ L_k^- = 0] & = \kappa p(\delta^-) \\
+\end{align*}
+Let's pre-compute some of the terms that we'll encounter in the supremum, namely the expectations of the random variables. 
+\begin{align}
+\E [\sgn(q + L_k^+ - L_k^-)] & = \P[L_k^- = 1] \cdot \P[L_k^+ = 1] \cdot \sgn(q) \nonumber \\
+& \quad + \P[L_k^- = 1] \cdot \P[L_k^+ = 0] \cdot \sgn(q - 1) \nonumber \\
+& \quad +  \P[L_k^- = 0] \cdot \P[L_k^+ = 1] \cdot \sgn(q+1) \nonumber \\
+& \quad + \P[L_k^- = 0] \cdot \P[L_k^+ = 0] \cdot \sgn(q) \nonumber \\
+& = p(\delta^-)p(\delta^+) \sgn(q) \nonumber \\
+& \quad + p(\delta^-) (1-p(\delta^+)) \sgn(q - 1) \nonumber \\
+& \quad + (1 - p(\delta^-)) p(\delta^+)  \sgn(q+1) \nonumber \\
+& \quad + (1 - p(\delta^-)) (1-p(\delta^+))  \sgn(q) \nonumber \\
+& = \sgn(q) \bigl[ 1 - p(\delta^+) - p(\delta^-) + 2 p(\delta^+) p(\delta^-) \bigr] \nonumber \\
+& \quad + \sgn(q-1) \bigl[ p(\delta^-)  - p(\delta^+) p(\delta^-) \bigr]  \nonumber \\
+& \quad + \sgn(q+1) \bigl[ p(\delta^+)  - p(\delta^+) p(\delta^-) \bigr]  \nonumber \\
+& = \begin{cases} 
+1 & q \geq 2 \\
+1 - p(\delta^-)(1 - p(\delta^+)) & q = 1 \\
+p(\delta^+) - p(\delta^-) & q = 0 \\
+-\bigl[ 1 - p(\delta^+)(1 - p(\delta^-)) \bigr] & q = -1 \\
+-1 & q \leq -2
+\end{cases} \\
+& = \Phi(q, \delta^+, \delta^-)
+\end{align}
+Similarly:
+\begin{align}
+\E [ L_k^+ \sgn(q + L_k^+ - L_k^-)] & = \P[L_k^- = 1] \cdot \P[L_k^+ = 1] \cdot \sgn(q) \nonumber \\
+& \quad + \P[L_k^- = 1] \cdot \P[L_k^+ = 0] \cdot 0 \sgn(q - 1) \nonumber \\
+& \quad +  \P[L_k^- = 0] \cdot \P[L_k^+ = 1] \cdot \sgn(q+1) \nonumber \\
+& \quad + \P[L_k^- = 0] \cdot \P[L_k^+ = 0] \cdot 0 \sgn(q) \nonumber \\
+& = p(\delta^+) \bigl[ p(\delta^-) \sgn(q) + (1-p(\delta^-) \sgn(q+1) \bigr] \nonumber \\
+& = p(\delta^+) \begin{cases} 
+1 & q \geq 2 \\
+1 & q = 1 \\
+(1 - p(\delta^-)) & q = 0 \\
+-p(\delta^-) & q = -1 \\
+-1 & q \leq -2
+\end{cases} \\
+& = p(\delta^+) \Psi(q, \delta^-)
+\end{align}
+and
+\begin{align}
+\E [ L_k^- \sgn(q + L_k^+ - L_k^-)] & = p(\delta^-) \bigl[ p(\delta^+) \sgn(q) + (1-p(\delta^+)) \sgn(q-1) \bigr] \nonumber \\
+& = p(\delta^-) \begin{cases} 
+1 & q \geq 2 \\
+p(\delta^+) & q = 1 \\
+-(1 - p(\delta^+)) & q = 0 \\
+-1 & q = -1 \\
+-1 & q \leq -2
+\end{cases} \\
+& = p(\delta^-) \Upsilon(q, \delta^+)
+\end{align}
+We'll also require the partial derivatives of these expectations, which we can easily compute. Below we'll use the simplified notation $\Phi_+$ to denote the function closely associated with the partial derivative of $ \Phi$ with respect to $\delta^+$.
+\begin{align}
+\partial_{\delta^-} \E [\sgn(q + L_k^+ - L_k^-)] = \partial_{\delta^-} \Phi(q, \delta^+, \delta^-) & = \kappa p(\delta^-) \begin{cases} 
+0 & q \geq 2 \\
+(1-p(\delta^+)) & q = 1 \\
+1 & q = 0 \\
+p(\delta^+)  & q = -1 \\
+0 & q \leq -2
+\end{cases} \\
+& = \kappa p(\delta^-) \Phi_-(q,\delta^+) \\
+\partial_{\delta^+} \E [\sgn(q + L_k^+ - L_k^-)] =\partial_{\delta^+} \Phi(q, \delta^+, \delta^-) & =  \kappa p(\delta^+) \begin{cases} 
+0 & q \geq 2 \\
+- p(\delta^-) & q = 1 \\
+- 1 & q = 0 \\
+- (1 - p(\delta^-)) & q = -1 \\
+0 & q \leq -2
+\end{cases} \\
+& = \kappa p(\delta^+)\Phi_+(q,\delta^-) \\
+\partial_{\delta^-} \E [L_k^+ \sgn(q + L_k^+ - L_k^-)] = \partial_{\delta^-} p(\delta^+) \Psi(q, \delta^-) & = \kappa p(\delta^+) p(\delta^-)\begin{cases} 
+0 & q \geq 2 \\
+0 & q = 1 \\
+1 & q = 0 \\
+1 & q = -1 \\
+0 & q \leq -2
+\end{cases} \\
+& = \kappa p(\delta^+) p(\delta^-) \Psi_-(q) \\
+\partial_{\delta^+} \E [L_k^+ \sgn(q + L_k^+ - L_k^-)] = \partial_{\delta^+} p(\delta^+) \Psi(q, \delta^-) & = -\kappa p(\delta^+) \Psi(q, \delta^-)
+ \\
+\partial_{\delta^-} \E [L_k^- \sgn(q + L_k^+ - L_k^-)] = \partial_{\delta^-} p(\delta^-) \Upsilon(q, \delta^+) & = -\kappa p(\delta^-) \Upsilon(q, \delta^+)
+ \\
+ \partial_{\delta^+} \E [L_k^- \sgn(q + L_k^+ - L_k^-)] = \partial_{\delta^+} p(\delta^-) \Upsilon(q, \delta^+)& = \kappa p(\delta^+) p(\delta^-) \begin{cases} 
+0 & q \geq 2 \\
+-1 & q = 1 \\
+-1 & q = 0 \\
+0 & q = -1 \\
+0 & q \leq -2
+\end{cases} \\
+& = \kappa p(\delta^+) p(\delta^-)\Upsilon_+(q)
+\end{align}
+Recalling that we have  $\bP$ the transition matrix for the Markov Chain $\bZ$, with $\bP_{\bz, \bj} = \P[\bZ_{k+1} = \bj | \bZ_k = \bz]$, then we can also write:
+\begin{equation}
+\begin{split}
+\E[h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- )] & = \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - p(\delta^+) - p(\delta^-) + 2 p(\delta^+) p(\delta^-) \bigr]  \\
+& \hphantom{\sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q-1) \bigl[ p(\delta^-)  - p(\delta^+) p(\delta^-) \bigr]   \\
+& \hphantom{\sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q+1) \bigl[ p(\delta^+)  - p(\delta^+) p(\delta^-) \bigr] \biggr]  \\
+\end{split}
+\end{equation}
+and its partial derivatives as
+\begin{align}
+\begin{split}
+\partial_{\delta^-} \E[h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- )] & = 
+\sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ \kappa p(\delta^-) - 2 \kappa p(\delta^+) p(\delta^-) \bigr]  \\
+& \hphantom{\sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q-1) \bigl[ -\kappa p(\delta^-) + \kappa p(\delta^+) p(\delta^-) \bigr]   \\
+& \hphantom{\sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q+1) \bigl[ \kappa p(\delta^+) p(\delta^-) \bigr] \biggr]
+\end{split} \\
+\begin{split}
+& = \kappa p(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - 2 p(\delta^+) \bigr]  \\
+& \hphantom{d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q-1) \bigl[-1 + p(\delta^+) \bigr]   \\
+& \hphantom{d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q+1) \bigl[ p(\delta^+) \bigr] \biggr]
+\end{split} \\
+\begin{split}
+\partial_{\delta^+} \E[h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- )] & = 
+\kappa p(\delta^+) \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - 2 p(\delta^-) \bigr]  \\
+& \hphantom{d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q-1) \bigl[ p(\delta^-) \bigr]   \\
+& \hphantom{d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q+1) \bigl[ -1 + p(\delta^-) \bigr] \biggr]
+\end{split}
+\end{align}
+
+Now we tackle solving the supremum in equation $\ref{eq:discretesup1}$. First we consider the first-order condition on $\delta^-$, namely that the partial derivative with respect to it must be equal to zero.
+\begin{align}
+\begin{split}
+0 & = \partial_{\delta^-} \biggl\lbrace 
+(s + \pi + \delta^-)\E [L_k^-] - (s - \pi - \delta^+)\E[L_k^+] \\
+& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} + \E[L_k^+] \left( s + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] \right)  - \pi \E \left[L_k^+ \sgn( q + L_k^+ - L_k^-) \right] \\
+& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} - \E[L_k^-] \left( s + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] \right) + \pi \E \left[ L_k^- \sgn( q + L_k^+ - L_k^-) \right] \\
+& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} + q \E[ \eta_{0,\bz} T(\bz, \omega)^{(2)}]  - q \pi \E[ \sgn( q + L_k^+ - L_k^-)] + q \pi \sgn(q)  \\
+& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} + \E \left[ h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) \right] -  h_k(\bz,q) \biggr\rbrace
+\end{split} \\
+\begin{split}
+& = \partial_{\delta^-} \biggl\lbrace 
+(s + \pi + \delta^-)\E [L_k^-] - \pi \E \left[L_k^+ \sgn( q + L_k^+ - L_k^-) \right] \\
+& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} - \E[L_k^-] \left( s + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] \right) + \pi \E \left[ L_k^- \sgn( q + L_k^+ - L_k^-) \right] \\
+& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} - q \pi \E[ \sgn( q + L_k^+ - L_k^-)]  + \E \left[ h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) \right]  \biggr\rbrace
+\end{split} \\
+\begin{split}
+& = p(\delta^-) - \kappa p(\delta^-) (s + \pi + \delta^-) - \pi \kappa p(\delta^+)p(\delta^-)\Psi_-(q) \\
+& \hphantom{{}={}} + \kappa p(\delta^-) \left( s + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] \right) - \pi \kappa p(\delta^-) \Upsilon(q,\delta^+) - q \pi \kappa p(\delta^-) \Phi_-(q,\delta^+) \\
+& \hphantom{{}={}} + \kappa p(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - 2 p(\delta^+) \bigr] + h_{k+1}(\bj, q-1) \bigl[-1 + p(\delta^+) \bigr] \\
+& \hphantom{{}={} + \kappa p(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[} + h_{k+1}(\bj, q+1) \bigl[ p(\delta^+) \bigr] \biggr]
+\end{split}
+\end{align}
+Dividing through by $\kappa p(\delta^-)$, which is nonzero, and re-arranging, we find that the optimal sell posting depth is given by
+\begin{align}
+\begin{split}
+{\delta^-}^* & = \frac{1}{\kappa} + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - \pi \left( 1 + p(\delta^+)\Psi_-(q) + \Upsilon(q,\delta^+) + q \Phi_-(q,\delta^+) \right) \\
+& \hphantom{{}={}} +  \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - 2 p(\delta^+) \bigr] + h_{k+1}(\bj, q-1) \bigl[-1 + p(\delta^+) \bigr] + h_{k+1}(\bj, q+1) \bigl[ p(\delta^+) \bigr] \biggr]
+\end{split} \\
+\begin{split}
+& = \frac{1}{\kappa} + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \left( \indicator_{q \geq 1} + p(\delta^+)\indicator_{q = 0} \right) \\
+& \hphantom{{}={}} +  \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - 2 p(\delta^+) \bigr] + h_{k+1}(\bj, q-1) \bigl[-1 + p(\delta^+) \bigr] + h_{k+1}(\bj, q+1) \bigl[ p(\delta^+) \bigr] \biggr]
+\end{split} \\
+\begin{split}
+& = \frac{1}{\kappa} + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \geq 1} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q-1) \biggr] \\
+& \hphantom{{}={}} -p(\delta^+) \left( 2 \pi \indicator_{q = 0} - \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \biggr] \right)
+\end{split}
+\end{align}
+\section*{Looking Ahead}
+\end{document}

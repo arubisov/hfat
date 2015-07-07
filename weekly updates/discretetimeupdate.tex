@@ -1,0 +1,322 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+\newtheorem{theorem}{Theorem}
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to establish and solve the stochastic optimal control problem that 
+captures the momentum and order imbalance dynamics of the Limit Order Book 
+(LOB). The solution will yield an optimal trading strategy that will permit
+statistical arbitrage of the underlying stock, which will then be backtested on
+historical data.
+\end{quote}
+
+\section*{Progress Timeline}
+\begin{table}[H]
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\fooo}{\color{LightSteelBlue3}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{9cm} !{\fooo} >{\raggedright\arraybackslash}p{5cm}} 
+\multicolumn{1}{@{\,}r <{\hskip 9pt}}{DATE} & \multicolumn{1}{l}{THESIS} & \multicolumn{1}{l}{STA4505} \\
+\hline
+\st{Dec 2014} & \st{Complete CTMC calibration} \\
+\st{Dec 2014} & \st{Backtest naive strategies based on CTMC} & \\
+\st{Jan-May} & \st{Study stochastic controls: ECE1639, STA4505} & \\
+\st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
+\st{Jun 12} & \st{Establish performance criteria} & \st{Exam Study} \\
+\st{Jun 15} & \st{Derive DPP/DPE} & \st{EXAM} \\
+\st{Jun 19} & \st{Derive DPP/DPE} &  \\
+\st{Jun 26} & \st{Derive continuous-time equations} & \\
+Jul 3 & Derive discrete-time equations & \\
+Jul 10 & Set up MATLAB numerical integration &  \\
+Jul 17 & Integrate functions and plot dynamics & Integrate and analyze too! \\
+Jul 24 & More dynamics, and calib/choose parameters & \\
+Jul 31 & Backtest on historical data & Simulate results \\
+Aug 7 & More backtesting, comparing with previous & \\
+Aug 14 & Dissertation writeup / buffer & Project writeup \\
+Aug 21 & Dissertation writeup / buffer &  \\
+Aug 28 & Dissertation writeup & Presentation \\
+\end{tabular}
+\end{table}
+
+\newpage
+\section*{The Academic Week in Review}
+Reminder of our processes (a little bit of abuse of notation going on):\\
+$\bz_k = (\rho_k, \Delta_k)$ - 2-D time-homogenous Markov Chain with transition probabilities $P_{ij}$, where $\rho_k \in \Gamma$ and $\Gamma$ represents the set of imbalance bins, and $\Delta_k = \sgn(s_k - s_{k-1}) \in \{-1,0,1\}$. \\
+State $\vec{x}_{k} = \begin{pmatrix}
+x_k \\
+s_k \\
+\bz_k \\
+q_k 
+\end{pmatrix} \qquad \begin{matrix}
+\text{cash} \\
+\text{stock price} \\
+\text{Markov chain state, as above} \\
+\text{inventory} \\
+\end{matrix}$ \\
+Control $\vec{u}_{k} = \begin{pmatrix}
+\delta_k^+ \\
+\delta_k^- \\
+M_k^+ \\
+M_k^-
+\end{pmatrix} \qquad \begin{matrix}
+\text{bid posting depth} \\
+\text{ask posting depth} \\
+\text{buy MO - binary control} \\
+\text{sell MO - binary control} \\
+\end{matrix}$ \\
+Random $\vec{w}_{k} = \begin{pmatrix}
+K_k^+ \\
+K_k^- \\
+\omega_k
+\end{pmatrix} \qquad \begin{matrix}
+\text{other agent buy MOs - binary} \\
+\text{other agent sell MOs - binary} \\
+\text{random variable uniformly distributed on [0,1]} \\
+\end{matrix}$ \\
+
+We'll write the evolution of the Markov chain as a function of the current state and a uniformly distributed random variable $\omega$:\footnote{Borrowed from ECE1639 notes.}
+\begin{equation}
+\bz_{k+1} = T(\bz_k, \omega_k) = \sum_{i=0}^{|\Gamma|} i \cdot \indicator_{\left( \sum_{j=0}^{i-1} P_{\bz_k,j} , \sum_{j=0}^{i} P_{\bz_k,j} \right]} (\omega_k)
+\end{equation}
+Here $\indicator_A(\omega) = \begin{cases} 1 & \text{if } \omega \in A \\
+0 & \text{if } \omega \not\in A
+\end{cases}$, and hence $Z_{k+1}$ is assigned to the value $i$ for which $\omega_k$ is in the indicated interval of probabilities.
+
+Our Markovian state evolution function $f$, given by $\vec{x}_{k+1} = f \left( \vec{x}_{k},\vec{u}_{k}, \vec{w}_{k} \right)$, can be written explicitly as
+\begin{equation}
+\label{eq:discretestateevolution}
+\begin{pmatrix}
+x_{k+1} \\
+s_{k+1} \\
+\bz_{k+1} \\
+q_{k+1} 
+\end{pmatrix} = \begin{pmatrix}
+x_k + (s_k + \pi + \delta_k^-)L_k^- - (s_k - \pi - \delta_k^+)L_k^+ + (s_k - \pi)M_k^- - (s_k + \pi)M_k^+ \\
+s_{k} + \eta_{k,\bz_k} T(\bz_k, \omega_k)^{(2)} \\
+T(\bz_k, \omega_k) \\
+q_{k} + L_k^+ - L_k^- + M_k^+ - M_k^-
+\end{pmatrix}
+\end{equation}
+Clearly, the cash process at a subsequent is equal to the cash at the previous step, plus the costs of profits of executing market or limit orders. There are two noteworthy observations regarding this formulation of the evolution function. First, note that the price paid/received for limit orders depends on the stock price at time $k$. This implies that at $k$, if the agent posts a sell limit order, and the binary random variable $L_k^-$ (which depends on the binary random variable $M_k^+$) is equal to 1, then the agent's order is filled ``between timesteps'' $k$ and $k+1$, but using the price at time $k$. Second, since the second dimension $T(\bz_k, \omega_k)^{(2)} = \Delta_{k+1} = \sgn(s_{k+1} - s_k)$ determines the directionality of the price jump between times $k$ and $k+1$, multiplying it by the random variable $\eta_{k,\bz_k}$ determines the the size of the price change.
+
+\subsection*{Case 1: Max Terminal Wealth (Discrete)}
+Following traditional dynamic programming, we introduce the value function $V_k^{\bu}$. In this first case, our objective is to maximize the value function given by
+\begin{equation}
+V_k^{\bu} (x,s,\bz,q) = \E \left[ W_T^{\bu} \right] = \E_{k,x,s,\bz,q}\left[ X_T^{\bu} + Q_T^{\bu}(S_T - \sgn(Q_T^{\bu})\pi) - \alpha {(Q_T^{\bu})}^2 \right]
+\end{equation}
+where, as before, the notation $\E_{k,x,s,\bz,q}[ \; \cdot \; ]$ represents the conditional expectation
+\[ \E [ \; \cdot \; | \; X_k = x, S_k = s, \bZ_k = \bz, Q_k = q] \]
+In this case, our dynamic programming equations (DPEs) are given by
+\begin{align}
+V_k (x,s,\bz,q) & = \sup_{\bu} \bigl\lbrace \E_{\bw} \left[ V_{k+1} (f((x,s,\bz,q),\bu,\bw_k) \right] \bigr\rbrace \\
+V_T (x,s,\bz,q) & = \sup_{\bu} \bigl\lbrace \E \left[ x + q(s-\sgn(q)\pi) - \alpha q^2 \right] \bigr\rbrace
+\end{align}
+where expectation is with respect to the random vector $\bw_k$.
+
+To simplify the DPEs, we introduce a now familiar ansatz:
+\begin{equation}
+\label{eq:ansatzHcase1discrete}
+V_k = x + q(s-\sgn(q)\pi) + h_k(\bz,q)
+\end{equation}
+with boundary condition $h_T(\bz,q) = -\alpha q^2$. Substituting this into the DPE, we obtain
+\begin{align}
+0 & = \sup_{\bu} \bigl\lbrace \E_{\bw} \left[ V_{k+1} (f((x,s,\bz,q),\bu,\bw_k) \right] \bigr\rbrace - V_k (x,s,\bz,q)  \nonumber \\
+\begin{split} & = \sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ + (s - \pi)M_k^- - (s + \pi)M_k^+ \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- + M_k^+ - M_k^-) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} \times \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- + M_k^+ - M_k^-)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- + M_k^+ - M_k^-) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- + M_k^+ - M_k^-) -  h_k(\bz,q) \biggr] \biggr\rbrace 
+\end{split}
+\end{align}
+Since our buy/sell market order controls are binary, the supremum over the control vector $\bu$ can be treated as a simultaneous supremum over $\delta^\pm$ and maximum over the four possible values for $M^\pm$. Notably, however, a quick substitution shows that the case where $M^+ = M^- = 1$ is not possible as it is always strictly $2\pi$ less in value than the case of only limit orders, where $M^+ = M^- = 0$. This should be evident, as buying and selling with market orders in a single timestep yields a guaranteed loss as the agent is forced to cross the spread. Thus, our DPE takes the form:
+\begin{align}
+\begin{split}
+0 & = \max \Biggl\lbrace 
+%%% Only Limit Orders
+\sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^-)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \biggr] \biggr\rbrace \; ;\\
+%%% Limit Orders + Market Buy
+& \hphantom{{}={} \max \biggl\lbrace } \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ - (s + \pi)\\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- +1) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- +1)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- +1) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- + 1) -  h_k(\bz,q) \biggr] \biggr\rbrace \; ; \\
+%%% Limit Orders + Market Sell
+& \hphantom{{}={} \max \biggl\lbrace } \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ + (s - \pi) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- -1) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- -1)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- -1) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- -1) -  h_k(\bz,q) \biggr] \biggr\rbrace  \Biggr\rbrace
+\end{split}
+\end{align}
+
+We'll begin by concentrating on the first case where $M^+ = M^- = 0$. Thus, we want to solve
+\begin{equation}
+\label{eq:discretesup1}
+\begin{split}
+& \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
+(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^-)\pi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \pi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \biggr] \biggr\rbrace
+\end{split}
+\end{equation}
+
+First, some preliminary results:
+\begin{align*}
+\P [ L_k^- = 1 | K_k^+ = 1] & = e^{-\kappa \delta^-} \\
+\P [ L_k^- = 0 | K_k^+ = 1] & = 1 - e^{-\kappa \delta^-} \\
+\P [ L_k^- = 0 | K_k^+ = n] & = (1 - e^{-\kappa \delta^-})^n \\
+\P [ L_k^- = 1 | K_k^+ = n] & = 1 - (1 - e^{-\kappa \delta^-})^n \\
+\P [ K_k^+ = n] & = \frac{e^{-\lambda \Delta t} (\lambda \Delta t)^n}{n!} \\
+\end{align*}
+
+\begin{theorem}
+$\E [ L_k^- ] = \P [ L_k^- = 1] =  1 - e^{-e^{-\kappa \delta^-} \lambda \Delta t}$
+\end{theorem}
+\begin{proof}
+\begin{align*}
+\E [ L_k^- ] & = \sum_{n=0}^\infty \P [ L_k^- = 1 | K_k^+ = n] \cdot \P[K_k^+ = n] \\
+& =  \sum_{n=0}^\infty \bigl[ 1 - (1 - e^{-\kappa \delta^-})^n \bigr] \frac{e^{-\lambda \Delta t} (\lambda \Delta t)^n}{n!} \\
+& = 1 - e^{-\lambda \Delta t} \sum_{n=0}^\infty \frac{(1 - e^{-\kappa \delta^-})^n (\lambda \Delta t)^n}{n!} \\
+& = 1 - e^{-\lambda \Delta t} \sum_{n=0}^\infty \frac{(\lambda \Delta t - e^{-\kappa \delta^-}\lambda \Delta t)^n}{n!} \\
+& = 1 - e^{-\lambda \Delta t} e^{\lambda \Delta t - e^{-\kappa \delta^-} \lambda \Delta t} \\
+& = 1 - e^{- e^{-\kappa \delta^-} \lambda \Delta t}
+\end{align*}
+\end{proof}
+
+For ease of notation, we'll write the probability of the $L_k^- = 0$ event as
+\[ p(\delta^-) = e^{- e^{-\kappa \delta^-} \lambda \Delta t} \]
+and its derivative as
+\[ d(\delta^-) = \partial_{\delta^-} p(\delta^-) = \kappa \lambda \Delta t e^{-e^{-\kappa \delta^-} \lambda \Delta t - \kappa \delta^-} \]
+
+This gives us the results:
+\begin{align*}
+\P [ L_k^- = 1] & = 1 - p(\delta^-) = \E [ L_k^-] \\
+\P [ L_k^- = 0] & = p(\delta^-) \\
+\partial_{\delta^-} \P [ L_k^- = 1]  & = -d(\delta^-) \\
+\partial_{\delta^-} \P [ L_k^- = 0] & = d(\delta^-) \\
+\end{align*}
+
+Let's pre-compute some of the terms that we'll encounter in the supremum, namely the expectations of the random variables. 
+
+\begin{align}
+\E [\sgn(q + L_k^+ - L_k^-)] & = \P[L_k^- = 1] \cdot \P[L_k^+ = 1] \cdot \sgn(q) \nonumber \\
+& \quad + \P[L_k^- = 1] \cdot \P[L_k^+ = 0] \cdot \sgn(q - 1) \nonumber \\
+& \quad +  \P[L_k^- = 0] \cdot \P[L_k^+ = 1] \cdot \sgn(q+1) \nonumber \\
+& \quad + \P[L_k^- = 0] \cdot \P[L_k^+ = 0] \cdot \sgn(q) \nonumber \\
+& = (1 - p(\delta^-))(1-p(\delta^+)) \sgn(q) \nonumber \\
+& \quad + (1 - p(\delta^-)) p(\delta^+) \sgn(q - 1) \nonumber \\
+& \quad + p(\delta^-) (1-p(\delta^+))  \sgn(q+1) \nonumber \\
+& \quad + p(\delta^-) p(\delta^+)  \sgn(q) \nonumber \\
+& = \sgn(q) \bigl[ 1 - p(\delta^+) - p(\delta^-) + 2 p(\delta^+) p(\delta^-) \bigr] \nonumber \\
+& \quad + \sgn(q-1) \bigl[ p(\delta^+)  - p(\delta^+) p(\delta^-) \bigr]  \nonumber \\
+& \quad + \sgn(q+1) \bigl[ p(\delta^-)  - p(\delta^+) p(\delta^-) \bigr]  \nonumber \\
+& = \begin{cases} 
+1 & q \geq 2 \\
+1 - p(\delta^+)(1 - p(\delta^-)) & q = 1 \\
+p(\delta^-) - p(\delta^+) & q = 0 \\
+-\bigl[ 1 - p(\delta^-)(1 - p(\delta^+)) \bigr] & q = -1 \\
+-1 & q \leq -2
+\end{cases} \\
+& = \Phi(q, \delta^+, \delta^-)
+\end{align}
+Hence, we can also compute the partial derivatives of this expectation:
+\begin{align}
+\partial_{\delta^-} \Phi(q, \delta^+, \delta^-) & =  \begin{cases} 
+0 & q \geq 2 \\
+d(\delta^-)p(\delta^+) & q = 1 \\
+d(\delta^-) & q = 0 \\
+d(\delta^-)(1 - p(\delta^+))  & q = -1 \\
+0 & q \leq -2
+\end{cases} \\
+\partial_{\delta^+} \Phi(q, \delta^+, \delta^-) & =  \begin{cases} 
+0 & q \geq 2 \\
+- d(\delta^+)(1 - p(\delta^-)) & q = 1 \\
+- d(\delta^+) & q = 0 \\
+- d(\delta^+) p(\delta^-) & q = -1 \\
+0 & q \leq -2
+\end{cases}
+\end{align}
+As it'll be required for later, we'll additionally introduce the shorthand notation
+\begin{equation}
+\frac{\partial_{\delta^-} \Phi(q, \delta^+, \delta^-)}{d(\delta^-)} = \Psi(q,\delta^+)
+\end{equation}
+\begin{equation}
+\frac{\partial_{\delta^+} \Phi(q, \delta^+, \delta^-)}{d(\delta^+)} = \Upsilon(q,\delta^-)
+\end{equation}
+Recalling that we have  $\bP$ the transition matrix for the Markov Chain $\bZ$, with $\bP_{\bz, \bj} = \P[\bZ_{k+1} = \bj | \bZ_k = \bz]$, then we can also write:
+\begin{equation}
+\begin{split}
+\E[h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- )] & = \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - p(\delta^+) - p(\delta^-) + 2 p(\delta^+) p(\delta^-) \bigr]  \\
+& \hphantom{\sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q-1) \bigl[ p(\delta^+)  - p(\delta^+) p(\delta^-) \bigr]   \\
+& \hphantom{\sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q+1) \bigl[ p(\delta^-)  - p(\delta^+) p(\delta^-) \bigr] \biggr]  \\
+\end{split}
+\end{equation}
+and its partial derivatives as
+\begin{align}
+\begin{split}
+\partial_{\delta^-} \E[h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- )] & = 
+\sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ - d(\delta^-) + 2 p(\delta^+) d(\delta^-) \bigr]  \\
+& \hphantom{\sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q-1) \bigl[  - p(\delta^+) d(\delta^-) \bigr]   \\
+& \hphantom{\sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q+1) \bigl[ d(\delta^-)  - p(\delta^+) d(\delta^-) \bigr] \biggr]
+\end{split} \\
+\begin{split}
+& = d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ - 1 + 2 p(\delta^+) \bigr]  \\
+& \hphantom{d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q-1) \bigl[  - p(\delta^+) \bigr]   \\
+& \hphantom{d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q+1) \bigl[ 1  - p(\delta^+) \bigr] \biggr]
+\end{split} \\
+\begin{split}
+\partial_{\delta^+} \E[h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- )] & = 
+d(\delta^+) \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ - 1 + 2 p(\delta^-) \bigr]  \\
+& \hphantom{d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q-1) \bigl[1  - p(\delta^-) \bigr]   \\
+& \hphantom{d(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ {}+{}} + h_{k+1}(\bj, q+1) \bigl[  - p(\delta^-) \bigr] \biggr]
+\end{split}
+\end{align}
+
+Now we tackle solving the supremum in equation $\ref{eq:discretesup1}$. First we consider the first-order condition on $\delta^-$, namely that the partial derivative with respect to it must be equal to zero.
+\begin{align}
+\begin{split}
+0 & = (1-p(\delta^-)) - d(\delta^-)(s+\pi+\delta^-) + d(\delta^-)\bigr(s + \E[\eta_{0,\bz}T(\bz,\omega)^{(2)}] - \Phi(q,\delta^+,\delta^-)\pi \bigl) \\
+& \quad -\partial_{\delta^-}\Phi(q,\delta^+,\delta^-)\pi \bigl( p(\delta^-) - p(\delta^+) \bigr) - q \pi \partial_{\delta^-}\Phi(q,\delta^+,\delta^-) + d(\delta^-) \sum_\bj \bP_{\bz,\bj} \\
+& \quad \times \biggl[ h_{k+1}(\bj, q) \bigl[ - 1 + 2 p(\delta^+) \bigr]  + h_{k+1}(\bj, q-1) \bigl[  - p(\delta^+) \bigr] + h_{k+1}(\bj, q+1) \bigl[ 1  - p(\delta^+) \bigr] \biggr]
+\end{split}
+\intertext{and diving through by $d(\delta^-)$, which is nonzero, we get}
+\begin{split}
+& = \frac{1-p(\delta^-)}{d(\delta^-)} -(s+\pi+\delta^-) + \bigr(s + \E[\eta_{0,\bz}T(\bz,\omega)^{(2)}] - \Phi(q,\delta^+,\delta^-)\pi \bigl) \\
+& \quad -\pi \bigl( p(\delta^-) - p(\delta^+) \bigr)\Psi(q,\delta^+) - q \pi\Psi(q,\delta^+)\\
+& \quad + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ - 1 + 2 p(\delta^+) \bigr]   + h_{k+1}(\bj, q-1) \bigl[  - p(\delta^+) \bigr] + h_{k+1}(\bj, q+1) \bigl[ 1  - p(\delta^+) \bigr] \biggr]
+\end{split}
+\end{align}
+
+
+Re-arranging and collecting terms in $\delta^-$ on the left-hand side:
+\begin{equation}
+\begin{split}
+& \frac{1-p(\delta^-)}{d(\delta^-)} + \delta^- + \pi \Phi(q,\delta^+,\delta^-) + \pi p(\delta^-)\Psi(q,\delta^+) \\
+& = \E[\eta_{0,\bz}T(\bz,\omega)^{(2)}] + \pi\left( -1 + p(\delta^+)\Psi(q,\delta^+) - q\Psi(q,\delta^+)\right) \\
+& + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ - 1 + 2 p(\delta^+) \bigr]   + h_{k+1}(\bj, q-1) \bigl[  - p(\delta^+) \bigr] + h_{k+1}(\bj, q+1) \bigl[ 1  - p(\delta^+) \bigr] \biggr]
+\end{split}
+\end{equation}
+
+\[ \frac{1-p(\delta^-)}{d(\delta^-)} = \frac{e^{\kappa \delta^-}\left( e^{\lambda \Delta t e^{-\kappa \delta^-}} \right)}{\kappa\lambda\Delta t} \]
+
+
+\end{document}
