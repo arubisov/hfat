@@ -18,4 +18,6 @@ end
 
 delta = max(delta,0);
 
+delta(:,:,(length(newQrange)+1)/2) = NaN;
+
 end

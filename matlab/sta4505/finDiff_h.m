@@ -55,7 +55,7 @@ epsilonminustable(:,2:6) = epsilonminustable(:,2:6)./repmat(sum(epsilonminustabl
 epsilonplus = sum(repmat(epsilonplustable(:,1),1,5).*epsilonplustable(:,2:6),1)';
 epsilonminus = sum(repmat(epsilonminustable(:,1),1,5).*epsilonminustable(:,2:6),1)';
 % precompute mu(z)
-mu = lambdaplus.*epsilonplus - lambdaminus.*epsilonminus;
+mu = lambdaplus.*epsilonplus + lambdaminus.*epsilonminus;
 
 % finite scheme setup
 Qmax = 20;
@@ -63,14 +63,14 @@ Qrange = -Qmax:1:Qmax;
 Zmax = 2;
 Zrange = -Zmax:1:Zmax;
 T = 300.0;
-dt = 0.002;
+dt = 0.02;
 
 hFunc = zeros(T/dt,length(Zrange),length(Qrange));
 
 % Establish terminal condition h(T,z,q) = -alpha*q^2
 hFunc(end, :, :) = repmat(-alpha*Qrange.*Qrange,5,1);
 
-for i = (T-dt)/dt:-1:1
+for i = round((T-dt)/dt):-1:1
     dq = zeros(length(Zrange),length(Qrange));
     
     dq(:,2:end) = hFunc(i+1,:,2:end) - hFunc(i+1,:,1:end-1);

@@ -2,7 +2,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass[12pt]{article}
 \input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header. 
-
+% and optionally (as of Pgfplots 1.3): 
+\pgfplotsset{compat=newest} 
+\pgfplotsset{plot coordinates/math parser=false} 
+\newlength\figureheight 
+\newlength\figurewidth 
 %%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
@@ -178,4 +182,63 @@ Substituting this feedback control back into the $\cA^+$-restricted PDE, we obta
 where 
 \[\delta^*=0 \; \iff \; -\Delta_q h \geq \frac{1}{\kappa} + \E \left[ \epsilon^+_{0,z} \right]\]
 and $\delta^*>0$ otherwise.
+
+\section*{Numerical Solution}
+Here I explain the finite differences scheme I used to solve for $h$.
+\begin{figure}
+  \centering
+  \setlength\figureheight{.5\linewidth} 
+  \setlength\figurewidth{.5\linewidth}
+  \input{/home/anton/Documents/masc/ml/matlab/sta4505/fig126a.tikz}
+  \caption{Optimal posting depth $\delta$}
+  \label{fig:126a}
+\end{figure}
+
+\section*{Simulation}
+Here I list the parameters used for the simulation and present the results.
+\begin{figure}
+  \centering
+  \setlength\figureheight{.5\linewidth}
+  \setlength\figurewidth{.5\linewidth}
+  \input{/home/anton/Documents/masc/ml/matlab/sta4505/fig126b.tikz} 
+  \caption{Simulated inventory}
+\label{fig:126b}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \input{/home/anton/Documents/masc/ml/matlab/sta4505/fig127a.tikz}
+  \caption{Fig 1}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \input{/home/anton/Documents/masc/ml/matlab/sta4505/fig127b.tikz} 
+  \caption{Fig 2}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \input{/home/anton/Documents/masc/ml/matlab/sta4505/fig127c.tikz}
+  \caption{Fig 1}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \input{/home/anton/Documents/masc/ml/matlab/sta4505/fig127d.tikz} 
+  \caption{Fig 2}
+\end{subfigure}\\
+\caption{Comparison of Naive (red), Naive+ (blue), and Naive++ (green) trading strategies, with benchmark Midprice (black). Plotted are bookvalues against time of trading day, averaged across trading year.}
+\label{fig:127}
+\end{figure}
 \end{document}

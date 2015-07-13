@@ -6,12 +6,7 @@ global dt
 
 t = dt:dt:T;
 
-f = figure('Name','Simulation: Liquidation with Order Imbalance');
-% conf_ints = [1, 5, 10, 90, 95, 99];
-% data = reshape(param_G(row,col,:),1,10000);
-% title(sprintf(['G(' num2str(row) ',' num2str(col) ')']));
-
-subplot(2,2,1);
+figure();
 hold on
 plt_mid = plot(t, hist_S(1,:),'-k','linewidth',3 );
 plt_depth = plot(t, hist_S(1,:) + hist_d(1,:),'-g','linewidth',1.5);
@@ -48,25 +43,25 @@ hold off
 xlabel('Time', 'FontSize', 24, 'interpreter','latex');
 ylabel('Price', 'FontSize', 24, 'interpreter','latex');
 
-subplot(2,2,2);
-plot(t,hist_Q(1,:));
-xlabel('Time', 'FontSize', 24, 'interpreter','latex');
-ylabel('Inventory', 'FontSize', 24, 'interpreter','latex');
-
-subplot(2,2,3);
-plot(t,hist_d(1,:));
-xlabel('Time', 'FontSize', 24, 'interpreter','latex');
-ylabel('Delta $\delta$', 'FontSize', 24, 'interpreter','latex');
-
-subplot(2,2,4);
-plot(t,hist_Z(1,:));
-xlabel('Time', 'FontSize', 24, 'interpreter','latex');
-ylabel('Imbalance', 'FontSize', 24, 'interpreter','latex');
-
 set(gca,'fontsize',18);
 leg = legend( [plt_mid, plt_depth, plt_b_fill, plt_b_nofill, plt_s], ...
         { '$S$', '$S+\delta$', 'MO lifts offer', 'other buy MO', 'sell MO' } );
 set(leg, 'interpreter','latex','fontsize',16);
+
+figure();
+plot(t,hist_Q(1,:));
+xlabel('Time', 'FontSize', 24, 'interpreter','latex');
+ylabel('Inventory', 'FontSize', 24, 'interpreter','latex');
+
+figure();
+plot(t,hist_d(1,:));
+xlabel('Time', 'FontSize', 24, 'interpreter','latex');
+ylabel('Delta $\delta$', 'FontSize', 24, 'interpreter','latex');
+
+figure();
+plot(t,hist_Z(1,:));
+xlabel('Time', 'FontSize', 24, 'interpreter','latex');
+ylabel('Imbalance', 'FontSize', 24, 'interpreter','latex');
 
 end
 

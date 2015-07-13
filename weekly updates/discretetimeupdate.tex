@@ -143,7 +143,8 @@ with boundary condition $h_T(\bz,q) = -\alpha q^2$. Substituting this into the D
 \end{split}
 \end{align}
 Since our buy/sell market order controls are binary, the supremum over the control vector $\bu$ can be treated as a simultaneous supremum over $\delta^\pm$ and maximum over the four possible values for $M^\pm$. Notably, however, a quick substitution shows that the case where $M^+ = M^- = 1$ is not possible as it is always strictly $2\pi$ less in value than the case of only limit orders, where $M^+ = M^- = 0$. This should be evident, as buying and selling with market orders in a single timestep yields a guaranteed loss as the agent is forced to cross the spread. Thus, our DPE takes the form:
-\begin{align}
+\begin{equation}
+\label{eq:discreteDPE}
 \begin{split}
 0 & = \max \Biggl\lbrace 
 %%% Only Limit Orders
@@ -165,7 +166,7 @@ Since our buy/sell market order controls are binary, the supremum over the contr
 & \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- -1) - \sgn(q) \right) \pi \right) \\
 & \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- -1) -  h_k(\bz,q) \biggr] \biggr\rbrace  \Biggr\rbrace
 \end{split}
-\end{align}
+\end{equation}
 
 We'll begin by concentrating on the first case where $M^+ = M^- = 0$. Thus, we want to solve
 \begin{equation}

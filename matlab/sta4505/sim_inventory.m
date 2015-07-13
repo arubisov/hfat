@@ -37,13 +37,15 @@ function [ hist_Q, hist_Z, hist_S, hist_d, hist_Mb, hist_Ms, hist_Filled] = ...
 
     rng(rand_seed);
     num_bins = size(G,1);
-    hist_Q = zeros(num_paths,T/dt);
+    hist_Q = NaN(num_paths,T/dt);
     hist_Z = zeros(num_paths,T/dt);
     hist_S = zeros(num_paths,T/dt);
     hist_d = NaN(num_paths,T/dt);
     hist_Mb = NaN(num_paths,T/dt);
     hist_Ms = NaN(num_paths,T/dt);
     hist_Filled = NaN(num_paths,T/dt);
+    
+    h = waitbar(0, 'Simulating...');
     
     for path = 1 : num_paths
         % initialize
@@ -108,12 +110,13 @@ function [ hist_Q, hist_Z, hist_S, hist_d, hist_Mb, hist_Ms, hist_Filled] = ...
             
             % document everything in the hists
             hist_Q(path,t) = Q;
-            hist_Z(path,t) = Z;
-            hist_S(path,t) = S;
-            hist_d(path,t) = delta;
+            %hist_Z(path,t) = Z;
+            %hist_S(path,t) = S;
+            %hist_d(path,t) = delta;
         end
-        
+        waitbar(path / num_paths) 
     end
+    close(h)
 
 end
 
