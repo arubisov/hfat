@@ -15,3 +15,4 @@ function rho = createbins(num_bins, mu_IB, type)
                 rho(bin+1) = prctile(mu_IB, bin * 100 / num_bins);
             end
     end
+end

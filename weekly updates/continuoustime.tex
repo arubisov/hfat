@@ -1,0 +1,361 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+\newtheorem{theorem}{Theorem}
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to establish and solve the stochastic optimal control problem that 
+captures the momentum and order imbalance dynamics of the Limit Order Book 
+(LOB). The solution will yield an optimal trading strategy that will permit
+statistical arbitrage of the underlying stock, which will then be backtested on
+historical data.
+\end{quote}
+
+\section*{Continuous Time}
+Below we list the processes involved in the optimization problem:
+
+\begin{tabular}{lll}
+Imbalance \& Midprice Change & $\bZ_t = (\rho_t, \Delta_t) $ & CTMC with generator $G$ \\
+Imbalance & $\rho_t = \bZ_t^{(1)}$ & LOB imbalance at time $t$ \\
+Midprice & $S_t$ & evolves according to CTMC \\
+Midprice Change & $\Delta_t = \bZ_t^{(2)} = S_t - S_{t-s}$ & $s$ a pre-determined interval \\
+Bid-Ask half-spread & $\pi_t$ & constant? \\
+LOB Shuffling & $N_t$ & Poisson with rate $\lambda(\bZ_t)$ \\
+$\Delta\text{Price:}$ LOB shuffled & $\{ \eta_{0,z}, \eta_{1,z}, \dots \} \sim F_{z}$ & i.i.d. with $z = (k,l)$, where \\
+& & $k \in \{ \text{\#bins} \}, \; l \in \{ \Delta \$ \}$ \\
+Other Agent MOs & $K^{\pm}_t$ & Poisson with rate $\mu^{\pm}(\bZ_t)$ \\
+LO posted depth & $\delta^{\pm}_t$ & our $\cF$-predictable controlled processes \\
+Our LO fill count & $L^{\pm}_t$ & $\cF$-predictable, non-Poisson \\
+Our MOs & $M^{\pm}_t$ & our controlled counting process \\
+Our MO execution times & $\btau^\pm = \{ \tau^\pm_k : k = 1, \dots \}$ & increasing sequence of $\cF$-stopping times \\
+Cash & $X^{\btau, \delta}_t$ & depends on our processes $M$ and $\delta$ \\
+Inventory & $Q^{\btau, \delta}_t$ & depends on our processes $M$ and $\delta$ \\
+\end{tabular}
+
+$L^{\pm}_t$ are counting processes (not Poisson) satisfying the relationship that if at time $t$ we have a sell limit order posted at a depth $\delta^{-}_t$, then our fill probability is $e^{-\kappa \delta^{-}_t}$ conditional on a buy market order arriving; namely:
+\[ \P [\d L^{-}_t = 1 \, | \, \d K^+_t = 1] = e^{-\kappa \delta^{-}_t} \]
+\[ \P [\d L^{+}_t = 1 \, | \, \d K^{-}_t = 1] = e^{-\kappa \delta^{+}_t} \]
+
+The midprice $S_t$ evolves according to the Markov chain and hence is Poisson with rate $\lambda$ and jump size $\eta$, both of which depend on the state of the Markov chain. This Poisson process is all-inclusive in the sense that it accounts for any midprice change, be it from executions, cancellations, or order modifications with the LOB. Thus, the stock midprice $S_t$ evolves according to the SDE:
+\begin{equation}\label{eq:stockprocess}
+\d S_t = \eta_{N_{t^-},Z_{t^-}} \d N_t
+\end{equation}
+and additionally satisfies:
+\begin{equation}\label{eq:stockintegral} 
+S_t = S_{t_0} + \int\limits_{t_0 + s}^t \Delta_u \du
+\end{equation}
+
+In executing market orders, we assume that the size of the MOs is small enough to achieve the best bid/ask price, and not walk the book. Hence, our cash process evolves according to:
+\begin{equation}\label{eq:cashprocess}
+\begin{split}
+\d X^{\btau, \delta}_t = 	&\underbrace{(S_t + \pi_t + \delta^{-}_t) \d L^{-}_t}_{\text{sell limit order}} - \underbrace{(S_t - \pi_t - \delta^{+}_t) \d L^{+}_t}_{\text{buy limit order}} \\
+						&+ \underbrace{(S_t - \pi_t) \d M^{-}_t}_{\text{sell market order}} - \underbrace{(S_t + \pi_t) \d M^{+}_t}_{\text{buy market order}}
+\end{split}
+\end{equation}
+
+Based on our execution of limit and market orders, our inventory satisfies:
+\begin{equation}\label{eq:inventory}
+Q^{\btau, \delta}_0 = 0, \qquad Q^{\btau, \delta}_t = L^+_t + M^+_t - L^-_t - M^-_t
+\end{equation}
+
+We define a new variable for our net present value (NPV) at time $t$, call it $W^{\btau, \delta}_t$, and hence $W^{\btau, \delta}_T$ at terminal time $T$ is our `terminal wealth'. In algorithmic trading, we want to finish the trading day with zero inventory, and assume that at the terminal time $T$ we will submit a market order (of a possibly large volume) to liquidate remaining stock. Here we do not assume that we can receive the best bid/ask price - instead, the price achieved will be $(S - \mathrm{sgn}(Q)\pi - \alpha Q)$, where $\mathrm{sgn}(Q)\pi$ represents crossing the spread in the direction of trading, and $\alpha Q$ represents receiving a worse price linearly in $Q$ due to walking the book. Hence, $W^{\btau, \delta}_t$ satisfies:
+\begin{equation}
+\label{eq:terminalwealth}
+W^{\btau, \delta}_t = \underbrace{\vphantom{\left( Q^{\btau, \delta}_t) \right)}X^{\btau, \delta}_t}_{\text{cash}}+ \underbrace{Q^{\btau, \delta}_t \left( S_t - \mathrm{sgn}(Q^{\btau, \delta}_t)\pi_t \right)}_{\text{book value of assets}} - \underbrace{\alpha \left( Q^{\btau, \delta}_t \right)^2}_{\text{liquidation penalty}}
+\end{equation}
+
+The set of admissible trading strategies $\cA$ is the set of all $\cF$-stopping times and $\cF$-predictable, bounded-from-below depths $\delta$. 
+
+For deriving an optimal trading strategy, I will consider three separate performance criteria, which allow us to evaluate the performance of a given strategy:
+\begin{enumerate}[noitemsep, topsep=0pt]
+\item Profit: $H^{\btau, \delta}(\cdot) = \E \left[ W_T^{\btau, \delta} \right]\vphantom{\int\limits_t^T}$
+\item Profit with risk aversion: $H^{\btau, \delta}(\cdot) = \E \left[ - e^{-\gamma W_T^{\btau, \delta}} \right] $
+\item Profit with running inventory penalty: $H^{\btau, \delta}(\cdot) = \E \left[  W_T^{\btau, \delta}  - \varphi \int\limits_t^T \left( Q^{\btau, \delta}_u \right)^2 \du  \right]$
+\end{enumerate}
+
+In each of the cases, the value function is given by
+\begin{equation}\label{eq:valuefunction}
+H(t,x,s,\bz,q) = \sup\limits_{\btau \in \mathcal{T}_{[t,T]}} \sup\limits_{\delta \in \cA_{[t,T]}} H^{\btau, \delta}(t,x,s,\bz,q)
+\end{equation}
+
+\subsection*{Dynamic Programming Principle for Optimal Stopping and Control}
+\begin{theorem}
+If an agent's performance criteria for a given admissible control $\bu$ and admissible stopping time $\tau$ are given by
+\[ H^{\tau, \bu}(t,\bx) = \E_{t,\bx} [ G (X^{\bu}_\tau)] \]
+and the value function is
+\[ H(t,\bx) = \sup\limits_{\tau \in \mathcal{T}_{[t,T]}} \sup\limits_{\bu \in \cA_{[t,T]}} H^{\tau, \bu}(t,\bx) \]
+then the value function satisfies the Dynamic Programming Principle
+\begin{equation}
+\label{eq:thmDPP}
+H(t,\bx) = \sup\limits_{\tau \in \mathcal{T}_{[t,T]}} \sup\limits_{\bu \in \cA_{[t,T]}} \E_{t,\bx} \left[ G (X^{\bu}_\tau) \indicator_{\tau<\theta} + H(\theta, X^{\bu}_\theta)\indicator_{\tau \geq \theta} \right]
+\end{equation}
+for all $(t,\bx) \in [0,T] \times \R^m$ and all stopping times $\theta \leq T$.
+\end{theorem}
+
+\subsection*{Dynamic Programming Equation for Optimal Stopping and Control}
+\begin{theorem}
+Assume that the value function $H(t,\bx)$ is once differentiable in $t$, all second-order derivatives in $\bx$ exist, and that \myfunction{G}{\R^m}{\R} is continuous. Then $H$ solves the quasi-variational inequality
+\begin{equation}
+\label{eq:thmDPE}
+\max \left\lbrace \partial_t H + \sup \limits_{\bu \in \cA_t} \cL^{\bu}_t H \; ; \; G - H \right\rbrace = 0
+\end{equation}
+on $\mathcal{D}$, where $\mathcal{D} = [0,T] \times \R^m$.
+\end{theorem}
+
+\subsection*{Maximizing Profit}
+Ok let's get to business. We need to solve the DPE that results from using the first performance criteria in our value function. So our $G$ function is exactly our NPV term $W$, and really the work comes from finding the infinitesimal generator for the processes. Let's get on it.
+
+The quasi-variational inequality in equation \ref{eq:thmDPE} can be interpreted as follows: the max operator is choosing between posting limit orders or executing market orders; the second term, $G-H$, is the stopping region and represents the value derived from executing a market order; and the first term is the continuation region, representing the value of posting limit orders. We'll use the shorthand $H(\cdot) = H(t,x,s,\bz,q)$ and solve for $\d H$ inside the continuation region, hence $\d M^{\pm} = 0$, in order to then extract out the infinitesimal generator.
+
+\begin{align*}
+\d H (t,x,s,\bz,q) & = \sum\limits_i \partial_{x_i} H \dx_i \\
+& = \partial_t H \dt + \partial_{K^{\pm}} H \d {K^{\pm}} + \partial_{\bZ} H \d {\bZ} \\
+& = \partial_t H \dt + \bigl\lbrace e^{ -\kappa \delta^{-}} \E \bigl[ H(t,x+(s+\pi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \bigr\rbrace \d K^+\\
+& \hphantom{{}={} \partial_t H \dt} + \bigl\lbrace e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\pi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \bigr\rbrace \d K^-\\
+& \hphantom{{}={}} + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} \E \left[ H(t,x,s+\mathrm{sgn}(l)\eta_{0,\bz},\bz+(k,l),q) - H(\cdot) \right] \d Z_{\bz,(k,l)}
+\end{align*}
+Substitute in the following identities for the compensated processes
+\begin{align*} 
+\d M^{\pm} & = \d \tilde{K}^{\pm} + \mu^{\pm}(\bz) \dt \\
+\d Z_{\bz,(k,l)}  & = \d \tilde{Z}_{\bz,(k,l)}  + G_{\bz,(k,l)} \dt 
+\end{align*}
+\begin{align*}
+{}\phantom{\d H (t,x,s,\bz,q)} & = \partial_t H \dt + \biggl\lbrace \mu^+(\bz) e^{ -\kappa \delta^{-}} \E \bigl[ H(t,x+(s+\pi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \\
+& \hphantom{{}={} \partial_t H \dt +} + \mu^-(\bz) e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\pi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \\
+& \hphantom{{}={}} + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \E \left[ H(t,x,s+\mathrm{sgn}(l)\eta_{0,\bz},\bz+(k,l),q) - H(\cdot) \right]  \biggr\rbrace \dt \\
+& \hphantom{{}={} \partial_t H \dt} + \bigl\lbrace e^{ -\kappa \delta^{-}} \E \bigl[ H(t,x+(s+\pi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \bigr\rbrace \d \tilde{K}^+\\
+& \hphantom{{}={} \partial_t H \dt} + \bigl\lbrace e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\pi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \bigr\rbrace \d \tilde{K}^-\\
+& \hphantom{{}={}} + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} \E \left[ H(t,x,s+\mathrm{sgn}(l)\eta_{0,\bz},\bz+(k,l),q) - H(\cdot) \right] \d \tilde{Z}_{\bz,(k,l)}\
+\end{align*}
+From which we can see that the infinitesimal generator is given by
+\begin{equation}
+\label{eq:infgen}
+\begin{split}
+\cL^{\delta}_t H & = \mu^+(\bz) e^{ -\kappa \delta^{-}} \E \bigl[ H(t,x+(s+\pi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \\
+& \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\pi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \E \left[ H(t,x,s+\mathrm{sgn}(l)\eta_{0,\bz},\bz+(k,l),q) - H(\cdot) \right] 
+\end{split}
+\end{equation}
+Now, our DPE has the form
+\begin{equation}
+\label{eq:DPEmaxprofit}
+\begin{split}
+\max \biggl\lbrace \partial_t H + \sup \limits_{\bu \in \cA_t} \cL^{\bu}_t H \; ; \; & H(t,x-(s+\pi), s, \bz, q+1) - H(\cdot) \; ; \\
+&  H(t,x+(s-\pi), s, \bz, q-1) - H(\cdot) \biggr\rbrace = 0
+\end{split}
+\end{equation}
+with boundary conditions
+\begin{align}
+H(T, x, s, \bz, q) & = x + q(s - \mathrm{sgn}(q)\pi) - \alpha q^2 \\
+H(T, x, s, \bz, 0) & = x
+\end{align}
+The three terms over which we are maximizing represent the continuation regions and stopping regions of the optimization problem. The first term, the continuation region, represents the limit order controls; the second and third terms, each a stopping region, represent the value gain from executing a buy market order and a sell market order, respectively.
+
+Let's introduce the ansatz $H(\cdot) = x + q(s - \mathrm{sgn}(q)\pi) + h(t,\bz,q)$. The first two terms are the wealth plus book value of assets, hence a mark-to-market of the current position, whereas the $h(t,\bz,q)$ captures value due to the optimal trading strategy. The corresponding boundary conditions on $h$ are
+\begin{align}
+h(T, \bz, q) & = - \alpha q^2 \\
+h(T, \bz, 0) & = 0
+\end{align}
+Substituting this ansatz into equation \ref{eq:infgen}, we get:
+\begin{align*}
+\cL^{\delta}_t H & = \mu^+(\bz) e^{ -\kappa \delta^{-}} \bigl[ \delta^- + \pi [ 1 + \mathrm{sgn}(q-1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q-1) ) ] + h(t,\bz,q-1) - h(t,\bz,q) \bigr] \\
+& \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} \bigl[ \delta^+ + \pi [ 1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) ) ] + h(t,\bz,q+1) - h(t,\bz,q) \bigr] \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \left[ ql \E \left[ \eta_{0,\bz} \right] + h(t,(k,l),q) - h(t,\bz,q) \right] 
+\end{align*}
+
+In the DPE, the first term requires finding the supremum over all $\delta^\pm$ of the infinitesimal generator. For this we can set the partial derivatives with respect to both $\delta^+$ and $\delta^-$ equal to zero to solve for the optimal posting depth. For $\delta^+$ we get:
+\begin{align*}
+0 & = \partial_{\delta^+} \biggl[ e^{ -\kappa \delta^{+}} \bigl[ \delta^+ + \pi [ 1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) ) ] + h(t,\bz,q+1) - h(t,\bz,q) \bigr] \biggr] \\
+& = -\kappa e^{ -\kappa \delta^{+}} \bigl[ \delta^+ + \pi [ 1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) ) ] + h(t,\bz,q+1) - h(t,\bz,q) \bigr] + e^{ -\kappa \delta^{+}} \\
+& = e^{ -\kappa \delta^{+}} \bigl[ -\kappa \bigl( \delta^+ + \pi [ 1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) ) ] + h(t,\bz,q+1) - h(t,\bz,q) \bigr) + 1 \bigr] \\
+\intertext{Since $e^{ -\kappa \delta^{+}}>0$, the term inside the square braces must be equal to zero:}
+0 & = -\kappa \bigl( \delta^+ + \pi [ 1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) ) ] + h(t,\bz,q+1) - h(t,\bz,q) \bigr) + 1 \\
+{\delta^+}^* & = \frac{1}{\kappa} - \pi [ 1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) ) ] - h(t,\bz,q+1) + h(t,\bz,q) 
+\end{align*}
+We can further simplify the factor of $\pi$.
+\begin{align*}
+1 - \mathrm{sgn}(q+1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q+1) )  & = 
+1 - (- \indicator_{q \leq -2} + \indicator_{q \geq 0}) +  \indicator_{q = -1} \\
+& = 1 + ( \indicator_{q \leq -1} -  \indicator_{q \geq 0} )\\
+& = 2 \cdot \indicator_{q \leq -1}
+\end{align*}
+Thus, we find that the optimal buy limit order posting depth can be written in feedback form as
+\begin{equation}
+\label{eq:optbuydepthfeedback}
+{\delta^+}^* = \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \leq -1} - h(t,\bz,q+1) + h(t,\bz,q) 
+\end{equation}
+We can follow similar steps to solve for the optimal sell limit order posting depth
+\begin{equation}
+\label{eq:optselldepthfeedback}
+{\delta^-}^* = \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \geq 1} - h(t,\bz,q-1) + h(t,\bz,q) 
+\end{equation}
+Turning our attention to the stopping regions of the DPE, we can use the ansatz to simplify the expressions:
+\begin{align*}
+H(t,x-(s+\pi), s, \bz, q+1) - H(\cdot) & = x - s - \pi + (q+1)(s - \sgn(q+1)\pi) + h(t, \bz, q+1) \\
+& \quad - \bigl[ x + q(s - q\sgn(q)\pi) + h(t,\bz,q) \bigr] \\
+& = -\pi \bigl[ (q+1)\sgn(q+1) - q\sgn(q) + 1 \bigr] + h(t, \bz, q+1) - h(t,\bz,q)  \\
+& = - 2 \pi \cdot \indicator_{q \geq 0} + h(t, \bz, q+1) - h(t,\bz,q) \\
+\intertext{and}
+H(t,x+(s-\pi), s, \bz, q-1) - H(\cdot) & = x + s - \pi + (q-1)(s - \sgn(q-1)\pi) + h(t, \bz, q-1)\\
+& \quad - \bigl[ x + q(s - q\sgn(q)\pi) + h(t,\bz,q) \bigr] \\
+& = - \pi \bigl[ (q-1)\sgn(q-1) - q\sgn(q) + 1 \bigr] + h(t, \bz, q-1) - h(t,\bz,q)  \\
+& = -2 \pi \cdot \indicator_{q \leq 0} + h(t, \bz, q-1) - h(t,\bz,q) \\ 
+\end{align*}
+Substituting all these results into the DPE, we find that $h$ satisfies
+\begin{equation}\label{eq:PDEcase1}
+\begin{split}
+0 = \max \biggl\lbrace & \partial_t h + \mu^+(\bz) \frac{1}{\kappa} e^{ -\kappa \left( \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \geq 1} - h(t,\bz,q-1) + h(t,\bz,q)  \right)} \\
+& \quad + \mu^-(\bz) \frac{1}{\kappa} e^{ -\kappa \left( \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \leq -1} - h(t,\bz,q+1) + h(t,\bz,q) \right)} \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \left[ ql \E \left[ \eta_{0,\bz} \right] + h(t,(k,l),q) - h(t,\bz,q) \right] \; ; \\
+& -2 \pi \cdot \indicator_{q \geq 0} + h(t, \bz, q+1) - h(t,\bz,q)   \; ; \\
+& -2 \pi \cdot \indicator_{q \leq 0} + h(t, \bz, q-1) - h(t,\bz,q)  \biggr\rbrace
+\end{split}
+\end{equation}
+Looking at the simplified feedback form in the stopping region, we see that a buy market order will be executed at time $\tau^+_q$ whenever
+\begin{equation}
+\label{eq:buyMOfeedbackcase1}
+h(\tau^+_q, \bz, q+1) - h(\tau^+_q,\bz,q) = 2 \pi \cdot \indicator_{q \geq 0}
+\end{equation}
+In particular, with negative inventory, we will execute a buy market order so long as it does not change our value function; and with zero or positive inventory, only if it increases the value function by the value of the spread. The opposite holds for sell market orders. Together, these indicate a penchant for using market orders to drive inventory levels back toward zero when it has no effect on value, and using them to gain extra value only when the expected gain is equal to the size of the spread. This is reminiscent of what we saw in the exploratory data analysis: if a stock is worth $S$, we can purchase it at $S+\pi$ and immediately be able to sell it at $S-\pi$, at a loss of $2 \pi$; this was the most significant source of loss in the naive trading market order strategy. Hence we need to expect our value to increase by at least $2\pi$ when executing market orders for gain.
+
+Our optimal posting depths ${\delta^\pm}^*$ can turn out to be negative with the above calculations, which unlike in the optimal liquidation problem, is permissible: in this framework there is a bid-ask spread of $2\pi$, so we can post at depths that are more aggressive than at-the-touch without yet triggering a market order - specifically, rather than ${\delta^\pm}^* \geq 0$, we have ${\delta^\pm}^* \geq -2\pi$. Further we see that when we are in the continuation region, the equality in equation \ref{eq:buyMOfeedbackcase1} is replaced with a $\leq$. Noting the feedback form of our optimal buy limit order depth given in equation \ref{eq:optbuydepthfeedback}, we thereby obtain a lower bound on our posting depths given by
+\begin{align*}
+{\delta^+}^* & = \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \leq -1} - h(t,\bz,q+1) + h(t,\bz,q) \\
+& \geq \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \leq -1} - 2 \pi \cdot \indicator_{q \geq 0} \\
+& = \frac{1}{\kappa} - 2\pi
+\end{align*}
+Combined with the identical conditions on the sell depth, we have the lower bound condition
+\begin{equation}
+\label{eq:deltaslowerboundcase1}
+\boxed{ {\delta^\pm}^* \geq \frac{1}{\kappa} - 2\pi }
+\end{equation}
+
+TODO: Why is the upper-bound on $\delta$ equal to $1/\kappa$?
+
+TODO: fix simulation to implement this bound. 
+
+
+
+\subsection*{Case 2: Max Terminal Wealth with Risk Aversion}
+Our second possible performance criteria was given by:
+\begin{enumerate}[noitemsep, topsep=0pt]
+\item[2.] Profit with risk aversion: $H^{\btau, \delta}(\cdot) = \E \left[ - e^{-\gamma W_T^{\btau, \delta}} \right] $
+\end{enumerate}
+Note how this performance criteria behaves: for large terminal wealth, we have $H \rightarrow 0^-$. In contrast, with negative wealth, we have $H \rightarrow -\infty$. Hence, this performance criteria disproportionately penalizes negative terminal wealth. In this case, the DPE (\ref{eq:DPEmaxprofit}) is unchanged, but the boundary conditions are now given by
+\begin{subequations}
+\begin{align}
+H(T, x, s, \bz, q) & = -e^{-\gamma(x + q(s - \mathrm{sgn}(q)\pi) -\alpha q^2)} \\
+H(T, x, s, \bz, 0) & = -e^{-\gamma x}
+\end{align}
+\end{subequations}
+We introduce a modified ansatz in order to solve this DPE:
+\begin{equation}
+\label{eq:ansatzHcase2}
+H(\cdot) = -e^{-\gamma(x + q(s - \mathrm{sgn}(q)\pi) + h(t,\bz,q))}
+\end{equation}
+where, as before, $h(T,\bz,q) = -\alpha q^2$ and $h(T,\bz,0) = 0$.
+
+Substituting this ansatz into the DPE, we can simplify the expressions through factoring:
+\begin{align*}
+0 = \max \biggl\lbrace & \partial_t H + \sup \limits_{\delta \in \cA} \bigl\lbrace \mu^+(\bz) e^{ -\kappa \delta^{-}} \bigl[ H(t,x+(s+\pi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \\
+& \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} \bigl[ H(t,x-(s-\pi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \E \left[ H(t,x,s+l\eta_{0,\bz},(k,l),q) - H(\cdot) \right] \bigr\rbrace \; ; \\
+& H(t,x-(s+\pi), s, \bz, q+1) - H(\cdot) \; ; \\
+&  H(t,x+(s-\pi), s, \bz, q-1) - H(\cdot) \biggr\rbrace \\
+\phantom{0 {}={}} = \max \biggl\lbrace & (-H)\gamma \partial_t h + \sup \limits_{\delta \in \cA} \bigl\lbrace \mu^+(\bz) e^{ -\kappa \delta^{-}} (-H) \bigl[ 1 - e^{-\gamma(\pi + \delta^- + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q))} \bigr] \\
+& \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} (-H) \bigl[ 1 - e^{-\gamma(\pi + \delta^+ - \sgn(q)\pi + h(t,\bz,q+1) - h(t,\bz,q))} \bigr] \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} (-H) \E \left[ 1 - e^{-\gamma(ql\eta_{0,\bz} + h(t,(k,l),q) - h(t,\bz,q))} \right] \bigr\rbrace \; ; \\
+& (-H) \bigl[ 1- e^{-\gamma(-\pi - \sgn(q)\pi + h(t,\bz,q+1) - h(t,\bz,q)) } \bigr] \; ; \\
+&  (-H) \bigl[ 1- e^{-\gamma(-\pi + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q)) } \bigr] \biggr\rbrace
+\end{align*}
+Since $(-H)$ appears in every term, and $H \neq 0$, it can be divided out of the equation. We now turn to solving the supremum, in the usual way of the first-order condition:
+\begin{subequations}
+\begin{align}
+\label{eq:optdepthfeedbackcase2}
+0 & = \partial_{\delta^-}\biggl\lbrace e^{ -\kappa \delta^{-}} \bigl[ 1 - e^{-\gamma(\pi + \delta^- + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q))} \bigr] \biggr\rbrace \nonumber \\
+& = -\kappa e^{ -\kappa \delta^{-}} + e^{-\gamma(\pi + \delta^- + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q)) -\kappa \delta^-} (\gamma + \kappa) \nonumber \\
+& = -\kappa + ( \gamma + \kappa ) e^{-\gamma(\pi + \delta^- + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q))} \nonumber \\
+\intertext{by dividing through by $e^{-\kappa \delta^-}$, which is nonzero. Thus:}
+-\ln\left( \frac{\kappa}{\gamma + \kappa} \right) & = \gamma \left( \pi + \delta^- + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q) \right) \nonumber \\
+{\delta^-}^* & = \frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right) - \pi - \sgn(q)\pi + h(t,\bz,q) - h(t,\bz,q-1) \\
+\intertext{And similarly, we obtain}
+{\delta^+}^* & = \frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right) - \pi + \sgn(q)\pi + h(t,\bz,q) - h(t,\bz,q+1)
+\end{align}
+\end{subequations}
+Substituting this feedback form for the optimal depths back into the DPE, we obtain the final form of the QVI:
+\begin{align}
+\begin{split}
+0 = \max \biggl\lbrace & \gamma \partial_t h + \mu^+(\bz) e^{ -\kappa{\delta^-}^*} \bigl[ 1 - e^{-\gamma\left(\frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right)\right)} \bigr] \\
+& \quad + \mu^-(\bz) e^{ -\kappa {\delta^+}^*} \bigl[ 1 - e^{-\gamma \left( \frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right) \right)} \bigr] \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \E \left[ 1 - e^{-\gamma(ql\eta_{0,\bz} + h(t,(k,l),q) - h(t,\bz,q))} \right] \; ; \\
+& \bigl[ 1- e^{-\gamma(-\pi - \sgn(q)\pi + h(t,\bz,q+1) - h(t,\bz,q)) } \bigr] \; ; \\
+& \bigl[ 1- e^{-\gamma(-\pi + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q)) } \bigr] \biggr\rbrace
+\end{split}\\
+\begin{split}
+\label{eq:PDEcase2}
+= \max \biggl\lbrace & \partial_t h + \mu^+(\bz) \left( \frac{1}{\kappa + \gamma} \right) e^{ -\kappa\left( \frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right) - \pi - \sgn(q)\pi + h(t,\bz,q) - h(t,\bz,q-1) \right)}  \\
+& \quad + \mu^-(\bz) \left( \frac{1}{\kappa + \gamma} \right) e^{ -\kappa \left( \frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right) - \pi + \sgn(q)\pi + h(t,\bz,q) - h(t,\bz,q+1) \right)} \\
+& \quad + \frac{1}{\gamma} \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \E \left[ 1 - e^{-\gamma(ql\eta_{0,\bz} + h(t,(k,l),q) - h(t,\bz,q))} \right] \; ; \\
+& \bigl[ 1- e^{-\gamma(-\pi - \sgn(q)\pi + h(t,\bz,q+1) - h(t,\bz,q)) } \bigr] \; ; \\
+& \bigl[ 1- e^{-\gamma(-\pi + \sgn(q)\pi + h(t,\bz,q-1) - h(t,\bz,q)) } \bigr] \biggr\rbrace
+\end{split}
+\end{align}
+We see then that we enter the buy market order stopping region at time $\tau_q^+$ when $h$ satisfies the equality
+\begin{align}
+0 = 1- e^{-\gamma(-\pi - \sgn(q)\pi + h(t,\bz,q+1) - h(t,\bz,q)) } \\
+\label{eq:buyMOfeedbackcase2}
+\iff \; \boxed{ h(\tau^+_q, \bz, q+1) - h(\tau^+_q,\bz,q) = \pi + \sgn(q) \pi }
+\end{align}
+This is nearly identical to the condition found in the Maximum Profit case, and in fact only differs in behaviour at $q=0$. Similarly, in the continuation region, we have
+\begin{align}
+0 & \geq 1- e^{-\gamma(-\pi - \sgn(q)\pi + h(t,\bz,q+1) - h(t,\bz,q)) } \\
+0 & \geq -\pi - \sgn(q)\pi + h(t,\bz,q+1) - h(t,\bz,q) \\
+h(t,\bz,q) - h(t,\bz,q+1) & \geq -\pi - \sgn(q)\pi \\
+\intertext{so we find that the imposed lower bound on the optimal posting depth is}
+{\delta^+}^* & = \frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right) - \pi + \sgn(q)\pi + h(t,\bz,q) - h(t,\bz,q+1) \nonumber \\
+& \geq \frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right) - 2\pi
+\end{align}
+Again, combined with the identical conditions on the sell depth, we have the lower bound condition
+\begin{equation}
+\label{eq:deltaslowerboundcase1}
+\boxed{ {\delta^\pm}^* \geq \frac{1}{\gamma} \ln \left( 1 + \frac{\gamma}{\kappa}\right) - 2\pi }
+\end{equation}
+
+TODO: Insert some commentary of some sort on the relevance/implication of all this.
+
+\subsection*{Case 3: Max Terminal Wealth with Running Inventory Penalty}
+\begin{enumerate}[noitemsep, topsep=0pt]
+\item[3.] Profit with running inventory penalty: $H^{\btau, \delta}(\cdot) = \E \left[  W_T^{\btau, \delta}  - \varphi \int\limits_t^T \left( Q^{\btau, \delta}_u \right)^2 \du  \right]$
+\end{enumerate}
+In this case, our boundary conditions are unchanged, but a $-\varphi q^2$ term does percolate down to the DPE. Hence, our value function $H$ is now the solution to
+\begin{equation}
+\label{eq:DPEcase3}
+\begin{split}
+0 = \max \biggl\lbrace \partial_t H - \varphi q^2 + \sup \limits_{\delta \in \cA} \cL^{\delta}_t H \; ; \; & H(t,x-(s+\pi), s, \bz, q+1) - H(\cdot) \; ; \\
+&  H(t,x+(s-\pi), s, \bz, q-1) - H(\cdot) \biggr\rbrace
+\end{split}
+\end{equation}
+It can easily be verified that the analysis otherwise proceeds unchanged using the same ansatz as in the first case, and we produce the same optimal posting depths and MO execution criteria. In turn, we find that $h$ satisfies the quasi-variational inequality
+\begin{equation}\label{eq:PDEcase3}
+\begin{split}
+0 = \max \biggl\lbrace & \partial_t h -\varphi q^2 + \mu^+(\bz) \frac{1}{\kappa} e^{ -\kappa \left( \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \geq 1} - h(t,\bz,q-1) + h(t,\bz,q)  \right)} \\
+& \quad + \mu^-(\bz) \frac{1}{\kappa} e^{ -\kappa \left( \frac{1}{\kappa} - 2 \pi \cdot \indicator_{q \leq -1} - h(t,\bz,q+1) + h(t,\bz,q) \right)} \\
+& \quad + \sum_{k\in P} \sum_{l \in \{-1,0,1\}} G_{\bz,(k,l)} \left[ ql \E \left[ \eta_{0,\bz} \right] + h(t,(k,l),q) - h(t,\bz,q) \right] \; ; \\
+& -2 \pi \cdot \indicator_{q \geq 0} + h(t, \bz, q+1) - h(t,\bz,q)   \; ; \\
+& -2 \pi \cdot \indicator_{q \leq 0} + h(t, \bz, q-1) - h(t,\bz,q)  \biggr\rbrace
+\end{split}
+\end{equation}
+
+\end{document}

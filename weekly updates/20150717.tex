@@ -1,0 +1,89 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+\newtheorem{theorem}{Theorem}
+\usepackage{hyperref}
+\allowdisplaybreaks
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to establish and solve the stochastic optimal control problem that 
+captures the momentum and order imbalance dynamics of the Limit Order Book 
+(LOB). The solution will yield an optimal trading strategy that will permit
+statistical arbitrage of the underlying stock, which will then be backtested on
+historical data.
+\end{quote}
+
+\section*{Progress Timeline}
+\begin{table}[H]
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\fooo}{\color{LightSteelBlue3}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{9cm} !{\fooo} >{\raggedright\arraybackslash}p{5cm}} 
+\multicolumn{1}{@{\,}r <{\hskip 9pt}}{DATE} & \multicolumn{1}{l}{THESIS} & \multicolumn{1}{l}{STA4505} \\
+\hline
+\st{Dec 2014} & \st{Complete CTMC calibration} \\
+\st{Dec 2014} & \st{Backtest naive strategies based on CTMC} & \\
+\st{Jan-May} & \st{Study stochastic controls: ECE1639, STA4505} & \\
+\st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
+\st{Jun 12} & \st{Establish performance criteria} & \st{Exam Study} \\
+\st{Jun 15} & \st{Derive DPP/DPE} & \st{EXAM} \\
+\st{Jun 19} & \st{Derive DPP/DPE} &  \\
+\st{Jun 26} & \st{Derive continuous-time equations} & \\
+\st{Jul 3} & \st{Derive discrete-time equations} & \\
+\st{Jul 10} & \st{Set up MATLAB numerical integration} &  \\
+Jul 17 & Integrate functions and plot dynamics & \st{Integrate and analyze} \\
+Jul 24 & More dynamics, and calib/choose parameters & \\
+Jul 31 & Backtest on historical data & \st{Simulate results} \\
+Aug 7 & More backtesting, comparing with previous & \\
+Aug 14 & Dissertation writeup / buffer & Project writeup \\
+Aug 21 & Dissertation writeup / buffer &  \\
+Aug 28 & Dissertation writeup & Presentation \\
+\end{tabular}
+\end{table}
+
+\newpage
+\section*{Whiteboard Inspirational Quote of the Week}
+\begin{quote}
+\textit{Solving a problem for which you know there's an answer is like climbing a mountain with a guide, along a trail someone else has laid. In mathematics, the truth is somewhere out there in a place no one knows, beyond all the beaten paths. And it's not always at the top of the mountain. It might be in a crack on the smoothest cliff or somewhere deep in the valley.} \\-- Yoko Ogawa, \textit{The Housekeeper and the Professor}
+\end{quote} 
+
+\section*{For Our Readers in the Middle East...}
+
+
+\section*{The Academic Week in Review}
+This week we develop numerical solutions for the simplified dynamic programming equations, and thus solve for the unknown ansantz functions $h$. Generally speaking, we will use an explicit finite difference scheme to solve the differential equations, and a cutoff method for evaluating the the quasi-variational inequality. These two methods are explained in greater detail below.
+\begin{equation}
+\label{eq:discreteDPE}
+\begin{split}
+h_k(\bz,q) & = \max \Biggl\lbrace 
+%%% Only Limit Orders
+q\E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] + \frac{1}{\kappa}(p({\delta^+}^*)+p({\delta^-}^*)) -2\pi p({\delta^+}^*)p({\delta^-}^*) \indicator_{q=0} \\ 
+& \hphantom{{}={} \max \biggl\lbrace {}+{}} + p({\delta^+}^*)p({\delta^-}^*)\sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \right] \\
+& \hphantom{{}={} \max \biggl\lbrace {}+{}} + \sum_{\bj} \bP_{\bz,\bj} h_{k+1}(\bj,q)  \; ;\\
+%%% Limit Orders + Market Buy
+& \hphantom{{}={} \max \biggl\lbrace} (q+1)\E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] + \frac{1}{\kappa}(p({\delta_{2}^+}^*)+p({\delta_{2}^-}^*)) -2\pi p({\delta_{2}^+}^*)p({\delta_{2}^-}^*) \indicator_{q=-1} \\ 
+& \hphantom{{}={} \max \biggl\lbrace {}+{}} + p({\delta_{2}^+}^*)p({\delta_{2}^-}^*)\sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q) + h_{k+1}(\bj, q+2) -2 h_{k+1}(\bj, q+1)  \right] \\
+& \hphantom{{}={} \max \biggl\lbrace {}+{}} + \sum_{\bj} \bP_{\bz,\bj} h_{k+1}(\bj,q+1) \; ;\\
+%%% Limit Orders + Market Sell
+& \hphantom{{}={} \max \biggl\lbrace} (q-1)\E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] + \frac{1}{\kappa}(p({\delta_3^+}^*)+p({\delta_3^-}^*)) -2\pi p({\delta_3^+}^*)p({\delta_3^-}^*) \indicator_{q=1} \\ 
+& \hphantom{{}={} \max \biggl\lbrace {}+{}} + p({\delta_3^+}^*)p({\delta_3^-}^*)\sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-2) + h_{k+1}(\bj, q) -2 h_{k+1}(\bj, q-1)  \right] \\
+& \hphantom{{}={} \max \biggl\lbrace {}+{}} + \sum_{\bj} \bP_{\bz,\bj} h_{k+1}(\bj,q-1)  \Biggr\rbrace
+\end{split}
+\end{equation}
+
+We now have an explicit means of numerically solving for the optimal posting depths. Since we know the function $h$ at the terminal timestep $T$, we can take one step back to $T-1$ and solve for each of the optimal posting depths in each of the cases. With these values we are then able to calculate the value function $h_{T-1}$, and in doing so determine whether to execute market orders in addition to posting limit orders (essentially taking the $\argmax$ instead of the $\max$ in equation \ref{eq:discreteDPE}). This process then repeats for each step backward.
+\section*{Looking Ahead}
+
+\end{document}
