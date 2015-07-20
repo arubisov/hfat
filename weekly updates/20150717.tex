@@ -43,10 +43,10 @@ historical data.
 \st{Jun 26} & \st{Derive continuous-time equations} & \\
 \st{Jul 3} & \st{Derive discrete-time equations} & \\
 \st{Jul 10} & \st{Set up MATLAB numerical integration} &  \\
-Jul 17 & Integrate functions and plot dynamics & \st{Integrate and analyze} \\
+\st{Jul 17} & \st{Integrate functions and plot dynamics} & \st{Integrate and analyze} \\
 Jul 24 & More dynamics, and calib/choose parameters & \\
 Jul 31 & Backtest on historical data & \st{Simulate results} \\
-Aug 7 & More backtesting, comparing with previous & \\
+Aug 7 & Backtest, comparing with naive strategies & \\
 Aug 14 & Dissertation writeup / buffer & Project writeup \\
 Aug 21 & Dissertation writeup / buffer &  \\
 Aug 28 & Dissertation writeup & Presentation \\
@@ -60,30 +60,16 @@ Aug 28 & Dissertation writeup & Presentation \\
 \end{quote} 
 
 \section*{For Our Readers in the Middle East...}
-
+my friend...it's been quite the week, a weak week but still a week, and I'm sorry that contained here within is perhaps the most disappointing TMW to date. a mixed bag of responsibility for this state of affairs - on the one hand i spent a considerable amount of time doing pan am games stuff, which i have absolutely no regrets about; and on the other i had that really disappointing realization that shit was fucked which took about two full days out, largely just trying to destress and await further instruction from the overlord sebastian himself. so as mentioned we're back on trajectory by just fudging things a little bit, and one way or another this'll produce some solid results.
 
 \section*{The Academic Week in Review}
-This week we develop numerical solutions for the simplified dynamic programming equations, and thus solve for the unknown ansantz functions $h$. Generally speaking, we will use an explicit finite difference scheme to solve the differential equations, and a cutoff method for evaluating the the quasi-variational inequality. These two methods are explained in greater detail below.
-\begin{equation}
-\label{eq:discreteDPE}
-\begin{split}
-h_k(\bz,q) & = \max \Biggl\lbrace 
-%%% Only Limit Orders
-q\E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] + \frac{1}{\kappa}(p({\delta^+}^*)+p({\delta^-}^*)) -2\pi p({\delta^+}^*)p({\delta^-}^*) \indicator_{q=0} \\ 
-& \hphantom{{}={} \max \biggl\lbrace {}+{}} + p({\delta^+}^*)p({\delta^-}^*)\sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \right] \\
-& \hphantom{{}={} \max \biggl\lbrace {}+{}} + \sum_{\bj} \bP_{\bz,\bj} h_{k+1}(\bj,q)  \; ;\\
-%%% Limit Orders + Market Buy
-& \hphantom{{}={} \max \biggl\lbrace} (q+1)\E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] + \frac{1}{\kappa}(p({\delta_{2}^+}^*)+p({\delta_{2}^-}^*)) -2\pi p({\delta_{2}^+}^*)p({\delta_{2}^-}^*) \indicator_{q=-1} \\ 
-& \hphantom{{}={} \max \biggl\lbrace {}+{}} + p({\delta_{2}^+}^*)p({\delta_{2}^-}^*)\sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q) + h_{k+1}(\bj, q+2) -2 h_{k+1}(\bj, q+1)  \right] \\
-& \hphantom{{}={} \max \biggl\lbrace {}+{}} + \sum_{\bj} \bP_{\bz,\bj} h_{k+1}(\bj,q+1) \; ;\\
-%%% Limit Orders + Market Sell
-& \hphantom{{}={} \max \biggl\lbrace} (q-1)\E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] + \frac{1}{\kappa}(p({\delta_3^+}^*)+p({\delta_3^-}^*)) -2\pi p({\delta_3^+}^*)p({\delta_3^-}^*) \indicator_{q=1} \\ 
-& \hphantom{{}={} \max \biggl\lbrace {}+{}} + p({\delta_3^+}^*)p({\delta_3^-}^*)\sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-2) + h_{k+1}(\bj, q) -2 h_{k+1}(\bj, q-1)  \right] \\
-& \hphantom{{}={} \max \biggl\lbrace {}+{}} + \sum_{\bj} \bP_{\bz,\bj} h_{k+1}(\bj,q-1)  \Biggr\rbrace
-\end{split}
-\end{equation}
+This week we develop numerical solutions for the simplified dynamic programming equations, and thus solve for the unknown ansantz functions $h$. Generally speaking, we will use an explicit finite difference scheme to solve the differential equations, and a cutoff method for evaluating the the quasi-variational inequalities. 
 
-We now have an explicit means of numerically solving for the optimal posting depths. Since we know the function $h$ at the terminal timestep $T$, we can take one step back to $T-1$ and solve for each of the optimal posting depths in each of the cases. With these values we are then able to calculate the value function $h_{T-1}$, and in doing so determine whether to execute market orders in addition to posting limit orders (essentially taking the $\argmax$ instead of the $\max$ in equation \ref{eq:discreteDPE}). This process then repeats for each step backward.
-\section*{Looking Ahead}
+TODO: Elaborate on these methods in greater detail. Is that redundant? 
 
+So look all I've got so far is code producing plots for my delta functions that I have virtually no way of assessing for correctness. There's definitely `funny' behaviour that I can't quite explain. With respect to where we want to be on the progress timeline, I've numerically solved and plotted cases 1 \& 2 in continuous time, which leaves cases 3 as well as the discrete time case. 
+
+Seems like it may not be correct to delineate the numerical solutions and simulation/backtesting, as it's proving difficult to make any sense of the plots. It would lend some credibility to the results if I could run them through a backtest and see what sort of results they produce... if they're multi-million dollar losses then I know I gotta flip a minus sign somewhere...
+
+So, the plan for the way forward: finish the code for case 3 and discrete time (by EOW), develop backtesting capability (EOTu), spend the rest of the week going back and forth with the results. 
 \end{document}
