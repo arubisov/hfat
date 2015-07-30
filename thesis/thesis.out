@@ -1,0 +1,25 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Exploratory Data Analysis}{}% 2
+\BOOKMARK [1][-]{section.2.1}{Maximum Likelihood Estimate of a Doubly Stochastic Poisson Process}{chapter.2}% 3
+\BOOKMARK [2][-]{subsection.2.1.1}{Maximum Likelihood Estimation of G}{section.2.1}% 4
+\BOOKMARK [2][-]{subsection.2.1.2}{Maximum Likelihood Estimation of lpmk}{section.2.1}% 5
+\BOOKMARK [1][-]{section.2.2}{Modeling I\(t\): Continuous Time Markov Chain}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.3}{Calibrating a CTMC}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.4}{Next Steps}{chapter.2}% 8
+\BOOKMARK [1][-]{section.2.5}{Cross-validation of CTMC}{chapter.2}% 9
+\BOOKMARK [1][-]{section.2.6}{2-dimensional CTMC}{chapter.2}% 10
+\BOOKMARK [1][-]{section.2.7}{In-Sample Backtesting of Naive Trading Strategies}{chapter.2}% 11
+\BOOKMARK [1][-]{section.2.8}{Conclusions from Naive Trading Strategies}{chapter.2}% 12
+\BOOKMARK [0][-]{chapter.3}{Stochastic Optimal Control}{}% 13
+\BOOKMARK [1][-]{section.3.1}{Continuous Time}{chapter.3}% 14
+\BOOKMARK [2][-]{subsection.3.1.1}{Dynamic Programming Principle for Optimal Stopping and Control}{section.3.1}% 15
+\BOOKMARK [2][-]{subsection.3.1.2}{Dynamic Programming Equation for Optimal Stopping and Control}{section.3.1}% 16
+\BOOKMARK [2][-]{subsection.3.1.3}{Maximizing Profit}{section.3.1}% 17
+\BOOKMARK [2][-]{subsection.3.1.4}{Case 2: Max Terminal Wealth with Risk Aversion}{section.3.1}% 18
+\BOOKMARK [2][-]{subsection.3.1.5}{Case 3: Max Terminal Wealth with Running Inventory Penalty}{section.3.1}% 19
+\BOOKMARK [1][-]{section.3.2}{Whiteboard Inspirational Quote of the Week}{chapter.3}% 20
+\BOOKMARK [1][-]{section.3.3}{Discrete Time}{chapter.3}% 21
+\BOOKMARK [2][-]{subsection.3.3.1}{Max Terminal Wealth \(Discrete\)}{section.3.3}% 22
+\BOOKMARK [2][-]{subsection.3.3.2}{DPE Cases 2 and 3}{section.3.3}% 23
+\BOOKMARK [2][-]{subsection.3.3.3}{Simplifying the DPE}{section.3.3}% 24
+\BOOKMARK [0][-]{chapter.4}{Results}{}% 25

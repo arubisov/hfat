@@ -1,0 +1,7 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces INTC: Bookvalue against time of trading day.\relax }}{23}{figure.caption.10}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces INTC: Histogram of 15min bookvalue changes.\relax }}{24}{figure.caption.11}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Comparison of Naive (red), Naive+ (blue), and Naive++ (green) trading strategies, with benchmark Midprice (black). Plotted are bookvalues against time of trading day, averaged across trading year.\relax }}{28}{figure.caption.12}
+\addvspace {10\p@ }
+\addvspace {10\p@ }

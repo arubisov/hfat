@@ -1,5 +1,5 @@
-function [ deltaplus, deltaminus ] = cts_delta_case1( h, Qmax, kappa, xi )
-% Optimal delta^+ and delta^- for the continuous time Case 1 DPE.
+function [ deltaplus, deltaminus ] = dscr_delta( h )
+% Optimal delta^+ and delta^- for the discrete time case.
 %
 % delta+*(t,z,q) = max{ 0 ; 1/kappa - 2*pi*(q <= -1) - h(t,z,q+1) + h(t,z,q) }
 % delta-*(t,z,q) = max{ 0 ; 1/kappa - 2*pi*(q >= 1)  - h(t,z,q-1) + h(t,z,q) }
@@ -7,8 +7,15 @@ function [ deltaplus, deltaminus ] = cts_delta_case1( h, Qmax, kappa, xi )
 % Master's Thesis
 % Date : 2015.07.15
 
+global kappa
+global Qmax
+global xi
+
 deltaplus = zeros(size(h));
 deltaminus = zeros(size(h));
+
+%newQrange = 11:31;
+%Qrange = Qrange(newQrange);
 
 deltaplus(:,:,1:end-1) = 1/kappa + h(:,:,1:end-1) - h(:,:,2:end);
 deltaplus(:,:,end) = deltaplus(:,:,end-1);

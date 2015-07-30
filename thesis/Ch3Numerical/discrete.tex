@@ -1,29 +1,13 @@
-% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\documentclass[12pt]{article}
-\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
-\usepackage{soul}
-\newtheorem{theorem}{Theorem}
-\usepackage{hyperref}
-\allowdisplaybreaks
-
-%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{document}
-\mymascheader
-\pagestyle{plain}
-{\begin{center} {\large {\bf High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}} \end{center}}
-\bigskip
-
-%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Whiteboard Inspirational Quote of the Week}
+\section{Whiteboard Inspirational Quote of the Week}
 \begin{quote}
 \textit{I'm sorry to say that the subject I most disliked was mathematics. I have thought about it. I think the reason was that mathematics leaves no room for argument. If you made a mistake, that was all there was to it.} \\-― Malcolm X 
 \end{quote} 
 
-\section*{The Academic Week in Review}
-Reminder of our processes (a little bit of abuse of notation going on):\\
-$\bz_k = (\rho_k, \Delta_k)$ - 2-D time-homogenous Markov Chain with transition probabilities $P_{ij}$, where $\rho_k \in \Gamma$ and $\Gamma$ represents the set of imbalance bins, and $\Delta_k = \sgn(s_k - s_{k-1}) \in \{-1,0,1\}$. \\
+\section{Discrete Time}
+Reminder of our processes (a little bit of abuse of notation going on):
+
+$\bz_k = (\rho_k, \Delta_k)$ - 2-D time-homogenous Markov Chain with transition probabilities $P_{ij}$, where $\rho_k \in \Gamma$ and $\Gamma$ represents the set of imbalance bins, and $\Delta_k = \sgn(s_k - s_{k-1}) \in \{-1,0,1\}$.
+
 State $\vec{x}_{k} = \begin{pmatrix}
 x_k \\
 s_k \\
@@ -34,7 +18,8 @@ q_k
 \text{stock price} \\
 \text{Markov chain state, as above} \\
 \text{inventory} \\
-\end{matrix}$ \\
+\end{matrix}$
+
 Control $\vec{u}_{k} = \begin{pmatrix}
 \delta_k^+ \\
 \delta_k^- \\
@@ -45,7 +30,8 @@ M_k^-
 \text{ask posting depth} \\
 \text{buy MO - binary control} \\
 \text{sell MO - binary control} \\
-\end{matrix}$ \\
+\end{matrix}$
+
 Random $\vec{w}_{k} = \begin{pmatrix}
 K_k^+ \\
 K_k^- \\
@@ -54,7 +40,7 @@ K_k^- \\
 \text{other agent buy MOs - binary} \\
 \text{other agent sell MOs - binary} \\
 \text{random variable uniformly distributed on [0,1]} \\
-\end{matrix}$ \\
+\end{matrix}$
 
 We'll write the evolution of the Markov chain as a function of the current state and a uniformly distributed random variable $\omega$:\footnote{Borrowed from ECE1639 notes.}
 \begin{equation}
@@ -81,7 +67,7 @@ q_{k} + L_k^+ - L_k^- + M_k^+ - M_k^-
 \end{equation}
 Clearly, the cash process at a subsequent is equal to the cash at the previous step, plus the costs of profits of executing market or limit orders. There are two noteworthy observations regarding this formulation of the evolution function. First, note that the price paid/received for limit orders depends on the stock price at time $k$. This implies that at $k$, if the agent posts a sell limit order, and the binary random variable $L_k^-$ (which depends on the binary random variable $M_k^+$) is equal to 1, then the agent's order is filled ``between timesteps'' $k$ and $k+1$, but using the price at time $k$. Second, since the second dimension $T(\bz_k, \omega_k)^{(2)} = \Delta_{k+1} = \sgn(s_{k+1} - s_k)$ determines the directionality of the price jump between times $k$ and $k+1$, multiplying it by the random variable $\eta_{k,\bz_k}$ determines the the size of the price change.
 
-\subsection*{Max Terminal Wealth (Discrete)}
+\subsection{Max Terminal Wealth (Discrete)}
 Following traditional dynamic programming, we introduce the value function $V_k^{\bu}$. Here, our objective is to maximize the terminal wealth performance criteria given by
 \begin{equation}
 V_k^{\bu} (x,s,\bz,q) = \E \left[ W_T^{\bu} \right] = \E_{k,x,s,\bz,q}\left[ X_T^{\bu} + Q_T^{\bu}(S_T - \sgn(Q_T^{\bu})\pi) - \alpha {(Q_T^{\bu})}^2 \right]
@@ -353,7 +339,7 @@ For ease of notation we'll write $\aleph = \sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}
 \end{split}
 }
 \end{equation}
-\subsection*{DPE Cases 2 and 3}
+\subsection{DPE Cases 2 and 3}
 We have derived the optimal LO posting depths for the first case of the DPE, where no market orders are placed. The analysis of the other two cases, where $M_k^+ = 1$ and $M_k^- = 1$, respectively, proceeds almost identically. Looking first at the case $M_k^+ = 1$, we try to solve:
 \begin{equation}
 \label{eq:discretesup2}
@@ -432,7 +418,7 @@ Likewise, in the third DPE case where $M_k^+ =0, M_k^-=1$, we get
 }
 \end{equation}
 The boxed equations for optimal depth in feedback form will need to be solved numerically due to the difficulty in isolating ${\delta^{\pm}}^*$ on one side of the equality. 
-\subsection*{Simplifying the DPE}
+\subsection{Simplifying the DPE}
 For reference, we repeat here the DPE we are attempting to solve:
 \begin{equation}
 \begin{split}
@@ -459,7 +445,7 @@ For reference, we repeat here the DPE we are attempting to solve:
 \end{equation}
 We now turn to simplifying our DPE by substituting in the optimal posting depths as written in recursive form (e.g. \ref{eq:discretedeltaplusreferential} and \ref{eq:discretedeltaminusreferential}). In doing so we see a incredible amount of cancellation and simplification, and we obtain the rather elegant, and surprisingly simple form of the DPE:
 \begin{equation}
-\label{eq:discreteDPE}
+\label{eq:discreteDPEfinal}
 \begin{split}
 h_k(\bz,q) & = \max \Biggl\lbrace 
 %%% Only Limit Orders
@@ -478,5 +464,4 @@ q\E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] + \frac{1}{\kappa}(p({\delta^+}^*)+p({\de
 \end{equation}
 TODO: commentary on this final form.
 
-We now have an explicit means of numerically solving for the optimal posting depths. Since we know the function $h$ at the terminal timestep $T$, we can take one step back to $T-1$ and solve for each of the optimal posting depths in each of the cases. With these values we are then able to calculate the value function $h_{T-1}$, and in doing so determine whether to execute market orders in addition to posting limit orders (essentially taking the $\argmax$ instead of the $\max$ in equation \ref{eq:discreteDPE}). This process then repeats for each step backward.
-\end{document}
+We now have an explicit means of numerically solving for the optimal posting depths. Since we know the function $h$ at the terminal timestep $T$, we can take one step back to $T-1$ and solve for each of the optimal posting depths in each of the cases. With these values we are then able to calculate the value function $h_{T-1}$, and in doing so determine whether to execute market orders in addition to posting limit orders (essentially taking the $\argmax$ instead of the $\max$ in equation \ref{eq:discreteDPEfinal}). This process then repeats for each step backward.

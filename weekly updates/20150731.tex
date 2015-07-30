@@ -1,0 +1,89 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+\newtheorem{theorem}{Theorem}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[vietnam,english]{babel}
+\allowdisplaybreaks
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to establish and solve the stochastic optimal control problem that 
+captures the momentum and order imbalance dynamics of the Limit Order Book 
+(LOB). The solution will yield an optimal trading strategy that will permit
+statistical arbitrage of the underlying stock, which will then be backtested on
+historical data.
+\end{quote}
+
+\section*{Progress Timeline}
+\vspace{-10pt}
+\begin{table}[H]
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\fooo}{\color{LightSteelBlue3}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{9cm} !{\fooo} >{\raggedright\arraybackslash}p{5cm}} 
+\multicolumn{1}{@{\,}r <{\hskip 9pt}}{DATE} & \multicolumn{1}{l}{THESIS} & \multicolumn{1}{l}{STA4505} \\
+\hline
+\st{Dec 2014} & \st{Complete CTMC calibration} \\
+\st{Dec 2014} & \st{Backtest naive strategies based on CTMC} & \\
+\st{Jan-May} & \st{Study stochastic controls: ECE1639, STA4505} & \\
+\st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
+\st{Jun 12} & \st{Establish performance criteria} & \st{Exam Study} \\
+\st{Jun 15} & \st{Derive DPP/DPE} & \st{EXAM} \\
+\st{Jun 19} & \st{Derive DPP/DPE} &  \\
+\st{Jun 26} & \st{Derive continuous-time equations} & \\
+\st{Jul 3} & \st{Derive discrete-time equations} & \\
+\st{Jul 10} & \st{Set up MATLAB numerical integration} &  \\
+\st{Jul 17} & \st{Integrate functions and plot dynamics} & \st{Integrate and analyze} \\
+\st{Jul 24} & \st{Empty promises; zero fucks given} & \\
+Jul 31 & Code for numerical solutions, calibrations, plots  & \st{Simulate results} \\
+Aug 7 & `wrong' calib method: all IS and OOS backtests & \\
+Aug 14 & `right' calib method: all IS and OOS backtests  & Project writeup \\
+Aug 21 & Compare with Naive methods, dissert. writeup &  \\
+Aug 28 & Dissertation writeup & Presentation \\
+Aug 31 & Submit thesis for review by panel.
+\end{tabular}
+\end{table}
+
+\newpage
+\section*{Whiteboard Inspirational Quote of the Week}
+\begin{quote}
+\textit{There is no way to happiness. Happiness is the way.} \\-- \foreignlanguage{vietnam}{Thích Nhất Hạnh}
+
+\end{quote} 
+
+\section*{For Our Readers in the Middle East...}
+\paragraph{Sun 26th:} ok bud here's the deal. shit is getting real, time-crunch style, as evidenced by the fact that i installed the Vietnamese TeX language package just to spell that monk's name properly. but here's what we're looking at for the immediate future: UTIAS has to submit a degree recommendation on my behalf to the School of Graduate Studies by Oct 2nd. before then I need to finish a `comprehensive first draft' that I submit to my two supervisors, Seb obviously being the more important of the two, receive back, make revisions, submit to an external reviewer, receive back, make revisions, submit to the graduate department. all that has to happen first. UTIAS has a recommended deadline of 3 months out for the first draft, 2 months out for the external reviewer, which, given the constraints on time-travel, clearly isn't happening. i shot the Real Big Seb Himself an email just now to run this by him, i'll get his thoughts hopefully soon, but one thing is immediately clear: the more I can compress that timeline above, and perform basic office functions with terrifying efficiency, the more likely is the success. so here we go my man. here's basically the full list of shit I need to do:
+\begin{itemize}
+\item \st{finish coding solutions for the ansatz $h$ for all four cases.}
+\item \st{write code for the two (`right' and `wrong') calibration methods}
+\item \st{write script for single-day calib in-sample backtest}
+\item write script for single-day calib out-of-sample (+1 week) backtest
+\item write script for annual calib out-of-sample backtest
+\item run ALL of those on the entire 2013 calendar year, for each of the 2 calibration methods, for each of the performance criteria, for 4 stocks of varying liquidity. all told: 4 stocks * 4 criteria * 2 methods * 3 backtests * 250 days = 6000 backtests.
+\item produce plots and tables to summarize results. mimic Seb's four plots to show arbitrary given stock, given day's testing using best calib method, for each of the criteria (another 4 backtests)
+\item compare the averaged results with the naive strategies from last year
+\item write-up
+\end{itemize}
+
+\paragraph{Mon 27th:} teddy I have been at work for 12h now, during which I have eaten one granola bar and had two coffees. this has been by far the most productive day i've ever had, and yet, absolutely nothing fucking works.
+
+\paragraph{Tue 28th:} what a turnaround day today. in a moment of insight i took the time to read a paper that i suspected might be able to help me out of this jam -- and voila, pretty much the first authentic citation of my reserch, and definitely saved the day. anyway, so, a million times more progress than yesterday, from which i conclude the following two things: productivity and progress are not the same thing; and that today's success really could not have been possible without yesterday's insane struggle. it turns out i accidentally followed the fast for tisha b'av - perhaps hashem was channeling some serious cosmic shit into me. regardless, irregardless, i'm delighted to say we're potentially back on a roll here. time to get gymnasty.
+
+\paragraph{Wed 29th:} \textit{I'm the pusherrr.} shit is fucking coming together my man! i think what's gonna happen here is i'm gonna postpone coding and generating some of the plots till i start doing some of the report writing... i know roughly the sort sick ass plots i want to include, but at the same time not all of them, and i sort of reckon it'd be a bit more fluid to just start the writing and be like `oh yeah that'd look real svelte right in here' and generate it, rather than right now try to conjure up all the different things i want. some are obvious and those're already done! yippee. so what this REALLY means ... is that i'll be getting out of here real soon.
+
+\section*{The Academic Week in Review}
+
+\end{document}

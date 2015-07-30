@@ -1,0 +1,104 @@
+\newcommand{\computeTitlePageSpacing}{
+
+% Title Box
+\newsavebox{\titlepgtitle}
+\begin{lrbox}{\titlepgtitle}
+  \begin{minipage}[c]{0.98\textwidth}
+    \centering \Huge \bfseries{High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}
+  \end{minipage}
+\end{lrbox}
+
+% University Crest Box
+% Crest minimum should be 30mm.
+\newsavebox{\titlepgcrest}
+\begin{lrbox}{\titlepgcrest}
+  {\includegraphics[width=0.2\textwidth]{Figs/utias-logo-black.png} \par}
+\end{lrbox}
+
+% Author Box
+\newsavebox{\titlepgauthor}
+\begin{lrbox}{\titlepgauthor}
+  \begin{minipage}[c]{\textwidth}
+    \centering \Large \bfseries{Anton Rubisov}
+  \end{minipage}
+\end{lrbox}
+
+% Department Box
+\newsavebox{\titlepgdept}
+\begin{lrbox}{\titlepgdept}
+  \begin{minipage}[c]{\textwidth}
+    \centering       
+      {\large University of Toronto Institute for Aerospace Studies \par}
+      {\large Faculty of Applied Science and Engineering  \par}
+	  {\large University of Toronto \par}
+  \end{minipage}
+\end{lrbox}
+
+% Submission Box
+\newsavebox{\titlepgsubmission}
+\begin{lrbox}{\titlepgsubmission}
+  \begin{minipage}[c]{\textwidth}
+    \begin{center}
+      \large A thesis submitted in partial fulfilment for the degree of \par
+      \large \textit{Master of Applied Science} \par
+    \end{center}
+  \end{minipage}
+\end{lrbox}
+
+% College and Date Box
+\newsavebox{\titlepggraddate}
+\begin{lrbox}{\titlepggraddate}
+\begin{minipage}[c]{0.95\textwidth}
+  \large October 2015
+\end{minipage}
+\end{lrbox}
+
+%  Now to compute the free vertical space
+\newlength{\titlepgspacing}
+\setlength{\titlepgspacing}{ \textheight %
+			- \totalheightof{\usebox{\titlepgtitle}}
+			- \totalheightof{\usebox{\titlepgcrest}}
+			- \totalheightof{\usebox{\titlepgauthor}}
+			- \totalheightof{\usebox{\titlepgdept}}
+			- \totalheightof{\usebox{\titlepgsubmission}}
+			- \totalheightof{\usebox{\titlepggraddate}}
+}
+}
+
+\renewcommand{\maketitle}{
+
+% To compute the free vertical space in Title page
+\computeTitlePageSpacing
+
+\begin{singlespace}
+\begin{center}
+
+% Title
+\vspace*{.1\titlepgspacing}
+{\usebox{\titlepgtitle}} % subtitle is defined
+
+% Crest
+\vspace{.15\titlepgspacing}
+{\usebox{\titlepgcrest}}
+\vspace{.15\titlepgspacing}
+
+% Author
+{\usebox{\titlepgauthor}}
+\vspace*{1em}
+
+% Department and University
+{\usebox{\titlepgdept}}
+\vspace{.2\titlepgspacing}
+
+% Submission Text
+{\usebox{\titlepgsubmission}}
+
+\end{center}
+
+% College and degree date
+\vfill
+{\usebox{\titlepggraddate}}
+\end{singlespace}
+}
+
+\maketitle

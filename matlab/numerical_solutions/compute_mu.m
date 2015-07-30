@@ -11,6 +11,7 @@ function [ muplus, muminus ] = compute_mu( data, oneDseries, dt, num_bins )
     MO = removeillegaltimes(MO);
     % store rounded times in column 3
     MO(:,3) = (floor(MO(:,1)/dt)*dt - T1)/dt + 1;
+    MO(:,3) = min(MO(:,3), length(oneDseries));
     
     % store regime bin number in column 4
     MO(:,4) = oneDseries(MO(:,3));

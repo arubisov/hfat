@@ -1,5 +1,7 @@
-function [ h ] = cts_h_case1( )
+function [ h ] = cts_h_case1( phi, num_bins, Qmax, kappa, alpha, xi, ...
+                              G, eta, muplus, muminus, T, dt  )
 % Numerical solution to the continuous time Case 1 DPE ansatz h(t,z,q).
+% Note that Case 3 is obtained by setting phi nonzero.
 % 
 % Utilize an explicit finite difference scheme with backward approximation
 % to solve the quasi-variational inequality obtained for the first
@@ -13,50 +15,17 @@ function [ h ] = cts_h_case1( )
 % Master's Thesis
 % Date  : 2015.07.13
 
-global kappa
-global alpha
-global phi
-global xi
-global Qmax
-global Qrange
-global Zrange
-global T
-global dt
-global muplus
-global muminus
-global num_bins
-global G
-
-% Parameters
-data = load('./data/ORCL_20130515.mat');    %
-data = data.data;
-dt_Z = 1000;                                %
-num_bins = 5;                               %
-avg_method = 5;                             %
-
-[ t, binseries, pricechgseries, G, mu_IB ] = ...
-    compute_G( data, dt_Z, num_bins, avg_method );
-[ oneDseries ] = get1Dseries( binseries, pricechgseries, num_bins );
-[ eta_table ] = compute_eta( oneDseries, pricechgseries, num_bins );
-[ muplus, muminus ] = compute_mu( data, oneDseries, dt_Z, num_bins );
-kappa = 100;
-alpha = 0.01;
-phi = 0.00001;
-xi = 0.01;
-% compute expected values
-eta = sum(repmat(eta_table(:,1),1,num_bins*3).*eta_table(:,2:end),1)';
-
-% finite scheme setup
-Qmax = 20;
 Qrange = -Qmax:1:Qmax;
 Zrange = 1:num_bins*3;
-T = 50.0;
-dt = 0.01;
 
 h = zeros(T/dt,length(Zrange),length(Qrange));
 
 % Establish terminal condition h(T,z,q) = -alpha*q^2
-h(end, :, :) = repmat(-alpha*Qrange.*Qrange,num_bins*3,1);
+% Face-lifting: never optimal to execute MO at maturity and pay xi+alpha*q
+% per share; instead we liquidate immed. prior to maturity at a cost of xi
+% per share. So left-hand limit at maturity is -xi*abs(q)
+% ACTUALLY: i think we have to set it to zero...
+% h(end, :, :) = repmat(-xi*abs(Qrange),num_bins*3,1);
 
 progress = waitbar(0, 'Calculating numerical solution...');
 
@@ -66,52 +35,51 @@ for i = round((T-dt)/dt):-1:1
     
     % dq^+ = h(t,z,q) - h(t,z,q-1)
     dqplus(:,2:end) = h(i+1,:,2:end) - h(i+1,:,1:end-1);
-    dqplus(:,1) = h(i+1,:,2) - h(i+1,:,1);
+    dqplus(:,1) = dqplus(:,2);
     % dq^- = h(t,z,q) - h(t,z,q+1)
     dqminus(:,1:end-1) = h(i+1,:,1:end-1) - h(i+1,:,2:end);
-    dqminus(:,end) = h(i+1,:,end-1) - h(i+1,:,end);
+    dqminus(:,end) = dqminus(:,end-1);
     
     for z = 1:length(Zrange)
         for q = 1:length(Qrange)
             dz = 0;
             for k = 1:length(Zrange)
-                dz = dz + G(z,k) * (Qrange(q) * (ceil(k/num_bins) ~= 2) * eta(z) + h(i+1,k,q) - h(i+1,z,q));
+                % dz = dz + G(z,k) * (Qrange(q) * (ceil(k/num_bins) ~= 2) * eta(z) + h(i+1,k,q) - h(i+1,z,q));
+                dz = dz + G(z,k) * (Qrange(q) * eta(k) + h(i+1,k,q) - h(i+1,z,q));
             end
             
             % checking delta^- >= 1/kappa - 2*xi
-            deltaminus = 1/kappa -2*xi*(Qrange(q) >= 1) + dqplus(z,q);
-            deltaminus = max(deltaminus , 1/kappa - 2*xi);
+            deltaminus = 1/kappa - 2*xi*(Qrange(q) >= 1) + dqplus(z,q);
+            deltaminus = max(deltaminus , 0);
             infgen_dKplus = exp(-kappa*deltaminus) * (deltaminus + 2*xi*(Qrange(q) >= 1) - dqplus(z,q));
             
             % checking delta^+ >= 1/kappa - 2*xi
             deltaplus = 1/kappa -2*xi*(Qrange(q) <= -1) + dqminus(z,q);
-            deltaplus = max(deltaplus , 1/kappa - 2*xi);
+            deltaplus = max(deltaplus , 0);
             infgen_dKminus = exp(-kappa*deltaplus) * (deltaplus + 2*xi*(Qrange(q) <= -1) - dqminus(z,q));
                 
-            h(i,z,q) = h(i+1,z,q) + dt * ( dz + ...
+            h(i,z,q) = h(i+1,z,q) + dt * (-phi*Qrange(q)*Qrange(q) + dz + ...
                     muplus(z)*infgen_dKplus + muminus(z)*infgen_dKminus );
         end
         
+        % enforce condition at zero.
         h(i,z,Qmax+1) = 0;
         
         for q = 1:Qmax
             % indexing from 1 upward
             idx = Qmax+1+q;
-            h(i,z,idx) = max(h(i,z,idx), h(i,z,idx-1) - 2*xi*(Qrange(idx) <= 0));
-            % from end down to 1
-            idx = 2*Qmax+1-q;
-            h(i,z,idx) = max(h(i,z,idx), h(i,z,idx+1) - 2*xi*(Qrange(idx) >= 0));
+            if h(i,z,idx) < h(i,z,idx-1), h(i,z,idx) = h(i,z,idx-1); end;
+            if h(i,z,idx) > h(i,z,idx-1) + 2*xi, h(i,z,idx) = h(i,z,idx-1) + 2*xi; end;
             % from -1 downward
             idx = Qmax+1-q;
-            h(i,z,idx) = max(h(i,z,idx), h(i,z,idx+1) - 2*xi*(Qrange(idx) >= 0));
-            % from start up to -1
-            idx = 1+q;
-            h(i,z,idx) = max(h(i,z,idx), h(i,z,idx-1) - 2*xi*(Qrange(idx) <= 0));
+            if h(i,z,idx) < h(i,z,idx+1), h(i,z,idx) = h(i,z,idx+1); end;
+            if h(i,z,idx) > h(i,z,idx+1) + 2*xi, h(i,z,idx) = h(i,z,idx+1) + 2*xi; end;
         end
-        
-        h(i,z,Qmax+1) = 0;
     end
     waitbar( (T-i*dt) / T) 
 end
+
+%h(end, :, :) = repmat(-alpha*Qrange.*Qrange,num_bins*3,1);
+
 close(progress)
 end

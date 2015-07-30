@@ -21,33 +21,20 @@ function [t, mu_IB] = computeavgimbalance(data, dt, avg_method)
        
     IB = (data.BuyVolume(:,1:num) * weights - data.SellVolume(:,1:num) * weights) ./ (data.BuyVolume(:,1:num) * weights + data.SellVolume(:,1:num) * weights);
 
-    
-
     for k = 1 : length(t)
-
         ctr_from = ctr;
+       
+        % find first index >= t(k)
+        while data.Event(ctr,1) < t(k), ctr = ctr+1; end
         
-        while data.Event(ctr,1) < t(k)
-            ctr = ctr+1;
-        end
+        % abort if no entries over this interval, same IB val as previous.
+        if ctr_from == ctr, mu_IB(k) = mu_IB(k-1); continue; end
         
-        tau = data.Event(ctr_from:ctr,1);
+        % calculate imbalance (done properly!)
+        tau = [ t(k) - dt; data.Event(ctr_from:ctr-1,1); t(k)];
         dtau = diff(tau);
-
-        thisIB = IB(ctr_from:ctr);
-
-        if ctr > ctr_from
-            if sum(dtau) > 1
-                mu_IB(k) = sum(dtau .* thisIB(1:end-1)) / sum(dtau);
-            else
-                mu_IB(k) = mean(thisIB);
-            end
-        else
-            if k > 1
-                mu_IB(k) = mu_IB(k-1);
-            else
-                mu_IB(k) = thisIB;
-            end
-        end
-
+        thisIB = IB(ctr_from-1:ctr-1);
+        mu_IB(k) = (dtau' * thisIB)/dt;
     end
+
+end

@@ -1,8 +1,9 @@
-function [ ] = plot_delta( deltastar, q )
+function [ ] = plot_delta_mo_case1( deltastar, h, qinit )
 
 % plot the results for Delta
 global T
 global dt
+global kappa
 global xi
 global Qrange
 
@@ -11,34 +12,68 @@ x = dt:dt:T;
 plotstep = 20;
 
 % adjust for q in range. 
-q = q + 11; % or find in Qrange
+q = find(Qrange==qinit,1); % or find in Qrange
 
-delta = zeros(length(x(1:plotstep:end)));
+delta = zeros(length(x(1:plotstep:end)),1);
 
 figure('Name','Optimal Liquidation Posting Depth');
 hold on;
 
-for z = [1,8,15]
-	for t = x(1:plotstep:end)
-		while deltastar(t,z,q+1) - deltastar(t,z,q) = 2*xi*(q >= 0)
-		    plt_b_fill = plot(t, q, '-ok', 'markerfacecolor','b', 'linewidth', 1  );
-			q = q+1;
-		end
-		while deltastar(t,z,q-1) - deltastar(t,z,q) = 2*xi*(q <= 0)
-		    plt_b_nofill = plot(t, q, '-ok', 'linewidth', 1  );
-			q = q-1;
-		end
-		delta = deltastar(t,z,q);
-	end
-	
-	if z == 1
-	    z1val = plot(x(1:plotstep:end),delta),'-g');		
-	elseif z == 8
-    	z8val = plot(x(1:plotstep:end),delta),'-m');
-	elseif z == 15
-	    z15val = plot(x(1:plotstep:end),delta),'-r');
-	end
+for z = 1
+    for t = round(x(1:plotstep:end)/dt)
+        while h(t,z,q+10+1) - h(t,z,q+10) == 2*xi*(Qrange(q) >= 0)
+            plt_b_fill = plot(x(t), deltastar(t,z,q), '-og', 'markerfacecolor','g', 'linewidth', 1  );
+            q = q+1;
+        end
+        while h(t,z,q+10-1) - h(t,z,q+10) == 2*xi*(Qrange(q) <= 0)
+            plt_b_nofill = plot(x(t), deltastar(t,z,q), '-og', 'linewidth', 1  );
+            q = q-1;
+        end
+        delta(1/plotstep*(t-1) + 1) = deltastar(t,z,q);
+    end
+    
+    z1val = plot(x(1:plotstep:end),delta,'-g');
 end
+
+q = find(Qrange==qinit,1); % or find in Qrange
+
+for z = 8
+    for t = round(x(1:plotstep:end)/dt)
+        if t == 1
+            t = 1;
+        end
+        while h(t,z,q+10+1) - h(t,z,q+10) == 2*xi*(Qrange(q) >= 0)
+            plt_b_fill = plot(x(t), deltastar(t,z,q), '-om', 'markerfacecolor','m', 'linewidth', 1  );
+            q = q+1;
+        end
+        while h(t,z,q+10-1) - h(t,z,q+10) == 2*xi*(Qrange(q) <= 0)
+            plt_b_nofill = plot(x(t), deltastar(t,z,q), '-om', 'linewidth', 1  );
+            q = q-1;
+        end
+        delta(1/plotstep*(t-1) + 1) = deltastar(t,z,q);
+    end
+    
+    z8val = plot(x(1:plotstep:end),delta,'-m');
+end
+
+q = find(Qrange==qinit,1); % or find in Qrange
+
+for z = 15
+    for t = round(x(1:plotstep:end)/dt)
+        while h(t,z,q+10+1) - h(t,z,q+10) == 2*xi*(Qrange(q) >= 0)
+            plt_b_fill = plot(x(t), deltastar(t,z,q), '-or', 'markerfacecolor','r', 'linewidth', 1  );
+            q = q+1;
+        end
+        while h(t,z,q+10-1) - h(t,z,q+10) == 2*xi*(Qrange(q) <= 0)
+            plt_b_nofill = plot(x(t), deltastar(t,z,q), '-or', 'linewidth', 1  );
+            q = q-1;
+        end
+        delta(1/plotstep*(t-1) + 1) = deltastar(t,z,q);
+    end
+
+    z15val = plot(x(1:plotstep:end),delta,'-r');
+end
+
 
 hold off;
 set(gca,'fontsize',18);
