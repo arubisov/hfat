@@ -1,9 +1,8 @@
-function [ ] = plot_delta( deltastar )
+function [ ] = plot_delta( deltastar, T, dt )
 
 % plot the results for Delta
-global T
-global dt
-global Qrange
+
+qzero = (size(deltastar, 3) - 1)/2 + 1;
 
 x = dt:dt:T;
 
@@ -15,15 +14,15 @@ for z = [1,3,5,6,8,10,11,13,15]
     figure('Name','Optimal Liquidation Posting Depth');
     hold on;
     
-    minusfour = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,find(Qrange==-4)),'--g');
-    minusthree = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,find(Qrange==-3)),'--m');
-    minustwo = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,find(Qrange==-2)),'--r');
-    minusone = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,find(Qrange==-1)),'--b');
-    zero = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,find(Qrange==0)),'-k');
-    one = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,find(Qrange==1)),'-b');
-    two = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,find(Qrange==2)),'-r');
-    three = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,find(Qrange==3)),'-m');
-    four = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,find(Qrange==4)),'-g');
+    minusfour = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,qzero-4),'--g');
+    minusthree = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,qzero-3),'--m');
+    minustwo = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,qzero-2),'--r');
+    minusone = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,qzero-1),'--b');
+    zero = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,qzero),'-k');
+    one = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,qzero+1),'-b');
+    two = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,qzero+2),'-r');
+    three = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,qzero+3),'-m');
+    four = plot(x(1:plotstep:end),deltastar(1:plotstep:end,z,qzero+4),'-g');
 
     hold off;
     set(gca,'fontsize',18);

@@ -73,12 +73,12 @@ for i = round((T-dt)/dt):-1:1
             
             % checking delta^- >= 1/kappa - 2*xi
             deltaminus = 1/gamma * log(1 + gamma/kappa) - xi*(1 + sign(Qrange(q))) + dqplus(z,q);
-            %deltaminus = max(deltaminus , 1/gamma * log(1 + gamma/kappa) - 2*xi);
+            deltaminus = max(deltaminus , 0 );
             infgen_dKplus = exp(-kappa*deltaminus) * (1 - exp(-gamma * (xi + deltaminus + xi*sign(Qrange(q)) - dqplus(z,q))));
             
             % checking delta^+ >= 1/kappa - 2*xi
             deltaplus = 1/gamma * log(1 + gamma/kappa) - xi*(1 - sign(Qrange(q))) + dqminus(z,q);
-            %deltaplus = max(deltaplus , 1/gamma * log(1 + gamma/kappa) - 2*xi);
+            deltaplus = max(deltaplus , 0 );
             infgen_dKminus = exp(-kappa*deltaplus) * (1 - exp(-gamma * (xi + deltaplus - xi*sign(Qrange(q)) - dqminus(z,q))));
                 
             h(i,z,q) = h(i+1,z,q) + dt * ( dz + ...

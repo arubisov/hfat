@@ -12,14 +12,9 @@
 \BOOKMARK [1][-]{section.2.8}{Conclusions from Naive Trading Strategies}{chapter.2}% 12
 \BOOKMARK [0][-]{chapter.3}{Stochastic Optimal Control}{}% 13
 \BOOKMARK [1][-]{section.3.1}{Continuous Time}{chapter.3}% 14
-\BOOKMARK [2][-]{subsection.3.1.1}{Dynamic Programming Principle for Optimal Stopping and Control}{section.3.1}% 15
-\BOOKMARK [2][-]{subsection.3.1.2}{Dynamic Programming Equation for Optimal Stopping and Control}{section.3.1}% 16
-\BOOKMARK [2][-]{subsection.3.1.3}{Maximizing Profit}{section.3.1}% 17
-\BOOKMARK [2][-]{subsection.3.1.4}{Case 2: Max Terminal Wealth with Risk Aversion}{section.3.1}% 18
-\BOOKMARK [2][-]{subsection.3.1.5}{Case 3: Max Terminal Wealth with Running Inventory Penalty}{section.3.1}% 19
-\BOOKMARK [1][-]{section.3.2}{Whiteboard Inspirational Quote of the Week}{chapter.3}% 20
-\BOOKMARK [1][-]{section.3.3}{Discrete Time}{chapter.3}% 21
-\BOOKMARK [2][-]{subsection.3.3.1}{Max Terminal Wealth \(Discrete\)}{section.3.3}% 22
-\BOOKMARK [2][-]{subsection.3.3.2}{DPE Cases 2 and 3}{section.3.3}% 23
-\BOOKMARK [2][-]{subsection.3.3.3}{Simplifying the DPE}{section.3.3}% 24
-\BOOKMARK [0][-]{chapter.4}{Results}{}% 25
+\BOOKMARK [2][-]{subsection.3.1.1}{Maximizing Terminal Wealth \(Continuous\)}{section.3.1}% 15
+\BOOKMARK [1][-]{section.3.2}{Discrete Time}{chapter.3}% 16
+\BOOKMARK [2][-]{subsection.3.2.1}{Dynamic Programming}{section.3.2}% 17
+\BOOKMARK [2][-]{subsection.3.2.2}{Maximizing Terminal Wealth \(Discrete\)}{section.3.2}% 18
+\BOOKMARK [2][-]{subsection.3.2.3}{Simplifying the DPE}{section.3.2}% 19
+\BOOKMARK [0][-]{chapter.4}{Results}{}% 20

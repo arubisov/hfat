@@ -36,7 +36,7 @@ avg_method = 5;                             %
 
 [ binseries, pricechgseries, G, ~ ] = ...
     compute_G( data, dt_Z, num_bins, avg_method );
-P = gentoprob(G);
+P = onestep(G, dt_Z);
 [ oneDseries ] = get1Dseries( binseries, pricechgseries, num_bins );
 [ eta ] = compute_eta( oneDseries, pricechgseries, num_bins );
 [ muplus, muminus ] = compute_mu( data, oneDseries, dt_Z, num_bins );

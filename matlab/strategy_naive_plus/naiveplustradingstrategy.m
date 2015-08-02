@@ -19,7 +19,7 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
     
     opening_mid = (data.BuyPrice(time_ctr,1) + data.SellPrice(time_ctr,1))/20000;
     
-    [P_bid, ~, binseries, bidchgseries, ~] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method);
+    [P_bid, ~, binseries, bidchgseries, ~] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close);
     
     if display
         log_name = sprintf('strategy_naive_plus/naive+_trading_%s_%s.log', datestr(now,'yyyymmdd_HHMMSS'),ticker);

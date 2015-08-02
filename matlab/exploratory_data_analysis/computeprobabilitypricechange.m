@@ -4,7 +4,7 @@
 % num_bins          number of bins to cast the imbalances into
 % dt_prive_chg      time increment over which to measure price change
 
-function [P_bid, P_ask, binseries, bidchgseries, G_binbid, N_bid] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method)
+function [P_bid, P_ask, binseries, bidchgseries, G_binbid, N_bid] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close)
 
     if exist('data','var') == 0
         load('./data/ORCL_20130515.mat');
@@ -23,7 +23,7 @@ function [P_bid, P_ask, binseries, bidchgseries, G_binbid, N_bid] = computeproba
         dt_price_chg = 500;
     end
     
-    [t, binseries, bidchgseries, askchgseries, G_binbid, G_binask]= getbinpricetimeseries(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method);
+    [t, binseries, bidchgseries, askchgseries, G_binbid, G_binask]= getbinpricetimeseries(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close);
     
     P_bid = calculateP(G_binbid, dt_imbalance_avg, num_bins);
     P_ask = calculateP(G_binask, dt_imbalance_avg, num_bins);
@@ -35,7 +35,7 @@ function [P_bid, P_ask, binseries, bidchgseries, G_binbid, N_bid] = computeproba
 function P = calculateP(G, dt_imbalance_avg, num_bins)
     
     % one-step probability matrix:
-    P_onestep = expm(G*dt_imbalance_avg/1000);
+    P_onestep = onestep(G, dt_imbalance_avg);
     
     % entries of P_onestep are P[ I_n=i, dS_n=j | I_n-1=k, dS_n-1=m ]
     % rewrite that as B == I_n-1=k, dS_n-1=m, so that:

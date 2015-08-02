@@ -1,9 +1,8 @@
-function [ cash, q ] = dscr_backtest( data, h, deltaminus, deltaplus )
+function [ hist_X, hist_Q ] = dscr_backtest( data, h, deltaminus, deltaplus )
     global kappa
     global xi
     global num_bins
     global G
-    global Qrange
     global avg_method
     global dt_Z
 
@@ -17,6 +16,9 @@ function [ cash, q ] = dscr_backtest( data, h, deltaminus, deltaplus )
     
     [ binseries, pricechgseries, G, ~ ] = compute_G( data, dt_Z, num_bins, avg_method );
     [ oneDseries ] = get1Dseries( binseries, pricechgseries, num_bins );
+    
+    hist_X = NaN(1,length(oneDseries));
+    hist_Q = NaN(1,length(oneDseries));
     
     from = find(data.Event(:,1) >= T1, 1, 'first');
     to = find(data.Event(:,1) <= T2, 1, 'last');
@@ -36,7 +38,8 @@ function [ cash, q ] = dscr_backtest( data, h, deltaminus, deltaplus )
     dminus = Inf;
     time_ctr = 1;
     MO_ctr = 1;
-    t_h = 1;
+    
+    opening_mid = 1/20000 * (data.BuyPrice(1,1) + data.SellPrice(1,1));
     
     for i = 1:length(oneDseries)
         z = round(oneDseries(i));
@@ -53,7 +56,7 @@ function [ cash, q ] = dscr_backtest( data, h, deltaminus, deltaplus )
                         q = q + 1;
                         price = data.BuyPrice(time_ctr,1)/10000 - dplus;
                         cash = cash - price;
-                        %[ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qrange);
+                        %[ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
                         dplus = Inf; dminus = Inf;
                     end
                 else
@@ -63,7 +66,7 @@ function [ cash, q ] = dscr_backtest( data, h, deltaminus, deltaplus )
                         q = q - 1;
                         price = data.SellPrice(time_ctr,1)/10000 + dminus;
                         cash = cash + price;
-                        %[ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qrange);
+                        %[ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
                         dplus = Inf; dminus = Inf;
                     end
                 end
@@ -88,44 +91,77 @@ function [ cash, q ] = dscr_backtest( data, h, deltaminus, deltaplus )
            t_h = round(size(deltaminus,1) -  (T2-t)/(1000*fs_dt));
         end
         
-        [ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qrange);
+        [ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
         
         % check whether we're executing any MOs?
-        while h(t_h,z,find(Qrange == q+1)) - h(t_h,z,find(Qrange == q)) == 2*xi*(q >= 0)
+        while checkbuycondition(h,t_h,z,q,xi,Qmax)
             % execute buy MO
             q = q + 1;
             price = data.SellPrice(time_ctr,1)/10000;
             cash = cash - price;
             %if display, fprintf(fid, '[%d] {%d, %d, %d}.   Buy at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, q, cash); end;
-            [ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qrange);
+            [ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
         end
         
-        while h(t_h,z,find(Qrange == q-1)) - h(t_h,z,find(Qrange == q)) == 2*xi*(q <= 0)
+        while checksellcondition(h,t_h,z,q,xi,Qmax)
             % execute sell MO
             q = q - 1;
             price = data.BuyPrice(time_ctr,1)/10000;
             cash = cash + price;
-            [ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qrange);
+            [ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
         end
        
-        
+        if q > 0,       price = data.BuyPrice(end,1)/10000;
+        elseif q < 0,   price = data.SellPrice(end,1)/10000;
+        else            price = 0; 
+        end
+        % get NPV.
+        hist_X(i) = cash + q*price;
+        hist_Q(i) = q;
     end
+    
+    % terminal liqudation
+    if q > 0,       price = data.BuyPrice(end,1)/10000;
+    elseif q < 0,   price = data.SellPrice(end,1)/10000;
+    else            price = 0; 
+    end
+    cash = cash + q*(price - alpha*q);
+    q = 0;
+    hist_X(i) = cash;
+    hist_Q(i) = q;
+    % normalize NPV
+    hist_X = 1/opening_mid * hist_X;
         
         
 
 end
 
-function [ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qrange)
+function [ bool ] = checkbuycondition(h,t_h,z,q,xi,Qmax)
+    if q == Qmax, bool = false; return; end
+
+    qidx = Qmax + 1 + q;
+    bool = h(t_h,z,qidx+1) - h(t_h,z,qidx) == 2*xi*(q >= 0);
+end
+
+function [ bool ] = checksellcondition(h,t_h,z,q,xi,Qmax)
+    if q == -Qmax, bool = false; return; end
+
+    qidx = Qmax + 1 + q;
+    bool = h(t_h,z,qidx-1) - h(t_h,z,qidx) == 2*xi*(q <= 0);
+end
+
+function [ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax)
     t_h = round(t_h);
     z = round(z);
-    if q == -15
+    if q == -Qmax
         dminus = Inf;
         dplus = deltaplus(t_h,z,1);
-    elseif q == 15
+    elseif q == Qmax
         dplus = Inf;
         dminus = deltaminus(t_h,z,end);
     else
-        dplus = deltaplus(t_h,z,find(Qrange == q, 1));
-        dminus = deltaminus(t_h,z,find(Qrange == q, 1));
+        qidx = Qmax + 1 + q;
+        dplus = deltaplus(t_h,z,qidx);
+        dminus = deltaminus(t_h,z,qidx);
     end
 end

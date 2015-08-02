@@ -4,7 +4,7 @@
 % num_bins          number of bins to cast the imbalances into
 % dt_prive_chg      time increment over which to measure price change
 
-function [t, binseries, bidchgseries, askchgseries, G_binbid, G_binask, mu_IB] = getbinpricetimeseries(data, dt_imbalance_avg, num_bins, dt_price_chg, avg_method)
+function [t, binseries, bidchgseries, askchgseries, G_binbid, G_binask, mu_IB] = getbinpricetimeseries(data, dt_imbalance_avg, num_bins, dt_price_chg, avg_method, early_close)
     
     if exist('data','var') == 0
         load('./data/ORCL_20130515.mat');
@@ -24,10 +24,10 @@ function [t, binseries, bidchgseries, askchgseries, G_binbid, G_binask, mu_IB] =
     end
    
     % Imbalance Timeseries
-    [t, mu_IB] = computeavgimbalance(data, dt_imbalance_avg, avg_method);
+    [t, mu_IB] = computeavgimbalance(data, dt_imbalance_avg, avg_method, early_close);
 
     % create bins for CTMC
-    rho = createbins(num_bins, mu_IB, 2);
+    rho = createbins(num_bins, mu_IB, 3);
 
     [bin_count, binseries] = histc(mu_IB, rho);
     

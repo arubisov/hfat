@@ -1,13 +1,13 @@
 function [ hist_X, hist_Q ] = cts_backtest( data, h, deltaminus, deltaplus, ...
                 num_bins, avg_method, ds_method, dt_Z, Qmax, alpha, ...
-                kappa, xi, fs_T, fs_dt )
+                kappa, xi, fs_T, fs_dt, early_close )
 
     T1 = 9.5 * 3600000;
     T2 = 16 * 3600000;
     q = 0;
     cash = 0;
     
-    [ binseries, pricechgseries, ~, ~ ] = compute_G( data, dt_Z, num_bins, avg_method, ds_method );
+    [ binseries, pricechgseries, ~, ~ ] = compute_G( data, dt_Z, num_bins, avg_method, ds_method, early_close );
     [ oneDseries ] = get1Dseries( binseries, pricechgseries, num_bins );
     
     hist_X = NaN(1,length(oneDseries));
@@ -31,6 +31,8 @@ function [ hist_X, hist_Q ] = cts_backtest( data, h, deltaminus, deltaplus, ...
     dminus = Inf;
     time_ctr = 1;
     MO_ctr = 1;
+    
+    opening_mid = 1/20000 * (data.BuyPrice(1,1) + data.SellPrice(1,1));
     
     for i = 1:length(oneDseries)
         z = round(oneDseries(i));
@@ -106,6 +108,7 @@ function [ hist_X, hist_Q ] = cts_backtest( data, h, deltaminus, deltaplus, ...
         elseif q < 0,   price = data.SellPrice(end,1)/10000;
         else            price = 0; 
         end
+        % get NPV.
         hist_X(i) = cash + q*price;
         hist_Q(i) = q;
     end
@@ -116,7 +119,11 @@ function [ hist_X, hist_Q ] = cts_backtest( data, h, deltaminus, deltaplus, ...
     else            price = 0; 
     end
     cash = cash + q*(price - alpha*q);
-    q = 0;   
+    q = 0;
+    hist_X(i) = cash;
+    hist_Q(i) = q;
+    % normalize NPV
+    hist_X = 1/opening_mid * hist_X;
 end
 
 function [ bool ] = checkbuycondition(h,t_h,z,q,xi,Qmax)

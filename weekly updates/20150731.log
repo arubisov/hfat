@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.1.5)  29 JUL 2015 17:54
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.1.5)  1 AUG 2015 15:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1444,21 +1444,25 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 39.
  [1
 
-{/home/anton/.texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 89.
- [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 89.
+{/home/anton/.texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+Underfull \hbox (badness 10000) in paragraph at lines 96--105
+
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 106.
+[4]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 106.
  (./20150731.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 89.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 89.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 106.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 106.
 Package rerunfilecheck Info: File `20150731.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 89.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 106.
  ) 
 Here is how much of TeX's memory you used:
- 26681 strings out of 495028
- 567411 string characters out of 6181498
- 737292 words of memory out of 5000000
+ 26685 strings out of 495028
+ 567449 string characters out of 6181498
+ 738292 words of memory out of 5000000
  29318 multiletter control sequences out of 15000+600000
  13897 words of font info for 48 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -1469,10 +1473,10 @@ e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></home/anton/texmf/fonts/type
 1/vntex/vnr/vnr12.pfb>
-Output written on 20150731.pdf (3 pages, 80386 bytes).
+Output written on 20150731.pdf (4 pages, 84975 bytes).
 PDF statistics:
- 58 PDF objects out of 1000 (max. 8388607)
- 46 compressed objects within 1 object stream
- 12 named destinations out of 1000 (max. 500000)
+ 66 PDF objects out of 1000 (max. 8388607)
+ 53 compressed objects within 1 object stream
+ 16 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

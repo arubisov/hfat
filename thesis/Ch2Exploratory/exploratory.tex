@@ -2,62 +2,6 @@
 
 \section{Maximum Likelihood Estimate of a Doubly Stochastic Poisson Process}
 
-Limit order book imbalance is a ratio of limit order volumes between the bid and ask side, and can be calculated for example as $I(t) = \dfrac{V_b(t) - V_a(t)}{V_b(t) + V_a(t)} \in [-1,1]$.
-\begin{itemize}
-\item We bin the bid/ask volume imbalances in the Limit Order Book into $K$ bins, each being dubbed a ``regime'' of the limit order book. 
-\item $Z_t$ is a continuous-time Markov chain that tracks which regime we're in. $Z_t$ takes values in $\{1, \dots , K\}$, and has an infinitesimal generator matrix $G$.
-\item Conditional on being in some regime $k$, the arrival of buy and sell market orders follow independent Poisson processes with intensities $\lambda^{\pm}_k$.
-\end{itemize}
-
-We have observations of arrivals of buy/sell market orders and of regime switches occurring, all of which are timestamped. Pictorially, a timeline might look like:
-
-\begin{tikzpicture}[scale=1.5]
-	[triangle/.style = {fill=blue!20, regular polygon, regular polygon sides=3 },
-	border rotated/.style = {shape border rotate=180}]
-	
-	
-    \draw [>=latex,->] (0,0) -- (10,0) node[draw=none,fill=none,shift=(right:0.5)] {time};
-    \draw[mark options={fill=black}, mark size=+3pt] plot[mark=*] coordinates {(.5,0)} node[shift=(down:0.5), align=center] {$\tau_1$};
-    \draw[mark options={fill=black}, mark size=+3pt] plot[mark=*] coordinates {(4,0)} node[shift=(down:0.5), align=center] {$\tau_2$};
-    \draw[mark options={fill=black}, mark size=+3pt] plot[mark=*] coordinates {(5,0)} node[shift=(down:0.5), align=center] {$\tau_3$};
-    \draw[mark options={fill=black}, mark size=+3pt] plot[mark=*] coordinates {(8,0)} node[shift=(down:0.5), align=center] {$\tau_4$};
-    
-    
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(.75,0)} node[shift=(up:0.7), align=center] {buy \\ $b_1$};
-	\draw[mark options={fill=red}, mark size =+3pt, shift=(down:0.1)] plot[mark=diamond*] coordinates {(1.25,0)} node[shift=(down:0.7), align=center] {$s_2$ \\ sell};
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(2.5,0)} node[shift=(up:0.7), align=center] {buy \\ $b_3$};
-	\draw[mark options={fill=red}, mark size =+3pt, shift=(down:0.1)] plot[mark=diamond*] coordinates {(3,0)} node[shift=(down:0.7), align=center] {$s_4$ \\ sell};
-	\draw[mark options={fill=red}, mark size =+3pt, shift=(down:0.1)] plot[mark=diamond*] coordinates {(3.5,0)} node[shift=(down:0.7), align=center] {$s_5$ \\ sell};
-
-%%% REGIME SWITCH
-	
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(4.25,0)} node[shift=(up:0.4), align=center] {$b_6$};
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(4.50,0)} node[shift=(up:0.7), align=center]
-{buy \\ $b_7$};
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(4.75,0)} node[shift=(up:0.4), align=center] {$b_8$};
-	
-%%% REGIME SWITCH
-
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(5.25,0)} node[shift=(up:0.7), align=center] {buy \\ $b_9$};
-	\draw[mark options={fill=red}, mark size =+3pt, shift=(down:0.1)] plot[mark=diamond*] coordinates {(5.75,0)} node[shift=(down:0.7), align=center] {$s_{10}$ \\ sell};
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(7,0)} node[shift=(up:0.7), align=center] {buy \\ $b_{11}$};
-	
-%%% REGIME SWITCH
-
-	\draw[mark options={fill=red}, mark size =+3pt, shift=(down:0.1)] plot[mark=diamond*] coordinates {(9,0)} node[shift=(down:0.7), align=center] {$s_{12}$ \\ sell};
-	
-%%% BRACES
-	
-	\draw [decorate, decoration = {brace, amplitude = 10pt, mirror}]
-	(0.55,-1) -- (3.95,-1) node [black, midway, yshift = -0.6cm] {regime $i$};
-	\draw [decorate, decoration = {brace, amplitude = 10pt, mirror}]
-	(4.05,-1) -- (4.95,-1) node [black, midway, yshift = -0.6cm] {regime $j$}; 
-	\draw [decorate, decoration = {brace, amplitude = 10pt, mirror}]
-	(5.05,-1) -- (7.95,-1) node [black, midway, yshift = -0.6cm] {regime $i$}; 
-	\draw [decorate, decoration = {brace, amplitude = 10pt, mirror}]
-	(8.05,-1) -- (9.95,-1) node [black, midway, yshift = -0.6cm] {regime $k$}; 
-
-\end{tikzpicture}
 
 \subsection{Maximum Likelihood Estimation of \texorpdfstring{$G$}{G}}
 
@@ -65,24 +9,28 @@ Let $G$ be the generator matrix for $Z_t$, so $G = \{ q_{ij} \} \in \mathbb{R}^{
 
 When $Z_t$ enters regime $i$, the amount of time it spends in regime $i$ is exponentially distributed with rate $v_i = \sum\limits_{j \neq i} q_{ij}$, and when it leaves regime $i$ it will to go regime $j$ with probability $p_{ij} = \dfrac{q_{ij}}{v_i}$. 
 
-From our observations we want to estimate the components of $G$. The holding time in a given regime $i$ is exponentially distributed with pdf $f(t;v_i) = v_i e^{-v_i t}$. For the fictional events in the timeline above, the likelihood function (allowing for repetition of terms) would therefore be:
+From our observations we want to estimate the components of $G$. The holding time in a given regime $i$ is exponentially distributed with pdf $f(t;v_i) = v_i e^{-v_i t}$. For the fictional events in the timeline given in Figure \ref{introtimeline}, the likelihood function (allowing for repetition of terms) would therefore be:
 
-\begin{align*}
+\begin{align}
 \mathcal{L}(G) &= (v_{i} e^{-v_{i}(\tau_2 - \tau_1)} p_{ij}) (v_{j} e^{-v_{j}(\tau_3 - \tau_2)} p_{ji}) (v_{i} e^{-v_{i}(\tau_4 - \tau_3)} p_{ik}) \dots \\
 &= \prod\limits_{i=1}^{K} \prod\limits_{i \neq j} (v_{i}p_{ij})^{N_{ij}(T)} e^{-v_{i}H_i(T)} \\
 &= \prod\limits_{i=1}^{K} \prod\limits_{i \neq j} (q_{ij})^{N_{ij}(T)} e^{-v_{i}H_i(T)} \\
 \intertext{where:}
-N_{ij}(T) & \equiv \mbox{number of transitions from regime $i$ to $j$ up to time $T$} \\
-H_{i}(T) & \equiv \mbox{holding time in regime $i$ up to time $T$} \\
+N_{ij}(T) & \equiv \mbox{number of transitions from regime $i$ to $j$ up to time $T$} \nonumber \\
+H_{i}(T) & \equiv \mbox{holding time in regime $i$ up to time $T$} \nonumber \\
 \intertext{So that the log-likelihood becomes:} 
 \ln \mathcal{L}(G) & = \sum\limits_{i=1}^{K} \sum\limits_{i \neq j} \left[ N_{ij}(T) \ln(q_{ij}) - v_{i} H_i(T) \right] \\
 &= \sum\limits_{i=1}^{K} \sum\limits_{i \neq j} \left[ N_{ij}(T) \ln(q_{ij}) - \left( \sum\limits_{i \neq k} q_{ik} H_i(T) \right) \right]
-\end{align*}
+\end{align}
 
 To get a maximum likelihood estimate $\hat{q}_{ij}$ for transition rates and therefore the matrix $G$, we take the partial derivative of $\ln \mathcal{L}(G)$ and set it equal to zero:
 
-$$\dfrac{\partial \ln \mathcal{L}(G)}{\partial q_{ij}} = \dfrac{N_{ij}(T)}{q_{ij}} - H_i(T) = 0$$
-$$ \Rightarrow \hat{q}_{ij} = \dfrac{N_{ij}(T)}{H_i(T)}$$
+\begin{equation}
+\dfrac{\partial \ln \mathcal{L}(G)}{\partial q_{ij}} = \dfrac{N_{ij}(T)}{q_{ij}} - H_i(T) = 0
+\end{equation}
+\begin{equation}
+\Rightarrow \boxed{ \hat{q}_{ij} = \dfrac{N_{ij}(T)}{H_i(T)} }
+\end{equation}
 
 
 
@@ -90,55 +38,29 @@ $$ \Rightarrow \hat{q}_{ij} = \dfrac{N_{ij}(T)}{H_i(T)}$$
 
 Now we want to derive an estimate for the intensity of the Poisson process of market order arrivals conditional on being in some regime $k$. We'll look first at just the market buys for some regime $k$. In the above timeline, the market order buy arrival times are indexed by $b_i$. Since we're assuming that the arrival process is Poisson with the same intensity throughout trials, we can consider the inter-arrival time of events conditional on being in regime $k$. Then the MLE derivation follows just as for the CTMC:
 
-\begin{align*}
+\begin{align}
 \mathcal{L}(\lambda^{+}_k ; b_1, \dots, b_N) &= \prod\limits_{i=2}^{N} \lambda^{+}_k e^{-\lambda^{+}_k (b_{i} - b_{i-1})} \\
 &= (\lambda^{+}_k)^{N^{+}_k(T)} e^{-\lambda^{+}_k H_k(T)} \\
 \intertext{where:}
-N^{+}_{k}(T) & \equiv \mbox{number of market order arrivals in regime $k$ up to time $T$} \\
-H_{k}(T) & \equiv \mbox{holding time in regime $k$ up to time $T$} \\
+N^{+}_{k}(T) & \equiv \mbox{number of market order arrivals in regime $k$ up to time $T$} \nonumber \\
+H_{k}(T) & \equiv \mbox{holding time in regime $k$ up to time $T$} \nonumber \\
 \intertext{So that the log-likelihood becomes:} 
 \ln \mathcal{L}(\lambda^{+}_k) & = N^{+}_k(T) \ln(\lambda^{+}_k) -\lambda^{+}_k H_k(T)
 \intertext{And the ML estimate for $\hat{\lambda}^{+}_k$ is:} 
 \dfrac{\partial \ln\mathcal{L} }{\partial \lambda^{+}_k} & = 
 \dfrac{N^{+}_k(T)}{\lambda^{+}_k} - H_k(T) = 0
-\end{align*}
-
-$$ \Rightarrow \hat{\lambda}^{+}_k = \dfrac{N^{+}_k(T)}{H_k(T)}$$
-
-%Now we want to derive an estimate for the intensity of the Poisson process of market order arrivals conditional on being in some regime $k$. We'll look first at just the market buys for some regime $k$ - call the random variable counting the number of market buys $X$. We want to estimate the intensity, $\lambda^{+}_k$, of the (Poisson) distribution of $X$, which is also the expected value of $X$ as well as its variance. Suppose we have $N$ observations of some fixed time interval of LOB activity in this regime, and the number of market buy events in each trial is $n_i$ for $i=1,\dots,N$.
-%
-%Assuming the distributions of each trial have the same intensity, the probability mass function gives us that for each $i$:
-%
-%$$P(X=n_i) = \frac{{\lambda^{+}_k}^{n_i} e^{-\lambda^{+}_k}}{n_i!}$$
-%
-%Since the trials are independent and identically distributed, the joint density function is:
-%
-%$$P(n_1, \dots, n_N | \lambda^{+}_k) = P(n_1 | \lambda^{+}_k) \times \dots \times P(n_N | \lambda^{+}_k)$$
-%
-%So the likelihood function is:
-%$$\mathcal{L}(\lambda^{+}_k ; n_1, \dots, n_N) = \prod_{i=1}^{N} P(n_i | \lambda^{+}_k) = \prod_{i=1}^{N} \frac{{\lambda^{+}_k}^{n_i} e^{-\lambda^{+}_k}}{n_i!}$$
-%
-%Thus the log-likehood can be simplified (using logarithm and exponent identities) as:
-%\begin{align*}
-%\ln\mathcal{L} &= \ln \left(  \prod_{i=1}^{N} \frac{{\lambda^{+}_k}^{n_i} e^{-\lambda^{+}_k}}{n_i!} \right) \\
-%&= \ln \left( \frac{{\lambda^{+}_k}^{\left(\sum_{i=1}^{N} n_i\right)} e^{-N\lambda^{+}_k}}{\prod_{i=1}^{N} n_i!} \right) \\
-%&= \ln \left( {\lambda^{+}_k}^{\left(\sum_{i=1}^{N} n_i \right)} \right) - N\lambda^{+}_k - \sum_{i=1}^{N} \ln (n_i !)
-%\end{align*}
-%
-%Now we can get a maximum likelihood estimate for $\lambda^{+}_k$ by taking the partial derivative of $\ln\mathcal{L}$ with respect to $\lambda^{+}_k$ and setting it equal to zero:
-%
-%$$ \frac{\partial \ln\mathcal{L} }{\partial \lambda^{+}_k} = 
-%\dfrac{\sum\limits_{i=1}^{N} n_i}{\lambda^{+}_k} - N = 0$$
-%$$\frac{\sum\limits_{i=1}^{N} n_i}{\lambda^{+}_k} = N$$
-%$$\lambda^{+}_k = \frac{\sum\limits_{i=1}^{N} n_i}{N}$$
+\end{align}
+\begin{equation}
+\Rightarrow \boxed{ \hat{\lambda}^{+}_k = \dfrac{N^{+}_k(T)}{H_k(T)} }
+\end{equation}
 
 \section{Modeling \texorpdfstring{$I(t)$}{I(t)}: Continuous Time Markov Chain}
-Instead of modeling imbalance directly, an alternative approach is to discretize imbalance
+Instead of modelling imbalance directly, an alternative approach is to discretize imbalance
 into subintervals (called bins), and model a stochastic process that tracks which
 bin $I(t)$ falls into. A naive model that can be employed is a continuous-time Markov chain (CTMC).
 
 Let $Z(t)$ be a CTMC taking values in $\left\lbrace 1,\dots , K \right\rbrace$, and having
-infinitessimal generator matrix $\mat{G}$.\footnote{Define the terms 
+infinitesimal generator matrix $\mat{G}$.\footnote{Define the terms 
 $P_{ij}(t) = P \lbrace Z(t) = j | Z(0) = i \rbrace$. Then the matrices 
 $\mat{P}(t) = \lbrace P_{ij}(t) \rbrace$ and $\mat{G}$ satisfy
 $\dot{\mat{P}}(t) = \mat{G} \cdot \mat{P}(t)$, and hence $\mat{P}(t) = e^{\mat{G}t}$} 
@@ -170,7 +92,7 @@ H_i(T) & \equiv \text{holding time in bin $k$ up to time $T$}
 We estimated parameters for a CTMC on a day's worth of LOB data.
 Using these parameters, we generated sample paths of the imbalance bins as well as arrival of market orders,
 and re-estimated parameters along the sample paths. By doing this for 10,000 paths we obtained histograms for
-the parameters (the individual entires of $\mat{G}$ as well as the intensities $\lambda_k^\pm$). 
+the parameters (the individual entries of $\mat{G}$ as well as the intensities $\lambda_k^\pm$). 
 
 Using data for \texttt{ORCL} from 2013-05-15, averaging imbalances over a 100ms window, and taking the number
 of bins $K=3$, we obtained the following mean values for the parameters:
@@ -215,7 +137,7 @@ In these results, we instead use the relationship $\dot{\mat{P}} (t) = \mat{P}(t
 \vspace*{2.5mm}
 \begin{tabular}{c|c|c|c|c}
 \hline
-\bf num bins & & & & \\ averaging time & stationary $n$ & Timewindow size & $err$ & $\mat{Err}$ \\
+\bf \# bins & & & & \\ averaging time & stationary $n$ & Timewindow size & $err$ & $\mat{Err}$ \\
 \hline\hline
 3 bins, 100ms & 478 & 47.8s (0.2\% of series) & 0.356402 & 644\% - 11371\% \\
 \hline
@@ -533,7 +455,7 @@ We backtested a number of naive trading strategies, outlined here, based on this
 
 \paragraph{Naive Trading Strategy}  Using the conditional probabilities obtained from $\mat{P_C}$, we will execute a buy (resp. sell) market order if the probability of an upward (resp. downward) price change is $> 0.5$.
 
-\paragraph{Naive+ Trading Strategy} Extending the naive trading strategy, if we anticipate no change then we'll additionally keep limited orders posted at the touch, front of the queue. We'll track MO arrival, assume we always get excuted, and immediately repost the limit orders.
+\paragraph{Naive+ Trading Strategy} Extending the naive trading strategy, if we anticipate no change then we'll additionally keep limited orders posted at the touch, front of the queue. We'll track MO arrival, assume we always get executed, and immediately repost the limit orders.
 
 \paragraph{Naive++ Trading Strategy} We won't execute market orders or keep limit orders at the touch. Using the conditional probabilities obtained from $\mat{P_C}$, if we expect a downward (resp. upward) price change then we'll add a limit order to the sell (resp. buy) side, and hopefully pick up an agent who is executing a market order going against the price change momentum. 
 
@@ -543,25 +465,57 @@ Backtesting these trading strategies required a choice of parameters for $\Delta
 
 \begin{figure}
   \includegraphics[width=\textwidth]{Figs/fig-INTC-year-bookvals}
-  \caption{INTC: Bookvalue against time of trading day.}
+  \caption{INTC: Book value against time of trading day.}
 \end{figure}
 
 \begin{figure}
   \includegraphics[width=\textwidth]{Figs/fig-INTC-15min-hist}
-  \caption{INTC: Histogram of 15min bookvalue changes.}
+  \caption{INTC: Histogram of 15min book value changes.}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}
   \centering
-  \begin{tabular}{cc}
-  	\includegraphics[width=0.45\textwidth]{Figs/fig-compare-strat-FARO} & \includegraphics[width=0.45\textwidth]{Figs/fig-compare-strat-INTC} \\
-  	FARO & INTC \\
-  	\includegraphics[width=0.45\textwidth]{Figs/fig-compare-strat-NTAP} & \includegraphics[width=0.45\textwidth]{Figs/fig-compare-strat-ORCL} \\
-  	  	NTAP & ORCL \\
-    \multicolumn{2}{c}{\includegraphics[width=0.45\textwidth]{Figs/fig-compare-strat-SMH} }\\
-    \multicolumn{2}{c}{SMH}  	
-  \end{tabular}
-  \caption{Comparison of Naive (red), Naive+ (blue), and Naive++ (green) trading strategies, with benchmark Midprice (black). Plotted are bookvalues against time of trading day, averaged across trading year.}
+  \setlength\figureheight{.5\linewidth} 
+  \setlength\figurewidth{.5\linewidth}
+  \input{/home/anton/Documents/masc/ml/matlab/sta4505/fig126a.tikz}
+  \caption{Optimal posting depth $\delta$}
+  \label{fig:126a}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \input{Figs/FARO-strategy-compare.tikz}
+  \caption{FARO}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \input{Figs/NTAP-strategy-compare.tikz} 
+  \caption{NTAP}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \input{Figs/ORCL-strategy-compare.tikz}
+  \caption{ORCL}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \input{Figs/ORCL-strategy-compare.tikz} 
+  \caption{AAPL}
+\end{subfigure}%
+  \caption{Comparison of Naive (red), Naive+ (blue), and Naive++ (green) trading strategies, with benchmark Midprice (black). Plotted are book values against time of trading day, averaged across trading year.}
   \label{fig:comp}
 \end{figure}
 
@@ -569,13 +523,13 @@ Backtesting these trading strategies required a choice of parameters for $\Delta
 
 To properly compare the Naive trading strategies, it must be understood that the Naive+ strategy has the Naive built into it - thus it's actually the difference between the two that needs to be assessed to ascertain the effect of posting Limit Orders when no price change is predicted. As seen in Figure \ref{fig:comp}, the Naive trading strategy on average underperformed the average mid price, while the Naive+ (adding at-the-touch limit orders when no change was predicted) and Naive++ (adding limit orders to adversely selecting agents that traded against the price change momentum) strategies both on average generated revenue. 
 
-\paragraph{Question 1} Why is the Naive strategy producing, on average, normalized losses? Especially so when considering that we are \underline{in-sample backtesting}. On calibration, we see that our intra-day sharpe ratio is around 0.01 or 0.02 when we choose our optimal parameters, so at the very least on the calibration date the strategy produces positive returns. The remainder of the calendar days are out-of-sample, as the parameters are (likely) not optimal. This suggests non-stationary data, and in particular not every day can be modelled by the same Markov chain. The problem may be exaggerated by the fact that we're calibrating on the first trading day of the calendar year, when we might expect reduced, or at least non-representative, trading activity. Further, we're currently obtaining the $\mat{P_C}$ probability matrix using only bid-side data, not sell-side or mid, and we're ignoring the bid-ask spread. Thus predicting a ``price change'' may be insufficient when considering a monetizable opportunity, as we won't be able to profit off a predicted increase followed by a predicted decrease unless the interim mid-price move is greater than the bid-ask spread (assuming constant spread). This suggests a potential straightforward modification to the strategy.
+\paragraph{Question 1} Why is the Naive strategy producing, on average, normalized losses? Especially so when considering that we are \underline{in-sample backtesting}. On calibration, we see that our intra-day Sharpe ratio is around 0.01 or 0.02 when we choose our optimal parameters, so at the very least on the calibration date the strategy produces positive returns. The remainder of the calendar days are out-of-sample, as the parameters are (likely) not optimal. This suggests non-stationary data, and in particular not every day can be modelled by the same Markov chain. The problem may be exaggerated by the fact that we're calibrating on the first trading day of the calendar year, when we might expect reduced, or at least non-representative, trading activity. Further, we're currently obtaining the $\mat{P_C}$ probability matrix using only bid-side data, not sell-side or mid, and we're ignoring the bid-ask spread. Thus predicting a ``price change'' may be insufficient when considering a monetizable opportunity, as we won't be able to profit off a predicted increase followed by a predicted decrease unless the interim mid-price move is greater than the bid-ask spread (assuming constant spread). This suggests a potential straightforward modification to the strategy.
 
-\paragraph{Question 2} Why do the Naive+ and ++ strategies outperform the Naive strategy? This is particularly interesting since the probabilities are being obtained from the same matrix. The obvious difference between the successful and nonsuccessful strategies is that the former (a) uses limit orders, and (b) executes when we predict a zero change, whereas the latter uses (a) market orders, and (b) executes when we do predict nonzero change.
+\paragraph{Question 2} Why do the Naive+ and ++ strategies outperform the Naive strategy? This is particularly interesting since the probabilities are being obtained from the same matrix. The obvious difference between the successful and unsuccessful strategies is that the former (a) uses limit orders, and (b) executes when we predict a zero change, whereas the latter uses (a) market orders, and (b) executes when we do predict non-zero change.
 
 (a) obviously leads to a different transaction price being used: if I buy with a LO I'm paying the bid price, whereas buying with a MO I pay the ask price. If I value the stock using the mid price, and the mid price doesn't move as a result of my transaction, then with LO I'm buying the asset for less than I'm valuing it at, and with MO I'm paying more than its value.
 
-(b) seems to be the largest flaw in the Naive strategy, to which there are two factors. One, we are not predicting the magnitude of the price change, only whether it is zero or nonzero. Two, from the probabilities presented above, \textit{we will only predict a price change if we've already seen a price change}. Thus we're effectively reacting too late. 
+(b) seems to be the largest flaw in the Naive strategy, to which there are two factors. One, we are not predicting the magnitude of the price change, only whether it is zero or non-zero. Two, from the probabilities presented above, \textit{we will only predict a price change if we've already seen a price change}. Thus we're effectively reacting too late. 
 
 Here's how this works adversely. Suppose a stock has bid/ask quotes of \$9.99/\$10.01, for a bid-ask spread of \$0.02 and a mid of \$10.
 

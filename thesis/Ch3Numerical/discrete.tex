@@ -1,12 +1,7 @@
-\section{Whiteboard Inspirational Quote of the Week}
-\begin{quote}
-\textit{I'm sorry to say that the subject I most disliked was mathematics. I have thought about it. I think the reason was that mathematics leaves no room for argument. If you made a mistake, that was all there was to it.} \\-― Malcolm X 
-\end{quote} 
-
 \section{Discrete Time}
 Reminder of our processes (a little bit of abuse of notation going on):
 
-$\bz_k = (\rho_k, \Delta_k)$ - 2-D time-homogenous Markov Chain with transition probabilities $P_{ij}$, where $\rho_k \in \Gamma$ and $\Gamma$ represents the set of imbalance bins, and $\Delta_k = \sgn(s_k - s_{k-1}) \in \{-1,0,1\}$.
+$\bz_k = (\rho_k, \Delta_k)$ - 2-D time-homogenous Markov Chain with transition probabilities $\bP_{ij}$, where $\rho_k \in \Gamma$ and $\Gamma$ represents the set of imbalance bins, and $\Delta_k = \sgn(s_k - s_{k-1}) \in \{-1,0,1\}$.
 
 State $\vec{x}_{k} = \begin{pmatrix}
 x_k \\
@@ -42,132 +37,193 @@ K_k^- \\
 \text{random variable uniformly distributed on [0,1]} \\
 \end{matrix}$
 
-We'll write the evolution of the Markov chain as a function of the current state and a uniformly distributed random variable $\omega$:\footnote{Borrowed from ECE1639 notes.}
+Following \cite{Kwong15}, we'll write the evolution of the Markov chain as a function of the current state and a uniformly distributed random variable $\omega$:
 \begin{equation}
-\bz_{k+1} = T(\bz_k, \omega_k) = \sum_{i=0}^{|\Gamma|} i \cdot \indicator_{\left( \sum_{j=0}^{i-1} P_{\bz_k,j} , \sum_{j=0}^{i} P_{\bz_k,j} \right]} (\omega_k)
+\bz_{k+1} = T(\bz_k, \omega_k) = \sum_{i=0}^{|\Gamma|} i \cdot \indicator_{\left( \sum_{j=0}^{i-1} \bP_{\bz_k,j} , \sum_{j=0}^{i} \bP_{\bz_k,j} \right]} (\omega_k)
 \end{equation}
 Here $\indicator_A(\omega) = \begin{cases} 1 & \text{if } \omega \in A \\
 0 & \text{if } \omega \not\in A
 \end{cases}$, and hence $Z_{k+1}$ is assigned to the value $i$ for which $\omega_k$ is in the indicated interval of probabilities.
 
 Our Markovian state evolution function $f$, given by $\vec{x}_{k+1} = f \left( \vec{x}_{k},\vec{u}_{k}, \vec{w}_{k} \right)$, can be written explicitly as
-\begin{equation}
-\label{eq:discretestateevolution}
+\begin{equation}\label{eq:discretestateevolution}
 \begin{pmatrix}
 x_{k+1} \\
 s_{k+1} \\
 \bz_{k+1} \\
 q_{k+1} 
 \end{pmatrix} = \begin{pmatrix}
-x_k + (s_k + \pi + \delta_k^-)L_k^- - (s_k - \pi - \delta_k^+)L_k^+ + (s_k - \pi)M_k^- - (s_k + \pi)M_k^+ \\
-s_{k} + \eta_{k+1,T(\bz_k, \omega_k)} T(\bz_k, \omega_k)^{(2)} \\
+x_k \\
+s_{k} + \eta_{k+1,T(\bz_k, \omega_k)} \\
 T(\bz_k, \omega_k) \\
-q_{k} + L_k^+ - L_k^- + M_k^+ - M_k^-
+q_{k}
 \end{pmatrix}
++ \begin{pmatrix}
+s_k + \xi + \delta_k^- \\
+0 \\
+0 \\
+-1
+\end{pmatrix}L_k^-
++ \begin{pmatrix}
+- (s_k - \xi - \delta_k^+) \\
+0 \\
+0 \\
+1
+\end{pmatrix} L_k^+
 \end{equation}
-Clearly, the cash process at a subsequent is equal to the cash at the previous step, plus the costs of profits of executing market or limit orders. There are two noteworthy observations regarding this formulation of the evolution function. First, note that the price paid/received for limit orders depends on the stock price at time $k$. This implies that at $k$, if the agent posts a sell limit order, and the binary random variable $L_k^-$ (which depends on the binary random variable $M_k^+$) is equal to 1, then the agent's order is filled ``between timesteps'' $k$ and $k+1$, but using the price at time $k$. Second, since the second dimension $T(\bz_k, \omega_k)^{(2)} = \Delta_{k+1} = \sgn(s_{k+1} - s_k)$ determines the directionality of the price jump between times $k$ and $k+1$, multiplying it by the random variable $\eta_{k,\bz_k}$ determines the the size of the price change.
+The cash process at a subsequent timestep is equal to the cash at the previous step, plus the profits and costs of executing market and/or limit orders. At time $k$, if the agent posts a sell limit order that gets filled ``between timesteps'' $k$ and $k+1$ (depending on the binary random variable $L_k^-$, itself depending on the binary random variable $K_k^+$), the revenue depends on the stock price at $k$. This is consistent with reality as with backtesting: while we are choosing to model the posting \textit{depth}, in reality a submitted limit order has a specific price specified - thus once the order is submitted at $k$, the potential cash received is fixed. 
 
-\subsection{Max Terminal Wealth (Discrete)}
-Following traditional dynamic programming, we introduce the value function $V_k^{\bu}$. Here, our objective is to maximize the terminal wealth performance criteria given by
+Our impulse control at every time step is given by
+\begin{equation}\label{eq:discretestateimpulse}
+\begin{pmatrix}
+x_{k} \\
+s_{k} \\
+\bz_{k} \\
+q_{k} 
+\end{pmatrix} = \begin{pmatrix}
+x_{k} \\
+s_{k} \\
+\bz_{k} \\
+q_{k}
+\end{pmatrix}
++ \begin{pmatrix}
+s_k - \xi \\
+0 \\
+0 \\
+-1
+\end{pmatrix}M_k^-
++ \begin{pmatrix}
+- (s_k + \xi) \\
+0 \\
+0 \\
+1
+\end{pmatrix} M_k^+
+\end{equation}
+Our market orders assume immediate execution, and are assumed to be sufficiently small in volume so as to not affect order imbalance or the midprice. 
+
+\subsection{Dynamic Programming}
+The system formulation allows both continuous and impulse control to mimic what was done in the continuous time section, though in discrete time there is no \textit{a priori} distinction between the two \cite{Bens08}. The following theorem shows that in this case a quasi-variational inequality formulation does exist, and that it is equivalent to the standard dynamic programming formulation. The result is a simplified expression that mirrors the continuous time analysis.
+
+\begin{theorem}[\cite{Bens08}] \textbf{Dynamic Programming with Impulse Control in Discrete Time.} Consider a controlled Markov Chain with state space $X = \R^d$, transition probability $\pi(x, v, \d \eta)$, and positive, bounded, uniformly continuous cost function $l(x,v)$.
+
+Introduce an impulse control $w$. Define the extended cost function by $l(x, v, w) = l(x + w, v) + c(w)$, the extended transition probability by $\pi (x, v, w, \d \eta) =  \pi (x+w, v, \d \eta)$ with the associated operator $\Phi^{v,w} f (x) = \int_{\R^d} f (\eta) \pi (x, v, w, \d \eta) = \Phi^{v} f (x+w)$.
+
+Consider a decision rule $V,W$ with associated probability $\P^{V,W,x}$ on $\Omega, \cA$ for which $y_1 = x$ a.s. Consider the pay-off function
 \begin{equation}
-V_k^{\bu} (x,s,\bz,q) = \E \left[ W_T^{\bu} \right] = \E_{k,x,s,\bz,q}\left[ X_T^{\bu} + Q_T^{\bu}(S_T - \sgn(Q_T^{\bu})\pi) - \alpha {(Q_T^{\bu})}^2 \right]
+J_x (V, W ) = \E^{V,W,x} \left[ \sum\limits_{n=1}^\infty \alpha^{n-1} l(y_n,v_n,w_n) \right]
+\end{equation}
+and the corresponding Bellman equation
+\begin{equation}\label{eq:DPDscrBellman}
+u(x) = \inf\limits_{\substack{v \in U \\ w \geq 0}} [ l(x+w,v) + c(w) +  \alpha \Phi^{v} u (x+w) ]
+\end{equation}
+Assume:
+\begin{enumerate}
+\item $\Phi^V \phi_v(x)$ is continuous in $v, x$ if $\phi_v(x) = \phi(x, v)$ is uniformly continuous and bounded in $x, v$;
+\item $c(w) = K \indicator_{w=0} + c_0 (w), \quad c_0(0)=0, \quad \quad c_0(w) \rightarrow \infty$ as $|w| \rightarrow \infty,$ \\ $c_0(w)$ is sub-linear positive continuous;
+\item $U$ is compact.
+\end{enumerate}
+Then there exists a unique, positive, bounded solution of \eqref{eq:DPDscrBellman} belonging to the space of uniformly continuous and bounded functions. Further, this solution is identical to that of
+\begin{equation}\label{eq:DPDscrAlt}
+u(x) = \min \left\lbrace K + \inf\limits_{w \geq 0} [c_0(w) + u(x+w)] \; ; \; \inf\limits_{v \in U}  [l(x,v) + \alpha \Phi^v u(x)] \right\rbrace
+\end{equation}
+\end{theorem}
+
+\subsection{Maximizing Terminal Wealth (Discrete)}
+Following the dynamic programming with impulse control programme, we introduce the value function $V_k^{\delta^\pm}$. Here, as in the continuous-time formulation, our objective is to maximize the terminal wealth performance criteria given by
+\begin{equation}
+V_k^{\delta^\pm} (x,s,\bz,q) = \E \left[ W_T^{\delta^\pm} \right] = \E_{k,x,s,\bz,q}\left[ X_T^{\delta^\pm} + Q_T^{\delta^\pm}(S_T - \sgn(Q_T^{\delta^\pm})\xi) - \alpha {(Q_T^{\delta^\pm})}^2 \right]
 \end{equation}
 where, as before, the notation $\E_{k,x,s,\bz,q}[ \; \cdot \; ]$ represents the conditional expectation
 \[ \E [ \; \cdot \; | \; X_k = x, S_k = s, \bZ_k = \bz, Q_k = q] \]
 In this case, our dynamic programming equations (DPEs) are given by
 \begin{align}
-V_k (x,s,\bz,q) & = \sup_{\bu} \bigl\lbrace \E_{\bw} \left[ V_{k+1} (f((x,s,\bz,q),\bu,\bw_k) \right] \bigr\rbrace \\
-V_T (x,s,\bz,q) & = \sup_{\bu} \bigl\lbrace \E \left[ x + q(s-\sgn(q)\pi) - \alpha q^2 \right] \bigr\rbrace
+V_T (x,s,\bz,q) & = x + q(s-\sgn(q)\xi) - \alpha q^2 \\
+\label{eq:discreteDPEinitial}
+\begin{split}
+V_k (x,s,\bz,q) & = \max \biggl\lbrace \sup_{\delta^\pm} \bigl\lbrace \E_{\bw} \left[ V_{k+1} (f((x,s,\bz,q),\bu,\bw_k) \right] \bigr\rbrace \; ; \\
+& \hphantom{{}={} \max \biggl\lbrace} V_k(x+s_k-\xi,s_k, \bz_k, q_k -1) \; ; \\
+& \hphantom{{}={} \max \biggl\lbrace} V_k(x-s_k-\xi,s_k, \bz_k, q_k +1) \biggr\rbrace
+\end{split}
 \end{align}
-where expectation is with respect to the random vector $\bw_k$.
+where expectation is with respect to the random vector $\bw_k$. Note that in this formulation we do not have per stage costs, as the cost of execution is bundled into the state $x$. Nevertheless, it is rather immediate that the execution costs could be disentangled from the system state and seen to satisfy the theorem assumptions. Hypothetically we could add the fourth case where $M^+ = M^- = 1$, though a quick substitution shows that it is always strictly $2\xi$ less in value than the case of only limit orders, where $M^+ = M^- = 0$. This should be evident, as buying and selling with market orders in a single timestep yields a guaranteed loss as the agent is forced to cross the spread. 
 
 To simplify the DPEs, we introduce a now familiar ansatz:
 \begin{equation}
-\label{eq:ansatzHcase1discrete}
-V_k = x + q(s-\sgn(q)\pi) + h_k(\bz,q)
+\label{eq:ansatzHdscr}
+V_k (x,s,\bz,q) = x + q(s-\sgn(q)\xi) + h_k(\bz,q)
 \end{equation}
-with boundary condition $h_k(\bz,0) = 0$ and terminal condition $h_T(\bz,q) = -\alpha q^2$. Substituting this into the DPE, we obtain
+with boundary condition $h_k(\bz,0) = 0$ and terminal condition $h_T(\bz,q) = -\alpha q^2$. Substituting this ansatz into the \eqref{eq:discreteDPEinitial}, we obtain
 \begin{align}
-0 & = \sup_{\bu} \bigl\lbrace \E_{\bw} \left[ V_{k+1} (f((x,s,\bz,q),\bu,\bw_k) \right] \bigr\rbrace - V_k (x,s,\bz,q)  \nonumber \\
-\begin{split} & = \sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[
-(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ + (s - \pi)M_k^- - (s + \pi)M_k^+ \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- + M_k^+ - M_k^-) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} \times \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- + M_k^+ - M_k^-)\pi   \bigr) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- + M_k^+ - M_k^-) - \sgn(q) \right) \pi \right) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- + M_k^+ - M_k^-) -  h_k(\bz,q) \biggr] \biggr\rbrace 
-\end{split}
-\end{align}
-Since our buy/sell market order controls are binary, the supremum over the control vector $\bu$ can be treated as a simultaneous supremum over $\delta^\pm$ and maximum over the four possible values for $M^\pm$. Notably, however, a quick substitution shows that the case where $M^+ = M^- = 1$ is not possible as it is always strictly $2\pi$ less in value than the case of only limit orders, where $M^+ = M^- = 0$. This should be evident, as buying and selling with market orders in a single timestep yields a guaranteed loss as the agent is forced to cross the spread. Thus, our DPE takes the form:
-\begin{equation}
+\begin{split}
+0 & = \max \biggl\lbrace \sup_{\delta^\pm} \bigl\lbrace \E_{\bw} \left[ V_{k+1} (f((x,s,\bz,q),\bu,\bw_k) \right] - V_k (x,s,\bz,q) \bigr\rbrace \; ; \\
+& \hphantom{{}={} \max \biggl\lbrace} V_k(x+s_k-\xi,s_k, \bz_k, q_k -1) - V_k (x,s,\bz,q)\; ; \\
+& \hphantom{{}={} \max \biggl\lbrace} V_k(x-s_k-\xi,s_k, \bz_k, q_k +1) - V_k (x,s,\bz,q) \biggr\rbrace
+\end{split} \\
 \label{eq:discreteDPE}
 \begin{split}
-0 & = \max \Biggl\lbrace 
+0 & = \max \biggl\lbrace 
 %%% Only Limit Orders
-\sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
-(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^-)\pi   \bigr) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \pi \right) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \biggr] \biggr\rbrace \; ;\\
-%%% Limit Orders + Market Buy
-& \hphantom{{}={} \max \biggl\lbrace } \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
-(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ - (s + \pi)\\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- +1) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- +1)\pi   \bigr) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- +1) - \sgn(q) \right) \pi \right) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- + 1) -  h_k(\bz,q) \biggr] \biggr\rbrace \; ; \\
-%%% Limit Orders + Market Sell
-& \hphantom{{}={} \max \biggl\lbrace } \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
-(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ + (s - \pi) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- -1) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- -1)\pi   \bigr) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- -1) - \sgn(q) \right) \pi \right) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- -1) -  h_k(\bz,q) \biggr] \biggr\rbrace  \Biggr\rbrace
+\sup_{\delta^\pm} \bigl\lbrace \E_{\bw} \bigl[
+(s + \xi + \delta^-)L_k^- - (s - \xi - \delta^+)L_k^+ \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,T(\bz, \omega)}  -\sgn( q + L_k^+ - L_k^-)\xi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,T(\bz, \omega)}  -\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \xi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \bigr] \bigr\rbrace \; ;\\
+%%% Market Buy
+& \hphantom{{}={} \max \biggl\lbrace } -2\xi \cdot \indicator_{q \geq 0} + h_k(\bz,q+1) \; ; \\
+%%% Market Sell
+& \hphantom{{}={} \max \biggl\lbrace } -2\xi \cdot \indicator_{q \leq 0} + h_k(\bz,q-1) \biggr\rbrace
 \end{split}
-\end{equation}
+\end{align}
 
-We'll begin by concentrating on the first case where $M^+ = M^- = 0$. Thus, we want to solve
+We'll begin by concentrating on the first term in the quasi-variational inequality. Thus, we want to solve
 \begin{equation}
 \label{eq:discretesup1}
 \begin{split}
 & \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
-(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^-)\pi   \bigr) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \pi \right) \\
+(s + \xi + \delta^-)L_k^- - (s - \xi - \delta^+)L_k^+ \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,T(\bz, \omega)}  -\sgn( q + L_k^+ - L_k^-)\xi   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,T(\bz, \omega)}  -\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \xi \right) \\
 & \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \biggr] \biggr\rbrace
 \end{split}
 \end{equation}
-You might recall that things got pretty messy pretty fast. Previously we had set up the problem such that at each timestep $k$ there can be multiple other agents' market orders ($K_k^+$) arriving, and these were Poisson distributed. For each arriving order, the probability of our posted limit order being filled was $e^{-\kappa \delta^-}$. We're going to modify this slightly. Keeping the market orders as Poisson distributed, we have that $\P [ K_k^+ = 0] = \frac{e^{-\mu^+ (\bz) \Delta t} (\mu^+ (\bz) \Delta t)^0}{0!} = e^{-\mu^+ (\bz) \Delta t}$, and so the probability of seeing some positive number of market orders is
+As other agents' market orders as Poisson distributed, we have that $\P [ K_k^+ = 0] = \frac{e^{-\mu^+ (\bz) \Delta t} (\mu^+ (\bz) \Delta t)^0}{0!} = e^{-\mu^+ (\bz) \Delta t}$, and so the probability of seeing some positive number of market orders is
 \begin{equation}
 \label{eq:discretepositiveKplus}
 \P [ K_k^+ > 0] = 1 - e^{-\mu^+ (\bz) \Delta t}
 \end{equation}
-Now we make the simplified assumption that the \textit{aggregate} of the orders walks the limit order book to a depth of $p_k$, and if $p_k > \delta^-$, then our sell limit order is lifted. Thus we have the following preliminary results:
-\begin{align*}
+Now we make the simplified assumption that the \textit{aggregate} of the orders walks the limit order book to a depth of $p_k$, and if $p_k > \delta^-$, then our sell limit order is lifted. As in the continuous time section, we will assume that the probability of our order being lifted is $e^{-\kappa \delta^-}$. Thus we have the following preliminary results:
+\begin{align}
 \P [ L_k^- = 1 | K_k^+ > 0] & = e^{-\kappa \delta^-} \\
 \P [ L_k^- = 0 | K_k^+ > 0] & = 1 - e^{-\kappa \delta^-} \\
 \E [ L_k^- ] & = \P [ L_k^- = 1 | K_k^+ > 0] \cdot \P[K_k^+ > 0] \\
-& = ( 1 - e^{-\mu^+ (\bz) \Delta t} ) e^{-\kappa \delta^-} \\
-\end{align*}
+& = ( 1 - e^{-\mu^+ (\bz) \Delta t} ) e^{-\kappa \delta^-}
+\end{align}
 For ease of notation, we'll write the probability of the $L_k^- = 1$ event as $p(\delta^-)$. This gives us the additional results:
-\begin{align*}
+\begin{align}
 \P [ L_k^- = 1] & = p(\delta^-) = \E [ L_k^-] \\
 \P [ L_k^- = 0] & = 1 - p(\delta^-) \\
 \partial_{\delta^-} \P [ L_k^- = 1]  & = -\kappa p(\delta^-) \\
-\partial_{\delta^-} \P [ L_k^- = 0] & = \kappa p(\delta^-) \\
-\end{align*}
-Contributing to last week's frustration, a la our man Malcolm X, was an error in calculation. I had mistakenly calculated $\E [ L_k^- \sgn(q + L_k^+ - L_k^-)] = \E [ L_k^-] \E[\sgn(q + L_k^+ - L_k^-)]$, as if to say they are independent, but of course they are not. This is fixed below. On the contrary, $\E [ L_k^- \eta_{0,\bz}T(\bz,\omega)^{(2)}]$ was correctly treated as the product of independent random variables. We have that $\E[L_k^-] = ( 1 - e^{-\mu^+ (\bz) \Delta t} ) e^{-\kappa \delta^-}$ is clearly dependent on $\bz$, but these expectations are over the vector of random variables $\bw = (K^+, K^-, \omega)$ and are evaluated at a given point $\bz$.
-
-Let's pre-compute some of the terms that we'll encounter in the supremum, namely the expectations of the random variables. 
+\partial_{\delta^-} \P [ L_k^- = 0] & = \kappa p(\delta^-)
+\end{align}
+Let's pre-compute some of the terms that we'll encounter in the supremum, namely the expectations of the random variables. To each we will assign an uppercase Greek letter as shorthand, as will be evident from the analysis.
 \begin{align}
-\E [\sgn(q + L_k^+ - L_k^-)] & = \P[L_k^- = 1] \cdot \P[L_k^+ = 1] \cdot \sgn(q) \nonumber \\
-& \quad + \P[L_k^- = 1] \cdot \P[L_k^+ = 0] \cdot \sgn(q - 1) \nonumber \\
-& \quad +  \P[L_k^- = 0] \cdot \P[L_k^+ = 1] \cdot \sgn(q+1) \nonumber \\
-& \quad + \P[L_k^- = 0] \cdot \P[L_k^+ = 0] \cdot \sgn(q) \nonumber \\
-& = p(\delta^-)p(\delta^+) \sgn(q) \nonumber \\
-& \quad + p(\delta^-) (1-p(\delta^+)) \sgn(q - 1) \nonumber \\
-& \quad + (1 - p(\delta^-)) p(\delta^+)  \sgn(q+1) \nonumber \\
-& \quad + (1 - p(\delta^-)) (1-p(\delta^+))  \sgn(q) \nonumber \\
-& = \sgn(q) \bigl[ 1 - p(\delta^+) - p(\delta^-) + 2 p(\delta^+) p(\delta^-) \bigr] \nonumber \\
-& \quad + \sgn(q-1) \bigl[ p(\delta^-)  - p(\delta^+) p(\delta^-) \bigr]  \nonumber \\
-& \quad + \sgn(q+1) \bigl[ p(\delta^+)  - p(\delta^+) p(\delta^-) \bigr]  \nonumber \\
+\begin{split}
+\E [\sgn(q + L_k^+ - L_k^-)] & = \P[L_k^- = 1] \cdot \P[L_k^+ = 1] \cdot \sgn(q) \\
+& \quad + \P[L_k^- = 1] \cdot \P[L_k^+ = 0] \cdot \sgn(q - 1) \\
+& \quad +  \P[L_k^- = 0] \cdot \P[L_k^+ = 1] \cdot \sgn(q+1) \\
+& \quad + \P[L_k^- = 0] \cdot \P[L_k^+ = 0] \cdot \sgn(q) 
+\end{split} \\
+\begin{split}
+& = p(\delta^-)p(\delta^+) \sgn(q)  \\
+& \quad + p(\delta^-) (1-p(\delta^+)) \sgn(q - 1)  \\
+& \quad + (1 - p(\delta^-)) p(\delta^+)  \sgn(q+1)  \\
+& \quad + (1 - p(\delta^-)) (1-p(\delta^+))  \sgn(q)
+\end{split} \\
+\begin{split}
+& = \sgn(q) \bigl[ 1 - p(\delta^+) - p(\delta^-) + 2 p(\delta^+) p(\delta^-) \bigr] \\
+& \quad + \sgn(q-1) \bigl[ p(\delta^-)  - p(\delta^+) p(\delta^-) \bigr] \\
+& \quad + \sgn(q+1) \bigl[ p(\delta^+)  - p(\delta^+) p(\delta^-) \bigr]
+\end{split} \\
 & = \begin{cases} 
 1 & q \geq 2 \\
 1 - p(\delta^-)(1 - p(\delta^+)) & q = 1 \\
@@ -179,11 +235,13 @@ p(\delta^+) - p(\delta^-) & q = 0 \\
 \end{align}
 Similarly:
 \begin{align}
-\E [ L_k^+ \sgn(q + L_k^+ - L_k^-)] & = \P[L_k^- = 1] \cdot \P[L_k^+ = 1] \cdot \sgn(q) \nonumber \\
-& \quad + \P[L_k^- = 1] \cdot \P[L_k^+ = 0] \cdot 0 \sgn(q - 1) \nonumber \\
-& \quad +  \P[L_k^- = 0] \cdot \P[L_k^+ = 1] \cdot \sgn(q+1) \nonumber \\
-& \quad + \P[L_k^- = 0] \cdot \P[L_k^+ = 0] \cdot 0 \sgn(q) \nonumber \\
-& = p(\delta^+) \bigl[ p(\delta^-) \sgn(q) + (1-p(\delta^-) \sgn(q+1) \bigr] \nonumber \\
+\begin{split}
+\E [ L_k^+ \sgn(q + L_k^+ - L_k^-)] & = \P[L_k^- = 1] \cdot \P[L_k^+ = 1] \cdot \sgn(q) \\
+& \quad + \P[L_k^- = 1] \cdot \P[L_k^+ = 0] \cdot 0 \sgn(q - 1) \\
+& \quad +  \P[L_k^- = 0] \cdot \P[L_k^+ = 1] \cdot \sgn(q+1) \\
+& \quad + \P[L_k^- = 0] \cdot \P[L_k^+ = 0] \cdot 0 \sgn(q)
+\end{split} \\
+& = p(\delta^+) \bigl[ p(\delta^-) \sgn(q) + (1-p(\delta^-) \sgn(q+1) \bigr] \\
 & = p(\delta^+) \begin{cases} 
 1 & q \geq 2 \\
 1 & q = 1 \\
@@ -195,7 +253,7 @@ Similarly:
 \end{align}
 and
 \begin{align}
-\E [ L_k^- \sgn(q + L_k^+ - L_k^-)] & = p(\delta^-) \bigl[ p(\delta^+) \sgn(q) + (1-p(\delta^+)) \sgn(q-1) \bigr] \nonumber \\
+\E [ L_k^- \sgn(q + L_k^+ - L_k^-)] & = p(\delta^-) \bigl[ p(\delta^+) \sgn(q) + (1-p(\delta^+)) \sgn(q-1) \bigr] \\
 & = p(\delta^-) \begin{cases} 
 1 & q \geq 2 \\
 p(\delta^+) & q = 1 \\
@@ -273,195 +331,82 @@ and its partial derivatives as
 \end{split}
 \end{align}
 
-Now we tackle solving the supremum in equation $\ref{eq:discretesup1}$. First we consider the first-order condition on $\delta^-$, namely that the partial derivative with respect to it must be equal to zero.
+Now we tackle solving the supremum in equation $\ref{eq:discretesup1}$ and thus finding the optimal posting depths, again denoted by a subscript asterisk. First we consider the first-order condition on $\delta^-$, namely that the partial derivative with respect to it must be equal to zero.
 \begin{align}
 \begin{split}
 0 & = \partial_{\delta^-} \biggl\lbrace 
-(s + \pi + \delta^-)\E [L_k^-] - (s - \pi - \delta^+)\E[L_k^+] \\
-& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} + \E[L_k^+] \left( s + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] \right)  - \pi \E \left[L_k^+ \sgn( q + L_k^+ - L_k^-) \right] \\
-& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} - \E[L_k^-] \left( s + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] \right) + \pi \E \left[ L_k^- \sgn( q + L_k^+ - L_k^-) \right] \\
-& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} + q \E[ \eta_{0,\bz} T(\bz, \omega)^{(2)}]  - q \pi \E[ \sgn( q + L_k^+ - L_k^-)] + q \pi \sgn(q)  \\
+(s + \xi + {\delta^-}^*)\E [L_k^-] - (s - \xi - \delta^+)\E[L_k^+] \\
+& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} + \E[L_k^+] \left( s + \E[\eta_{0,T(\bz, \omega)}] \right)  - \xi \E \left[L_k^+ \sgn( q + L_k^+ - L_k^-) \right] \\
+& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} - \E[L_k^-] \left( s + \E[\eta_{0,T(\bz, \omega)}] \right) + \xi \E \left[ L_k^- \sgn( q + L_k^+ - L_k^-) \right] \\
+& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} + q \E[ \eta_{0,T(\bz, \omega)}]  - q \xi \E[ \sgn( q + L_k^+ - L_k^-)] + q \xi \sgn(q)  \\
 & \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} + \E \left[ h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) \right] -  h_k(\bz,q) \biggr\rbrace
 \end{split} \\
 \begin{split}
 & = \partial_{\delta^-} \biggl\lbrace 
-(s + \pi + \delta^-)\E [L_k^-] - \pi \E \left[L_k^+ \sgn( q + L_k^+ - L_k^-) \right] \\
-& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} - \E[L_k^-] \left( s + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] \right) + \pi \E \left[ L_k^- \sgn( q + L_k^+ - L_k^-) \right] \\
-& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} - q \pi \E[ \sgn( q + L_k^+ - L_k^-)]  + \E \left[ h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) \right]  \biggr\rbrace
+(s + \xi + {\delta^-}^*)\E [L_k^-] - \xi \E \left[L_k^+ \sgn( q + L_k^+ - L_k^-) \right] \\
+& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} - \E[L_k^-] \left( s + \E[\eta_{0,T(\bz, \omega)}] \right) + \xi \E \left[ L_k^- \sgn( q + L_k^+ - L_k^-) \right] \\
+& \hphantom{\partial_{\delta^-} \biggl\lbrace {}+{}} - q \xi \E[ \sgn( q + L_k^+ - L_k^-)]  + \E \left[ h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) \right]  \biggr\rbrace
 \end{split} \\
 \begin{split}
-& = p(\delta^-) - \kappa p(\delta^-) (s + \pi + \delta^-) - \pi \kappa p(\delta^+)p(\delta^-)\Psi_-(q) \\
-& \hphantom{{}={}} + \kappa p(\delta^-) \left( s + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] \right) - \pi \kappa p(\delta^-) \Upsilon(q,\delta^+) - q \pi \kappa p(\delta^-) \Phi_-(q,\delta^+) \\
-& \hphantom{{}={}} + \kappa p(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - 2 p(\delta^+) \bigr] + h_{k+1}(\bj, q-1) \bigl[-1 + p(\delta^+) \bigr] \\
-& \hphantom{{}={} + \kappa p(\delta^-) \sum_\bj \bP_{\bz,\bj} \biggl[} + h_{k+1}(\bj, q+1) \bigl[ p(\delta^+) \bigr] \biggr]
+& = p({\delta^-}^*) - \kappa p({\delta^-}^*) (s + \xi + {\delta^-}^*) - \xi \kappa p(\delta^+)p({\delta^-}^*)\Psi_-(q) \\
+& \hphantom{{}={}} + \kappa p({\delta^-}^*) \left( s + \E[\eta_{0,T(\bz, \omega)}] \right) - \xi \kappa p({\delta^-}^*) \Upsilon(q,\delta^+) - q \xi \kappa p({\delta^-}^*) \Phi_-(q,\delta^+) \\
+& \hphantom{{}={}} + \kappa p({\delta^-}^*) \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - 2 p(\delta^+) \bigr] + h_{k+1}(\bj, q-1) \bigl[-1 + p(\delta^+) \bigr] \\
+& \hphantom{{}={} + \kappa p({\delta^-}^*) \sum_\bj \bP_{\bz,\bj} \biggl[} + h_{k+1}(\bj, q+1) \bigl[ p(\delta^+) \bigr] \biggr]
 \end{split}
 \end{align}
-Dividing through by $\kappa p(\delta^-)$, which is nonzero, and re-arranging, we find that the optimal sell posting depth is given by
+Dividing through by $\kappa p({\delta^-}^*)$, which is nonzero, and re-arranging, we find that the optimal sell posting depth is given by
 \begin{align}
 \begin{split}
-{\delta^-}^* & = \frac{1}{\kappa} + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - \pi \left( 1 + p(\delta^+)\Psi_-(q) + \Upsilon(q,\delta^+) + q \Phi_-(q,\delta^+) \right) \\
+{\delta^-}^* & = \frac{1}{\kappa} + \E[\eta_{0,T(\bz, \omega)}] - \xi \left( 1 + p(\delta^+)\Psi_-(q) + \Upsilon(q,\delta^+) + q \Phi_-(q,\delta^+) \right) \\
 & \hphantom{{}={}} +  \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - 2 p(\delta^+) \bigr] + h_{k+1}(\bj, q-1) \bigl[-1 + p(\delta^+) \bigr] + h_{k+1}(\bj, q+1) \bigl[ p(\delta^+) \bigr] \biggr]
 \end{split} \\
 \begin{split}
-& = \frac{1}{\kappa} + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \left( \indicator_{q \geq 1} + p(\delta^+)\indicator_{q = 0} \right) \\
+& = \frac{1}{\kappa} + \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \left( \indicator_{q \geq 1} + p(\delta^+)\indicator_{q = 0} \right) \\
 & \hphantom{{}={}} +  \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - 2 p(\delta^+) \bigr] + h_{k+1}(\bj, q-1) \bigl[-1 + p(\delta^+) \bigr] + h_{k+1}(\bj, q+1) \bigl[ p(\delta^+) \bigr] \biggr]
-\end{split} \\
-\begin{split}
-\label{eq:discretedeltaminusreferential}
-{\delta^-}^* & = \frac{1}{\kappa} + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \geq 1} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q-1) \biggr] \\
-& \hphantom{{}={}} -p(\delta^+) \left( 2 \pi \indicator_{q = 0} - \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \biggr] \right)
-\end{split}
-\intertext{And similarly, for the optimal buy posting depth:}
-\begin{split}
-\label{eq:discretedeltaplusreferential}
-{\delta^+}^* & = \frac{1}{\kappa} - \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \leq -1} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q+1) \biggr] \\
-& \hphantom{{}={}} -p(\delta^-) \left( 2 \pi \indicator_{q = 0} - \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \biggr] \right)
 \end{split}
 \end{align}
-For ease of notation we'll write $\aleph = \sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \right]$. Now, assuming we behave optimally on both the buy and sell sides simultaneously, we can substitute equation \ref{eq:discretedeltaplusreferential} into equation \ref{eq:discretedeltaminusreferential}, and vice versa, while evaluating both at ${\delta^+}^*$ and ${\delta^-}^*$ to obtain the optimal posting depths in feedback form:
-\begin{equation}
-\label{eq:discretedeltaminusfeedback}
-\boxed{
+Recalling that we want $\delta^\pm \geq 0$, we find:
+\begin{equation}\label{eq:discretedeltaminusreferential}
 \begin{split}
-{\delta^-}^* & = \frac{1}{\kappa} + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \geq 1} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q-1) \biggr] \\
-& \hphantom{{}={}} - (1-e^{\mu^-(\bz) \Delta t})e^{-\kappa \bigl( \frac{1}{\kappa} - \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \leq -1} + \sum_\bj \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q+1) \bigr] \bigr) } \\
-& \hphantom{{}={} {}-{}} \times e^{\kappa (1-e^{\mu^+ (\bz) \Delta t})e^{-\kappa {\delta^-}^*} \left( 2 \pi \indicator_{q = 0} - \aleph \right)} \left( 2 \pi \indicator_{q = 0} - \aleph \right)
-\end{split}
-}
-\end{equation}
-\begin{equation}
-\label{eq:discretedeltaplusfeedback}
-\boxed{
-\begin{split}
-{\delta^+}^* & = \frac{1}{\kappa} - \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \leq -1} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q+1) \biggr] \\
-& \hphantom{{}={}} - (1-e^{\mu^+ (\bz) \Delta t})e^{-\kappa \bigl( \frac{1}{\kappa} + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \geq 1} + \sum_\bj \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q-1) \bigr] \bigr) } \\
-& \hphantom{{}={} {}-{}} \times e^{\kappa (1-e^{\mu^- (\bz) \Delta t})e^{-\kappa {\delta^+}^*} \left( 2 \pi \indicator_{q = 0} - \aleph \right)} \left( 2 \pi \indicator_{q = 0} - \aleph \right)
-\end{split}
-}
-\end{equation}
-\subsection{DPE Cases 2 and 3}
-We have derived the optimal LO posting depths for the first case of the DPE, where no market orders are placed. The analysis of the other two cases, where $M_k^+ = 1$ and $M_k^- = 1$, respectively, proceeds almost identically. Looking first at the case $M_k^+ = 1$, we try to solve:
-\begin{equation}
-\label{eq:discretesup2}
-\begin{split}
-& \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
-(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ - (s + \pi)\\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- +1) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- +1)\pi   \bigr) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- +1) - \sgn(q) \right) \pi \right) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- + 1) -  h_k(\bz,q) \biggr] \biggr\rbrace \; ; \\
+{\delta^-}^* & = \max \biggl\lbrace 0 \; ; \; \frac{1}{\kappa} + \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \geq 1} + \sum_\bj \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q-1) \bigr] \\
+& \hphantom{{}={}} -p(\delta^+) \left( 2 \xi \indicator_{q = 0} - \sum_\bj \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \bigr] \right) \biggr\rbrace
 \end{split}
 \end{equation}
-We find that the functions $\Phi, \Psi, \Upsilon$ are identical but evaluated at $q+1$. Thus, for example, we have:
-\begin{equation}
-\label{eq:discretephioffset}
-\Phi(q+1, \delta^+, \delta^-) = \begin{cases} 
-1 & q \geq 1 \\
-1 - p(\delta^-)(1 - p(\delta^+)) & q = 0 \\
-p(\delta^+) - p(\delta^-) & q = -1 \\
--\bigl[ 1 - p(\delta^+)(1 - p(\delta^-)) \bigr] & q = -2 \\
--1 & q \leq -3
-\end{cases}
-\end{equation}
-In a similar fashion to the previous analysis, we obtain the posting depths for the second case (indicated with a subscript 2)
-\begin{align}
-\label{eq:discretedeltaminus2referential}
+And similarly, the optimal buy posting depth is given by:
+\begin{equation}\label{eq:discretedeltaplusreferential}
 \begin{split}
-{\delta_{2}^{-}}^* & = \frac{1}{\kappa} + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \geq 0} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q+1) - h_{k+1}(\bj, q) \biggr] \\
-& \hphantom{{}={}} -p(\delta^+) \left( 2 \pi \indicator_{q = -1} - \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) + h_{k+1}(\bj, q+2) -2 h_{k+1}(\bj, q+1)  \biggr] \right)
-\end{split} \\
-\begin{split}
-\label{eq:discretedeltaplus2referential}
-{\delta_{2}^+}^* & = \frac{1}{\kappa} - \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \leq -2} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q+1) - h_{k+1}(\bj, q+2) \biggr] \\
-& \hphantom{{}={}} -p(\delta^-) \left( 2 \pi \indicator_{q = -1} - \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) + h_{k+1}(\bj, q+2) -2 h_{k+1}(\bj, q+1)  \biggr] \right)
+{\delta^+}^* & = \max \biggl\lbrace 0 \; ; \; \frac{1}{\kappa} - \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \leq -1} + \sum_\bj \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q+1) \bigr] \\
+& \hphantom{{}={}} -p(\delta^-) \left( 2 \xi \indicator_{q = 0} - \sum_\bj \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \bigr] \right) \biggr\rbrace
 \end{split}
-\end{align}
-Again, substitution equations \ref{eq:discretedeltaminus2referential} and \ref{eq:discretedeltaplus2referential} into one another and evaluating both at the optimal posting depths, we obtain
-\begin{equation}
-\label{eq:discretedeltaminus2feedback}
-\boxed{
-\begin{split}
-{\delta_{2}^-}^* & = \frac{1}{\kappa} + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \geq 0} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q+1) - h_{k+1}(\bj, q) \biggr] \\
-& \hphantom{{}={}} - (1-e^{\mu (\bz) \Delta t})e^{-\kappa \bigl( \frac{1}{\kappa} - \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \leq -2} + \sum_\bj \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q+1) - h_{k+1}(\bj, q+2) \bigr] \bigr) } \\
-& \hphantom{{}={} {}-{}} \times e^{\kappa (1-e^{\mu (\bz) \Delta t})e^{-\kappa {\delta_{2}^-}^*} \left( 2 \pi \indicator_{q = -1} - \aleph_{(+1)} \right)} \left( 2 \pi \indicator_{q = -1} - \aleph_{(+1)} \right)
-\end{split}
-}
 \end{equation}
-\begin{equation}
-\label{eq:discretedeltaplus2feedback}
-\boxed{
+For ease of notation we'll write $\aleph(q) = \sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \right]$. Now, assuming we behave optimally on both the buy and sell sides simultaneously, we can substitute equation \ref{eq:discretedeltaplusreferential} into equation \ref{eq:discretedeltaminusreferential}, while evaluating both at ${\delta^+}^*$ and ${\delta^-}^*$ to obtain the optimal posting depth in feedback form:
+\begin{equation}\label{eq:discretedeltaminusfeedback}
 \begin{split}
-{\delta_{2}^+}^* & = \frac{1}{\kappa} - \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \leq -2} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q+1) - h_{k+1}(\bj, q+2) \biggr] \\
-& \hphantom{{}={}} - (1-e^{\mu (\bz) \Delta t})e^{-\kappa \bigl( \frac{1}{\kappa} + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \geq 0} + \sum_\bj \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q+1) - h_{k+1}(\bj, q) \bigr] \bigr) } \\
-& \hphantom{{}={} {}-{}} \times e^{\kappa (1-e^{\mu (\bz) \Delta t})e^{-\kappa {\delta_{2}^+}^*} \left( 2 \pi \indicator_{q = -1} - \aleph_{(+1)} \right)} \left( 2 \pi \indicator_{q = -1} - \aleph_{(+1)} \right)
+{\delta^-}^* & = \frac{1}{\kappa} + \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \geq 1} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q-1) \biggr] \\
+& \hphantom{{}={}} - (1-e^{\mu^-(\bz) \Delta t})e^{-\kappa \max \bigl\lbrace 0 \; ; \; \frac{1}{\kappa} - \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \leq -1} + \sum_\bj \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q+1) \bigr]} \\
+& \hphantom{{}={} {}-{}} {}^{-(1-e^{\mu^+ (\bz) \Delta t})e^{-\kappa {\delta^-}^*} \left( 2 \xi \indicator_{q = 0} - \aleph(q) \right) \bigr\rbrace } \left( 2 \xi \indicator_{q = 0} - \aleph(q) \right)
 \end{split}
-}
 \end{equation}
-Likewise, in the third DPE case where $M_k^+ =0, M_k^-=1$, we get
-\begin{equation}
-\label{eq:discretedeltaminus3feedback}
-\boxed{
-\begin{split}
-{\delta_{3}^-}^* & = \frac{1}{\kappa} + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \geq 2} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q-1) - h_{k+1}(\bj, q-2) \biggr] \\
-& \hphantom{{}={}} - (1-e^{\mu (\bz) \Delta t})e^{-\kappa \bigl( \frac{1}{\kappa} - \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \leq 0} + \sum_\bj \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q-1) - h_{k+1}(\bj, q) \bigr] \bigr) } \\
-& \hphantom{{}={} {}-{}} \times e^{\kappa (1-e^{\mu (\bz) \Delta t})e^{-\kappa {\delta_{3}^-}^*} \left( 2 \pi \indicator_{q = 1} - \aleph_{(-1)} \right)} \left( 2 \pi \indicator_{q = 1} - \aleph_{(-1)} \right)
-\end{split}
-}
-\end{equation}
-\begin{equation}
-\label{eq:discretedeltaplus3feedback}
-\boxed{
-\begin{split}
-{\delta_{3}^+}^* & = \frac{1}{\kappa} - \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \leq 0} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q-1) - h_{k+1}(\bj, q) \biggr] \\
-& \hphantom{{}={}} - (1-e^{\mu (\bz) \Delta t})e^{-\kappa \bigl( \frac{1}{\kappa} + \E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] - 2 \pi \indicator_{q \geq 2} + \sum_\bj \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q-1) - h_{k+1}(\bj, q-2) \bigr] \bigr) } \\
-& \hphantom{{}={} {}-{}} \times e^{\kappa (1-e^{\mu (\bz) \Delta t})e^{-\kappa {\delta_{3}^+}^*} \left( 2 \pi \indicator_{q = 1} - \aleph_{(-1)} \right)} \left( 2 \pi \indicator_{q = 1} - \aleph_{(-1)} \right)
-\end{split}
-}
-\end{equation}
-The boxed equations for optimal depth in feedback form will need to be solved numerically due to the difficulty in isolating ${\delta^{\pm}}^*$ on one side of the equality. 
+This equation will need to be solved numerically due to the difficulty in isolating ${\delta^{-}}^*$ on one side of the equality. Once a solution has been obtained, the value can be substituted back into \eqref{eq:discretedeltaplusreferential} to solve for ${\delta^{+}}^*$.
+
 \subsection{Simplifying the DPE}
-For reference, we repeat here the DPE we are attempting to solve:
-\begin{equation}
-\begin{split}
-0 & = \max \Biggl\lbrace 
-%%% Only Limit Orders
-\sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
-(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^-)\pi   \bigr) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \pi \right) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \biggr] \biggr\rbrace \; ;\\
-%%% Limit Orders + Market Buy
-& \hphantom{{}={} \max \biggl\lbrace } \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
-(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ - (s + \pi)\\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- +1) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- +1)\pi   \bigr) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- +1) - \sgn(q) \right) \pi \right) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- + 1) -  h_k(\bz,q) \biggr] \biggr\rbrace \; ; \\
-%%% Limit Orders + Market Sell
-& \hphantom{{}={} \max \biggl\lbrace } \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
-(s + \pi + \delta^-)L_k^- - (s - \pi - \delta^+)L_k^+ + (s - \pi) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^- -1) \bigl( s + \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\sgn( q + L_k^+ - L_k^- -1)\pi   \bigr) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,\bz} T(\bz, \omega)^{(2)}  -\left( \sgn( q + L_k^+ - L_k^- -1) - \sgn(q) \right) \pi \right) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- -1) -  h_k(\bz,q) \biggr] \biggr\rbrace  \Biggr\rbrace
-\end{split}
-\end{equation}
-We now turn to simplifying our DPE by substituting in the optimal posting depths as written in recursive form (e.g. \ref{eq:discretedeltaplusreferential} and \ref{eq:discretedeltaminusreferential}). In doing so we see a incredible amount of cancellation and simplification, and we obtain the rather elegant, and surprisingly simple form of the DPE:
+We now turn to simplifying the DPE in \eqref{eq:discreteDPE} by substituting in the optimal posting depths as written in recursive form: \eqref{eq:discretedeltaplusreferential} and \eqref{eq:discretedeltaminusreferential}. In doing so we see a incredible amount of cancellation and simplification, and we obtain the rather elegant, and surprisingly simple form of the DPE:
 \begin{equation}
 \label{eq:discreteDPEfinal}
 \begin{split}
-h_k(\bz,q) & = \max \Biggl\lbrace 
+h_k(\bz,q) & = \max \biggl\lbrace 
 %%% Only Limit Orders
-q\E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] + \frac{1}{\kappa}(p({\delta^+}^*)+p({\delta^-}^*)) -2\pi p({\delta^+}^*)p({\delta^-}^*) \indicator_{q=0} \\ 
-& \hphantom{{}={} \max \biggl\lbrace {}+{}} + p({\delta^+}^*)p({\delta^-}^*)\sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \right] \\
-& \hphantom{{}={} \max \biggl\lbrace {}+{}} + \sum_{\bj} \bP_{\bz,\bj} h_{k+1}(\bj,q)  \; ;\\
-%%% Limit Orders + Market Buy
-& \hphantom{{}={} \max \biggl\lbrace} (q+1)\E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] + \frac{1}{\kappa}(p({\delta_{2}^+}^*)+p({\delta_{2}^-}^*)) -2\pi p({\delta_{2}^+}^*)p({\delta_{2}^-}^*) \indicator_{q=-1} \\ 
-& \hphantom{{}={} \max \biggl\lbrace {}+{}} + p({\delta_{2}^+}^*)p({\delta_{2}^-}^*)\sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q) + h_{k+1}(\bj, q+2) -2 h_{k+1}(\bj, q+1)  \right] \\
-& \hphantom{{}={} \max \biggl\lbrace {}+{}} + \sum_{\bj} \bP_{\bz,\bj} h_{k+1}(\bj,q+1) \; ;\\
-%%% Limit Orders + Market Sell
-& \hphantom{{}={} \max \biggl\lbrace} (q-1)\E[\eta_{0,\bz} T(\bz, \omega)^{(2)}] + \frac{1}{\kappa}(p({\delta_3^+}^*)+p({\delta_3^-}^*)) -2\pi p({\delta_3^+}^*)p({\delta_3^-}^*) \indicator_{q=1} \\ 
-& \hphantom{{}={} \max \biggl\lbrace {}+{}} + p({\delta_3^+}^*)p({\delta_3^-}^*)\sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-2) + h_{k+1}(\bj, q) -2 h_{k+1}(\bj, q-1)  \right] \\
-& \hphantom{{}={} \max \biggl\lbrace {}+{}} + \sum_{\bj} \bP_{\bz,\bj} h_{k+1}(\bj,q-1)  \Biggr\rbrace
+q\E[\eta_{0,T(\bz, \omega)}] + \frac{1}{\kappa}(p({\delta^+}^*)+p({\delta^-}^*))  + \sum_{\bj} \bP_{\bz,\bj} h_{k+1}(\bj,q) \\ 
+& \hphantom{{}={} \max \biggl\lbrace {}+{}} + p({\delta^+}^*)p({\delta^-}^*)\sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \right] \; ; \\
+%%% Market Buy
+& \hphantom{{}={} \max \biggl\lbrace } -2\xi \cdot \indicator_{q \geq 0} + h_k(\bz,q+1) \; ; \\
+%%% Market Sell
+& \hphantom{{}={} \max \biggl\lbrace } -2\xi \cdot \indicator_{q \leq 0} + h_k(\bz,q-1) \biggr\rbrace
 \end{split}
 \end{equation}
-TODO: commentary on this final form.
+% Note to self: I removed -2\xi p({\delta^+}^*)p({\delta^-}^*) \indicator_{q=0} from the final DPE, because we know that at q=0 h=0. 
+TODO: Similar commentary to the continuous case. Find the whole inequality thing, bounds on $h$, bounds on $\delta$. Identical.
 
-We now have an explicit means of numerically solving for the optimal posting depths. Since we know the function $h$ at the terminal timestep $T$, we can take one step back to $T-1$ and solve for each of the optimal posting depths in each of the cases. With these values we are then able to calculate the value function $h_{T-1}$, and in doing so determine whether to execute market orders in addition to posting limit orders (essentially taking the $\argmax$ instead of the $\max$ in equation \ref{eq:discreteDPEfinal}). This process then repeats for each step backward.
+At terminal time $T$, we liquidate our position at a cost of $(s - xi \sgn(q) - \alpha q)$ per share, whereas at $T-1$, we can liquidate at the regular cost of $(s - \xi \sgn(q)$. It is thus never optimal to wait until maturity to liquidate the position, and instead we force liquidation one step earlier by setting $h(T-1,\bz,q) = 0 \; \forall q$. This allows us to effectively ignore the terminal condition, and avoids a contradiction with the finding that $h \geq 0$.
+
+We now have an explicit means of numerically solving for the optimal posting depths. Since we know the function $h$ at the terminal timesteps $T$ and $T-1$, we can take one step back to $T-2$ and solve for both the optimal posting depths. With these values we are then able to calculate the value function $h_{T-2}$ using \eqref{eq:discreteDPEfinal}, and in doing so determine whether to execute market orders in addition to posting limit orders. This process then repeats for each step backward.

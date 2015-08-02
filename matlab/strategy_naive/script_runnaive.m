@@ -1,7 +1,7 @@
 %%% For a given ticker, calibrate on 1-day, backtest entire year.
 % We have full-year data for: INTC, NTAP, ORCL, SMH
 
-ticker = 'FARO';
+ticker = 'ORCL';
 
 listing = dir(sprintf('data-more/%s*',ticker));
 
@@ -57,7 +57,13 @@ for file = 2 : numel(listing)
         early_close = 1;
     end
     
-    if all(size(data) == [1 1]) == 0, data = data{1,1}; end;
+    if all(size(data) == [1 1]) == 0
+        if ~isempty(data{1})
+            data = data{1};
+        else
+            data = data{2};
+        end
+    end
 
     [~,~,bookvalues,midprices] = naivetradingstrategy(data, imb, bin, ds, ticker, 0, early_close);
     [bookvalues,midprices] = normalizebookvals(bookvalues,midprices);

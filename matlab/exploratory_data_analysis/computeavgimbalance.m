@@ -1,9 +1,13 @@
 %% Called by getbinpricetimeseries in process of estimating generator G
 
-function [t, mu_IB] = computeavgimbalance(data, dt, avg_method)
+function [t, mu_IB] = computeavgimbalance(data, dt, avg_method, early_close)
 
     T1 = 9.5 * 3600000;
-    T2 = 16 * 3600000;
+    if early_close
+        T2 = 13 * 3600000;
+    else
+        T2 = 16 * 3600000;
+    end
     t = [T1 + dt : dt : T2];    % these are the endpoints of avging intervals
 
     mu_IB = zeros(length(t),1);
