@@ -104,7 +104,7 @@ Our market orders assume immediate execution, and are assumed to be sufficiently
 \subsection{Dynamic Programming}
 The system formulation allows both continuous and impulse control to mimic what was done in the continuous time section, though in discrete time there is no \textit{a priori} distinction between the two \cite{Bens08}. The following theorem shows that in this case a quasi-variational inequality formulation does exist, and that it is equivalent to the standard dynamic programming formulation. The result is a simplified expression that mirrors the continuous time analysis.
 
-\begin{theorem}[\cite{Bens08}] \textbf{Dynamic Programming with Impulse Control in Discrete Time.} Consider a controlled Markov Chain with state space $X = \R^d$, transition probability $\pi(x, v, \d \eta)$, and positive, bounded, uniformly continuous cost function $l(x,v)$.
+\begin{thm}[\cite{Bens08}] \textbf{Dynamic Programming with Impulse Control in Discrete Time.} Consider a controlled Markov Chain with state space $X = \R^d$, transition probability $\pi(x, v, \d \eta)$, and positive, bounded, uniformly continuous cost function $l(x,v)$.
 
 Introduce an impulse control $w$. Define the extended cost function by $l(x, v, w) = l(x + w, v) + c(w)$, the extended transition probability by $\pi (x, v, w, \d \eta) =  \pi (x+w, v, \d \eta)$ with the associated operator $\Phi^{v,w} f (x) = \int_{\R^d} f (\eta) \pi (x, v, w, \d \eta) = \Phi^{v} f (x+w)$.
 
@@ -126,7 +126,7 @@ Then there exists a unique, positive, bounded solution of \eqref{eq:DPDscrBellma
 \begin{equation}\label{eq:DPDscrAlt}
 u(x) = \min \left\lbrace K + \inf\limits_{w \geq 0} [c_0(w) + u(x+w)] \; ; \; \inf\limits_{v \in U}  [l(x,v) + \alpha \Phi^v u(x)] \right\rbrace
 \end{equation}
-\end{theorem}
+\end{thm}
 
 \subsection{Maximizing Terminal Wealth (Discrete)}
 Following the dynamic programming with impulse control programme, we introduce the value function $V_k^{\delta^\pm}$. Here, as in the continuous-time formulation, our objective is to maximize the terminal wealth performance criteria given by
@@ -405,7 +405,7 @@ q\E[\eta_{0,T(\bz, \omega)}] + \frac{1}{\kappa}(p({\delta^+}^*)+p({\delta^-}^*))
 \end{split}
 \end{equation}
 % Note to self: I removed -2\xi p({\delta^+}^*)p({\delta^-}^*) \indicator_{q=0} from the final DPE, because we know that at q=0 h=0. 
-TODO: Similar commentary to the continuous case. Find the whole inequality thing, bounds on $h$, bounds on $\delta$. Identical.
+\mynote{Similar commentary to the continuous case. Find the whole inequality thing, bounds on $h$, bounds on $\delta$. Identical.}
 
 At terminal time $T$, we liquidate our position at a cost of $(s - xi \sgn(q) - \alpha q)$ per share, whereas at $T-1$, we can liquidate at the regular cost of $(s - \xi \sgn(q)$. It is thus never optimal to wait until maturity to liquidate the position, and instead we force liquidation one step earlier by setting $h(T-1,\bz,q) = 0 \; \forall q$. This allows us to effectively ignore the terminal condition, and avoids a contradiction with the finding that $h \geq 0$.
 

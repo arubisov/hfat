@@ -1,9 +1,0 @@
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Hypothetical timeline of market orders arriving during changing order imbalance regimes.\relax }}{9}{figure.caption.6}
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces INTC: Book value against time of trading day.\relax }}{23}{figure.caption.11}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces INTC: Histogram of 15min book value changes.\relax }}{24}{figure.caption.12}
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Optimal posting depth $\delta $\relax }}{25}{figure.caption.13}
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Comparison of Naive (red), Naive+ (blue), and Naive++ (green) trading strategies, with benchmark Midprice (black). Plotted are book values against time of trading day, averaged across trading year.\relax }}{26}{figure.caption.14}
-\addvspace {10\p@ }
-\addvspace {10\p@ }
