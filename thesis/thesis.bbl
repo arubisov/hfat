@@ -1,0 +1,36 @@
+\begin{thebibliography}{}
+
+\bibitem[Bensoussan, 2008]{Bens08}
+Bensoussan, A. (2008).
+\newblock Impulse control in discrete time.
+\newblock {\em Georgian Mathematical Journal}, 15(3):439--454.
+
+\bibitem[Cartea et~al., 2015]{STA4505}
+Cartea, A., Jaimungal, S., and Penalva, J. (2015).
+\newblock {\em Algorithmic and High-Frequency Trading}.
+\newblock Cambridge University Press.
+
+\bibitem[Kwong, 2015]{Kwong15}
+Kwong, R. (2015).
+\newblock Ece1639 lecture notes.
+\newblock Lecture Notes, University of Toronto, Department of Electrical \&
+  Computer Engineering.
+
+\bibitem[Takahara, 2014]{STAT455}
+Takahara, G. (2014).
+\newblock Stat455 stochastic processes.
+\newblock Lecture Notes, Queen's University, Department of Mathematics and
+  Statistics.
+
+\bibitem[Tan and Yılmaz, 2002]{Tan02}
+Tan, B. and Yılmaz, K. (2002).
+\newblock Markov chain test for time dependence and homogeneity: An analytical
+  and empirical evaluation.
+\newblock {\em European Journal of Operational Research}, 137(3):524--543.
+
+\bibitem[Weißbach and Walter, 2010]{Weiss10}
+Weißbach, R. and Walter, R. (2010).
+\newblock A likelihood ratio test for stationarity of rating transitions.
+\newblock {\em Journal of Econometrics}, 155(2):188 -- 194.
+
+\end{thebibliography}

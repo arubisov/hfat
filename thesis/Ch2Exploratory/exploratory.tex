@@ -1,12 +1,46 @@
 \chapter{Exploratory Data Analysis}
 
-\section{Modelling Imbalance: Continuous Time Markov Chain}
-The key aim of this research project is to utilize the LOB volume imbalance $I(t)$, and as such we require a suitable model for that stochastic process. Rather than modelling imbalance directly as a real-valued process, an alternative approach is to discretize imbalance into subintervals, or bins, and model a stochastic process that tracks into which bin $I(t)$ falls. A particularly simple yet powerful choice is the Continuous Time Markov Chain (CTMC).
+\section{Modeling Imbalance: Continuous Time Markov Chain}
+The aim of this research project is to utilize the LOB volume imbalance $I(t)$ in an algorithmic trading application; hence, a suitable choice of model for $I(t)$ must be made. Rather than modeling imbalance directly as a real-valued process, an alternative approach, and that which is utilized herein, is to discretize the imbalance value $I(t)$ into subintervals, or bins, and fit the resulting process to a continuous-time Markov chain.
 
-Let $Z(t)$ be a CTMC taking values in $\left\lbrace 1,\dots , K \right\rbrace$, and having transition probabilities $P_{ij}(t) = P \lbrace Z(t) = j | Z(0) = i \rbrace$ and transition matrix $\mat{P}(t) = \lbrace P_{ij}(t) \rbrace$. $Z(t)$ additionally has a so-called \textit{infinitesimal generator matrix} $\mat{G}$, where the matrices $\mat{P}(t)$ and $\mat{G}$ satisfy
-\[\dot{\mat{P}}(t) = \mat{G} \cdot \mat{P}(t) \]
-\[\mat{P}(t) = e^{\mat{G}t} \]
+The following definitions and properties are adapted from \cite{STAT455}:
+\begin{defn}
+A continuous-time stochastic process $\left\lbrace X(t) \; | \; t \geq 0 \right\rbrace$ with state space $S$ is called a \emph{continuous-time Markov chain (CTMC)} if it has the Markov property; namely, that 
+\begin{equation}
+\P \left[ X(t) = j \; | \; X(s) = i, X(t_{n-1} = i_{n-1}, \dots , X(t_1) = i_1 \right] = \P \left[ X(t) = j \; | \; X(s) = i \right]
+\end{equation}
+where for any integer $n \geq 1$, $0 \leq t_1 \leq \dots \leq t_{n-1} \leq s \leq t$ is any non-decreasing sequence of $n+1$ times, and $i_1,\dots,i_{n-1}, i, j \in S$ are any $n+1$ states.
+\end{defn}
+\begin{defn} A CTMC $X(t)$ is \emph{time homogeneous} if for any $s \leq t$ and any states $i,j \in S$,
+\begin{equation}
+\P \left[ X(t) = j \; | \; X(s) = i \right] = \P \left[ X(t-s) = j \; | \; X(0) = i \right]
+\end{equation}
+\end{defn}
+\begin{defn}
+The key quantities that determine a CTMC $X(t)$ are the \emph{transition rates} $q_{ij}$, which specify the rate at which $X$ jumps from state $i$ to $j$. Conditional on leaving state $i$, $X$ transitions to state $j$ with \emph{conditional transition probability} $p_{ij}$. The amount of time that $X$ spends in state $i$, called the \emph{holding time}, is exponentially distributed with rate $v_i$. These quantities are related by:
+\begin{align}
+v_i & = \sum_{\substack{j \in S \\ j \neq i}} q_{ij} \\
+q_{ij} & = v_i \cdot p_{ij} \\
+p_{ij} & = \frac{q_{ij}}{v_i}
+\end{align} 
+\end{defn}
+\begin{defn}
+A CTMC $X(t)$ has an \emph{infinitesimal generator matrix} $\mat{G}$, whose entries are
+\begin{align}
+g_{ij} &= q_{ij}, \qquad i \neq j \\
+g_{ii} & = -v_i
+\end{align}
+If $X(t)$ has transition probabilities $P_{ij}(t) = \P \left[ X(t) = j \; | \; X(0) = i \right]$ and matrix $\mat{P}(t) = \lbrace P_{ij}(t) \rbrace$, then $\mat{P}(t)$ and $\mat{G}$ are related by
+\begin{align}
+\dot{\mat{P}}(t) & = \mat{G} \cdot \mat{P}(t) \\
+\mat{P}(t)  &= e^{\mat{G}t} \label{eq:CTMCPG}
+\end{align}
+\end{defn}
+\mynote{confirm we're using left stochastic or righ stochastic matrices? a few formulas depend on this.}
+
 Conditional on $Z(t) = k$, we will assume the arrival of buy and sell market orders follow independent Poisson processes with intensities $\lambda_k^\pm$, where $\lambda_k^+$ ($\lambda_k^-$) is the rate of arrivals of market buys (resp. sells). Such processes are hence called \textit{Markov-modulated Poisson processes}.
+
+In the sections that follow, I derive maximum likelihood estimations for the parameters of the CTMC, and evaluate the fit of the model to the data.
 
 \section{Maximum Likelihood Estimate of a Markov-modulated Poisson Process}
 
@@ -59,104 +93,43 @@ H_{k}(T) & \equiv \mbox{holding time in regime $k$ up to time $T$} \nonumber \\
 \Rightarrow \boxed{ \hat{\lambda}^{+}_k = \dfrac{N^{+}_k(T)}{H_k(T)} }
 \end{equation}
 
-\section{Cross-validation of CTMC}
-Given a set of observations of buy/sell market orders and regime switches, in the previous section we derived a maximum likelihood estimation (MLE) for both the entries of the infinitesimal generator matrix $\mat{G}$, and the market order arrival rates $\lambda_k^\pm$. 
+\section{Cross-Validation of CTMC Parameters}
+To cross-validate the CTMC calibration, we conduct a time-homogeneity test similar to that done in \cite{Tan02}. The null hypothesis is given by \cite{Weiss10}:
+\begin{equation}
+H_0 = ...
+\end{equation}
+To test the hypothesis, we fix an imbalance averaging time $\Delta t_I$, number of imbalance bins, and calculate the MLE estimate of the infinitesimal generator matrix $\mat{G}$ on the full timeseries. For a chosen error threshold $\epsilon$, we use the relationship in \eqref{eq:CTMCPG} to calculate the number of timesteps $n$ of size $\Delta t_I$ such that $||\mat{P}\left((n+1)\Delta t_I \right) - \mat{P} \left( n\Delta t_I \right) || < \epsilon$. This value $n$ determines the size of the cross-validation timewindow into which to partition the full timeseries, yielding $K$ equal subintervals of length $n$. For each ``removed series'' $k \in \{ 1,\dots,K \}$, we recalibrate a CTMC generator matrix $\mat{G}_{k}$. Finally, we test whether the one-step transition probabilities $p_{ij}^k$ contained in $\mat{P}_k \left(\Delta t_I \right)$ are statistically different from those of the full period. The asymptotically equivalent test statistic to the likelihood ratio test statistic is:
+\begin{equation}
+\phi = -2 \ln (\mathcal{L})  = 2 \sum_k \sum_{i,j} n_{i,j}^k \left[ \ln(p_{ij}^k)  - \ln(p_{ij})   \right]
+\end{equation}
+where $n_{ij}^k$ is the number of observed transitions from state $i$ to $j$ in subinterval $k$. 
 
-We estimated parameters for a CTMC on a day's worth of LOB data.
-Using these parameters, we generated sample paths of the imbalance bins as well as arrival of market orders,
-and re-estimated parameters along the sample paths. By doing this for 10,000 paths we obtained histograms for
-the parameters (the individual entries of $\mat{G}$ as well as the intensities $\lambda_k^\pm$). 
-
-Using data for \texttt{ORCL} from 2013-05-15, averaging imbalances over a 100ms window, and taking the number
-of bins $K=3$, we obtained the following mean values for the parameters:
-
-\[ \mat{G} = \begin{pmatrix} -0.112 & 0.098 & 0.0122 \\
-							0.099 & -0.21 & 0.111 \\
-							0.0115 & 0.112 & -0.1235 \end{pmatrix} \]
-							
-\[ \mat{\lambda} = \bordermatrix{  & k=1    & k=2   & k=3   \cr
-								+ & 0.121  & 0.081 & 0.048 \cr
-								- & 0.0263 & 0.062 & 0.153 } \]
-
-To cross-validate the CTMC calibration, the following steps were taken:
-\begin{enumerate}
-\item An imbalance averaging time (in ms) and number of imbalance bins were fixed. The infinitesimal generator matrix $\mat{G}$ was calculated on the resulting timeseries. 
-\item An embedded discrete Markov chain transition matrix $\mat{A}$ was obtained from $\mat{G}$. This effectively says: conditional on a transition from bin $i$, what are the transition probabilities to bin $j$?
-\item The stationary distribution, and number ($n$) of steps required to converge to the stationary distribution, was calculated. That is: for $\epsilon > 0$, calculate $n$ such that $||\mat{A}^{n+1} - \mat{A}^n|| < \epsilon$.
-\item Find the average number of steps in the timeseries that are required to observe $n$ transitions. This is the size of the timewindow against which to cross-validate. 
-\item Remove the cross-validation timewindow (call this the ``removed series'') from the full timeseries (call this the ``remaining series''). Calculate two infinitesimal generator matrices $\mat{G}_{removed}$ and $\mat{G}_{remaining}$.
-\item Calculate two error terms for the resulting matrices:
-$$err = \sqrt{\dfrac{1}{\#trials} \times \sum\limits_{trials} \left( \dfrac{1}{\#bins^2} \sum\limits_{ij} (\mat{G}_{remaining}(ij) - \mat{G}_{removed}(ij))^2 \right)x} $$
-$$\mat{Err} = \sqrt{\dfrac{1}{\#trials} \times \sum\limits_{trials} (\mat{1} - \mat{G}_{removed} \div \mat{G}_{remaining})^2 }$$
-where, for $\mat{Err}$, division and squaring are entry-wise and not matrix-wise.
-\end{enumerate}
-
-This is following up on the cross-validation results from last time. In those results, in order to obtain the invariant distribution for the Markov chain, we calculated a transition probability matrix $\mat{A}$ for the embedded discrete-time Markov chain and took matrix powers $\mat{A}^n$ until it converged, and then observed the average number of timesteps that it took to see $n$ transitions in the data.
-
-In these results, we instead use the relationship $\dot{\mat{P}} (t) = \mat{P}(t)\mat{G} \; \Rightarrow \; \mat{P}(t) = e^{t\mat{G}}$. Thus we calculate the invariant distribution using the averaging time $\Delta t$ and the number of such timesteps $n$ and observe when $e^{\Delta t\mat{G}n}$ converges. This value $n$ immediately tells us the timewindow size to remove for cross-validation.
-
+\mynote{this table is no longer relevant - rerun the cross-validation results}
 \begin{table}[H]
-\small
 \centering
-\caption{New results, convergence threshold 1e-05}
-\vspace*{2.5mm}
-\begin{tabular}{c|c|c|c|c}
-\hline
-\bf \# bins & & & & \\ averaging time & stationary $n$ & Timewindow size & $err$ & $\mat{Err}$ \\
-\hline\hline
-3 bins, 100ms & 478 & 47.8s (0.2\% of series) & 0.356402 & 644\% - 11371\% \\
-\hline
-3 bins, 500ms & 144 & 72s (0.3\% of series) & 0.087631 & 236\% - 985\% \\
-\hline
-3 bins, 1000ms & 89 & 89s (0.4\% of series) &  0.050605 & 150\% - 480\% \\
-\hline
-3 bins, 2000ms & 57 & 114s (0.5\% of series) & 0.032076 & 122\% - 725\% \\
-\hline
-3 bins, 3000ms & 45 & 135s (0.6\% of series) & 0.023662 & 98\% - 552\% \\
-\hline
-3 bins, 5000ms & 35 & 175s (0.75\% of series) & 0.014182 & 70\% - 514\% \\
-\hline
-3 bins, 10000ms & 29 & 290s (1.2\% of series) & 0.007361 & 52\% - 496\% \\
-\hline
-3 bins, 20000ms & 22 & 440s (1.9\% of series) & 0.004447 & 43\% - 1698\% \\
-\hline
-\hline
-5 bins, 100ms & 546 & 54.6s (0.2\% of series) & 0.162690 & 452\% - 6785\% \\
-\hline
-5 bins, 500ms & 162 & 81s (0.3\% of series) &  0.046204 & 187\% - 2590\% \\
-\hline
-5 bins, 1000ms & 100 & 100s (0.4\% of series) & 0.029900 & 136\% - 2962\% \\
-\hline
-5 bins, 2000ms & 65 & 130s (0.6\% of series)  & 0.017340 & 86\% - 2141\% \\
-\hline
-5 bins, 3000ms & 52 & 156s (0.7\% of series) &  0.012505 & 87\% - Inf\% \\
-\hline
-5 bins, 5000ms & 42 & 210s (0.9\% of series) & 0.008035 & 66\% - 978\% \\
-\hline
-5 bins, 10000ms & 31 & 310s (1.3\% of series) & 0.004563 & 45\% - Inf\% \\
-\hline
-5 bins, 20000ms & 25 & 500s (2.1\% of series) & 0.002485 & 42\% - Inf\% \\
-\hline
+\ra{1.2}
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+\bf \# bins & & window size & & \\ averaging time & stationary $n$ & (\% of series) & $err$ & $\mat{Err}$ \\
+\midrule
+\#bins = 3 &&&& \\
+100ms & 478 & 47.8s (0.2\%) & 35.64\% & 644\% - 11371\% \\
+500ms & 144 & 72s (0.3\%) & 8.76\% & 236\% - 985\% \\
+1000ms & 89 & 89s (0.4\%) &  5.06\% & 150\% - 480\% \\
+2000ms & 57 & 114s (0.5\%) & 3.21\% & 122\% - 725\% \\
+3000ms & 45 & 135s (0.6\%) & 2.37\% & 98\% - 552\% \\
+\#bins = 5 &&&& \\
+100ms & 546 & 54.6s (0.2\%) & 16.27\% & 452\% - 6785\% \\
+500ms & 162 & 81s (0.3\%) &  4.62\% & 187\% - 2590\% \\
+1000ms & 100 & 100s (0.4\%) & 3.00\% & 136\% - 2962\% \\
+2000ms & 65 & 130s (0.6\%)  & 1.73\% & 86\% - 2141\% \\
+3000ms & 52 & 156s (0.7\%) &  1.25\% & 87\% - Inf\% \\
+\bottomrule
 \end{tabular}
+\caption{CTMC cross-validation results for $\epsilon = 10e-5$.}
 \end{table}
 
-The large errors seen in the error matrix $\mat{Err}$ are attributable to the corner elements: in the case of 3 bins, this would be $G_{13}$ and $G_{31}$. Or, for example, the error matrices for 5 bins at 100ms and at 20000ms looked like:
-
-$$\mat{Err}_{100ms} = \begin{bmatrix}
-    6.86 &   8.48 &   5.92 &   9.68 &  11.02\\
-    7.57 &   6.82 &   8.80 &  67.58 &   8.31\\
-    6.33 &   5.08 &   4.52 &   8.55 &  16.79\\
-   14.64 &  54.50 &   8.12 &   6.41 &   7.77\\
-    6.82 &  36.76 &   5.47 &   5.86 &   5.04
-\end{bmatrix}$$
-
-$$\mat{Err}_{20000ms} = \begin{bmatrix}
-    0.79 &   0.99 &   3.63 &  20.23 &    Inf\\
-    1.10 &   0.44 &   0.82 &   1.36 &    NaN\\
-    2.07 &   0.64 &   0.42 &   0.88 &   3.83\\
-    3.64 &   1.66 &   0.85 &   0.57 &   2.81\\
-     NaN &    Inf &   1.42 &   1.08 &   0.87
-\end{bmatrix}$$
+The cross-validation results show a strong case for the rejection of the non-homogeneity assumption, and as such the assumption of homogeneity, despite its appeal, is disputable, and backtesting results may reflect this. Naturally, this suggests possible extensions to this research project, wherein the trading day is broken down into subintervals to better account for fluctuations and patterns in trading activity - perhaps early morning, mid-day, and final hour of trading.
 
 \section{2-dimensional CTMC}
 Next we considered a CTMC that jointly models the imbalance bin and the price change over a subsequent interval. That is, the CTMC modelled the joint distribution $(I(t), \Delta S(t))$ where $I(t) \in \lbrace 1,2,\dots,\#_{bins} \rbrace$ is the bin corresponding to imbalance averaged over the interval $[t-\Delta t_I, t]$, and $\Delta S(t) = \sgn(S(t+\Delta t_S)-S(t)) \in \lbrace -1, 0, 1 \rbrace$.  The pair $(I(t), \Delta S(t))$ was then reduced into one dimension with a simple encoding which we will denote $\varphi(I(t),S(t))$; for example, using 3 bins:
