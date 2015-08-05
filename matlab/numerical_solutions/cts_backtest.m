@@ -1,4 +1,4 @@
-function [ hist_X, hist_Q ] = cts_backtest( data, h, deltaminus, deltaplus, ...
+function [ hist_X, hist_Q, numtrades ] = cts_backtest( data, h, deltaminus, deltaplus, ...
                 num_bins, avg_method, ds_method, dt_Z, Qmax, alpha, ...
                 kappa, xi, fs_T, fs_dt, early_close )
 
@@ -6,12 +6,13 @@ function [ hist_X, hist_Q ] = cts_backtest( data, h, deltaminus, deltaplus, ...
     T2 = 16 * 3600000;
     q = 0;
     cash = 0;
+    numtrades = 0;
     
     [ binseries, pricechgseries, ~, ~ ] = compute_G( data, dt_Z, num_bins, avg_method, ds_method, early_close );
     [ oneDseries ] = get1Dseries( binseries, pricechgseries, num_bins );
     
-    hist_X = NaN(1,length(oneDseries));
-    hist_Q = NaN(1,length(oneDseries));
+    hist_X = NaN(1,round(T2-T1)/dt_Z);
+    hist_Q = NaN(1,round(T2-T1)/dt_Z);
     
     from = find(data.Event(:,1) >= T1, 1, 'first');
     to = find(data.Event(:,1) <= T2, 1, 'last');
@@ -47,6 +48,7 @@ function [ hist_X, hist_Q ] = cts_backtest( data, h, deltaminus, deltaplus, ...
                     if u < exp(-kappa*dplus)
                         % market order sell, so we buy at delta^+ (buy) price
                         q = q + 1;
+                        numtrades = numtrades + 1;
                         price = data.BuyPrice(time_ctr,1)/10000 - dplus;
                         cash = cash - price;
                         %[ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
@@ -57,6 +59,7 @@ function [ hist_X, hist_Q ] = cts_backtest( data, h, deltaminus, deltaplus, ...
                     if u < exp(-kappa*dminus)
                         % market order buy, so we sell at delta^- (buy) price
                         q = q - 1;
+                        numtrades = numtrades + 1;
                         price = data.SellPrice(time_ctr,1)/10000 + dminus;
                         cash = cash + price;
                         %[ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
@@ -67,7 +70,7 @@ function [ hist_X, hist_Q ] = cts_backtest( data, h, deltaminus, deltaplus, ...
                 MO_ctr = MO_ctr + 1;
             end
         catch
-            disp('MO: Reached end of day');
+            %disp('MO: Reached end of day');
         end
         
         try
@@ -75,7 +78,7 @@ function [ hist_X, hist_Q ] = cts_backtest( data, h, deltaminus, deltaplus, ...
                 time_ctr = time_ctr+1;
             end
         catch
-            disp('data.Event: Reached end of day.');
+            %disp('data.Event: Reached end of day.');
         end
 
         if t <= T2 - fs_T*1000
@@ -90,6 +93,7 @@ function [ hist_X, hist_Q ] = cts_backtest( data, h, deltaminus, deltaplus, ...
         while checkbuycondition(h,t_h,z,q,xi,Qmax)
             % execute buy MO
             q = q + 1;
+            numtrades = numtrades + 1;
             price = data.SellPrice(time_ctr,1)/10000;
             cash = cash - price;
             %if display, fprintf(fid, '[%d] {%d, %d, %d}.   Buy at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, q, cash); end;
@@ -99,6 +103,7 @@ function [ hist_X, hist_Q ] = cts_backtest( data, h, deltaminus, deltaplus, ...
         while checksellcondition(h,t_h,z,q,xi,Qmax)
             % execute sell MO
             q = q - 1;
+            numtrades = numtrades + 1;
             price = data.BuyPrice(time_ctr,1)/10000;
             cash = cash + price;
             [ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
@@ -116,9 +121,12 @@ function [ hist_X, hist_Q ] = cts_backtest( data, h, deltaminus, deltaplus, ...
     % terminal liqudation
     if q > 0,       price = data.BuyPrice(end,1)/10000;
     elseif q < 0,   price = data.SellPrice(end,1)/10000;
-    else            price = 0; 
+    else
+        price = 0;
+        numtrades = numtrades - 1;
     end
     cash = cash + q*(price - alpha*q);
+    numtrades = numtrades + 1;
     q = 0;
     hist_X(i) = cash;
     hist_Q(i) = q;

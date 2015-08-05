@@ -1,11 +1,6 @@
-function [ hist_X, hist_Q ] = dscr_backtest( data, h, deltaminus, deltaplus )
-    global kappa
-    global xi
-    global num_bins
-    global G
-    global avg_method
-    global dt_Z
-
+function [ hist_X, hist_Q ] = dscr_backtest( data, h, deltaminus, deltaplus, ...
+                num_bins, avg_method, ds_method, dt_Z, Qmax, alpha, ...
+                kappa, xi, fs_T, fs_dt, early_close )
     fs_T = 50;
     fs_dt = 1;
 
@@ -13,8 +8,9 @@ function [ hist_X, hist_Q ] = dscr_backtest( data, h, deltaminus, deltaplus )
     T2 = 16 * 3600000;
     q = 0;
     cash = 0;
+    numtrades = 0;
     
-    [ binseries, pricechgseries, G, ~ ] = compute_G( data, dt_Z, num_bins, avg_method );
+    [ binseries, pricechgseries, ~, ~ ] = compute_G( data, dt_Z, num_bins, avg_method );
     [ oneDseries ] = get1Dseries( binseries, pricechgseries, num_bins );
     
     hist_X = NaN(1,length(oneDseries));
@@ -54,6 +50,7 @@ function [ hist_X, hist_Q ] = dscr_backtest( data, h, deltaminus, deltaplus )
                     if u < exp(-kappa*dplus)
                         % market order sell, so we buy at delta^+ (buy) price
                         q = q + 1;
+                        numtrades = numtrades + 1;
                         price = data.BuyPrice(time_ctr,1)/10000 - dplus;
                         cash = cash - price;
                         %[ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
@@ -64,6 +61,7 @@ function [ hist_X, hist_Q ] = dscr_backtest( data, h, deltaminus, deltaplus )
                     if u < exp(-kappa*dminus)
                         % market order buy, so we sell at delta^- (buy) price
                         q = q - 1;
+                        numtrades = numtrades + 1;
                         price = data.SellPrice(time_ctr,1)/10000 + dminus;
                         cash = cash + price;
                         %[ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
@@ -97,6 +95,7 @@ function [ hist_X, hist_Q ] = dscr_backtest( data, h, deltaminus, deltaplus )
         while checkbuycondition(h,t_h,z,q,xi,Qmax)
             % execute buy MO
             q = q + 1;
+            numtrades = numtrades + 1;
             price = data.SellPrice(time_ctr,1)/10000;
             cash = cash - price;
             %if display, fprintf(fid, '[%d] {%d, %d, %d}.   Buy at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, q, cash); end;
@@ -106,6 +105,7 @@ function [ hist_X, hist_Q ] = dscr_backtest( data, h, deltaminus, deltaplus )
         while checksellcondition(h,t_h,z,q,xi,Qmax)
             % execute sell MO
             q = q - 1;
+            numtrades = numtrades + 1;
             price = data.BuyPrice(time_ctr,1)/10000;
             cash = cash + price;
             [ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
@@ -123,9 +123,12 @@ function [ hist_X, hist_Q ] = dscr_backtest( data, h, deltaminus, deltaplus )
     % terminal liqudation
     if q > 0,       price = data.BuyPrice(end,1)/10000;
     elseif q < 0,   price = data.SellPrice(end,1)/10000;
-    else            price = 0; 
+    else
+        price = 0;
+        numtrades = numtrades - 1;
     end
     cash = cash + q*(price - alpha*q);
+    numtrades = numtrades + 1;
     q = 0;
     hist_X(i) = cash;
     hist_Q(i) = q;

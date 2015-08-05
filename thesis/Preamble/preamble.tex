@@ -53,8 +53,10 @@
 % figures, links, etc. 
 \usepackage{graphicx}
 \usepackage{pgfplots}
-\usepackage{tikz}
-\usepackage{tikz-cd}
+%\usepackage{tikz}
+%\usepackage{tikz-cd}
+\usetikzlibrary{external} % Externalization library to avoid plot re-generation
+\tikzexternalize[prefix=Figs/] % activate
 \pgfplotsset{compat=newest} 
 \pgfplotsset{plot coordinates/math parser=false} 
 \newlength\figureheight 
@@ -71,8 +73,9 @@
 
 %\usepackage{Tabbing}
 %\usepackage{tabularx}
-%\usepackage{multicol}
+\usepackage{multicol}
 %\usepackage{multirow}
+\usepackage{relsize}	% For \mathsmaller command
 
 % ******************************* Line Spacing *********************************
 
@@ -127,8 +130,9 @@
 
 
 % ******************************** Todo Notes **********************************
-\usepackage[colorinlistoftodos]{todonotes}
-\newcommand{\mynote}[1]{\todo[author=Anton,size=\small,inline,color=green!40]{#1}}
+%\usepackage[colorinlistoftodos]{todonotes}
+%\newcommand{\mynote}[1]{\todo[author=Anton,size=\small,inline,color=green!40]{#1}}
+\usepackage{fixme}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %% LaTeX header
@@ -259,16 +263,15 @@
 \newcommand{\grstep}[2][\relax]{%
    \ensuremath{\mathrel{
        {\mathop{\longrightarrow}\limits^{#2\mathstrut}_{
-                                     \begin{subarray}{l} #1 \end{subarray}}}}}}
-                                     
-                                     
-\newcommand\undermat[2]{% http://tex.stackexchange.com/a/102468/5764
+           \begin{subarray}{l} #1 \end{subarray}}}}}}
+    
+\newcommand\undermat[2]{%
   \makebox[0pt][l]{$\smash{\underbrace{\phantom{%
-    \begin{smallmatrix}#2\end{smallmatrix}}}_{\text{$#1$}}}$}#2}
+    \begin{matrix}#2\end{matrix}}}_{\text{$#1$}}}$}#2}
     
 \newcommand\overmat[2]{%
   \makebox[0pt][l]{$\smash{\overbrace{\phantom{%
-    \begin{smallmatrix}#2\end{smallmatrix}}}^{\text{$#1$}}}$}#2}
+    \begin{matrix}#2\end{matrix}}}^{\text{$#1$}}}$}#2}
     
 \newenvironment{amatrix}[1]{%
   \left[\begin{array}{@{}*{#1}{c}|c@{}}

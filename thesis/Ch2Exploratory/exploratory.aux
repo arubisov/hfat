@@ -4,46 +4,38 @@
 \@writefile{toc}{\contentsline {chapter}{\numberline {2}Exploratory Data Analysis}{11}{chapter.2}}
 \@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\addvspace {10\p@ }}
-\@writefile{toc}{\contentsline {section}{\numberline {2.1}Modeling Imbalance: Continuous Time Markov Chain}{11}{section.2.1}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.1}Modelling Imbalance: Continuous Time Markov Chain}{11}{section.2.1}}
 \newlabel{eq:CTMCPG}{{2.9}{12}{}{equation.2.1.9}{}}
-\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{green!40}{\leavevmode {\color  {green!40}o}}\ confirm we're using left stochastic or righ stochastic matrices? a few formulas depend on this.}{12}{section*.8}}
+\@writefile{lox}{\contentsline {fixme}{Note: confirm we're using left stochastic or righ stochastic matrices? a few formulas depend on this.}{12}{equation.2.1.9}}
 \@writefile{toc}{\contentsline {section}{\numberline {2.2}Maximum Likelihood Estimate of a Markov-modulated Poisson Process}{13}{section.2.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.1}Maximum Likelihood Estimation of $G$}{13}{subsection.2.2.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2.2}Maximum Likelihood Estimation of $\lambda ^{\pm }_k$}{14}{subsection.2.2.2}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.3}2-Dimensional CTMC}{14}{section.2.3}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.1}{\ignorespaces $\varphi (I(t),S(t))$: 1-Dimensional Encoding of 2-Dimensional CTMC\relax }}{15}{table.caption.8}}
+\newlabel{eq:POneStepUgly}{{2.22}{15}{2-Dimensional CTMC}{equation.2.3.22}{}}
+\newlabel{eq:POneStepNice}{{2.23}{15}{2-Dimensional CTMC}{equation.2.3.23}{}}
+\newlabel{eq:POneStepBayes}{{2.26}{15}{2-Dimensional CTMC}{equation.2.3.26}{}}
+\newlabel{eq:POneStepBayesDenom}{{2.27}{15}{2-Dimensional CTMC}{equation.2.3.27}{}}
 \citation{Tan02}
 \citation{Weiss10}
-\@writefile{toc}{\contentsline {section}{\numberline {2.3}Cross-Validation of CTMC Parameters}{15}{section.2.3}}
-\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{green!40}{\leavevmode {\color  {green!40}o}}\ this table is no longer relevant - rerun the cross-validation results}{15}{section*.9}}
-\@writefile{lot}{\contentsline {table}{\numberline {2.1}{\ignorespaces CTMC cross-validation results for $\epsilon = 10e-5$.\relax }}{16}{table.caption.10}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.4}2-dimensional CTMC}{16}{section.2.4}}
-\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces $\varphi (I(t),S(t))$: 1-Dimensional Encoding of 2-Dimensional CTMC\relax }}{17}{table.caption.11}}
-\newlabel{eq:POneStepUgly}{{2.24}{17}{2-dimensional CTMC}{equation.2.4.24}{}}
-\newlabel{eq:POneStepNice}{{2.25}{17}{2-dimensional CTMC}{equation.2.4.25}{}}
-\newlabel{eq:POneStepBayes}{{2.28}{17}{2-dimensional CTMC}{equation.2.4.28}{}}
-\newlabel{eq:POneStepBayesDenom}{{2.29}{17}{2-dimensional CTMC}{equation.2.4.29}{}}
-\@writefile{tdo}{\contentsline {todo}{\color@fb@x {}{black}{}{green!40}{\leavevmode {\color  {green!40}o}}\ these aren't the real results. re-run these, and format it better.}{18}{section*.12}}
-\newlabel{eq:EDAKeyInsight}{{2.30}{18}{2-dimensional CTMC}{equation.2.4.30}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.5}In-Sample Backtesting of Naive Trading Strategies}{19}{section.2.5}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.2}{\ignorespaces The $\bm  {Q}$ matrix: conditional probabilities of future price changes, conditioned on current imbalance, current price change, and previous imbalance.\relax }}{16}{table.caption.9}}
+\newlabel{tbl:Qmatrix}{{2.2}{16}{The $\mat {Q}$ matrix: conditional probabilities of future price changes, conditioned on current imbalance, current price change, and previous imbalance.\relax }{table.caption.9}{}}
+\newlabel{eq:EDAKeyInsight}{{2.28}{16}{2-Dimensional CTMC}{equation.2.3.28}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.4}Cross-Validation of CTMC Parameters}{17}{section.2.4}}
+\newlabel{eq:crossvalidnconv}{{2.30}{17}{Cross-Validation of CTMC Parameters}{equation.2.4.30}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2.3}{\ignorespaces $\chi ^2$-test $p$-values for testing the time homogeneity hypothesis. Tests were run for each ticker for each trading day of 2013, and averaged over the year. For calculating $n_{conv}$, the converge error threshold was $\epsilon = 1\times 10^{-10}$.\relax }}{18}{table.caption.10}}
+\newlabel{tbl:pvalues}{{2.3}{18}{$\chi ^2$-test $p$-values for testing the time homogeneity hypothesis. Tests were run for each ticker for each trading day of 2013, and averaged over the year. For calculating $n_{conv}$, the converge error threshold was $\epsilon = 1\times 10^{-10}$.\relax }{table.caption.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2.5}Naive Trading Strategies}{19}{section.2.5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5.1}Naive Trading Strategy}{19}{subsection.2.5.1}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Naive Trading Strategy\relax }}{19}{algorithm.1}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5.2}Naive+ Trading Strategy}{19}{subsection.2.5.2}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Naive+ Trading Strategy\relax }}{20}{algorithm.2}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.5.3}Naive++ Trading Strategy}{20}{subsection.2.5.3}}
 \@writefile{loa}{\contentsline {algorithm}{\numberline {3}{\ignorespaces Naive++ Trading Strategy\relax }}{21}{algorithm.3}}
-\@writefile{toc}{\contentsline {paragraph}{Naive- Trading Strategy}{21}{section*.13}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.1}{\ignorespaces INTC: Book value against time of trading day.\relax }}{22}{figure.caption.14}}
-\@writefile{toc}{\contentsline {section}{\numberline {2.6}Conclusions from Naive Trading Strategies}{22}{section.2.6}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.2}{\ignorespaces INTC: Histogram of 15min book value changes.\relax }}{23}{figure.caption.15}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.3}{\ignorespaces Optimal posting depth $\delta $\relax }}{24}{figure.caption.16}}
-\newlabel{fig:126a}{{2.3}{24}{Optimal posting depth $\delta $\relax }{figure.caption.16}{}}
-\@writefile{toc}{\contentsline {paragraph}{Question 1}{24}{section*.18}}
-\@writefile{toc}{\contentsline {paragraph}{Question 2}{24}{section*.19}}
-\@writefile{lof}{\contentsline {figure}{\numberline {2.4}{\ignorespaces Comparison of Naive (red), Naive+ (blue), and Naive++ (green) trading strategies, with benchmark Midprice (black). Plotted are book values against time of trading day, averaged across trading year.\relax }}{25}{figure.caption.17}}
-\newlabel{fig:comp}{{2.4}{25}{Comparison of Naive (red), Naive+ (blue), and Naive++ (green) trading strategies, with benchmark Midprice (black). Plotted are book values against time of trading day, averaged across trading year.\relax }{figure.caption.17}{}}
 \@setckpt{Ch2Exploratory/exploratory}{
-\setcounter{page}{27}
-\setcounter{equation}{30}
-\setcounter{enumi}{10}
+\setcounter{page}{22}
+\setcounter{equation}{31}
+\setcounter{enumi}{0}
 \setcounter{enumii}{0}
 \setcounter{enumiii}{0}
 \setcounter{enumiv}{0}
@@ -51,17 +43,17 @@
 \setcounter{mpfootnote}{0}
 \setcounter{part}{0}
 \setcounter{chapter}{2}
-\setcounter{section}{6}
-\setcounter{subsection}{0}
+\setcounter{section}{5}
+\setcounter{subsection}{3}
 \setcounter{subsubsection}{0}
 \setcounter{paragraph}{0}
 \setcounter{subparagraph}{0}
-\setcounter{figure}{4}
-\setcounter{table}{2}
+\setcounter{figure}{0}
+\setcounter{table}{3}
 \setcounter{parentequation}{0}
 \setcounter{float@type}{8}
 \setcounter{algorithm}{3}
-\setcounter{ALG@line}{30}
+\setcounter{ALG@line}{25}
 \setcounter{ALG@rem}{0}
 \setcounter{ALG@nested}{0}
 \setcounter{ALG@Lnr}{2}
@@ -70,16 +62,20 @@
 \setcounter{ALG@tmpcounter}{0}
 \setcounter{SC@C}{0}
 \setcounter{ContinuedFloat}{0}
-\setcounter{subfigure}{4}
+\setcounter{subfigure}{0}
 \setcounter{subtable}{0}
-\setcounter{Item}{10}
+\setcounter{Item}{0}
 \setcounter{Hfootnote}{0}
-\setcounter{bookmark@seq@number}{16}
+\setcounter{bookmark@seq@number}{0}
 \setcounter{r@tfl@t}{0}
 \setcounter{@pps}{0}
 \setcounter{@ppsavesec}{0}
 \setcounter{@ppsaveapp}{0}
-\setcounter{@todonotes@numberoftodonotes}{3}
+\setcounter{fixmecount}{5}
+\setcounter{fxnotecount}{5}
+\setcounter{fxwarningcount}{0}
+\setcounter{fxerrorcount}{0}
+\setcounter{fxfatalcount}{0}
 \setcounter{thm}{4}
-\setcounter{section@level}{4}
+\setcounter{section@level}{2}
 }

@@ -32,7 +32,14 @@ function [t, mu_IB] = computeavgimbalance(data, dt, avg_method, early_close)
         while data.Event(ctr,1) < t(k), ctr = ctr+1; end
         
         % abort if no entries over this interval, same IB val as previous.
-        if ctr_from == ctr, mu_IB(k) = mu_IB(k-1); continue; end
+        if ctr_from == ctr, 
+            if k > 1
+                mu_IB(k) = mu_IB(k-1);
+            else
+                mu_IB(k) = 0;
+            end
+            continue;
+        end
         
         % calculate imbalance (done properly!)
         tau = [ t(k) - dt; data.Event(ctr_from:ctr-1,1); t(k)];

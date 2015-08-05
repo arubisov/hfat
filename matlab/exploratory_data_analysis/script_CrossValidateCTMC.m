@@ -1,7 +1,7 @@
 %% Cross-validate a CTMC calibration.
 
 num_bins = 5;
-dt = 100;
+dt = 1000;
 
 fprintf('*** Beginning Cross-Validation ***\n');
 fprintf('Number of bins = %d, averaging time (ms) = %d\n', num_bins, dt);

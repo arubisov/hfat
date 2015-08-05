@@ -1,8 +1,9 @@
 \chapter{Stochastic Optimal Control}
-
+\fxnote{write intro section.}
 Hello and welcome to this limited edition chapter on stochastic optimal control. Read on if you dare subject yourself to the infinite wisdom contained herein.
 
 \section{Continuous Time}
+\fxnote{better lead in to this section.}
 Below we list the processes involved in the optimization problem:
 
 \begin{tabular}{lll}
@@ -65,6 +66,8 @@ And the value function, in turn, is given by
 \begin{equation}\label{eq:valuefunction}
 H(t,x,s,\bz,q) = \sup\limits_{\btau \in \mathcal{T}_{[t,T]}} \sup\limits_{\delta \in \cA_{[t,T]}} H^{\btau, \delta}(t,x,s,\bz,q)
 \end{equation}
+
+\subsection{Dynamic Programming}
 The following theorems establish the dynamic programming method we will utilize to solve this type of problem:
 \begin{thm}[\cite{STA4505}] \textbf{Dynamic Programming Principle for Optimal Stopping and Control.}
 If an agent's performance criteria for a given admissible control $\bu$ and admissible stopping time $\tau$ are given by
@@ -97,7 +100,7 @@ In this section we solve the DPE that results from using the maximal terminal we
 & \hphantom{{}={}} + \sum_{\bj} \E \left[ H(t,x,s+\eta_{0,\bj},\bj,q) - H(\cdot) \right] \d Z_{\bz,\bj}
 \end{split}
 \end{align}
-\mynote{section on compensated processes, especially for Markov Chain}
+\fxnote{section on compensated processes, especially for Markov Chain}
 
 Substitute in the following identities for the compensated processes
 \begin{align} 
@@ -231,7 +234,7 @@ or alternatively,
 h(t,\bz,q) \leq h(t,\bz,q+1) \leq h(t,\bz,q) + 2\xi, \qquad q \geq 0 \\
 h(t,\bz,q) \leq h(t,\bz,q-1) \leq h(t,\bz,q) + 2\xi, \qquad q \leq 0 
 \end{align}
-\mynote{insert the little bubbles with sell and buy at the inequatlity signs. sell, buy, buy, sell left right top down.}
+\fxnote{insert the little bubbles with sell and buy at the inequatlity signs. sell, buy, buy, sell left right top down.}
 
 Recalling the boundary condition $h(t,\bz,0) = 0$, this tells us that the function $h$ is non-negative everywhere. Furthermore, noting the feedback form of our optimal buy limit order depth given in equation \eqref{eq:optbuydepthfeedback}, together with the inequalities in \eqref{eq:MOineq1} and \eqref{eq:MOineq2}, we obtain bounds on our posting depths given by
 \begin{align}

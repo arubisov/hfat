@@ -1,11 +1,91 @@
 \chapter{Results}
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam lobortis facilisis
-sem. Nullam nec mi et neque pharetra sollicitudin. Praesent imperdiet mi nec
-ante. Donec ullamcorper, felis non sodales commodo, lectus velit ultrices augue,
-a dignissim nibh lectus placerat pede. Vivamus nunc nunc, molestie ut, ultricies
-vel, semper in, velit. Ut porttitor. Praesent in sapien. Lorem ipsum dolor sit
-amet, consectetuer adipiscing elit. Duis fringilla tristique neque. Sed interdum
-libero ut metus. Pellentesque placerat. Nam rutrum augue a leo. Morbi sed elit
-sit amet ante lobortis sollicitudin. Praesent blandit blandit mauris. Praesent
-lectus tellus, aliquet aliquam, luctus a, egestas a, turpis. Mauris lacinia lorem
-sit amet ipsum. Nunc quis urna dictum turpis accumsan semper.
+In this section we estimate model parameters, plot model dynamics, and perform in-sample and out-of-sample backtests compare the performance of the three naive trading strategies along with the continuous and discrete time solutions to the stochastic optimal control problem.
+
+\section{Calibration}
+
+Backtesting these trading strategies required a choice of parameters for $\Delta t_S$, the price change observation period, $\Delta t_I$, the imbalance averaging period, and $\#_{bins}$, the number of imbalance bins. Through a brute force calibration technique we found that $\#_{bins} = 4$ provided the highest expected number of successful trades for most tickers, so this was chosen as a constant. Similarly, we empirically saw that calibration always yielded $\Delta t_S = \Delta t_I$, so this was taken as a given. Then each backtest consisted of first calibrating the value $\Delta t_I$ from one day of data by maximizing the intra-day Sharpe ratio, then using the calibrated parameters to backtest the entire year.
+
+\section{Dynamics of \texorpdfstring{${\delta^{\pm}}^*$}{delta}}
+
+\section{In-Sample Backtesting}
+
+\begin{figure}[H]
+  \centering
+  \setlength\figureheight{0.75\linewidth} 
+  \setlength\figurewidth{0.75\linewidth}
+  \tikzsetnextfilename{insampleds1}
+  \input{Figs/insampleds1.tikz}
+  \caption{Backtest strategy comparison}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{FARO-strat-compare}
+  \input{Figs/FARO-strategy-compare.tikz}
+  \caption{FARO}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{NTAP-strat-compare}
+  \input{Figs/NTAP-strategy-compare.tikz} 
+  \caption{NTAP}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{ORCL-strat-compare}
+  \input{Figs/ORCL-strategy-compare.tikz}
+  \caption{ORCL}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{FARO-strat-compare}
+  \input{Figs/ORCL-strategy-compare.tikz} 
+  \caption{AAPL}
+\end{subfigure}%
+  \caption{Comparison of Naive (red), Naive+ (blue), and Naive++ (green) trading strategies, with benchmark Midprice (black). Plotted are book values against time of trading day, averaged across trading year.}
+  \label{fig:comp}
+\end{figure}
+
+\section{Out-of-Sample Backtesting}
+
+\section{Conclusions from Naive Trading Strategies}
+
+As seen in Figure \ref{fig:comp}, the Naive trading strategy on average underperformed the average mid price, while the Naive+ (adding at-the-touch limit orders when no change was predicted) and Naive++ (adding limit orders to adversely selecting agents that traded against the price change momentum) strategies both on average generated revenue. 
+
+\paragraph{Question 1} Why is the Naive strategy producing, on average, normalized losses? Especially so when considering that we are \emph{in-sample backtesting}. On calibration, we see that our intra-day Sharpe ratio is around 0.01 or 0.02 when we choose our optimal parameters, so at the very least on the calibration date the strategy produces positive returns. The remainder of the calendar days are out-of-sample, as the parameters are (likely) not optimal. This suggests non-stationary data, and in particular not every day can be modelled by the same Markov chain. The problem may be exaggerated by the fact that we're calibrating on the first trading day of the calendar year, when we might expect reduced, or at least non-representative, trading activity. Further, we're currently obtaining the $\mat{P_C}$ probability matrix using only bid-side data, not sell-side or mid, and we're ignoring the bid-ask spread. Thus predicting a ``price change'' may be insufficient when considering a monetizable opportunity, as we won't be able to profit off a predicted increase followed by a predicted decrease unless the interim mid-price move is greater than the bid-ask spread (assuming constant spread). This suggests a potential straightforward modification to the strategy.
+
+\paragraph{Question 2} Why do the Naive+ and ++ strategies outperform the Naive strategy? This is particularly interesting since the probabilities are being obtained from the same matrix. The obvious difference between the successful and unsuccessful strategies is that the former (a) uses limit orders, and (b) executes when we predict a zero change, whereas the latter uses (a) market orders, and (b) executes when we do predict non-zero change.
+
+(a) obviously leads to a different transaction price being used: if I buy with a LO I'm paying the bid price, whereas buying with a MO I pay the ask price. If I value the stock using the mid price, and the mid price doesn't move as a result of my transaction, then with LO I'm buying the asset for less than I'm valuing it at, and with MO I'm paying more than its value.
+
+(b) seems to be the largest flaw in the Naive strategy, to which there are two factors. One, we are not predicting the magnitude of the price change, only whether it is zero or non-zero. Two, from the probabilities presented above, \textit{we will only predict a price change if we've already seen a price change}. Thus we're effectively reacting too late. 
+
+Here's how this works adversely. Suppose a stock has bid/ask quotes of \$9.99/\$10.01, for a bid-ask spread of \$0.02 and a mid of \$10.
+
+\begin{enumerate}
+\item Imbalance = 1 (pressure for upward price move). [$NPV = 0$]
+\item Bid/ask goes up to \$10.00/\$10.02. [$NPV = 0$]
+\item Imbalance = 1. We predict another $>0$ price change. [$NPV = 0$]
+\item We buy 1 share (at \$10.02). [$NPV = -0.01$]
+\item Bid/ask goes up to \$10.01/\$10.03. [$NPV = 0$]
+\item Imbalance = -1 (pressure for a downward move). [$NPV = 0$]
+\item Bid/ask goes down to \$10.00/\$10.02. [$NPV = -0.01$]
+\item Imbalance = -1. We predict another $<0$ price change. 
+\item We sell 1 share (at \$10.00). [$NPV = -0.02$]
+\item Bid/ask goes down to \$9.99/\$10.01. [$NPV = -0.02$]
+\end{enumerate}
+
+In this example the price goes up and back down by two cents to return to where it started, and in the process we lost \$0.02. Now imagine what happens if we price goes up by one cent, up by one cent, then down by ten cents, down by one cent. In this case we lose \$0.11. We're unable to predict that initial upward or downward price change, and only react to it. 

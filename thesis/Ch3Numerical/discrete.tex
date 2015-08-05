@@ -1,4 +1,5 @@
 \section{Discrete Time}
+\fxnote{better lead in to this section.}
 Reminder of our processes (a little bit of abuse of notation going on):
 
 $\bz_k = (\rho_k, \Delta_k)$ - 2-D time-homogenous Markov Chain with transition probabilities $\bP_{ij}$, where $\rho_k \in \Gamma$ and $\Gamma$ represents the set of imbalance bins, and $\Delta_k = \sgn(s_k - s_{k-1}) \in \{-1,0,1\}$.
@@ -186,7 +187,11 @@ We'll begin by concentrating on the first term in the quasi-variational inequali
 & \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \biggr] \biggr\rbrace
 \end{split}
 \end{equation}
-As other agents' market orders as Poisson distributed, we have that $\P [ K_k^+ = 0] = \frac{e^{-\mu^+ (\bz) \Delta t} (\mu^+ (\bz) \Delta t)^0}{0!} = e^{-\mu^+ (\bz) \Delta t}$, and so the probability of seeing some positive number of market orders is
+As other agents' market orders as Poisson distributed, we have that 
+\begin{equation}
+[ K_k^+ = 0] = \frac{e^{-\mu^+ (\bz) \Delta t} (\mu^+ (\bz) \Delta t)^0}{0!} = e^{-\mu^+ (\bz) \Delta t}
+\end{equation}
+and so the probability of seeing some positive number of market orders is
 \begin{equation}
 \label{eq:discretepositiveKplus}
 \P [ K_k^+ > 0] = 1 - e^{-\mu^+ (\bz) \Delta t}
@@ -405,7 +410,7 @@ q\E[\eta_{0,T(\bz, \omega)}] + \frac{1}{\kappa}(p({\delta^+}^*)+p({\delta^-}^*))
 \end{split}
 \end{equation}
 % Note to self: I removed -2\xi p({\delta^+}^*)p({\delta^-}^*) \indicator_{q=0} from the final DPE, because we know that at q=0 h=0. 
-\mynote{Similar commentary to the continuous case. Find the whole inequality thing, bounds on $h$, bounds on $\delta$. Identical.}
+\fxnote{Similar commentary to the continuous case. Find the whole inequality thing, bounds on $h$, bounds on $\delta$. Identical.}
 
 At terminal time $T$, we liquidate our position at a cost of $(s - xi \sgn(q) - \alpha q)$ per share, whereas at $T-1$, we can liquidate at the regular cost of $(s - \xi \sgn(q)$. It is thus never optimal to wait until maturity to liquidate the position, and instead we force liquidation one step earlier by setting $h(T-1,\bz,q) = 0 \; \forall q$. This allows us to effectively ignore the terminal condition, and avoids a contradiction with the finding that $h \geq 0$.
 

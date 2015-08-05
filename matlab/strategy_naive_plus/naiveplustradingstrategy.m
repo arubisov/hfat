@@ -1,4 +1,4 @@
-function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg, ticker, display, early_close, ib_avg_method)
+function [cash,inventory,bookvalues,numtrades] = naiveplustradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg, ticker, display, early_close, ib_avg_method)
 % Backtest Naive+ Trading Strategy
 %   Extending the naive trading strategy, if we anticipate no change then 
 %   we'll additionally keep limited orders posted at the touch, front of
@@ -6,11 +6,8 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
 %   repost.
 
     T1 = 9.5 * 3600000;
-    
-    if early_close
-        T2 = 13 * 3600000;
-    else
-        T2 = 16 * 3600000;
+    if early_close,         T2 = 13 * 3600000;
+    else                    T2 = 16 * 3600000;
     end
     
     t = [T1 + dt_imbalance_avg : dt_imbalance_avg : T2];    % these are the endpoints of avging intervals
@@ -19,7 +16,7 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
     
     opening_mid = (data.BuyPrice(time_ctr,1) + data.SellPrice(time_ctr,1))/20000;
     
-    [P_bid, ~, binseries, bidchgseries, ~] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close);
+    [ P, binseries, pricechgseries, ~, ~ ] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close);
     
     if display
         log_name = sprintf('strategy_naive_plus/naive+_trading_%s_%s.log', datestr(now,'yyyymmdd_HHMMSS'),ticker);
@@ -37,7 +34,9 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
     
     cash = 0;
     asset = 0;
+    numtrades = 0;
     bookvalues = zeros(length(t),1);
+    inventory = zeros(length(t),1);
     
     LO_posted = 0;
     
@@ -47,7 +46,7 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
         IB_curr = binseries(timestep);
         IB_prev = binseries(timestep-1);
         % check price change over last price change period
-        DS_prev = bidchgseries(timestep-1);
+        DS_prev = pricechgseries(timestep-1);
         % now check this entry in the probability matrix. If prob > 0.5,
         % buy/sell/nothing accordingly.
         B = IB_prev + num_bins*(sign(DS_prev)+1);
@@ -57,7 +56,7 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
         end
         time_ctr = time_ctr-1;
         
-        if P_bid(1,B,IB_curr) > 0.5
+        if P(1,B,IB_curr) > 0.5
             % sell asset at BID (buy) price
             LO_posted = 0;
 %             asset = asset - 1;
@@ -66,7 +65,7 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
 %             cash = cash + price;
 %             if display, fprintf(fid, '[%d] {%d, %d, %d}. Sell at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
             
-        elseif P_bid(3,B,IB_curr) > 0.5
+        elseif P(3,B,IB_curr) > 0.5
             % buy asset at ASK (sell) price
             LO_posted = 0;
 %             asset = asset + 1;
@@ -75,7 +74,7 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
 %             cash = cash - price;
 %             if display, fprintf(fid, '[%d] {%d, %d, %d}.   Buy at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
             
-        elseif P_bid(2,B,IB_curr) > 0.5
+        elseif P(2,B,IB_curr) > 0.5
             LO_posted = 1;
         end
         
@@ -85,6 +84,7 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
                 if trades(i,2) == 1
                     % market order sell, so we buy at BID (buy) price
                     asset = asset + 1;
+                    numtrades = numtrades + 1;
                     price = data.BuyPrice(trades(i,4))/10000;
                     price_time = data.Event(trades(i,4),1);
                     cash = cash - price;
@@ -92,14 +92,16 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
                 elseif trades(i,2) == -1
                     % market order buy, so we sell at ASK (sell) price
                     asset = asset - 1;
+                    numtrades = numtrades + 1;
                     price = data.SellPrice(trades(i,4))/10000;
                     price_time = data.Event(trades(i,4),1);
                     cash = cash + price;
                     if display, fprintf(fid, '[%d] {%d, %d, %d}. MO buy arrived. Sell at %.2f (%d). [%d, %.2f].\n',  trades(i,1), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
                 end
             end
-        end     
+        end
         
+        inventory(timestep) = asset;
         bookvalues(timestep) = computebookvalue(data, time_ctr, cash, asset);
 
     end
@@ -109,13 +111,18 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
         price = data.BuyPrice(time_ctr,1)/10000;
         price_time = data.Event(time_ctr,1);
         cash = cash + asset * price;
+        numtrades = numtrades + 1;
         if display, fprintf(fid, '[%d] Closing long position %d shares at %.2f (%d).\n', t(timestep), asset, price, price_time); end;
     elseif asset < 0
         price = data.SellPrice(time_ctr,1)/10000;
         price_time = data.Event(time_ctr,1);
         cash = cash + asset * price;
+        numtrades = numtrades + 1;
         if display, fprintf(fid, '[%d] Closing short position %d shares at %.2f (%d).\n', t(timestep), asset, price, price_time); end;
     end
+    
+    inventory(timestep) = asset;
+    bookvalues(timestep) = cash;
     
     if display
         fprintf(fid, '[%d] Final cash: %.2f.\n', t(timestep), cash);
@@ -133,6 +140,10 @@ function [cash,P_bid,bookvalues] = naiveplustradingstrategy(data, dt_imbalance_a
 end
 
 function value = computebookvalue(data, time_ctr, cash, asset)
-    mid_price = (data.BuyPrice(time_ctr,1) + data.SellPrice(time_ctr,1))/20000;
-    value = cash + asset*mid_price;
+    if asset > 0
+        price = data.BuyPrice(time_ctr,1)/10000;
+    else
+        price = data.SellPrice(time_ctr,1)/10000;
+    end
+    value = cash + asset*price;
 end

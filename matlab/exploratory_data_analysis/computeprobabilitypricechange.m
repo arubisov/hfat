@@ -4,35 +4,21 @@
 % num_bins          number of bins to cast the imbalances into
 % dt_prive_chg      time increment over which to measure price change
 
-function [P_bid, P_ask, binseries, bidchgseries, G_binbid, N_bid] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close)
-
-    if exist('data','var') == 0
-        load('./data/ORCL_20130515.mat');
-       % load('./data/FARO_20131016.mat');
-    end
-
-    if exist('dt_imbalance_avg','var') == 0
-        dt_imbalance_avg = 1000;
-    end
+function [ P, binseries, pricechgseries, G, N ] = ...
+        computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, ...
+                                    dt_price_chg, ib_avg_method, early_close)
+  
+    [ ~, binseries, pricechgseries, G, ~ ] = getbinpricetimeseries(data, ...
+        dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close);
     
-    if exist('num_bins','var') == 0
-        num_bins = 5;
-    end
+    [ P ] = calculateP(G, dt_imbalance_avg, num_bins);
     
-    if exist('dt_price_chg','var') == 0
-        dt_price_chg = 500;
-    end
+    [ N ] = calculateN(binseries, pricechgseries, num_bins);
+end
     
-    [t, binseries, bidchgseries, askchgseries, G_binbid, G_binask]= getbinpricetimeseries(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close);
-    
-    P_bid = calculateP(G_binbid, dt_imbalance_avg, num_bins);
-    P_ask = calculateP(G_binask, dt_imbalance_avg, num_bins);
-    
-    N_bid = calculateN(binseries, bidchgseries, num_bins);
-    N_ask = calculateN(binseries, askchgseries, num_bins);
-    
-    
-function P = calculateP(G, dt_imbalance_avg, num_bins)
+% This is the matrix of conditional probabilities of price changes,
+% alternatively called Q in the dissertation.
+function [ P ] = calculateP(G, dt_imbalance_avg, num_bins)
     
     % one-step probability matrix:
     P_onestep = onestep(G, dt_imbalance_avg);
@@ -82,8 +68,9 @@ function P = calculateP(G, dt_imbalance_avg, num_bins)
             end
         end
     end
+end
     
-function N = calculateN(binseries, chgseries, num_bins)
+function [ N ] = calculateN(binseries, chgseries, num_bins)
 
     % convert to 1D series by encoding.
     series = [binseries(1:end-1) sign(chgseries)];
@@ -97,3 +84,4 @@ function N = calculateN(binseries, chgseries, num_bins)
             N(:, B, rho_n) = sum((series==B) .* (binseries(2:end) == rho_n));
         end
     end
+end

@@ -1,17 +1,8 @@
 %% Estimate the doubly stochastic Poisson process model parameters from a day's worth of data.
 function [G, lambda] = estimatemodelparameters(data, dt, num_bins)
     
-    if exist('data','var') == 0
-        %datafile = './data/FARO_20131016.mat';
-        datafile = './data/ORCL_20130515.mat';
-        load(datafile);
-        fprintf('Loaded data: %s\n', datafile);
-    end
 
-%     num_bins = 3;       % number of bins for underlying CTMC 
-%     dt_avg = 60000;       % ms time increment for averaging of IB and mid
     dt_avg = dt;
-%     dt_mid_diff = 2;    % multiple of dt_avg: time increment for change in mid-price
 
     [~, mu_IB] = computeavgmidpriceandimbalance(data, dt_avg);
 

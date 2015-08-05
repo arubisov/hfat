@@ -1,6 +1,12 @@
-\contentsline {todo}{\color@fb@x {}{black}{}{green!40}{\leavevmode {\color {green!40}o}}\ confirm we're using left stochastic or righ stochastic matrices? a few formulas depend on this.}{12}{section*.8}
-\contentsline {todo}{\color@fb@x {}{black}{}{green!40}{\leavevmode {\color {green!40}o}}\ this table is no longer relevant - rerun the cross-validation results}{15}{section*.9}
-\contentsline {todo}{\color@fb@x {}{black}{}{green!40}{\leavevmode {\color {green!40}o}}\ these aren't the real results. re-run these, and format it better.}{18}{section*.12}
-\contentsline {todo}{\color@fb@x {}{black}{}{green!40}{\leavevmode {\color {green!40}o}}\ section on compensated processes, especially for Markov Chain}{30}{section*.20}
-\contentsline {todo}{\color@fb@x {}{black}{}{green!40}{\leavevmode {\color {green!40}o}}\ insert the little bubbles with sell and buy at the inequatlity signs. sell, buy, buy, sell left right top down.}{35}{section*.21}
-\contentsline {todo}{\color@fb@x {}{black}{}{green!40}{\leavevmode {\color {green!40}o}}\ Similar commentary to the continuous case. Find the whole inequality thing, bounds on $h$, bounds on $\delta $. Identical.}{46}{section*.22}
+\contentsline {todo}{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ write intro section.}{8}{section*.7}
+\contentsline {todo}{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ write algo trading section.}{8}{section*.8}
+\contentsline {todo}{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ write LOB dynamics section }{8}{section*.9}
+\contentsline {todo}{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ write ITCH data set section.}{9}{section*.11}
+\contentsline {todo}{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ confirm we're using left stochastic or righ stochastic matrices? a few formulas depend on this.}{11}{section*.12}
+\contentsline {todo}{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ finish running the cross-validation results}{16}{section*.15}
+\contentsline {todo}{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ write intro section.}{21}{section*.17}
+\contentsline {todo}{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ better lead in to this section.}{21}{section*.18}
+\contentsline {todo}{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ section on compensated processes, especially for Markov Chain}{25}{section*.19}
+\contentsline {todo}{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ insert the little bubbles with sell and buy at the inequatlity signs. sell, buy, buy, sell left right top down.}{29}{section*.20}
+\contentsline {todo}{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ better lead in to this section.}{31}{section*.21}
+\contentsline {todo}{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ Similar commentary to the continuous case. Find the whole inequality thing, bounds on $h$, bounds on $\delta $. Identical.}{42}{section*.22}

@@ -1,15 +1,12 @@
-function [cash,P_bid,bookvalues,midprices] = naivetradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg, ticker, display, early_close, ib_avg_method)
+function [cash,inventory,bookvalues,numtrades,midprices] = naivetradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg, ticker, display, early_close, ib_avg_method)
 % Backtest Naive Trading Strategy
 %   Using the conditional probabilities obtained from the P_bid matrix,
 %   execute a buy/sell market order if the probability of a price change in
 %   the right direction is > 0.5
 
     T1 = 9.5 * 3600000;
-    
-    if early_close
-        T2 = 13 * 3600000;
-    else
-        T2 = 16 * 3600000;
+    if early_close,         T2 = 13 * 3600000;
+    else                    T2 = 16 * 3600000;
     end
     
     t = [T1 + dt_imbalance_avg : dt_imbalance_avg : T2];    % these are the endpoints of avging intervals
@@ -18,7 +15,7 @@ function [cash,P_bid,bookvalues,midprices] = naivetradingstrategy(data, dt_imbal
     
     opening_mid = (data.BuyPrice(time_ctr,1) + data.SellPrice(time_ctr,1))/20000;
     
-    [P_bid, ~, binseries, bidchgseries, ~] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close);
+    [ P, binseries, pricechgseries, ~, ~ ] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close);
     
     if display
         log_name = sprintf('strategy_naive/naive_trading_%s_%s.log', datestr(now,'yyyymmdd_HHMMSS'),ticker);
@@ -28,7 +25,9 @@ function [cash,P_bid,bookvalues,midprices] = naivetradingstrategy(data, dt_imbal
     
     cash = 0;
     asset = 0;
+    numtrades = 0;
     bookvalues = zeros(length(t),1);
+    inventory = zeros(length(t),1);
     midprices = zeros(length(t),1);
     midprices(1) = opening_mid;
     
@@ -38,7 +37,7 @@ function [cash,P_bid,bookvalues,midprices] = naivetradingstrategy(data, dt_imbal
         IB_curr = binseries(timestep);
         IB_prev = binseries(timestep-1);
         % check price change over last price change period
-        DS_prev = bidchgseries(timestep-1);
+        DS_prev = pricechgseries(timestep-1);
         % now check this entry in the probability matrix. If prob > 0.5,
         % buy/sell/nothing accordingly.
         B = IB_prev + num_bins*(sign(DS_prev)+1);
@@ -49,17 +48,19 @@ function [cash,P_bid,bookvalues,midprices] = naivetradingstrategy(data, dt_imbal
         time_ctr = time_ctr-1;
         
         
-        if P_bid(1,B,IB_curr) > 0.5
+        if P(1,B,IB_curr) > 0.5
             % sell asset            
             asset = asset - 1;
+            numtrades = numtrades + 1;
             price = data.BuyPrice(time_ctr,1)/10000;
             price_time = data.Event(time_ctr,1);
             cash = cash + price;
             if display, fprintf(fid, '[%d] {%d, %d, %d}. Sell at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, asset, cash); end;
             
-        elseif P_bid(3,B,IB_curr) > 0.5
+        elseif P(3,B,IB_curr) > 0.5
             % buy asset
             asset = asset + 1;
+            numtrades = numtrades + 1;
             price = data.SellPrice(time_ctr,1)/10000;
             price_time = data.Event(time_ctr,1);
             cash = cash - price;
@@ -68,8 +69,9 @@ function [cash,P_bid,bookvalues,midprices] = naivetradingstrategy(data, dt_imbal
         end
         
         mid_price = (data.BuyPrice(time_ctr,1) + data.SellPrice(time_ctr,1))/20000;
-        bookvalues(timestep) = cash + asset*mid_price;
         midprices(timestep) = mid_price;
+        inventory(timestep) = asset;
+        bookvalues(timestep) = computebookvalue(data, time_ctr, cash, asset);
 
     end
     
@@ -78,13 +80,17 @@ function [cash,P_bid,bookvalues,midprices] = naivetradingstrategy(data, dt_imbal
         price = data.BuyPrice(time_ctr,1)/10000;
         price_time = data.Event(time_ctr,1);
         cash = cash + asset * price;
+        numtrades = numtrades + 1;
         if display, fprintf(fid, '[%d] Closing long position %d shares at %.2f (%d).\n', t(timestep), asset, price, price_time); end;
     elseif asset < 0
         price = data.SellPrice(time_ctr,1)/10000;
         price_time = data.Event(time_ctr,1);
         cash = cash + asset * price;
+        numtrades = numtrades + 1;
         if display, fprintf(fid, '[%d] Closing short position %d shares at %.2f (%d).\n', t(timestep), asset, price, price_time); end;
     end
+    inventory(timestep) = asset;
+    bookvalues(timestep) = cash;
     
     if display
         fprintf(fid, '[%d] Final cash: %.2f.\n', t(timestep), cash);
@@ -99,4 +105,13 @@ function [cash,P_bid,bookvalues,midprices] = naivetradingstrategy(data, dt_imbal
         ylabel('Book Value $$$') % y-axis label
         saveas(f, sprintf('strategy_naive/fig-%s-bookvals-%s.jpg',ticker,datestr(now,'yyyymmdd_HHMMSS')));
     end
+end
+
+function value = computebookvalue(data, time_ctr, cash, asset)
+    if asset > 0
+        price = data.BuyPrice(time_ctr,1)/10000;
+    else
+        price = data.SellPrice(time_ctr,1)/10000;
+    end
+    value = cash + asset*price;
 end

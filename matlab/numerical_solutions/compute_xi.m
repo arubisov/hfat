@@ -14,5 +14,5 @@ function [ xi ] = compute_xi( data, early_close )
     data.BuyPrice = data.BuyPrice(from:to,:);
     
     xi = mean(1/10000 * (data.SellPrice(:,1) - data.BuyPrice(:,1)));
-    xi = 1/100 * round(xi/2*100);
+    xi = 1/2 * round(xi*100) / 100;
 end

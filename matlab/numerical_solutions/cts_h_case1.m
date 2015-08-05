@@ -27,7 +27,7 @@ h = zeros(T/dt,length(Zrange),length(Qrange));
 % ACTUALLY: i think we have to set it to zero...
 % h(end, :, :) = repmat(-xi*abs(Qrange),num_bins*3,1);
 
-progress = waitbar(0, 'Calculating numerical solution...');
+%progress = waitbar(0, 'Calculating numerical solution...');
 
 for i = round((T-dt)/dt):-1:1
     dqplus = zeros(length(Zrange),length(Qrange));
@@ -76,10 +76,10 @@ for i = round((T-dt)/dt):-1:1
             if h(i,z,idx) > h(i,z,idx+1) + 2*xi, h(i,z,idx) = h(i,z,idx+1) + 2*xi; end;
         end
     end
-    waitbar( (T-i*dt) / T) 
+    %waitbar( (T-i*dt) / T) 
 end
 
 %h(end, :, :) = repmat(-alpha*Qrange.*Qrange,num_bins*3,1);
 
-close(progress)
+%close(progress)
 end

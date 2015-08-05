@@ -1,4 +1,6 @@
 \chapter{Introduction}
+
+\fxnote{write intro section.}
 Hi, my name is Stereo Mike.
 
 Yeah, we got three tickets to the Bran Van concert this Monday night at the Pacific Pallisades. You can all dial in if you want to answer a couple of questions; namely, what is Todd's favorite cheese? Jackie just called up and said it was a form of Roquefort. We'll see about that.
@@ -9,7 +11,12 @@ Yeah Todd, this is Liquid, ring-a-ding-a-dinging, I want those three Bran Van ti
 
 \section{Algorithmic Trading}
 
-\section{Limit Order Book}
+\fxnote{write algo trading section.}
+
+\section{Limit Order Book Dynamics}
+
+
+\fxnote{write LOB dynamics section }
 
 Limit order book imbalance is a ratio of limit order volumes between the bid and ask side, and can be calculated for example as $I(t) = \dfrac{V_b(t) - V_a(t)}{V_b(t) + V_a(t)} \in [-1,1]$.
 \begin{itemize}
@@ -19,56 +26,12 @@ Limit order book imbalance is a ratio of limit order volumes between the bid and
 \end{itemize}
 
 We have observations of arrivals of buy/sell market orders and of regime switches occurring, all of which are timestamped. Pictorially, a timeline might look like:
-
-\begin{figure}
-\begin{tikzpicture}[scale=1.5]
-	[triangle/.style = {fill=blue!20, regular polygon, regular polygon sides=3 },
-	border rotated/.style = {shape border rotate=180}]
-	
-	
-    \draw [>=latex,->] (0,0) -- (10,0) node[draw=none,fill=none,shift=(right:0.5)] {time};
-    \draw[mark options={fill=black}, mark size=+3pt] plot[mark=*] coordinates {(.5,0)} node[shift=(down:0.5), align=center] {$\tau_1$};
-    \draw[mark options={fill=black}, mark size=+3pt] plot[mark=*] coordinates {(4,0)} node[shift=(down:0.5), align=center] {$\tau_2$};
-    \draw[mark options={fill=black}, mark size=+3pt] plot[mark=*] coordinates {(5,0)} node[shift=(down:0.5), align=center] {$\tau_3$};
-    \draw[mark options={fill=black}, mark size=+3pt] plot[mark=*] coordinates {(8,0)} node[shift=(down:0.5), align=center] {$\tau_4$};
-    
-    
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(.75,0)} node[shift=(up:0.7), align=center] {buy \\ $b_1$};
-	\draw[mark options={fill=red}, mark size =+3pt, shift=(down:0.1)] plot[mark=diamond*] coordinates {(1.25,0)} node[shift=(down:0.7), align=center] {$s_2$ \\ sell};
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(2.5,0)} node[shift=(up:0.7), align=center] {buy \\ $b_3$};
-	\draw[mark options={fill=red}, mark size =+3pt, shift=(down:0.1)] plot[mark=diamond*] coordinates {(3,0)} node[shift=(down:0.7), align=center] {$s_4$ \\ sell};
-	\draw[mark options={fill=red}, mark size =+3pt, shift=(down:0.1)] plot[mark=diamond*] coordinates {(3.5,0)} node[shift=(down:0.7), align=center] {$s_5$ \\ sell};
-
-%%% REGIME SWITCH
-	
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(4.25,0)} node[shift=(up:0.4), align=center] {$b_6$};
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(4.50,0)} node[shift=(up:0.7), align=center]
-{buy \\ $b_7$};
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(4.75,0)} node[shift=(up:0.4), align=center] {$b_8$};
-	
-%%% REGIME SWITCH
-
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(5.25,0)} node[shift=(up:0.7), align=center] {buy \\ $b_9$};
-	\draw[mark options={fill=red}, mark size =+3pt, shift=(down:0.1)] plot[mark=diamond*] coordinates {(5.75,0)} node[shift=(down:0.7), align=center] {$s_{10}$ \\ sell};
-	\draw[mark options={fill=blue}, mark size =+3pt, shift=(up:0.1)] plot[mark=diamond*] coordinates {(7,0)} node[shift=(up:0.7), align=center] {buy \\ $b_{11}$};
-	
-%%% REGIME SWITCH
-
-	\draw[mark options={fill=red}, mark size =+3pt, shift=(down:0.1)] plot[mark=diamond*] coordinates {(9,0)} node[shift=(down:0.7), align=center] {$s_{12}$ \\ sell};
-	
-%%% BRACES
-	
-	\draw [decorate, decoration = {brace, amplitude = 10pt, mirror}]
-	(0.55,-1) -- (3.95,-1) node [black, midway, yshift = -0.6cm] {regime $i$};
-	\draw [decorate, decoration = {brace, amplitude = 10pt, mirror}]
-	(4.05,-1) -- (4.95,-1) node [black, midway, yshift = -0.6cm] {regime $j$}; 
-	\draw [decorate, decoration = {brace, amplitude = 10pt, mirror}]
-	(5.05,-1) -- (7.95,-1) node [black, midway, yshift = -0.6cm] {regime $i$}; 
-	\draw [decorate, decoration = {brace, amplitude = 10pt, mirror}]
-	(8.05,-1) -- (9.95,-1) node [black, midway, yshift = -0.6cm] {regime $k$}; 
-\end{tikzpicture}
+\begin{figure}[H]
+  \tikzsetnextfilename{LOBtimeline}
+  \input{Figs/LOBtimeline.tikz}
 \caption{Hypothetical timeline of market orders arriving during changing order imbalance regimes.}
 \label{introtimeline}
 \end{figure}
 
 \section{ITCH Data Set}
+\fxnote{write ITCH data set section.}

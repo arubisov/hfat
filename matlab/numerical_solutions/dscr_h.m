@@ -1,4 +1,5 @@
-function [ h, ctrl, optdelp, optdelm ] = dscr_h( data )
+function [ h, optdelp, optdelm ] = dscr_h( num_bins, Qmax, kappa, alpha, xi, ...
+                              P, eta, muplus, muminus, T, dt_Z)
 % Numerical solution to the discrete time Case 1 DPE ansatz h(t,z,q).
 % 
 % Utilize an explicit finite difference scheme with backward approximation
@@ -13,64 +14,28 @@ function [ h, ctrl, optdelp, optdelm ] = dscr_h( data )
 % Master's Thesis
 % Date  : 2015.07.28
 
-global kappa
-global alpha
-global phi
-global xi
-global Qmax
-global Qrange
-global Zrange
-global T
-global dt
-global muplus
-global muminus
-global num_bins
-global G
-global avg_method
-global dt_Z
-
-% Parameters
-dt_Z = 1000;                                %
-num_bins = 5;                               %
-avg_method = 5;                             %
-
-[ binseries, pricechgseries, G, ~ ] = ...
-    compute_G( data, dt_Z, num_bins, avg_method );
-P = onestep(G, dt_Z);
-[ oneDseries ] = get1Dseries( binseries, pricechgseries, num_bins );
-[ eta ] = compute_eta( oneDseries, pricechgseries, num_bins );
-[ muplus, muminus ] = compute_mu( data, oneDseries, dt_Z, num_bins );
-kappa = 50;
-alpha = 0.01;
-phi = 0.00001;
-xi = 0.01;
-
 % finite scheme setup
-Qmax = 20;
 Qrange = -Qmax:1:Qmax;
 Zrange = 1:num_bins*3;
-T = 50;                         % in s
-dt = 1;                         % Markov Chain time increments
 
 init_guess = 0.01;
 options = optimset('Display','off');
 
-h = zeros(T/dt,length(Zrange),length(Qrange));
-ctrl = zeros(T/dt,length(Zrange),length(Qrange));
-optdelp = zeros(T/dt,length(Zrange),length(Qrange));
-optdelm = zeros(T/dt,length(Zrange),length(Qrange));
+h = zeros(T/dt_Z,length(Zrange),length(Qrange));
+optdelp = zeros(T/dt_Z,length(Zrange),length(Qrange));
+optdelm = zeros(T/dt_Z,length(Zrange),length(Qrange));
 
 % Establish terminal condition h(T,z,q) = -alpha*q^2
 % Face-lifting: never optimal to execute MO at maturity and pay xi+alpha*q
 % per share; instead we liquidate immed. prior to maturity at a cost of xi
 % per share. So at T-1, we have a penultimate terminal condition of
 % h(T-1,z,q) = -xi*abs(q)
-h(end, :, :) = repmat(-alpha*Qrange.*Qrange,num_bins*3,1);
-%h(end-1, :, :) = repmat(-xi*abs(Qrange),num_bins*3,1);
+% h(end, :, :) = repmat(-alpha*Qrange.*Qrange,num_bins*3,1);
+% h(end-1, :, :) = repmat(-xi*abs(Qrange),num_bins*3,1);
 
-progress = waitbar(0, 'Calculating numerical solution...');
+%progress = waitbar(0, 'Calculating numerical solution...');
 
-for i = round((T-2*dt)/dt):-1:1
+for i = round((T-2*dt_Z)/dt_Z):-1:1
     
     dqplus = zeros(length(Zrange),length(Qrange));
     dqminus = zeros(length(Zrange),length(Qrange));
@@ -93,10 +58,10 @@ for i = round((T-2*dt)/dt):-1:1
 
         for q = 1:length(Qrange)
             probdelm = @(x) min( 1 , exp( -kappa*x ) );
-            probdelp = @(x) (1 - exp(-muminus(z)*dt) ) ...
+            probdelp = @(x) (1 - exp(-muminus(z)*dt_Z) ) ...
                 *min( 1 , exp( -kappa * ( 1/kappa - P(z,:)*eta ...
                 -2*xi*(Qrange(q) <= -1) + P(z,:)*dqminus(:,q) ) ) ...
-                *exp( kappa*( 1 - exp( -muplus(z)*dt) ) * probdelm(x) ...
+                *exp( kappa*( 1 - exp( -muplus(z)*dt_Z) ) * probdelm(x) ...
                 *(2*xi*(Qrange(q) == 0) - P(z,:)*aleph(:,q) ) ) );
             func = @(x) -x + 1/kappa + P(z,:)*eta ...
                 -2*xi*(Qrange(q) >= 1) + P(z,:)*dqplus(:,q) ...
@@ -114,13 +79,13 @@ for i = round((T-2*dt)/dt):-1:1
             
             dm1 = max(dm1, 0);
             
-            pdm1 = (1 - exp(-muplus(z)*dt))*exp(-kappa*dm1);
+            pdm1 = (1 - exp(-muplus(z)*dt_Z))*exp(-kappa*dm1);
            
             dp1 = max( 0 , 1/kappa - P(z,:)*eta ...
                 -2*xi*(Qrange(q) <= -1) + P(z,:)*dqminus(:,q) ...
                 -pdm1*(2*xi*(Qrange(q) == 0) - P(z,:)*aleph(:,q)) );
             
-            pdp1 = (1 - exp(-muminus(z)*dt))*exp(-kappa*dp1);
+            pdp1 = (1 - exp(-muminus(z)*dt_Z))*exp(-kappa*dp1);
             
             h(i,z,q) = Qrange(q)*P(z,:)*eta + 1/kappa*(pdp1 + pdm1) ...
                 + pdp1*pdm1*(-2*xi*(Qrange(q) == 0) + P(z,:)*aleph(:,q)) ...
@@ -145,7 +110,7 @@ for i = round((T-2*dt)/dt):-1:1
         end
         
     end
-    waitbar( (T-i*dt) / T) 
+    %waitbar( (T-i*dt_Z) / T) 
 end
-close(progress)
+%close(progress)
 end

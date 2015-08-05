@@ -1,8 +1,7 @@
 %% Called by getbinpricetimeseries in process of estimating generator G
 
-function [bidchgseries, askchgseries] = computepricechanges(data, t, dt_price_chg)
-    bidchgseries = zeros(length(t)-1,1);
-    askchgseries = zeros(length(t)-1,1);
+function [pricechgseries] = computepricechanges(data, t, dt_price_chg)
+    pricechgseries = zeros(length(t)-1,1);
     
     ctr_from = 1;
     
@@ -20,11 +19,10 @@ function [bidchgseries, askchgseries] = computepricechanges(data, t, dt_price_ch
         ctr = ctr-1;
 
         if ctr > ctr_from
-            bidchgseries(k) = data.BuyPrice(ctr,1) - data.BuyPrice(ctr_from,1);
-            askchgseries(k) = data.SellPrice(ctr,1) - data.SellPrice(ctr_from,1);
+            from_mean = (data.BuyPrice(ctr_from,1)+data.SellPrice(ctr_from,1))/2;
+            to_mean = (data.BuyPrice(ctr,1)+data.SellPrice(ctr,1))/2;
+            pricechgseries(k) = to_mean - from_mean;
         else
-            bidchgseries(k) = 0;
-            askchgseries(k) = 0;
+            pricechgseries(k) = 0;
         end
-
     end 

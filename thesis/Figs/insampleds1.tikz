@@ -1,0 +1,81 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.75686,0.21961,0.19216}%
+\definecolor{mycolor2}{rgb}{0.00000,0.62745,0.85882}%
+\definecolor{mycolor3}{rgb}{0.41176,1.00000,0.41176}%
+\definecolor{mycolor4}{rgb}{0.63922,0.00000,0.85882}%
+\definecolor{mycolor5}{rgb}{0.96863,0.58039,0.11373}%
+%
+\begin{tikzpicture}[trim axis left, trim axis right]
+
+\begin{axis}[%
+width=\figurewidth,
+height=\figureheight,
+at={(0\figurewidth,0\figureheight)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={black},
+every x tick label/.append style={font=\color{black}},
+xmin=0.5,
+xmax=4.5,
+xtick={1,2,3,4},
+xticklabels={{FARO},{NTAP},{ORCL},{INTC}},
+every outer y axis line/.append style={black},
+every y tick label/.append style={font=\color{black}},
+ymin=-1,
+ymax=0.5,
+ylabel={Average Normalized End of Day Profit},
+axis background/.style={fill=white},
+legend style={at={(1.03,0.5)},anchor=west,legend cell align=left,align=left,draw=black}
+]
+\addplot[ybar,bar width=0.123,bar shift=-0.308,draw=mycolor1,fill=mycolor1,area legend] plot table[row sep=crcr] {%
+1	-0.878986219967543\\
+2	-0.187708972454446\\
+3	-0.105192607558586\\
+4	-0.0823266873934365\\
+};
+\addlegendentry{Naive};
+
+\addplot [color=black,solid,forget plot]
+  table[row sep=crcr]{%
+0.5	0\\
+4.5	0\\
+};
+\addplot[ybar,bar width=0.123,bar shift=-0.154,draw=mycolor2,fill=mycolor2,area legend] plot table[row sep=crcr] {%
+1	0.101198682624954\\
+2	0.387935051629749\\
+3	-0.0338779988665499\\
+4	0.365003926315921\\
+};
+\addlegendentry{Naive+};
+
+\addplot[ybar,bar width=0.123,draw=mycolor3,fill=mycolor3,area legend] plot table[row sep=crcr] {%
+1	0.00151943548715599\\
+2	-0.00465530638923724\\
+3	0.00158111609787142\\
+4	-0.000661301001274794\\
+};
+\addlegendentry{Naive++};
+
+\addplot[ybar,bar width=0.123,bar shift=0.154,draw=mycolor4,fill=mycolor4,area legend] plot table[row sep=crcr] {%
+1	-0.0592027318702052\\
+2	-0.00588317856299085\\
+3	0.114949430236275\\
+4	0.214464923211256\\
+};
+\addlegendentry{Continuous};
+
+\addplot[ybar,bar width=0.123,bar shift=0.308,draw=mycolor5,fill=mycolor5,area legend] plot table[row sep=crcr] {%
+1	-0.0644780718066917\\
+2	0.0987530503981803\\
+3	0.135130335654378\\
+4	0.231644578331766\\
+};
+\addlegendentry{Discrete};
+
+\end{axis}
+\end{tikzpicture}%
