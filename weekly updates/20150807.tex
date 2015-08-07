@@ -1,0 +1,97 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+\usepackage{hyperref}
+\allowdisplaybreaks
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf High-Frequency Algorithmic Trading \\ with Momentum and Order Imbalance}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to establish and solve the stochastic optimal control problem that 
+captures the momentum and order imbalance dynamics of the Limit Order Book 
+(LOB). The solution will yield an optimal trading strategy that will permit
+statistical arbitrage of the underlying stock, which will then be backtested on
+historical data.
+\end{quote}
+
+\section*{Progress Timeline}
+\vspace{-10pt}
+\begin{table}[H]
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\fooo}{\color{LightSteelBlue3}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{9cm} !{\fooo} >{\raggedright\arraybackslash}p{5cm}} 
+\multicolumn{1}{@{\,}r <{\hskip 9pt}}{DATE} & \multicolumn{1}{l}{THESIS} & \multicolumn{1}{l}{STA4505} \\
+\hline
+\st{Dec 2014} & \st{Complete CTMC calibration} \\
+\st{Dec 2014} & \st{Backtest naive strategies based on CTMC} & \\
+\st{Jan-May} & \st{Study stochastic controls: ECE1639, STA4505} & \\
+\st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
+\st{Jun 12} & \st{Establish performance criteria} & \st{Exam Study} \\
+\st{Jun 15} & \st{Derive DPP/DPE} & \st{EXAM} \\
+\st{Jun 19} & \st{Derive DPP/DPE} &  \\
+\st{Jun 26} & \st{Derive continuous-time equations} & \\
+\st{Jul 3} & \st{Derive discrete-time equations} & \\
+\st{Jul 10} & \st{Set up MATLAB numerical integration} &  \\
+\st{Jul 17} & \st{Integrate functions and plot dynamics} & \st{Integrate and analyze} \\
+\st{Jul 24} & \st{Empty promises; zero fucks given} & \\
+\st{Jul 31} & \st{Code for numerical solutions, calibrations, plots} & \st{Simulate results} \\
+\st{Aug 7} & \st{All in-sample backtests} & \\
+Aug 14 & All out-of-sample backtests & \\
+Aug 21 & The Big Writeup Effort & Project writeup \\
+{\bf Aug 24} & {\bf Submit first draft for review by panel} & \\
+Sep 2 & & Presentation
+\end{tabular}
+\end{table}
+
+\newpage
+\section*{Whiteboard Inspirational Quote of the Week}
+\begin{quote}
+\end{quote} 
+
+\section*{For Our Colleagues at Duke University...}
+\paragraph{Thu 6th:} man this shit is all total balls. that's just the general sentiment of the day, ok? like, fuck, so tired of this, and i'm totally doing a shit job of time management in terms of breaking this down into manageable tasks and crossing them off one by one. i really do lose a good chunk of time just looking at my todo list and thinking that i don't want to do any of it, largely because it's broken down into what i would say are unmanageable, not-specific-enough tasks such as ``write the whole results section''. goal for the weekend is to un-kertwang that: just sit down, take i dunno, the maximum hour that it takes, and just write out a really solid todo list that i can look at and not have any individual thing be crazy daunting. \par
+anyway but that's not all. today i brought the entire coffee brewing station into the office: kettle, grinder, aeropress, accessories. i'm not certain that my labmates are thrilled about the occasional 2-minute grinding sessions, but i'm sipping some damn FINE coffee these days. i also had a visiting scholar in at the lab: Alex Mogyoros. she's currently consulting for the OECD, is getting married to Seb in a couple weeks, and in a month is starting her PhD in Law at Oxford.\par
+i have found a Para Pan Am sport that i can actually watch: goalball. it's kind of like a hybrid of soccer and bowling, 3 vs 3, the ball has little bells inside and the game is played by blind people only (hence i can watch them in comfort). \href{https://youtu.be/Zj6galPLxmQ}{like, check this shit out.} fucking nuts.
+
+\paragraph{Fri 7th:} Not even 9am and I'm here, optimizing code, drinking coffee, writing you a few shitty paragraphs. so look, bit of a faux pas during thesis crunch time, but i'm going to the zoo today with the gifty hall crew. by the way we might want to rebrand ourselves as The Northern Men and get that sewn onto leather jackets with skulls, something like that. anyway so i'll be getting out of here pretty soon for the majority of the afternoon. i'll try to suss out whether Alan is gay and run the hypothesis by Kevin - i think he'll be the voice of reason on this one. well what else is new today ... not much. i'm reading a book called Bravo Two Zero, it's a memoir about a troop of British SAS guys, which by the way is the regiment JTF2 is modelled after, during the gulf war that get dropped into Iraq and shit goes bad. i haven't gotten that far though. as far as i've gotten, they're a bunch of dipshits that seem to take every opportunity to take the piss out of each other, not even limited to when they were departing on their mission, the other regiment guys were making jokes like `since you won't be coming back, you won't be needing that air mattress anymore right?', and whistling funeral marches, and gesturing digging graves, etc. pretty grim stuff, i dunno how that isn't taboo in the forces. but anyway, they get heli dropped in Iraq, it's flat as fuck everywhere, they have 203 lbs of equipment each, and they gotta spend 14 days there. so it's day two, they're hiding in a little crevice type thing they found, middle of the day, and the point where i put the book down was when a little iraqi goat boy comes right to the ledge of the crevice, looks down, makes eye contact with the sergeant, and runs yelling toward the enemy guys who relocated during the night and are now 500ft away. shit is about to get REAL.
+
+\section*{The Academic Week in Review}
+Here it is, the full shebang, a prioritized list of what's standing between me and that Aug 24th deadline:
+
+\begin{itemize}
+\st{\item write script for out-of-sample (+1 week) backtest}
+\item run overnight out-of-sample backtest for all strategies
+\item the results section: produce plots and tables to summarize all results. 
+\item compare contrast dynamics of delta for the stochastic methods.
+\item mimic Seb's four plots to show mechanics of the stoch methods
+\item write introduction
+\item write algo trading section
+\item write LOB dynamics section
+\item write ITCH data section
+\item write intro to stochastic chapter
+\item Link STA4505 project into dissertation with lead-in blurb.
+\item re-write lead-in to continuous time section
+\item re-write lead-in to discrete time section
+\item write abstract
+\item write acknowledgement
+\item write dissertation
+\item any remaining time to proof-read the bitch
+\item STA4505 project standalone write-up.
+\end{itemize}
+
+\end{document}
+1014s for cts_h_case1 (two runs)
+dz line took 351+345s =696s
+
+down to 440 (two runs)

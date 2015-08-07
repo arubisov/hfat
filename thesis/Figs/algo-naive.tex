@@ -1,0 +1,18 @@
+\begin{algorithmic}[1]
+\State $cash = 0$
+\State $asset = 0$
+\For{$t=2 \; : \; \texttt{length}(timeseries)$}
+	\If {$\mathbb{P} \left[ \Delta S_{future} < 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{curr} \right] > 0.5$}
+		\State $cash \pluseq data.BuyPrice(\textit{t})$
+		\State $asset \mineq 1$
+	\ElsIf {$\mathbb{P} \left[ \Delta S_{future} > 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{curr} \right] > 0.5$}
+		\State $cash \mineq data.SellPrice(\textit{t})$	
+		\State $asset \pluseq 1$
+	\EndIf
+\EndFor
+\If {$asset > 0$} 
+	\State $cash \pluseq asset \times data.BuyPrice(\textit{t})$
+\ElsIf {$asset < 0$} 
+	\State $cash \pluseq asset \times data.SellPrice(\textit{t})$	
+\EndIf
+\end{algorithmic}

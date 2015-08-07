@@ -1,7 +1,0 @@
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Hypothetical timeline of market orders arriving during changing order imbalance regimes.\relax }}{10}{figure.caption.7}
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Comparison of Naive (red), Naive+ (blue), and Naive++ (green) trading strategies, with benchmark Midprice (black). Plotted are book values against time of trading day, averaged across trading year.\relax }}{43}{figure.caption.12}
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Backtest strategy comparison\relax }}{43}{figure.caption.11}

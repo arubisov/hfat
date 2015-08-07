@@ -1,6 +1,6 @@
 function [ hist_X, hist_Q, numtrades ] = cts_backtest( data, h, deltaminus, deltaplus, ...
                 num_bins, avg_method, ds_method, dt_Z, Qmax, alpha, ...
-                kappa, xi, fs_T, fs_dt, early_close )
+                kappa, xi, fs_T, fs_dt, early_close, rho )
 
     T1 = 9.5 * 3600000;
     T2 = 16 * 3600000;
@@ -8,7 +8,7 @@ function [ hist_X, hist_Q, numtrades ] = cts_backtest( data, h, deltaminus, delt
     cash = 0;
     numtrades = 0;
     
-    [ binseries, pricechgseries, ~, ~ ] = compute_G( data, dt_Z, num_bins, avg_method, ds_method, early_close );
+    [ binseries, pricechgseries, ~, ~ ] = compute_G( data, dt_Z, num_bins, avg_method, ds_method, early_close, rho );
     [ oneDseries ] = get1Dseries( binseries, pricechgseries, num_bins );
     
     hist_X = NaN(1,round(T2-T1)/dt_Z);

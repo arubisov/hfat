@@ -1,0 +1,27 @@
+\begin{algorithmic}[1]
+\State $cash = 0$
+\State $asset = 0$
+\For{$t=2 \; : \; \texttt{length}(timeseries)$}
+	\If {$\mathbb{P} \left[ \Delta S_{curr} = 0 \; | \; \rho_{curr}, \rho_{prev}, \Delta S_{prev} \right] > 0.5$}
+		\State $LO_{posted} = \texttt{True}$
+	\Else
+		\State $LO_{posted} = \texttt{False}$
+	\EndIf
+	\If {$LO_{posted}$}
+		\For{$MO \in ArrivedMarketOrders(t,t+1)$}		
+			\If {$MO == Sell$}
+				\State $cash \mineq data.BuyPrice(\textit{t})$	
+				\State $asset \pluseq 1$
+			\ElsIf {$MO == Buy$}
+				\State $cash \pluseq data.SellPrice(\textit{t})$
+				\State $asset \mineq 1$
+			\EndIf
+		\EndFor
+	\EndIf
+\EndFor
+\If {$asset > 0$} 
+\State $cash \pluseq asset \times data.BuyPrice(\textit{t})$
+\ElsIf {$asset < 0$} 
+\State $cash \pluseq asset \times data.SellPrice(\textit{t})$	
+\EndIf
+\end{algorithmic}

@@ -10,9 +10,10 @@
 \begin{document}
 
 % ******************************** Front Matter ********************************
-\include{Title/title}
-\include{Abstract/abstract}
-\include{Acknowledgement/acknowledgement}
+\include{Ch0Front/title}
+\include{Ch0Front/abstract}
+\include{Ch0Front/acknowledgement}
+%\include{Ch0Front/dedication}
 
 % *********************** Adding TOC and List of Figures ***********************
 \tableofcontents
@@ -23,30 +24,16 @@
 % ******************************** Main Matter *********************************
 \include{Ch1Introduction/introduction}
 \include{Ch2Exploratory/exploratory}
+%\include{Ch3Numerical/sta4505}
 \include{Ch3Numerical/continuous}
 \include{Ch3Numerical/discrete}
 \include{Ch4Results/results}
 
 % ********************************** Bibliography ******************************
 \begin{spacing}{0.9}
-
-% To use the conventional natbib style referencing
-% Bibliography style previews: http://nodonn.tipido.net/bibstyle.php
-% Reference styles: http://sites.stat.psu.edu/~surajit/present/bib.htm
-
 \bibliographystyle{apalike}
-%\bibliographystyle{unsrt} % Use for unsorted references  
-%\bibliographystyle{plainnat} % use this to have URLs listed in References
 \cleardoublepage
 \bibliography{References/references} % Path to your References.bib file
-
-% If you would like to use BibLaTeX for your references, pass `custombib' as
-% an option in the document class. The location of 'reference.bib' should be
-% specified in the preamble.tex file in the custombib section.
-% Comment out the lines related to natbib above and uncomment the following line.
-
-%\printbibliography[heading=bibintoc, title={References}]
-
 \end{spacing}
 
 % ********************************** Appendices ********************************

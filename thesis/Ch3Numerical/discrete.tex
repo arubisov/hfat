@@ -410,7 +410,19 @@ q\E[\eta_{0,T(\bz, \omega)}] + \frac{1}{\kappa}(p({\delta^+}^*)+p({\delta^-}^*))
 \end{split}
 \end{equation}
 % Note to self: I removed -2\xi p({\delta^+}^*)p({\delta^-}^*) \indicator_{q=0} from the final DPE, because we know that at q=0 h=0. 
-\fxnote{Similar commentary to the continuous case. Find the whole inequality thing, bounds on $h$, bounds on $\delta$. Identical.}
+As was the case in continuous time, \eqref{eq:discreteDPEfinal} yields that whilst in the continuation region, we have
+\begin{align}
+h_k(\bz,q) & \leq h_k(\bz, q+1) - 2 \xi \cdot \indicator_{q \geq 0} \\
+h_k(\bz,q) & \leq h_k(\bz, q-1) - 2 \xi \cdot \indicator_{q \leq 0}
+\end{align}
+And these inequalities again give us
+\begin{align}
+-2\xi \cdot \indicator_{q \geq 0} & \leq h_k(\bz,q) - h_k(\bz,q+1) \leq 2\xi \cdot \indicator_{q \leq -1} \label{eq:dscrMOineq1}\\
+-2\xi \cdot \indicator_{q \leq 0} & \leq h_k(\bz,q) - h_k(\bz,q-1) \leq 2\xi \cdot \indicator_{q \geq 1} \label{eq:dscrMOineq2}\\[4ex]
+h_k(\bz,q) & \overset{\text{\makebox[0pt]{sell if =}}}{\overset{\downarrow}{\leq}} h_k(\bz,q+1) \overset{\text{\makebox[0pt]{buy if =}}}{\overset{\downarrow}{\leq}} h_k(\bz,q) + 2\xi, \qquad q \geq 0 \label{eq:dscrMOineq3}\\
+h_k(\bz,q) & \underset{\text{\makebox[0pt]{buy if =}}}{\underset{\uparrow}{\leq}} h_k(\bz,q-1) \underset{\text{\makebox[0pt]{sell if =}}}{\underset{\uparrow}{\leq}} h_k(\bz,q) + 2\xi, \qquad q \leq 0 \label{eq:dscrMOineq4}
+\end{align}
+Recalling the boundary condition $h_k(\bz,0) = 0$, \eqref{eq:dscrMOineq3} and \eqref{eq:dscrMOineq4} tell us that the function $h$ is non-negative everywhere.
 
 At terminal time $T$, we liquidate our position at a cost of $(s - xi \sgn(q) - \alpha q)$ per share, whereas at $T-1$, we can liquidate at the regular cost of $(s - \xi \sgn(q)$. It is thus never optimal to wait until maturity to liquidate the position, and instead we force liquidation one step earlier by setting $h(T-1,\bz,q) = 0 \; \forall q$. This allows us to effectively ignore the terminal condition, and avoids a contradiction with the finding that $h \geq 0$.
 

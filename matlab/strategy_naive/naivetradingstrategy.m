@@ -1,4 +1,4 @@
-function [cash,inventory,bookvalues,numtrades,midprices] = naivetradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg, ticker, display, early_close, ib_avg_method)
+function [bookvalues,inventory,numtrades,midprices] = naivetradingstrategy(data, P, dt_Z, num_bins, dt_S, ticker, display, early_close, ib_avg_method, rho)
 % Backtest Naive Trading Strategy
 %   Using the conditional probabilities obtained from the P_bid matrix,
 %   execute a buy/sell market order if the probability of a price change in
@@ -9,13 +9,13 @@ function [cash,inventory,bookvalues,numtrades,midprices] = naivetradingstrategy(
     else                    T2 = 16 * 3600000;
     end
     
-    t = [T1 + dt_imbalance_avg : dt_imbalance_avg : T2];    % these are the endpoints of avging intervals
+    t = [T1 + dt_Z : dt_Z : T2];    % these are the endpoints of avging intervals
     
     time_ctr = find(data.Event(:,1) >= T1, 1, 'first');
     
     opening_mid = (data.BuyPrice(time_ctr,1) + data.SellPrice(time_ctr,1))/20000;
     
-    [ P, binseries, pricechgseries, ~, ~ ] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close);
+    [ ~, binseries, pricechgseries, ~, ~ ] = computeprobabilitypricechange(data, dt_Z, num_bins, dt_S, ib_avg_method, early_close, rho);
     
     if display
         log_name = sprintf('strategy_naive/naive_trading_%s_%s.log', datestr(now,'yyyymmdd_HHMMSS'),ticker);
@@ -91,6 +91,8 @@ function [cash,inventory,bookvalues,numtrades,midprices] = naivetradingstrategy(
     end
     inventory(timestep) = asset;
     bookvalues(timestep) = cash;
+    % normalize NPV
+    bookvalues = 1/opening_mid * bookvalues;
     
     if display
         fprintf(fid, '[%d] Final cash: %.2f.\n', t(timestep), cash);

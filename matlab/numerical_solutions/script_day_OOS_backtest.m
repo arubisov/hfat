@@ -5,10 +5,9 @@
 clear;
 clc;
 
-%tickers = {'FARO','NTAP','ORCL','INTC'};
-tickers = {'FARO'};
+tickers = {'FARO','NTAP','ORCL','INTC'};
 strategies = {'Naive','Naive+','Naive++','Cts Stoch Ctrl','Dscr Stoch Ctrl','Cts Stoch Ctrl w NMC','Dscr Stoch Ctrl w NMC'};
-daterange = '20130130';
+daterange = '';
 
 % Parameters
 T1 = 9.5 * 3600000; % Start of day
@@ -44,6 +43,7 @@ X = NaN(numel(strategies), numel(tickers),numel(listing),(T2-T1)/dt_Z);
 Q = NaN(numel(strategies), numel(tickers),numel(listing),(T2-T1)/dt_Z);
 T = NaN(numel(strategies), numel(tickers),numel(listing));
 
+tic;
 for tickernum = 1 : numel(tickers)
     % Initial set-up
     ticker = tickers{tickernum};
@@ -77,10 +77,17 @@ for tickernum = 1 : numel(tickers)
             if any(oosdate==early_close_dates), oos_early_close = 1;
             else oos_early_close = 0; end
             
-
-            strat = 4;
-            [x,q,t] = run_OOS_strategy(strat, data, oosdata, dt_Z, num_bins, ...
-                        avg_method, early_close, oos_early_close, phi, kappa, alpha, Qmax, fs_T, fs_dt );
+            % Insert for loop over ds_method = [ 1 2 ]
+            parfor strat = 1:numel(strategies)
+                [x,q,t] = run_OOS_strategy(strat, data, oosdata, dt_Z, num_bins, ...
+                            avg_method, early_close, oos_early_close, phi, kappa, alpha, Qmax, fs_T, fs_dt );
+                X(strat,tickernum,file,:) = x;
+                Q(strat,tickernum,file,:) = q;
+                T(strat,tickernum,file) = t;
+            end
         end
     end
+
 end
+toc;
+save('./saves/outofsample/OOS.mat', 'X','Q','T');

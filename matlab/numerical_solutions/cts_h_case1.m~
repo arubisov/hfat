@@ -40,20 +40,28 @@ for i = round((T-dt)/dt):-1:1
     dqminus(:,1:end-1) = h(i+1,:,1:end-1) - h(i+1,:,2:end);
     dqminus(:,end) = dqminus(:,end-1);
     
-    % optimized like fucking crazy.
-    dz = G*eta*Qrange + G*squeeze(h(i+1,:,:));
+    dztest = G*eta*Qrange + G*h(i+1,:,:)'
+    
     
     for z = 1:length(Zrange)
         for q = 1:length(Qrange)
+            dz = Qrange(q)*G(z,:)*eta + G(z,:)*h(i+1,:,q)';
+            
+            dz2 = dztest(z,q) +  G(z,:)*h(i+1,:,q)';
+            
+            if abs(dz - dz2) > 1e-10, disp('fatal calc error');end;
+
             % checking delta^- >= 1/kappa - 2*xi
-            deltaminus = max( 0 , 1/kappa - 2*xi*(Qrange(q) >= 1) + dqplus(z,q) );
+            deltaminus = 1/kappa - 2*xi*(Qrange(q) >= 1) + dqplus(z,q);
+            deltaminus = max(deltaminus , 0);
             infgen_dKplus = exp(-kappa*deltaminus) * (deltaminus + 2*xi*(Qrange(q) >= 1) - dqplus(z,q));
             
             % checking delta^+ >= 1/kappa - 2*xi
-            deltaplus = max ( 0 , 1/kappa -2*xi*(Qrange(q) <= -1) + dqminus(z,q) );
+            deltaplus = 1/kappa -2*xi*(Qrange(q) <= -1) + dqminus(z,q);
+            deltaplus = max(deltaplus , 0);
             infgen_dKminus = exp(-kappa*deltaplus) * (deltaplus + 2*xi*(Qrange(q) <= -1) - dqminus(z,q));
                 
-            h(i,z,q) = h(i+1,z,q) + dt * (-phi*Qrange(q)*Qrange(q) + dz(z,q) + ...
+            h(i,z,q) = h(i+1,z,q) + dt * (-phi*Qrange(q)*Qrange(q) + dz + ...
                     muplus(z)*infgen_dKplus + muminus(z)*infgen_dKminus );
         end
         

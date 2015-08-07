@@ -4,12 +4,12 @@
 % num_bins          number of bins to cast the imbalances into
 % dt_prive_chg      time increment over which to measure price change
 
-function [ P, binseries, pricechgseries, G, N ] = ...
+function [ P, binseries, pricechgseries, G, N, rho ] = ...
         computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, ...
-                                    dt_price_chg, ib_avg_method, early_close)
+                                    dt_price_chg, ib_avg_method, early_close, rho)
   
-    [ ~, binseries, pricechgseries, G, ~ ] = getbinpricetimeseries(data, ...
-        dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close);
+    [ ~, binseries, pricechgseries, G, rho ] = getbinpricetimeseries(data, ...
+        dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close, rho);
     
     [ P ] = calculateP(G, dt_imbalance_avg, num_bins);
     

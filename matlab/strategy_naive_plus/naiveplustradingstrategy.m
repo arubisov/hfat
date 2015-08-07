@@ -1,4 +1,4 @@
-function [cash,inventory,bookvalues,numtrades] = naiveplustradingstrategy(data, dt_imbalance_avg, num_bins, dt_price_chg, ticker, display, early_close, ib_avg_method)
+function [bookvalues,inventory,numtrades] = naiveplustradingstrategy(data, P, dt_Z, num_bins, dt_S, ticker, display, early_close, ib_avg_method, rho)
 % Backtest Naive+ Trading Strategy
 %   Extending the naive trading strategy, if we anticipate no change then 
 %   we'll additionally keep limited orders posted at the touch, front of
@@ -10,13 +10,13 @@ function [cash,inventory,bookvalues,numtrades] = naiveplustradingstrategy(data, 
     else                    T2 = 16 * 3600000;
     end
     
-    t = [T1 + dt_imbalance_avg : dt_imbalance_avg : T2];    % these are the endpoints of avging intervals
+    t = [T1 + dt_Z : dt_Z : T2];    % these are the endpoints of avging intervals
     
     time_ctr = find(data.Event(:,1) >= T1, 1, 'first');
     
     opening_mid = (data.BuyPrice(time_ctr,1) + data.SellPrice(time_ctr,1))/20000;
     
-    [ P, binseries, pricechgseries, ~, ~ ] = computeprobabilitypricechange(data, dt_imbalance_avg, num_bins, dt_price_chg, ib_avg_method, early_close);
+    [ ~, binseries, pricechgseries, ~, ~ ] = computeprobabilitypricechange(data, dt_Z, num_bins, dt_S, ib_avg_method, early_close, rho);
     
     if display
         log_name = sprintf('strategy_naive_plus/naive+_trading_%s_%s.log', datestr(now,'yyyymmdd_HHMMSS'),ticker);
@@ -123,6 +123,8 @@ function [cash,inventory,bookvalues,numtrades] = naiveplustradingstrategy(data, 
     
     inventory(timestep) = asset;
     bookvalues(timestep) = cash;
+    % normalize NPV
+    bookvalues = 1/opening_mid * bookvalues;
     
     if display
         fprintf(fid, '[%d] Final cash: %.2f.\n', t(timestep), cash);

@@ -1,6 +1,7 @@
-function [ binseries, pricechgseries, G, rho ] = ...
-    compute_G( data, dt, num_bins, avg_method, ds_method, early_close )
 % Calculate generator matrix G, 1D Markov chain series, and imbalance bins.
+function [ binseries, pricechgseries, G, rho ] = ...
+    compute_G( data, dt, num_bins, avg_method, ds_method, early_close, rho )
+    % if rho is passed, use it. 
     
     % Imbalance Timeseries
     % t are the endpoints of averaging intervals, mu_IB gives the
@@ -8,10 +9,12 @@ function [ binseries, pricechgseries, G, rho ] = ...
     % and ending at t. 
     [t, mu_IB] = computeavgimbalance(data, dt, avg_method, early_close);
 
-    % create bins for CTMC. 
-    % bintype = 1 creates evenly spaced bins symmetric around zero. 
-    bintype = 3;
-    rho = createbins(num_bins, mu_IB, bintype);
+    if isempty(rho)
+        % create bins for CTMC. 
+        % bintype = 1 creates evenly spaced bins symmetric around zero. 
+        bintype = 3;
+        rho = createbins(num_bins, mu_IB, bintype);
+    end
 
     [~, binseries] = histc(mu_IB, rho);
     

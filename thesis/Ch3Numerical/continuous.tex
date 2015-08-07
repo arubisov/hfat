@@ -97,24 +97,24 @@ In this section we solve the DPE that results from using the maximal terminal we
 \begin{split}
 & = \partial_t H \dt + \bigl\lbrace e^{ -\kappa \delta^{-}} \E \bigl[ H(t,x+(s+\xi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \bigr\rbrace \d K^+\\
 & \hphantom{{}={} \partial_t H \dt} + \bigl\lbrace e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\xi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \bigr\rbrace \d K^-\\
-& \hphantom{{}={}} + \sum_{\bj} \E \left[ H(t,x,s+\eta_{0,\bj},\bj,q) - H(\cdot) \right] \d Z_{\bz,\bj}
+& \hphantom{{}={} \partial_t H \dt} + \sum_{\bj} \E \left[ H(t,x,s+\eta_{0,\bj},\bj,q) - H(\cdot) \right] \d Z_{\bz,\bj}
 \end{split}
 \end{align}
-\fxnote{section on compensated processes, especially for Markov Chain}
 
-Substitute in the following identities for the compensated processes
+We substitute in the following identities for the compensated processes, which are continuous-time martingales. For Poisson processes this is given by \cite{STA4505}
 \begin{align} 
-\d M^{\pm} & = \d \tilde{K}^{\pm} + \mu^{\pm}(\bz) \dt \\
+\d K^{\pm} & = \d \tilde{K}^{\pm} + \mu^{\pm}(\bz) \dt
+\intertext{while for the Markov Chain, this is \cite{MAT833}}
 \d Z_{\bz,\bj}  & = \d \tilde{Z}_{\bz,\bj}  + G_{\bz,\bj} \dt 
 \end{align}
 \begin{align}
 \begin{split}
 {}\phantom{\d H (t,x,s,\bz,q)} & = \partial_t H \dt + \biggl\lbrace \mu^+(\bz) e^{ -\kappa \delta^{-}} \E \bigl[ H(t,x+(s+\xi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \\
-& \hphantom{{}={} \partial_t H \dt +} + \mu^-(\bz) e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\xi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \\
-& \hphantom{{}={}} + \sum_{\bj} G_{\bz,\bj} \E \left[ H(t,x,s+\eta_{0,\bj},\bj,q) - H(\cdot) \right]  \biggr\rbrace \dt \\
+& \hphantom{{}={} \partial_t H \dt +\biggl\lbrace} + \mu^-(\bz) e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\xi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \\
+& \hphantom{{}={} \partial_t H \dt +\biggl\lbrace} + \sum_{\bj} G_{\bz,\bj} \E \left[ H(t,x,s+\eta_{0,\bj},\bj,q) - H(\cdot) \right]  \biggr\rbrace \dt \\
 & \hphantom{{}={} \partial_t H \dt} + \bigl\lbrace e^{ -\kappa \delta^{-}} \E \bigl[ H(t,x+(s+\xi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \bigr\rbrace \d \tilde{K}^+\\
 & \hphantom{{}={} \partial_t H \dt} + \bigl\lbrace e^{ -\kappa \delta^{+}} \E \bigl[ H(t,x-(s-\xi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \bigr\rbrace \d \tilde{K}^-\\
-& \hphantom{{}={}} + \sum_{\bj} \E \left[ H(t,x,s+\eta_{0,\bj},\bj,q) - H(\cdot) \right] \d \tilde{Z}_{\bz,\bj}
+& \hphantom{{}={} \partial_t H \dt} + \sum_{\bj} \E \left[ H(t,x,s+\eta_{0,\bj},\bj,q) - H(\cdot) \right] \d \tilde{Z}_{\bz,\bj}
 \end{split}
 \end{align}
 From which we can see that the infinitesimal generator is given by
@@ -226,17 +226,16 @@ h(\tau^+_q, \bz, q-1) - h(\tau^+_q,\bz,q) & \leq 2 \xi \cdot \indicator_{q \leq 
 \end{align}
 Taken together, these inequalities yield
 \begin{align}
--2\xi \cdot \indicator_{q \geq 0} \leq h(t,\bz,q) - h(t,\bz,q+1) \leq 2\xi \cdot \indicator_{q \leq -1} \label{eq:MOineq1}\\
--2\xi \cdot \indicator_{q \leq 0} \leq h(t,\bz,q) - h(t,\bz,q-1) \leq 2\xi \cdot \indicator_{q \geq 1} \label{eq:MOineq2}
+-2\xi \cdot \indicator_{q \geq 0} \leq h(t,\bz,q) - h(t,\bz,q+1) \leq 2\xi \cdot \indicator_{q \leq -1} \label{eq:ctsMOineq1}\\
+-2\xi \cdot \indicator_{q \leq 0} \leq h(t,\bz,q) - h(t,\bz,q-1) \leq 2\xi \cdot \indicator_{q \geq 1} \label{eq:ctsMOineq2}
 \end{align}
 or alternatively,
 \begin{align}
-h(t,\bz,q) \leq h(t,\bz,q+1) \leq h(t,\bz,q) + 2\xi, \qquad q \geq 0 \\
-h(t,\bz,q) \leq h(t,\bz,q-1) \leq h(t,\bz,q) + 2\xi, \qquad q \leq 0 
+h(t,\bz,q) \overset{\text{\makebox[0pt]{sell if =}}}{\overset{\downarrow}{\leq}} h(t,\bz,q+1) \overset{\text{\makebox[0pt]{buy if =}}}{\overset{\downarrow}{\leq}} h(t,\bz,q) + 2\xi, \qquad q \geq 0 \label{eq:ctsMOineq3}\\
+h(t,\bz,q) \underset{\text{\makebox[0pt]{buy if =}}}{\underset{\uparrow}{\leq}} h(t,\bz,q-1) \underset{\text{\makebox[0pt]{sell if =}}}{\underset{\uparrow}{\leq}} h(t,\bz,q) + 2\xi, \qquad q \leq 0 \label{eq:ctsMOineq4}
 \end{align}
-\fxnote{insert the little bubbles with sell and buy at the inequatlity signs. sell, buy, buy, sell left right top down.}
 
-Recalling the boundary condition $h(t,\bz,0) = 0$, this tells us that the function $h$ is non-negative everywhere. Furthermore, noting the feedback form of our optimal buy limit order depth given in equation \eqref{eq:optbuydepthfeedback}, together with the inequalities in \eqref{eq:MOineq1} and \eqref{eq:MOineq2}, we obtain bounds on our posting depths given by
+Recalling the boundary condition $h(t,\bz,0) = 0$, \eqref{eq:ctsMOineq3} and \eqref{eq:ctsMOineq4} tell us that the function $h$ is non-negative everywhere. Furthermore, noting the feedback form of our optimal buy limit order depth given in equation \eqref{eq:optbuydepthfeedback}, together with the inequalities in \eqref{eq:ctsMOineq1} and \eqref{eq:ctsMOineq1}, we obtain bounds on our posting depths given by
 \begin{align}
 {\delta^+}^* & = \frac{1}{\kappa} - 2 \xi \cdot \indicator_{q \leq -1} - h(t,\bz,q+1) + h(t,\bz,q) \\
 & \geq \frac{1}{\kappa} - 2 \xi \cdot \indicator_{q \leq -1} - 2 \xi \cdot \indicator_{q \geq 0} \\
