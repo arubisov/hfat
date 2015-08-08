@@ -12,18 +12,32 @@ Yeah Todd, this is Liquid, ring-a-ding-a-dinging, I want those three Bran Van ti
 \section{Algorithmic Trading}
 
 \fxnote{write algo trading section.}
+Lo and Habermas (97)
+Almgren and Chriss (98) 
+primary theoretical papers on the subject. AT generally aimed at transaction cost reduction.
 
 \section{Limit Order Book Dynamics}
 
+A \emph{limit order} is an instruction submitted by an agent to buy or sell up to a specified quantity or volume of a financial instrument, and at a specified price. A \emph{limit order book (LOB)} is the accumulated list of such orders sent to a given exchange, where each order is accompanied by a timestamp and an anonymous unique key for identifying the agent. The exchange runs a trade matching engine that utilizes the LOB to pair buy and sell requests that concur on price, even if only partially on volume. Orders remain in effect until they are modified, canceled, or fully filled \cite{Kyle1989}.
 
-\fxnote{write LOB dynamics section }
+The unfilled or partially filled orders accumulate in the limit order book and provide liquidity to the market. At any given time, the structure of the LOB can be visualized as in \autoref{fig:LOB}. As new limit orders arrive, they are compared with existing opposing orders in the book in search of a match - and if so, existing orders are \emph{filled} or \emph{lifted} according to a first-in-first-out priority queue for each price level. \emph{Market orders} extend the idea of limit orders by specifying only the volume, and accept the best possible price currently available in the LOB; whereas limit orders are free to post, modify, and cancel (as an incentive for providing liquidity), market orders are charged a fee.
 
-Limit order book imbalance is a ratio of limit order volumes between the bid and ask side, and can be calculated for example as $I(t) = \dfrac{V_b(t) - V_a(t)}{V_b(t) + V_a(t)} \in [-1,1]$.
-\begin{itemize}
-\item We bin the bid/ask volume imbalances in the Limit Order Book into $K$ bins, each being dubbed a ``regime'' of the limit order book. 
-\item $Z_t$ is a continuous-time Markov chain that tracks which regime we're in. $Z_t$ takes values in $\{1, \dots , K\}$, and has an infinitesimal generator matrix $G$.
-\item Conditional on being in some regime $k$, the arrival of buy and sell market orders follow independent Poisson processes with intensities $\lambda^{\pm}_k$.
-\end{itemize}
+\begin{figure}
+%  \tikzsetnextfilename{LOB}
+%  \input{Figs/LOB.tikz}
+  \includegraphics[width=0.9\textwidth]{Figs/LOBAshBooth.png}
+\caption{Structure and mechanics of the limit order book.}
+\label{fig:LOB}
+\end{figure}
+\fxnote{Keep Booth's diagram? Create my own?}
+
+In the literature, LOBs are generally modelled in one of two ways: either by an economics-based approach, or a physics-based approach \cite{Summary2013}. The economics based approaches are trader-centric, assume perfect rationality, view order flow as static, and seek to understand trader strategies, in particular through game-style theories. By contrast, the physics approach, with which we are more concerned here, assumes zero-intelligence, provides conceptual toy models of the evolution of the book, and is concerned with the search for statistical regularity. The dynamics of the book, namely order arrivals and cancellations, are governed by stochastic processes of varying complexity, from particles on a 1-D price lattice \cite{Bak97} to independent Poisson processes governing the arrival, modification, and cancellation of orders \cite{Cont10}. See \cite{Summary2013} for an excellent literature survey on LOB modelling.
+
+\fxnote{pick up editting from here.}
+In this thesis, I will be concerned primarily with limit order book order imbalance. \emph{Imbalance} is a ratio of limit order volumes between the bid and ask side, and in this work is calculated as 
+\begin{equation}\label{eq:LOBImbalance}
+I(t) = \dfrac{V_b(t) - V_a(t)}{V_b(t) + V_a(t)} \in [-1,1]
+\end{equation}
 
 We have observations of arrivals of buy/sell market orders and of regime switches occurring, all of which are timestamped. Pictorially, a timeline might look like:
 \begin{figure}[H]
