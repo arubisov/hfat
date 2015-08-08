@@ -23,29 +23,20 @@ A \emph{limit order} is an instruction submitted by an agent to buy or sell up t
 The unfilled or partially filled orders accumulate in the limit order book and provide liquidity to the market. At any given time, the structure of the LOB can be visualized as in \autoref{fig:LOB}. As new limit orders arrive, they are compared with existing opposing orders in the book in search of a match - and if so, existing orders are \emph{filled} or \emph{lifted} according to a first-in-first-out priority queue for each price level. \emph{Market orders} extend the idea of limit orders by specifying only the volume, and accept the best possible price currently available in the LOB; whereas limit orders are free to post, modify, and cancel (as an incentive for providing liquidity), market orders are charged a fee.
 
 \begin{figure}
-%  \tikzsetnextfilename{LOB}
-%  \input{Figs/LOB.tikz}
-  \includegraphics[width=0.9\textwidth]{Figs/LOBAshBooth.png}
-\caption{Structure and mechanics of the limit order book.}
+  \tikzsetnextfilename{LOB}
+  \input{Figs/LOB.tikz}
+%  \includegraphics[width=0.9\textwidth]{Figs/LOBAshBooth.png}
+\caption{Structure and mechanics of the limit order book \cite{AshBooth}. Each block represents an order, of varying volumes, submitted by an agent.}
 \label{fig:LOB}
 \end{figure}
-\fxnote{Keep Booth's diagram? Create my own?}
 
 In the literature, LOBs are generally modelled in one of two ways: either by an economics-based approach, or a physics-based approach \cite{Summary2013}. The economics based approaches are trader-centric, assume perfect rationality, view order flow as static, and seek to understand trader strategies, in particular through game-style theories. By contrast, the physics approach, with which we are more concerned here, assumes zero-intelligence, provides conceptual toy models of the evolution of the book, and is concerned with the search for statistical regularity. The dynamics of the book, namely order arrivals and cancellations, are governed by stochastic processes of varying complexity, from particles on a 1-D price lattice \cite{Bak97} to independent Poisson processes governing the arrival, modification, and cancellation of orders \cite{Cont10}. See \cite{Summary2013} for an excellent literature survey on LOB modelling.
 
-\fxnote{pick up editting from here.}
 In this thesis, I will be concerned primarily with limit order book order imbalance. \emph{Imbalance} is a ratio of limit order volumes between the bid and ask side, and in this work is calculated as 
 \begin{equation}\label{eq:LOBImbalance}
-I(t) = \dfrac{V_b(t) - V_a(t)}{V_b(t) + V_a(t)} \in [-1,1]
+I(t) = \dfrac{V_{bid}(t) - V_{ask}(t)}{V_{bid}(t) + V_{ask}(t)} \in [-1,1]
 \end{equation}
-
-We have observations of arrivals of buy/sell market orders and of regime switches occurring, all of which are timestamped. Pictorially, a timeline might look like:
-\begin{figure}[H]
-  \tikzsetnextfilename{LOBtimeline}
-  \input{Figs/LOBtimeline.tikz}
-\caption{Hypothetical timeline of market orders arriving during changing order imbalance regimes.}
-\label{introtimeline}
-\end{figure}
+where both $V_{bid}$ and $V_{ask}$ are computed as the weighted average volumes at the best three prices, with exponentially decreasing weights.
 
 \section{ITCH Data Set}
 \fxnote{write ITCH data set section.}

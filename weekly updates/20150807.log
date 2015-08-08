@@ -1,6 +1,6 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.3)  7 AUG 2015 21:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.3)  8 AUG 2015 21:10
 entering extended mode
- restricted \write18 enabled.
+ \write18 enabled.
  %&-line parsing enabled.
 **20150807.tex
 (./20150807.tex
@@ -1081,20 +1081,21 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
  [1
 
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 93.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 93.
+ [4]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 97.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 97.
 
 (./20150807.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 93.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 93.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 97.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 97.
 Package rerunfilecheck Info: File `20150807.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 93.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 97.
  ) 
 Here is how much of TeX's memory you used:
- 29146 strings out of 495109
- 679682 string characters out of 6182810
- 855940 words of memory out of 5000000
+ 29149 strings out of 495109
+ 679708 string characters out of 6182810
+ 855939 words of memory out of 5000000
  31757 multiletter control sequences out of 15000+600000
  12578 words of font info for 46 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -1102,10 +1103,10 @@ Here is how much of TeX's memory you used:
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
 /usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on 20150807.pdf (3 pages, 55331 bytes).
+Output written on 20150807.pdf (4 pages, 57407 bytes).
 PDF statistics:
- 45 PDF objects out of 1000 (max. 8388607)
- 36 compressed objects within 1 object stream
- 10 named destinations out of 1000 (max. 500000)
+ 52 PDF objects out of 1000 (max. 8388607)
+ 42 compressed objects within 1 object stream
+ 13 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
