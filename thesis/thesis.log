@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.3)  8 AUG 2015 21:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.3)  9 AUG 2015 22:25
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1082,7 +1082,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 \titlepgcrest=\box73
 
-<Figs/utias-logo-black.png, id=119, 441.43297pt x 552.1428pt>
+<Figs/utias-logo-black.png, id=123, 441.43297pt x 552.1428pt>
 File: Figs/utias-logo-black.png Graphic file (type png)
 
 <use Figs/utias-logo-black.png>
@@ -1128,8 +1128,10 @@ utias-logo-black.png>]
 \openout5 = `thesis.toc'.
 
  [5] (./thesis.lof
-
-LaTeX Warning: Citation `AshBooth' on page 6 undefined on input line 2.
+Overfull \hbox (6.89124pt too wide) in paragraph at lines 2--2
+ [][] [][][]\OT1/cmr/m/n/12 Structure and me-chan-ics of the limit or-der book,
+ adapted from [[]]. 
+ []
 
 )
 \tf@lof=\write6
@@ -1148,30 +1150,21 @@ LaTeX Warning: Citation `AshBooth' on page 6 undefined on input line 2.
 
  (./Ch1Introduction/introduction.tex
 Chapter 1.
-Package hyperref Info: bookmark level for unknown fixme defaults to 0 on input 
-line 3.
-FiXme Note: 'write intro section.' on input line 3.
-FiXme Note: 'write algo trading section.' on input line 14.
 [8
 
 
-] (./Figs/LOB.tikz
+] [9] (./Figs/LOB.tikz
 ===== Image 'Figs/LOB' is up-to-date. ======
-)
-
-LaTeX Warning: Citation `AshBooth' on page 9 undefined on input line 29.
-
-
-LaTeX Warning: Citation `AshBooth' on page 9 undefined on input line 29.
-
-[9 <./Figs/LOB.pdf>]
-FiXme Note: 'write ITCH data set section.' on input line 42.
-) [10]
+) [10 <./Figs/LOB.pdf>]
+Package hyperref Info: bookmark level for unknown fixme defaults to 0 on input 
+line 38.
+FiXme Note: 'write ITCH data set section.' on input line 38.
+) [11]
 \openout2 = `Ch2Exploratory/exploratory.aux'.
 
  (./Ch2Exploratory/exploratory.tex
 Chapter 2.
-[11
+[12
 
 
 
@@ -1192,8 +1185,8 @@ Overfull \hbox (47.56645pt too wide) in paragraph at lines 50--50
 []\OT1/cmr/bx/n/17.28 Maximum Like-li-hood Es-ti-mate of a Markov-modulated
  []
 
-[12] [13 <./Figs/LOBtimeline.pdf>] [14]
-Overfull \hbox (9.26266pt too wide) in paragraph at lines 94--95
+[13] [14 <./Figs/LOBtimeline.pdf>] [15]
+Overfull \hbox (9.26266pt too wide) in paragraph at lines 95--96
 \OT1/cmr/m/n/12 is then re-duced into one di-men-sion with a sim-ple en-cod-ing
  which we will de-note $\OML/cmm/m/it/12 '\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 I\O
 T1/cmr/m/n/12 (\OML/cmm/m/it/12 t\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ; S\OT1/cmr/
@@ -1203,17 +1196,17 @@ m/n/12 (\OML/cmm/m/it/12 t\OT1/cmr/m/n/12 ))$;
 Missing character: There is no Ä in font cmr12!
 Missing character: There is no ± in font cmr12!
 
-Overfull \hbox (40.22647pt too wide) in paragraph at lines 112--113
+Overfull \hbox (40.22647pt too wide) in paragraph at lines 113--114
 \OT1/cmr/m/n/12 that done in [[]]. The null hy-poth-e-sis is given by [[]]: 
  []
 
-[15] [16] [17] [18]
+[16] [17] [18] [19]
 
-Package hyperref Warning: No autoref name for `algorithm' on input line 241.
+Package hyperref Warning: No autoref name for `algorithm' on input line 242.
 
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 243.
-(./Figs/algo-naive.tex) [19] [20] (./Figs/FARO-strategy-compare.tikz
+put line 244.
+(./Figs/algo-naive.tex) [20] [21] (./Figs/FARO-strategy-compare.tikz
 \openout3 = `Figs/FARO-strat-compare.md5'.
 
 
@@ -1231,14 +1224,14 @@ executed.
 ) (./Figs/NTAP-strategy-compare.tikz
 ===== Image 'Figs/NTAP-strat-compare' is up-to-date. ======
 )
-Overfull \hbox (12.64375pt too wide) in paragraph at lines 7--280
+Overfull \hbox (12.64375pt too wide) in paragraph at lines 7--281
  [][] 
  []
 
 (./Figs/ORCL-strategy-compare.tikz
 ===== Image 'Figs/ORCL-strat-compare' is up-to-date. ======
 )
-Overfull \hbox (12.64375pt too wide) in paragraph at lines 7--289
+Overfull \hbox (12.64375pt too wide) in paragraph at lines 7--290
  [][] 
  []
 
@@ -1257,8 +1250,8 @@ executed.
 
 \openout3 = `thesis.auxlock'.
 
-) [21] [22 <./Figs/FARO-strat-compare.pdf> <./Figs/NTAP-strat-compare.pdf> <./F
-igs/ORCL-strat-compare.pdf> <./Figs/FARO-strat-compare.pdf>]) [23]
+) [22] [23 <./Figs/FARO-strat-compare.pdf> <./Figs/NTAP-strat-compare.pdf> <./F
+igs/ORCL-strat-compare.pdf> <./Figs/FARO-strat-compare.pdf>]) [24]
 \openout2 = `Ch3Numerical/continuous.aux'.
 
 
@@ -1271,36 +1264,36 @@ Overfull \hbox (59.10823pt too wide) in paragraph at lines 9--26
 [][] 
  []
 
-[24
+[25
 
 
 
-] [25] [26]
+] [26] [27]
 LaTeX Font Info:    Try loading font information for U+dsrom on input line 79.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
-) [27]
+) [28]
 Overfull \hbox (13.18832pt too wide) in paragraph at lines 104--105
 []\OT1/cmr/m/n/12 We sub-sti-tute in the fol-low-ing iden-ti-ties for the com-p
 en-sated pro-cesses, which are continuous-
  []
 
-[28] [29] [30] [31] [32]) [33]
+[29] [30] [31] [32] [33]) [34]
 \openout2 = `Ch3Numerical/discrete.aux'.
 
  (./Ch3Numerical/discrete.tex
 FiXme Note: 'better lead in to this section.' on input line 2.
- [34
+ [35
 
 
-] [35] [36]
-[37] [38] [39] [40] [41] [42]
+] [36] [37]
+[38] [39] [40] [41] [42] [43]
 Overfull \hbox (24.20595pt too wide) in paragraph at lines 372--372
 [] 
  []
 
-[43]
+[44]
 Overfull \hbox (4.43831pt too wide) in paragraph at lines 386--388
 \OT1/cmr/m/n/12 For ease of no-ta-tion we'll write $\OMS/cmsy/m/n/12 @\OT1/cmr/
 m/n/12 (\OML/cmm/m/it/12 q\OT1/cmr/m/n/12 ) = [][] \OML/cmm/b/it/12 P[] []$\OT1
@@ -1312,35 +1305,69 @@ Overfull \hbox (1.27225pt too wide) in paragraph at lines 411--411
 [] 
  []
 
-[44]) [45] [46]
+[45]) [46] [47]
 \openout2 = `Ch4Results/results.aux'.
 
  (./Ch4Results/results.tex
 Chapter 4.
-(./Figs/insampleds1.tikz
-===== Image 'Figs/insampleds1' is up-to-date. ======
-) [47
-
-
-
-]) [48 <./Figs/insampleds1.pdf>] [49] [50] (./thesis.bbl
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ± in font cmr12!
-Missing character: There is no Ä in font cmr12!
-Missing character: There is no ± in font cmr12!
-)
-
-FiXme Summary: Number of notes: 6,
-(FiXme)        Number of warnings: 0,
-(FiXme)        Number of errors: 0,
-(FiXme)        Number of fatal errors: 0,
-(FiXme)        Total: 6.
-
-[51
+[48
 
 
 
 ]
+FiXme Note: 'change from bar to daily plot' on input line 32.
+ (./Figs/insampleds1.tikz
+===== Image 'Figs/insampleds1' is up-to-date. ======
+)
+FiXme Note: 'tables have to be rerun: break out num of trades into MO and LO. s
+toch ctrl only, naive is obvious' on input line 43.
+FiXme Note: 'commentary needed. compare stoch methods' on input line 102.
+
+
+LaTeX Warning: Reference `tbl:oosweeklyFARONTAP' on page 49 undefined on input 
+line 106.
+
+
+LaTeX Warning: Reference `tbl:oosweeklyORCLINTC' on page 49 undefined on input 
+line 106.
+
+
+LaTeX Warning: Reference `fig:oosweekly' on page 49 undefined on input line 106
+.
+
+FiXme Note: 'commentary needed. compare stoch methods' on input line 108.
+[49] [50 <./Figs/insampleds1.pdf>] [51] [52]
+
+LaTeX Warning: Reference `tbl:oosannualFARONTAP' on page 53 undefined on input 
+line 111.
+
+
+LaTeX Warning: Reference `tbl:oosannualORCLINTC' on page 53 undefined on input 
+line 111.
+
+
+LaTeX Warning: Reference `fig:oosannual' on page 53 undefined on input line 111
+.
+
+FiXme Note: 'commentary needed. compare stoch methods' on input line 113.
+) [53] (./thesis.bbl
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ± in font cmr12!
+Missing character: There is no Ä in font cmr12!
+Missing character: There is no ± in font cmr12!
+ [54
+
+
+
+])
+
+FiXme Summary: Number of notes: 9,
+(FiXme)        Number of warnings: 0,
+(FiXme)        Number of errors: 0,
+(FiXme)        Number of fatal errors: 0,
+(FiXme)        Total: 9.
+
+[55]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 44.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 44.
  (./thesis.aux (./Ch0Front/title.aux) (./Ch0Front/abstract.aux)
@@ -1350,7 +1377,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 44.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 44.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 44.
 Package rerunfilecheck Info: File `thesis.out' has not changed.
-(rerunfilecheck)             Checksum: 493506F28B0E00DC3A0D3F6579500C02;2031.
+(rerunfilecheck)             Checksum: C8699DF6631955C2C8FBDCCE1ED6E8E1;2110.
 
 
 LaTeX Warning: There were undefined references.
@@ -1358,10 +1385,10 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 44.
  ) 
 Here is how much of TeX's memory you used:
- 29924 strings out of 495109
- 682877 string characters out of 6182810
- 2251696 words of memory out of 5000000
- 32155 multiletter control sequences out of 15000+600000
+ 29945 strings out of 495109
+ 683178 string characters out of 6182810
+ 2255156 words of memory out of 5000000
+ 32168 multiletter control sequences out of 15000+600000
  22525 words of font info for 86 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  64i,23n,84p,1282b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1391,10 +1418,10 @@ ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texli
 ve/2015/texmf-dist/fonts/type1/public/doublestroke/dsrom12.pfb></usr/local/texl
 ive/2015/texmf-dist/fonts/type1/public/doublestroke/dsrom8.pfb></usr/local/texl
 ive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (51 pages, 561856 bytes).
+Output written on thesis.pdf (55 pages, 570173 bytes).
 PDF statistics:
- 879 PDF objects out of 1000 (max. 8388607)
- 782 compressed objects within 8 object streams
- 269 named destinations out of 1000 (max. 500000)
- 277 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 919 PDF objects out of 1000 (max. 8388607)
+ 816 compressed objects within 9 object streams
+ 277 named destinations out of 1000 (max. 500000)
+ 285 words of extra memory for PDF output out of 10000 (max. 10000000)
 

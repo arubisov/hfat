@@ -1,14 +1,35 @@
 \chapter{Results}
-In this section we estimate model parameters, plot model dynamics, and perform in-sample and out-of-sample backtests compare the performance of the three naive trading strategies along with the continuous and discrete time solutions to the stochastic optimal control problem.
+
+In this chapter we explore the continuous time and discrete time model dynamics, and perform in-sample and out-of-sample backtests to compare the performance of the three naive trading strategies along with the continuous and discrete time solutions to the stochastic optimal control problem.
 
 \section{Calibration}
 
-Backtesting these trading strategies required a choice of parameters for $\Delta t_S$, the price change observation period, $\Delta t_I$, the imbalance averaging period, and $\#_{bins}$, the number of imbalance bins. Through a brute force calibration technique we found that $\#_{bins} = 4$ provided the highest expected number of successful trades for most tickers, so this was chosen as a constant. Similarly, we empirically saw that calibration always yielded $\Delta t_S = \Delta t_I$, so this was taken as a given. Then each backtest consisted of first calibrating the value $\Delta t_I$ from one day of data by maximizing the intra-day Sharpe ratio, then using the calibrated parameters to backtest the entire year.
+All tests in this chapter were run using the following global set of parameters:
 
-\section{Dynamics of \texorpdfstring{${\delta^{\pm}}^*$}{delta}}
+\begin{tabular}{lll}
+$\Delta t_S$ & 1000ms & desc \\
+$\Delta t_I$ & 1000ms & desc \\
+$\#_{bins}$ & 5 & desc \\
+$\kappa$ & 100 & desc \\
+\end{tabular}
+
+For each daily calibration, we then computed the remaining parameters utilizing the following formulae: 
+
+\begin{tabular}{lll}
+$\mat{G}$ & \autoref{eq:MLEG} & infinitesimal generator matrix \\
+$\mat{P}$ & \autoref{eq:CTMCPG} & transition probability matrix \\
+$\mu^\pm$ & \autoref{eq:MLElambda} & market order arrival intensities \\
+\end{tabular}
+
+Additionally, $xi$ was computed as half of the simple average of the bid-ask spread observed during the trading day, rounded to the nearest half-cent; and the imbalance bins $\rho$ were computed as the partitioning of the interval $[-1,1]$ into percentile bins symmetric around zero, where the percentile interval was $100 \div \#_{bins}$.
+
+As was mentioned in Chapter 2, the exploratory data analysis done on the data made use of an unorthodox Markov chain, where its state at time $t$ was actually not determinable at time $t$ because the price change $\Delta S(t)$ was computed over the \emph{future} time interval $\Delta t_S$. (See \autoref{sec:2DCTMC}.) In the optimal stochastic control formulations, the Markov chain was defined instead such the price change was computed over the \emph{past} interval $\Delta t_S$. However, it was of interest to explore what results would be obtained if the calibration was still done using the non $\cF$-predictable method. A justification for doing so is that in a given Markov state $Z$, there is a state-dependent arrival rate of price updates, and there is a state-dependent distribution of jumps when a price update occurs. So that although the price change is measured over the future when calibrating, this really is a way of getting at the state-dependence of those price changes. In the following tests, this calibration method is denoted `/w nFPC', standing for `non-$\cF$-predictable calibration'.
 
 \section{In-Sample Backtesting}
 
+For in-sample backtesting, calibration was run for each ticker and each trading day of 2013, and backtesting was then done for each strategy using the same day's calibration. Each backtest would yield the end of day PnL, average inventory held during the day, and the number of executed market orders and filled limit orders. In \autoref{tbl:insampleFARONTAP} and \autoref{tbl:insampleORCLINTC} we show performance values for several metrics of interest. In \autoref{fig:insample} compares the day-over-day performance of the various strategies. 
+
+\fxnote{change from bar to daily plot}
 \begin{figure}
   \centering
   \setlength\figureheight{0.75\linewidth} 
@@ -16,8 +37,10 @@ Backtesting these trading strategies required a choice of parameters for $\Delta
   \tikzsetnextfilename{insampleds1}
   \input{Figs/insampleds1.tikz}
   \caption{Backtest strategy comparison}
+  \label{fig:insample}
 \end{figure}
 
+\fxnote{tables have to be rerun: break out num of trades into MO and LO. stoch ctrl only, naive is obvious}
 \begin{sidewaystable}
 \centering
 \ra{1.2}
@@ -44,7 +67,7 @@ Dscr. Stoch. Ctrl w/ NMC & 0.121 & 0.881 & 1738 & 2.82 & 0.89 & -0.045 & -0.139 
 \bottomrule
 \end{tabular}
 \caption{Resultz}
-\label{tbl:insamplestochFARONTAP}
+\label{tbl:insampleFARONTAP}
 \end{sidewaystable}
 
 \begin{sidewaystable}
@@ -76,26 +99,18 @@ Dscr. Stoch. Ctrl w/ NMC &  0.226 & 2.202 & 1569 & 4.28 & 0.98 & -0.220 & -0.220
 \label{tbl:insampleORCLINTC}
 \end{sidewaystable}
 
-
-
-%printresulttable( FAROn, FAROninv, FAROnnum);
-%printresulttable( NTAPn, NTAPninv, NTAPnnum);
-%printresulttable( ORCLn, ORCLninv, ORCLnnum);
-%printresulttable( INTCn, INTCninv, INTCnnum);
-%\texttt{FARO} &
-%\texttt{NTAP} & 
-%\texttt{ORCL} & 
-%\texttt{INTC} & 
-%0.365 & 0.134 & 3962 & -32.50 & 1.77 & -2.097 & -11.202 & 1.759 & 11.669 \\ 
-%table:
-%ticker
-%Return
-%Sharpe
-%Num of Trades
-%Win/Loss Ratio
-%Average Loss
-%Max Loss
-%Average Win
-%Max Win
+\fxnote{commentary needed. compare stoch methods}
 
 \section{Out-of-Sample Backtesting}
+\subsection{Weekday Calibration}
+The first type of out-of-sample backtesting done was to calibrate for each ticker and each trading day of 2013, and to use the results to backtest on the date given by the calibration date shifted forward 7 days. Thus, the calibration obtained on Monday, January 2, 2013 would be used to backtest on Monday, January 9, 2013. Performance values are given in tables \autoref{tbl:oosweeklyFARONTAP} and \autoref{tbl:oosweeklyORCLINTC}, and \autoref{fig:oosweekly} compares the day-over-day performance of the various strategies. 
+
+\fxnote{commentary needed. compare stoch methods}
+
+\subsection{Annual Calibration}
+The second type of out-of-sample backtesting done was to calibrate using data amalgamated from the entire 2013 trading year. This was a very rich calibration source, as it effectively ensured that every possible state of the Markov chain would have had sufficient observations. Further, this caused us to fix the imbalance bins $\rho$ for the entire year, rather than having bins (and hence what it means to be `heavy buy imbalance' and `neutral imbalance') vary each day. Performance values are given in tables \autoref{tbl:oosannualFARONTAP} and \autoref{tbl:oosannualORCLINTC}, and \autoref{fig:oosannual} compares the day-over-day performance of the various strategies. 
+
+\fxnote{commentary needed. compare stoch methods}
+
+\section{Dynamics of \texorpdfstring{${\delta^{\pm}}^*$}{delta}}
+

@@ -1,20 +1,16 @@
 \chapter{Introduction}
 
-\fxnote{write intro section.}
-Hi, my name is Stereo Mike.
+Algorithmic trading is the process of running computer algorithms to execute orders on an electronic exchange such as NASDAQ. Speed of execution is typically paramount (and hence the alternate moniker of high-frequency trading), often requiring running the algorithms on servers directly wired to the exchange (known as co-location) which comes at a steep price of X. Theoretically, high-frequency trading is encompassed by algorithmic trading, but not all algorithmic trading need be high-frequency; however, the two terms are often used interchangeably. 
 
-Yeah, we got three tickets to the Bran Van concert this Monday night at the Pacific Pallisades. You can all dial in if you want to answer a couple of questions; namely, what is Todd's favorite cheese? Jackie just called up and said it was a form of Roquefort. We'll see about that.
+High-frequency trading can be proprietary or non-proprietary, and varies greatly across the different types of strategies employed. For example, low-latency strategies utilize naive algorithms to profit from price discrepancies for a single stock cross-listed on multiple exchanges, while statistical arbitrage strategies use complex algorithms to profit from observed statistical patterns of a single stock on a single exchange.
 
-Give us a ring ding ding, it's a beautiful day.
+Proprietary trading refers to trading for-profit with an institution's money, e.g. the livelihood of hedge funds. Cross-exchange arbitrage uses primitive algorithms and emphasizes speed: the server is co-located at one of the exchanges, algorithm latency is on the order of microseconds, and the limiting reagent is the time taken for information to travel to and from the other exchange. In the case of Chicago and New York, for example, information can make the trip in 6ms via fibreoptics that send information at half the speed of light. For this reason, agents are now paying for access to a system of ground satellites that has been set up to relay information between the two exchanges via microwaves, shaving latency down to 4ms \cite{Laughlin14}.
 
-Yeah Todd, this is Liquid, ring-a-ding-a-dinging, I want those three Bran Van tickets, man. Whaddya think? Todd?
+Non-proprietary algorithmic trading is generally aimed at transaction cost reduction, with the primary theoretical paper on the subject being \cite{Almgren01}. When an institutional investor wishes to buy or sell a large quantity of shares, the aim of the trader is to obtain the best possible price compared with some benchmark (often taken to be the midprice at the time of initiating the strategy). Here the definition of `large' is determined relative to the liquidity of the stock - either in comparison to the average size of trades for the given stock, or to the available quantity to be bought/sold at the best listed price. The goal of the algorithmic trading is then to split up the large order into smaller pieces and execute them on an algorithmically-determined schedule, balancing the total time for execution with the volatility of the price the trader will receive. 
 
-\section{Algorithmic Trading}
+In statistical arbitrage, the aim is to exploit predictable statistical patterns in the available data provided by the exchange, e.g. predicting stock price movements from prices observed thus far. This method too requires co-location, and operates on the scale of milliseconds. It is this type of high-frequency trading that I will explore in this dissertation. 
 
-\fxnote{write algo trading section.}
-Lo and Habermas (97)
-Almgren and Chriss (98) 
-primary theoretical papers on the subject. AT generally aimed at transaction cost reduction.
+As part of the Dodd-Frank Act of 2010, the Volcker Rule has banned US banks from making certain speculative investments, and in so doing effectively curbed their proprietary trading activity. Nevertheless, as they are still required to provide liquidity to markets via market-making, banks utilize algorithmic trading to determine the bid/ask bands they will send to exchanges. Thus it remains feasible for banks to simply shift the bands they send in order to comply with market-making requirements and simultaneously execute a given strategy.
 
 \section{Limit Order Book Dynamics}
 
@@ -26,7 +22,7 @@ The unfilled or partially filled orders accumulate in the limit order book and p
   \tikzsetnextfilename{LOB}
   \input{Figs/LOB.tikz}
 %  \includegraphics[width=0.9\textwidth]{Figs/LOBAshBooth.png}
-\caption{Structure and mechanics of the limit order book \cite{AshBooth}. Each block represents an order, of varying volumes, submitted by an agent.}
+\caption{Structure and mechanics of the limit order book, adapted from \cite{Booth15}. Each block represents an order, of varying volumes, submitted by an agent.}
 \label{fig:LOB}
 \end{figure}
 
