@@ -67,7 +67,7 @@ To get a maximum likelihood estimate $\hat{q}_{ij}$ for transition rates and the
 \begin{equation}
 \dfrac{\partial \ln \mathcal{L}(\mat{G})}{\partial q_{ij}} = \dfrac{N_{ij}(T)}{q_{ij}} - H_i(T) = 0
 \end{equation}
-\begin{equation}
+\begin{equation}\label{eq:MLEG}
 \Rightarrow \hat{q}_{ij} = \dfrac{N_{ij}(T)}{H_i(T)}
 \end{equation}
 
@@ -86,11 +86,12 @@ H_{k}(T) & \equiv \mbox{holding time in regime $k$ up to time $T$} \nonumber
 \dfrac{\partial \ln\mathcal{L} }{\partial \lambda^{+}_k} & = 
 \dfrac{N^{+}_k(T)}{\lambda^{+}_k} - H_k(T) = 0
 \end{align}
-\begin{equation}
+\begin{equation}\label{eq:MLElambda}
 \Rightarrow \hat{\lambda}^{+}_k = \dfrac{N^{+}_k(T)}{H_k(T)}
 \end{equation}
 
 \section{2-Dimensional CTMC}
+\label{sec:2DCTMC}
 Next we consider a CTMC that jointly models the imbalance bin and the price change over a subsequent interval. That is, the CTMC models the joint distribution $(I(t), \Delta S(t))$ where $I(t) \in \lbrace 1,2,\dots,\#_{bins} \rbrace$ is the bin corresponding to imbalance averaged over the interval $[t-\Delta t_I, t]$, and $\Delta S(t) = \sgn(S(t+\Delta t_S)-S(t)) \in \lbrace -1, 0, 1 \rbrace$.  The pair $(I(t), \Delta S(t))$ is then reduced into one dimension with a simple encoding which we will denote $\varphi(I(t),S(t))$; for example, using 3 bins:
 
 \begin{table}[H]

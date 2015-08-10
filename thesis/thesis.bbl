@@ -1,5 +1,10 @@
 \begin{thebibliography}{}
 
+\bibitem[Almgren and Chriss, 2001]{Almgren01}
+Almgren, R. and Chriss, N. (2001).
+\newblock Optimal execution of portfolio transactions.
+\newblock {\em Journal of Risk}, 3:5--40.
+
 \bibitem[Bak et~al., 1997]{Bak97}
 Bak, P., Paczuski, M., and Shubik, M. (1997).
 \newblock Price variations in a stock market with many agents.
@@ -10,6 +15,12 @@ Bak, P., Paczuski, M., and Shubik, M. (1997).
 Bensoussan, A. (2008).
 \newblock Impulse control in discrete time.
 \newblock {\em Georgian Mathematical Journal}, 15(3):439--454.
+
+\bibitem[Booth, 2015]{Booth15}
+Booth, A. (2015).
+\newblock {\em Automated Algorithmic Trading: Machine Learning and Agent-Based
+  Modelling in Complex Adaptive Financial Markets}.
+\newblock PhD thesis, University of Southampton.
 
 \bibitem[Cartea et~al., 2015]{STA4505}
 Cartea, {\`A}., Jaimungal, S., and Penalva, J. (2015).
@@ -43,7 +54,13 @@ Kwong, R. (2015).
 \bibitem[Kyle, 1989]{Kyle1989}
 Kyle, A.~S. (1989).
 \newblock Informed speculation with imperfect competition.
-\newblock {\em The Review of Economic Studies}, 56(3):pp. 317--355.
+\newblock {\em The Review of Economic Studies}, 56(3):317--355.
+
+\bibitem[Laughlin et~al., 2014]{Laughlin14}
+Laughlin, G., Aguirre, A., and Grundfest, J. (2014).
+\newblock Information transmission between financial markets in chicago and new
+  york.
+\newblock {\em Financial Review}, 49(2):283--312.
 
 \bibitem[Takahara, 2014]{STAT455}
 Takahara, G. (2014).
@@ -60,6 +77,6 @@ Tan, B. and Yılmaz, K. (2002).
 \bibitem[Wei{\ss}bach and Walter, 2010]{Weiss10}
 Wei{\ss}bach, R. and Walter, R. (2010).
 \newblock A likelihood ratio test for stationarity of rating transitions.
-\newblock {\em Journal of Econometrics}, 155(2):188 -- 194.
+\newblock {\em Journal of Econometrics}, 155(2):188--194.
 
 \end{thebibliography}
