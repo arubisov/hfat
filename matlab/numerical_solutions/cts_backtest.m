@@ -6,7 +6,7 @@ function [ hist_X, hist_Q, numtrades ] = cts_backtest( data, h, deltaminus, delt
     T2 = 16 * 3600000;
     q = 0;
     cash = 0;
-    numtrades = 0;
+    numtrades = [0 0]; %idx 1=MO, 2=LO
     
     [ binseries, pricechgseries, ~, ~ ] = compute_G( data, dt_Z, num_bins, avg_method, ds_method, early_close, rho );
     [ oneDseries ] = get1Dseries( binseries, pricechgseries, num_bins );
@@ -48,7 +48,7 @@ function [ hist_X, hist_Q, numtrades ] = cts_backtest( data, h, deltaminus, delt
                     if u < exp(-kappa*dplus)
                         % market order sell, so we buy at delta^+ (buy) price
                         q = q + 1;
-                        numtrades = numtrades + 1;
+                        numtrades(2) = numtrades(2) + 1;
                         price = data.BuyPrice(time_ctr,1)/10000 - dplus;
                         cash = cash - price;
                         %[ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
@@ -59,7 +59,7 @@ function [ hist_X, hist_Q, numtrades ] = cts_backtest( data, h, deltaminus, delt
                     if u < exp(-kappa*dminus)
                         % market order buy, so we sell at delta^- (buy) price
                         q = q - 1;
-                        numtrades = numtrades + 1;
+                        numtrades(2) = numtrades(2) + 1;
                         price = data.SellPrice(time_ctr,1)/10000 + dminus;
                         cash = cash + price;
                         %[ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
@@ -93,7 +93,7 @@ function [ hist_X, hist_Q, numtrades ] = cts_backtest( data, h, deltaminus, delt
         while checkbuycondition(h,t_h,z,q,xi,Qmax)
             % execute buy MO
             q = q + 1;
-            numtrades = numtrades + 1;
+            numtrades(1) = numtrades(1) + 1;
             price = data.SellPrice(time_ctr,1)/10000;
             cash = cash - price;
             %if display, fprintf(fid, '[%d] {%d, %d, %d}.   Buy at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, q, cash); end;
@@ -103,7 +103,7 @@ function [ hist_X, hist_Q, numtrades ] = cts_backtest( data, h, deltaminus, delt
         while checksellcondition(h,t_h,z,q,xi,Qmax)
             % execute sell MO
             q = q - 1;
-            numtrades = numtrades + 1;
+            numtrades(1) = numtrades(1) + 1;
             price = data.BuyPrice(time_ctr,1)/10000;
             cash = cash + price;
             [ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);

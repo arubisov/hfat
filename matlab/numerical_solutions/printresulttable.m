@@ -1,7 +1,8 @@
 function [] = printresulttable( X, Xinv, Xnum )
 
 ret = nanmean(X(:,end));
-sharpe = nanmean(X(:,end)) / nanstd(X(:,end));
+% this is incorrect for sharpe. we want INTRAday, not interday
+%sharpe = nanmean(X(:,end)) / nanstd(X(:,end));
 numt = round(nanmean(Xnum));
 inv = nanmean(nanmean(Xinv,2),1);
 winidx = X(:,end) > 0;

@@ -9,7 +9,7 @@ x = dt:dt:T;
 plotstep = 1;
 
 
-for z = [1,3,5,6,8,10,11,13,15]
+for z = [1,8,15]
 
     figure('Name','Optimal Liquidation Posting Depth');
     hold on;
@@ -31,6 +31,8 @@ for z = [1,3,5,6,8,10,11,13,15]
     leg = legend( [minusfour, minusthree, minustwo, minusone, zero, one, two, three, four], ...
             { '$q=-4$', '$q=-3$', '$q=-2$', '$q=-1$', '$q=0$', '$q=1$', '$q=2$', '$q=3$', '$q=4$' } );
     set(leg, 'interpreter','latex','fontsize',16);
+    title(sprintf('Z=%d',z));
+    matlab2tikz(sprintf('dm_cts_nFPC_z%d.tikz',z));
 end
 
 

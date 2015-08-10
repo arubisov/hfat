@@ -1,6 +1,6 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.3)  7 AUG 2015 23:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.3)  8 AUG 2015 21:00
 entering extended mode
- restricted \write18 enabled.
+ \write18 enabled.
  %&-line parsing enabled.
 **thesis.tex
 (./thesis.tex
@@ -1127,7 +1127,11 @@ utias-logo-black.png>]
 \tf@toc=\write5
 \openout5 = `thesis.toc'.
 
- [5] (./thesis.lof)
+ [5] (./thesis.lof
+
+LaTeX Warning: Citation `AshBooth' on page 6 undefined on input line 2.
+
+)
 \tf@lof=\write6
 \openout6 = `thesis.lof'.
 
@@ -1142,8 +1146,7 @@ utias-logo-black.png>]
 ]
 \openout2 = `Ch1Introduction/introduction.aux'.
 
-
-(./Ch1Introduction/introduction.tex
+ (./Ch1Introduction/introduction.tex
 Chapter 1.
 Package hyperref Info: bookmark level for unknown fixme defaults to 0 on input 
 line 3.
@@ -1152,30 +1155,18 @@ FiXme Note: 'write algo trading section.' on input line 14.
 [8
 
 
-] <Figs/LOBAshBooth.png, id=226, 626.34pt x 515.9275pt>
-File: Figs/LOBAshBooth.png Graphic file (type png)
-
-<use Figs/LOBAshBooth.png>
-Package pdftex.def Info: Figs/LOBAshBooth.png used on input line 28.
-(pdftex.def)             Requested size: 409.76834pt x 337.5453pt.
-FiXme Note: 'Keep Booth's diagram? Create my own?' on input line 32.
- [9 <./Figs/LOBAshBooth.png>]
-FiXme Note: 'pick up editting from here.' on input line 36.
-
-(./Figs/LOBtimeline.tikz
-===== Image 'Figs/LOBtimeline' is up-to-date. ======
+] (./Figs/LOB.tikz
+===== Image 'Figs/LOB' is up-to-date. ======
 )
-Overfull \hbox (1.25642pt too wide) in paragraph at lines 4--46
-[][]
- []
+
+LaTeX Warning: Citation `AshBooth' on page 9 undefined on input line 29.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 4--46
+LaTeX Warning: Citation `AshBooth' on page 9 undefined on input line 29.
 
- []
-
-FiXme Note: 'write ITCH data set section.' on input line 51.
-) [10 <./Figs/LOBtimeline.pdf>]
+[9 <./Figs/LOB.pdf>]
+FiXme Note: 'write ITCH data set section.' on input line 42.
+) [10]
 \openout2 = `Ch2Exploratory/exploratory.aux'.
 
  (./Ch2Exploratory/exploratory.tex
@@ -1184,64 +1175,70 @@ Chapter 2.
 
 
 
-]
-Overfull \hbox (47.56645pt too wide) in paragraph at lines 44--44
+] (./Figs/LOBtimeline.tikz
+===== Image 'Figs/LOBtimeline' is up-to-date. ======
+)
+Overfull \hbox (1.25642pt too wide) in paragraph at lines 4--44
+[][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 4--44
+
+ []
+
+
+Overfull \hbox (47.56645pt too wide) in paragraph at lines 50--50
 []\OT1/cmr/bx/n/17.28 Maximum Like-li-hood Es-ti-mate of a Markov-modulated
  []
 
-[12] [13]
-Overfull \hbox (9.26266pt too wide) in paragraph at lines 88--89
+[12] [13 <./Figs/LOBtimeline.pdf>] [14]
+Overfull \hbox (9.26266pt too wide) in paragraph at lines 94--95
 \OT1/cmr/m/n/12 is then re-duced into one di-men-sion with a sim-ple en-cod-ing
  which we will de-note $\OML/cmm/m/it/12 '\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 I\O
 T1/cmr/m/n/12 (\OML/cmm/m/it/12 t\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 ; S\OT1/cmr/
 m/n/12 (\OML/cmm/m/it/12 t\OT1/cmr/m/n/12 ))$;
  []
 
-[14]
 Missing character: There is no Ä in font cmr12!
 Missing character: There is no ± in font cmr12!
 
-Overfull \hbox (40.22647pt too wide) in paragraph at lines 106--107
+Overfull \hbox (40.22647pt too wide) in paragraph at lines 112--113
 \OT1/cmr/m/n/12 that done in [[]]. The null hy-poth-e-sis is given by [[]]: 
  []
 
 [15] [16] [17] [18]
 
-Package hyperref Warning: No autoref name for `algorithm' on input line 235.
+Package hyperref Warning: No autoref name for `algorithm' on input line 241.
 
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 237.
-(./Figs/algo-naive.tex) [19] (./Figs/FARO-strategy-compare.tikz
+put line 243.
+(./Figs/algo-naive.tex) [19] [20] (./Figs/FARO-strategy-compare.tikz
 \openout3 = `Figs/FARO-strat-compare.md5'.
 
 
-===== 'mode=convert with system call': Invoking 'pdflatex -halt-on-error -inter
-action=batchmode -jobname "Figs/FARO-strat-compare" "\def\tikzexternalrealjob{t
-hesis}\input{thesis}"' ========
+===== 'mode=convert with system call': Invoking 'pdflatex -shell-escape -halt-o
+n-error -interaction=batchmode -jobname "Figs/FARO-strat-compare" "\def\tikzext
+ernalrealjob{thesis}\input{thesis}"' ========
 \openout3 = `thesis.auxlock'.
 
-runsystem(pdflatex -halt-on-error -interaction=batchmode -jobname "Figs/FARO-st
-rat-compare" "\def\tikzexternalrealjob{thesis}\input{thesis}")...disabled (rest
-ricted).
+runsystem(pdflatex -shell-escape -halt-on-error -interaction=batchmode -jobname
+ "Figs/FARO-strat-compare" "\def\tikzexternalrealjob{thesis}\input{thesis}")...
+executed.
 
 \openout3 = `thesis.auxlock'.
 
-)
-Overfull \hbox (12.64375pt too wide) in paragraph at lines 7--265
- [][] 
- []
-
-(./Figs/NTAP-strategy-compare.tikz
+) (./Figs/NTAP-strategy-compare.tikz
 ===== Image 'Figs/NTAP-strat-compare' is up-to-date. ======
 )
-Overfull \hbox (12.64375pt too wide) in paragraph at lines 7--274
+Overfull \hbox (12.64375pt too wide) in paragraph at lines 7--280
  [][] 
  []
 
 (./Figs/ORCL-strategy-compare.tikz
 ===== Image 'Figs/ORCL-strat-compare' is up-to-date. ======
 )
-Overfull \hbox (12.64375pt too wide) in paragraph at lines 7--283
+Overfull \hbox (12.64375pt too wide) in paragraph at lines 7--289
  [][] 
  []
 
@@ -1249,24 +1246,19 @@ Overfull \hbox (12.64375pt too wide) in paragraph at lines 7--283
 \openout3 = `Figs/FARO-strat-compare.md5'.
 
 
-===== 'mode=convert with system call': Invoking 'pdflatex -halt-on-error -inter
-action=batchmode -jobname "Figs/FARO-strat-compare" "\def\tikzexternalrealjob{t
-hesis}\input{thesis}"' ========
+===== 'mode=convert with system call': Invoking 'pdflatex -shell-escape -halt-o
+n-error -interaction=batchmode -jobname "Figs/FARO-strat-compare" "\def\tikzext
+ernalrealjob{thesis}\input{thesis}"' ========
 \openout3 = `thesis.auxlock'.
 
-runsystem(pdflatex -halt-on-error -interaction=batchmode -jobname "Figs/FARO-st
-rat-compare" "\def\tikzexternalrealjob{thesis}\input{thesis}")...disabled (rest
-ricted).
+runsystem(pdflatex -shell-escape -halt-on-error -interaction=batchmode -jobname
+ "Figs/FARO-strat-compare" "\def\tikzexternalrealjob{thesis}\input{thesis}")...
+executed.
 
 \openout3 = `thesis.auxlock'.
 
-)
-Overfull \hbox (12.64375pt too wide) in paragraph at lines 7--292
- [][] 
- []
-
-[20] [21 <./Figs/FARO-strat-compare.pdf> <./Figs/NTAP-strat-compare.pdf> <./Fig
-s/ORCL-strat-compare.pdf> <./Figs/FARO-strat-compare.pdf>]) [22] [23]
+) [21] [22 <./Figs/FARO-strat-compare.pdf> <./Figs/NTAP-strat-compare.pdf> <./F
+igs/ORCL-strat-compare.pdf> <./Figs/FARO-strat-compare.pdf>]) [23]
 \openout2 = `Ch3Numerical/continuous.aux'.
 
 
@@ -1338,11 +1330,11 @@ Missing character: There is no Ä in font cmr12!
 Missing character: There is no ± in font cmr12!
 )
 
-FiXme Summary: Number of notes: 8,
+FiXme Summary: Number of notes: 6,
 (FiXme)        Number of warnings: 0,
 (FiXme)        Number of errors: 0,
 (FiXme)        Number of fatal errors: 0,
-(FiXme)        Total: 8.
+(FiXme)        Total: 6.
 
 [51
 
@@ -1359,13 +1351,17 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 44.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 44.
 Package rerunfilecheck Info: File `thesis.out' has not changed.
 (rerunfilecheck)             Checksum: 493506F28B0E00DC3A0D3F6579500C02;2031.
+
+
+LaTeX Warning: There were undefined references.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 44.
  ) 
 Here is how much of TeX's memory you used:
- 29923 strings out of 495109
- 682920 string characters out of 6182810
- 2252310 words of memory out of 5000000
- 32156 multiletter control sequences out of 15000+600000
+ 29924 strings out of 495109
+ 682877 string characters out of 6182810
+ 2251696 words of memory out of 5000000
+ 32155 multiletter control sequences out of 15000+600000
  22525 words of font info for 86 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  64i,23n,84p,1282b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1384,20 +1380,21 @@ local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib6.pfb></
 usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pf
 b></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></
-usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr
-/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/lo
-cal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
-al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local
-/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/t
-exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/te
-xlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/tex
-live/2015/texmf-dist/fonts/type1/public/doublestroke/dsrom12.pfb></usr/local/te
-xlive/2015/texmf-dist/fonts/type1/public/doublestroke/dsrom8.pfb></usr/local/te
-xlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on thesis.pdf (51 pages, 643701 bytes).
+usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></us
+r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/loca
+l/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local
+/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/t
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/tex
+live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/public/doublestroke/dsrom12.pfb></usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/doublestroke/dsrom8.pfb></usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on thesis.pdf (51 pages, 561856 bytes).
 PDF statistics:
- 858 PDF objects out of 1000 (max. 8388607)
- 761 compressed objects within 8 object streams
+ 879 PDF objects out of 1000 (max. 8388607)
+ 782 compressed objects within 8 object streams
  269 named destinations out of 1000 (max. 500000)
  277 words of extra memory for PDF output out of 10000 (max. 10000000)
 

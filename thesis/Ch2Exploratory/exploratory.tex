@@ -37,7 +37,13 @@ If $X(t)$ has transition probabilities $P_{ij}(t) = \P \left[ X(t) = j \; | \; X
 \end{align}
 \end{defn}
 
-Conditional on $Z(t) = k$, we assume the arrival of buy and sell market orders follow independent Poisson processes with intensities $\lambda_k^\pm$, where $\lambda_k^+$ ($\lambda_k^-$) is the rate of arrivals of market buys (resp. sells). Such processes are called \textit{Markov-modulated Poisson processes}, as the Poisson intensities are themselves stochastic processes determined by the state of the Markov chain.
+Conditional on $Z(t) = k$, we assume the arrival of buy and sell market orders follow independent Poisson processes with intensities $\lambda_k^\pm$, where $\lambda_k^+$ ($\lambda_k^-$) is the rate of arrivals of market buys (resp. sells). Such processes are called \textit{Markov-modulated Poisson processes}, as the Poisson intensities are themselves stochastic processes determined by the state of the Markov chain. Thus, a timeline of observations of arrivals of buy/sell market orders and of regime switches might look like:
+\begin{figure}
+  \tikzsetnextfilename{LOBtimeline}
+  \input{Figs/LOBtimeline.tikz}
+\caption{Hypothetical timeline of market orders arriving during changing order imbalance regimes.}
+\label{introtimeline}
+\end{figure}
 
 In the sections that follow, I derive maximum likelihood estimations for the parameters of the CTMC, and evaluate the fit of the model to the data.
 

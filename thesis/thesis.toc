@@ -7,17 +7,17 @@
 \contentsline {section}{\numberline {2.2}Maximum Likelihood Estimate of a Markov-modulated Poisson Process}{13}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}Maximum Likelihood Estimation of $G$}{13}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Maximum Likelihood Estimation of $\lambda ^{\pm }_k$}{14}{subsection.2.2.2}
-\contentsline {section}{\numberline {2.3}2-Dimensional CTMC}{14}{section.2.3}
+\contentsline {section}{\numberline {2.3}2-Dimensional CTMC}{15}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Cross-Validation}{15}{subsection.2.3.1}
 \contentsline {section}{\numberline {2.4}Predicting Future Price Changes}{16}{section.2.4}
 \contentsline {section}{\numberline {2.5}Naive Trading Strategies}{19}{section.2.5}
-\contentsline {paragraph}{Naive Trading Strategy}{19}{section*.10}
-\contentsline {paragraph}{Naive+ Trading Strategy}{19}{section*.11}
+\contentsline {paragraph}{Naive Trading Strategy}{20}{section*.10}
+\contentsline {paragraph}{Naive+ Trading Strategy}{20}{section*.11}
 \contentsline {paragraph}{Naive++ Trading Strategy}{20}{section*.12}
 \contentsline {section}{\numberline {2.6}Calibration and Backtesting}{20}{section.2.6}
-\contentsline {section}{\numberline {2.7}Conclusions from the Naive Trading Strategies}{20}{section.2.7}
-\contentsline {paragraph}{Question 1}{20}{section*.14}
-\contentsline {paragraph}{Question 2}{22}{section*.15}
+\contentsline {section}{\numberline {2.7}Conclusions from the Naive Trading Strategies}{21}{section.2.7}
+\contentsline {paragraph}{Question 1}{21}{section*.14}
+\contentsline {paragraph}{Question 2}{23}{section*.15}
 \contentsline {chapter}{\numberline {3}Stochastic Optimal Control}{24}{chapter.3}
 \contentsline {section}{\numberline {3.1}Continuous Time}{24}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}Dynamic Programming}{26}{subsection.3.1.1}
