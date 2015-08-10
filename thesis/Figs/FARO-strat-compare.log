@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.3)  9 AUG 2015 22:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.3)  10 AUG 2015 17:37
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1283,54 +1283,35 @@ line 106.
 LaTeX Warning: Reference `fig:oosweekly' on page 46 undefined on input line 106
 .
 
-FiXme Note: 'commentary needed. compare stoch methods' on input line 108.
+FiXme Note: 'commentary needed. compare stoch methods' on input line 109.
 
 LaTeX Warning: Reference `tbl:oosannualFARONTAP' on page 49 undefined on input 
-line 111.
+line 112.
 
 
 LaTeX Warning: Reference `tbl:oosannualORCLINTC' on page 49 undefined on input 
-line 111.
+line 112.
 
 
-LaTeX Warning: Reference `fig:oosannual' on page 49 undefined on input line 111
+LaTeX Warning: Reference `fig:oosannual' on page 49 undefined on input line 112
 .
 
-FiXme Note: 'commentary needed. compare stoch methods' on input line 113.
-)
-No file Figs/FARO-strat-compare.bbl.
-
-FiXme Summary: Number of notes: 9,
-(FiXme)        Number of warnings: 0,
-(FiXme)        Number of errors: 0,
-(FiXme)        Number of fatal errors: 0,
-(FiXme)        Total: 9.
-
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 44.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 44.
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 44.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 44.
-
-LaTeX Warning: There were undefined references.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 44.
- ) 
+FiXme Note: 'commentary needed. compare stoch methods' on input line 114.
+(./Figs/dp_cts_z1.tikz
+Runaway text?
+[trim axis left, trim axis right] \par \begin {axis}[width=\figurewidth \ETC.
+! TeX capacity exceeded, sorry [main memory size=5000000].
+<inserted text> ...024966459719\\ 35 0.000885\ETC.
+                                                  
+l.90149 \end{tikzpicture}
+                         % 
 Here is how much of TeX's memory you used:
- 30033 strings out of 495109
- 692173 string characters out of 6182810
- 2023240 words of memory out of 5000000
- 32582 multiletter control sequences out of 15000+600000
+ 30036 strings out of 495109
+ 692232 string characters out of 6182810
+ 5000001 words of memory out of 5000000
+ 32583 multiletter control sequences out of 15000+600000
  22826 words of font info for 87 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  65i,23n,84p,1318b,2431s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
-></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
-/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
-sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on Figs/FARO-strat-compare.pdf (2 pages, 104287 bytes).
-PDF statistics:
- 35 PDF objects out of 1000 (max. 8388607)
- 26 compressed objects within 1 object stream
- 2 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
+!  ==> Fatal error occurred, no output PDF file produced!
