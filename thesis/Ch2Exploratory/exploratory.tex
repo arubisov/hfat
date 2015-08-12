@@ -261,6 +261,7 @@ Utilizing the key insight drawn from \eqref{eq:EDAKeyInsight}, we implemented se
 \section{Calibration and Backtesting}
 Backtesting these naive trading strategies required a choice of parameters for the price change observation period $\Delta t_S$, the imbalance averaging period $\Delta t_I$, and the number of imbalance bins $\#_{bins}$. We used a brute force calibration technique that, for each ticker and each day, traversed the potential parameter space searching for the highest number of timesteps at which \eqref{eq:EDAKeyInsight} could be utilized. We found that $\#_{bins} = 4$ provided the highest expected number of trades for most tickers. However, as we were utilizing percentile bins symmetric around zero, we wanted to have $\#_{bins}$ as an odd number such that all behaviour around zero imbalance was treated equally; thus all backtesting was done with either $\#_{bins} = 3$ or $\#_{bins} = 5$. Additionally, we found empirically that calibration always yielded $\Delta t_S = \Delta t_I$, so this was taken as a given. The backtest for each ticker then consisted of first calibrating the value $\Delta t_I$ from the first day of data by maximizing the intra-day Sharpe ratio, then using the calibrated parameters to backtest the entire year.
 
+\fxnote{regenerate this entire figure. it's all bullshit. also fix it so that it's actually INTC. i think these values are already run in matlab, so just reuqires a good plotting or two...}
 \begin{figure}
 \centering
 \begin{subfigure}{.35\linewidth}
@@ -294,9 +295,9 @@ Backtesting these naive trading strategies required a choice of parameters for t
   \centering
   \setlength\figureheight{.35\linewidth}
   \setlength\figurewidth{.35\linewidth}
-  \tikzsetnextfilename{FARO-strat-compare}
-  \input{Figs/ORCL-strategy-compare.tikz} 
-  \caption{AAPL}
+  \tikzsetnextfilename{INTC-strat-compare}
+  \input{Figs/FARO-strategy-compare.tikz} 
+  \caption{INTC}
 \end{subfigure}%
   \caption{Comparison of Naive (red), Naive+ (blue), and Naive++ (green) trading strategies, with benchmark Midprice (black). Plotted are normalized book values against time of trading day, averaged across the trading year.}
   \label{fig:comp}
