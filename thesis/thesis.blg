@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2015)
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: thesis.aux
 A level-1 auxiliary file: Ch0Front/title.aux
@@ -11,10 +11,9 @@ A level-1 auxiliary file: Ch3Numerical/discrete.aux
 A level-1 auxiliary file: Ch4Results/results.aux
 The style file: apalike.bst
 Database file #1: References/references.bib
-Warning--I didn't find a database entry for "AshBooth"
 You've used 14 entries,
             1935 wiz_defined-function locations,
-            582 strings with 6075 characters,
+            580 strings with 6059 characters,
 and the built_in function-call counts, 4995 in all, are:
 = -- 484
 > -- 186
@@ -53,4 +52,3 @@ warning$ -- 0
 while$ -- 37
 width$ -- 0
 write$ -- 180
-(There was 1 warning)

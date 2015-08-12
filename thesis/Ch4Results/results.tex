@@ -5,117 +5,31 @@ In this chapter we explore the continuous time and discrete time model dynamics,
 \section{Calibration}
 
 All tests in this chapter were run using the following global set of parameters:
-
-\begin{tabular}{lll}
-$\Delta t_S$ & 1000ms & desc \\
-$\Delta t_I$ & 1000ms & desc \\
-$\#_{bins}$ & 5 & desc \\
-$\kappa$ & 100 & desc \\
+\begin{center}
+\begin{tabular}{rll}
+time window for computing price change & $\Delta t_S$ & 1000ms \\
+time window for averaging order imbalance & $\Delta t_I$ & 1000ms \\
+number of imbalance bins & $\#_{bins}$ & 5 \\
+fill probability constant & $\kappa$ & 100 \\
+&& \\
+\multicolumn{3}{p{\linewidth}}{For each daily calibration, we then computed the remaining parameters utilizing the following formulae:} \\
+&& \\
+infinitesimal generator matrix & $\mat{G}$ & \autoref{eq:MLEG} \\
+transition probability matrix & $\mat{P}$ & \autoref{eq:CTMCPG} \\
+market order arrival intensities & $\mu^\pm$ & \autoref{eq:MLElambda}
 \end{tabular}
+\end{center}
 
-For each daily calibration, we then computed the remaining parameters utilizing the following formulae: 
-
-\begin{tabular}{lll}
-$\mat{G}$ & \autoref{eq:MLEG} & infinitesimal generator matrix \\
-$\mat{P}$ & \autoref{eq:CTMCPG} & transition probability matrix \\
-$\mu^\pm$ & \autoref{eq:MLElambda} & market order arrival intensities \\
-\end{tabular}
-
-Additionally, $xi$ was computed as half of the simple average of the bid-ask spread observed during the trading day, rounded to the nearest half-cent; and the imbalance bins $\rho$ were computed as the partitioning of the interval $[-1,1]$ into percentile bins symmetric around zero, where the percentile interval was $100 \div \#_{bins}$.
+Additionally, $\xi$ was computed as half of the simple average of the bid-ask spread observed during the trading day, rounded to the nearest half-cent; and the imbalance bins $\rho$ were computed as the partitioning of the interval $[-1,1]$ into percentile bins symmetric around zero, where the percentile interval was $100 \div \#_{bins}$.
 
 As was mentioned in Chapter 2, the exploratory data analysis done on the data made use of an unorthodox Markov chain, where its state at time $t$ was actually not determinable at time $t$ because the price change $\Delta S(t)$ was computed over the \emph{future} time interval $\Delta t_S$. (See \autoref{sec:2DCTMC}.) In the optimal stochastic control formulations, the Markov chain was defined instead such the price change was computed over the \emph{past} interval $\Delta t_S$. However, it was of interest to explore what results would be obtained if the calibration was still done using the non $\cF$-predictable method. A justification for doing so is that in a given Markov state $Z$, there is a state-dependent arrival rate of price updates, and there is a state-dependent distribution of jumps when a price update occurs. So that although the price change is measured over the future when calibrating, this really is a way of getting at the state-dependence of those price changes. In the following tests, this calibration method is denoted `/w nFPC', standing for `non-$\cF$-predictable calibration'.
 
-\section{In-Sample Backtesting}
-
-For in-sample backtesting, calibration was run for each ticker and each trading day of 2013, and backtesting was then done for each strategy using the same day's calibration. Each backtest would yield the end of day PnL, average inventory held during the day, and the number of executed market orders and filled limit orders. In \autoref{tbl:insampleFARONTAP} and \autoref{tbl:insampleORCLINTC} we show performance values for several metrics of interest. In \autoref{fig:insample} compares the day-over-day performance of the various strategies. 
-
-\fxnote{change from bar to daily plot}
-\begin{figure}
-  \centering
-  \setlength\figureheight{0.75\linewidth} 
-  \setlength\figurewidth{0.75\linewidth}
-  \tikzsetnextfilename{insampleds1}
-  \input{Figs/insampleds1.tikz}
-  \caption{Backtest strategy comparison}
-  \label{fig:insample}
-\end{figure}
-
-\fxnote{tables have to be rerun: break out num of trades into MO and LO. stoch ctrl only, naive is obvious}
-\begin{sidewaystable}
-\centering
-\ra{1.2}
-\begin{tabular}{@{} *{10}{r} @{}}
-\toprule
-Strategy & Return & Sharpe & Trades & Inv & \% Win & Avg Loss & Max Loss & Avg Win & Max Win \\
-\midrule
-\multicolumn{10}{l}{\texttt{FARO}} \\
-Naive & -0.879 & -0.808 & 413 & 0.47 & 0.07 & -1.013 & -7.109 & 0.844 & 5.715 \\ 
-Naive+ & 0.101 & 0.107 & 213 & 2.45 & 0.74 & -0.559 & -8.797 & 0.320 & 5.336 \\ 
-Naive++ & 0.002 & 0.021 & 7 & 0.17 & 0.50 & -0.025 & -0.842 & 0.024 & 0.320 \\ 
-Cont. Stoch. Ctrl & -0.059 & -0.551 & 201 & 0.09 & 0.18 & -0.077 & -0.912 & 0.020 & 0.071 \\ 
-Dscr. Stoch. Ctrl & -0.064 & -0.695 & 210 & -0.02 & 0.08 & -0.075 & -0.914 & 0.050 & 0.440 \\ 
-Cont. Stoch. Ctrl w/ NMC & -0.063 & -0.571 & 204 & 0.08 & 0.14 & -0.077 & -1.161 & 0.019 & 0.077 \\ 
-Dscr. Stoch. Ctrl w/ NMC & -0.060 & -0.662 & 209 & -0.03 & 0.09 & -0.072 & -0.716 & 0.060 & 0.539 \\[2ex]
-\multicolumn{10}{l}{\texttt{NTAP}} \\
-Naive & -0.188 & -0.316 & 842 & -9.81 & 0.23 & -0.391 & -3.238 & 0.481 & 3.524 \\ 
-Naive+ & 0.388 & 0.169 & 3562 & -9.73 & 0.74 & -1.880 & -19.367 & 1.140 & 10.201 \\ 
-Naive++ & -0.005 & -0.012 & 157 & -0.90 & 0.54 & -0.189 & -2.888 & 0.151 & 2.558 \\ 
-Cont. Stoch. Ctrl & -0.006 & -0.062 & 2265 & 0.40 & 0.56 & -0.083 & -0.441 & 0.053 & 0.215 \\ 
-Dscr. Stoch. Ctrl & 0.099 & 0.767 & 1872 & 4.74 & 0.86 & -0.046 & -0.126 & 0.121 & 1.042 \\ 
-Cont. Stoch. Ctrl w/ NMC & -0.141 & -0.951 & 2897 & 0.65 & 0.14 & -0.172 & -0.935 & 0.047 & 0.244 \\ 
-Dscr. Stoch. Ctrl w/ NMC & 0.121 & 0.881 & 1738 & 2.82 & 0.89 & -0.045 & -0.139 & 0.140 & 0.962 \\ 
-\bottomrule
-\end{tabular}
-\caption{Resultz}
-\label{tbl:insampleFARONTAP}
-\end{sidewaystable}
-
-\begin{sidewaystable}
-\centering
-\ra{1.2}
-\begin{tabular}{@{} *{10}{r} @{}}
-\toprule
-Strategy & Return & Sharpe & Trades & Inv & \% Win & Avg Loss & Max Loss & Avg Win & Max Win \\
-\midrule
-\multicolumn{10}{l}{\texttt{ORCL}} \\
-Naive & -0.105 & -0.253 & 484 & 1.40 & 0.28 & -0.270 & -1.837 & 0.308 & 2.180 \\ 
-Naive+ & -0.034 & -0.011 & 4086 & -55.18 & 0.61 & -2.322 & -17.501 & 1.402 & 18.400 \\ 
-Naive++ & 0.002 & 0.006 & 132 & 0.61 & 0.52 & -0.152 & -0.798 & 0.142 & 2.636 \\ 
-Cont. Stoch. Ctrl & 0.115 & 1.348 & 1874 & 1.94 & 0.92 & -0.061 & -0.217 & 0.127 & 0.521 \\ 
-Dscr. Stoch. Ctrl & 0.135 & 1.620 & 1898 & 3.93 & 0.98 & -0.043 & -0.063 & 0.137 & 0.515 \\ 
-Cont. Stoch. Ctrl w/ NMC & -0.010 & -0.100 & 2455 & 1.32 & 0.48 & -0.082 & -0.478 & 0.066 & 0.503 \\ 
-Dscr. Stoch. Ctrl w/ NMC & 0.144 & 1.501 & 1759 & 2.85 & 0.97 & -0.023 & -0.032 & 0.148 & 0.573 \\[2ex]
-\multicolumn{10}{l}{\texttt{INTC}} \\
-Naive & -0.082 & -0.228 & 258 & -5.21 & 0.33 & -0.245 & -1.465 & 0.249 & 1.425 \\ 
-Naive+ & 0.365 & 0.134 & 3962 & -32.50 & 0.63 & -2.097 & -11.202 & 1.759 & 11.669 \\ 
-Naive++ & -0.001 & -0.003 & 74 & -0.84 & 0.48 & -0.136 & -1.314 & 0.140 & 1.264 \\ 
-Cont. Stoch. Ctrl & 0.214 & 2.159 & 1577 & 5.17 & 0.97 & -0.121 & -0.213 & 0.220 & 0.487 \\ 
-Dscr. Stoch. Ctrl & 0.232 & 2.528 & 1642 & 4.48 & 0.98 & -0.217 & -0.217 & 0.233 & 0.611 \\ 
-Cont. Stoch. Ctrl w/ NMC & 0.114 & 1.218 & 1894 & 2.01 & 0.90 & -0.061 & -0.244 & 0.131 & 0.416 \\ 
-Dscr. Stoch. Ctrl w/ NMC &  0.226 & 2.202 & 1569 & 4.28 & 0.98 & -0.220 & -0.220 & 0.228 & 0.650 \\ 
-\bottomrule
-\end{tabular}
-\caption{Resultz}
-\label{tbl:insampleORCLINTC}
-\end{sidewaystable}
-
-\fxnote{commentary needed. compare stoch methods}
-
-\section{Out-of-Sample Backtesting}
-\subsection{Weekday Calibration}
-The first type of out-of-sample backtesting done was to calibrate for each ticker and each trading day of 2013, and to use the results to backtest on the date given by the calibration date shifted forward 7 days. Thus, the calibration obtained on Monday, January 2, 2013 would be used to backtest on Monday, January 9, 2013. Performance values are given in tables \autoref{tbl:oosweeklyFARONTAP} and \autoref{tbl:oosweeklyORCLINTC}, and \autoref{fig:oosweekly} compares the day-over-day performance of the various strategies. 
-
-
-\fxnote{commentary needed. compare stoch methods}
-
-\subsection{Annual Calibration}
-The second type of out-of-sample backtesting done was to calibrate using data amalgamated from the entire 2013 trading year. This was a very rich calibration source, as it effectively ensured that every possible state of the Markov chain would have had sufficient observations. Further, this caused us to fix the imbalance bins $\rho$ for the entire year, rather than having bins (and hence what it means to be `heavy buy imbalance' and `neutral imbalance') vary each day. Performance values are given in tables \autoref{tbl:oosannualFARONTAP} and \autoref{tbl:oosannualORCLINTC}, and \autoref{fig:oosannual} compares the day-over-day performance of the various strategies. 
-
-\fxnote{commentary needed. compare stoch methods}
-
 \section{Dynamics of \texorpdfstring{${\delta^{\pm}}^*$}{delta}}
 
-We have solved the same stochastic control problem using both continuous and discrete time, which have yielded markedly different resulting formulae for the optimal limit order posting depths. In this section we explore the calibrated results obtained on an in-sample backtest on \texttt{ORCL} from 2013-05-15.
+We have solved the same stochastic control problem using both continuous and discrete time, which have yielded markedly different resulting formulae for the optimal limit order posting depths. In this section we explore the calibrated results obtained on an in-sample backtest on \texttt{ORCL} using data from 2013-05-15.
+
+\FloatBarrier
+\subsection{Continuous Time versus Discrete Time}
 
 \begin{figure}
 \centering
@@ -125,7 +39,7 @@ We have solved the same stochastic control problem using both continuous and dis
   \setlength\figurewidth{\linewidth}
   \tikzsetnextfilename{dp_cts_z1}
   \input{Figs/dp_cts_z1.tikz}
-  \caption{FARO}
+  \caption{Continuous Time}
 \end{subfigure}%
 \hfil%
 \begin{subfigure}{.35\linewidth}
@@ -134,16 +48,45 @@ We have solved the same stochastic control problem using both continuous and dis
   \setlength\figurewidth{\linewidth}
   \tikzsetnextfilename{dp_dscr_z1}
   \input{Figs/dp_dscr_z1.tikz} 
-  \caption{NTAP}
+  \caption{Discrete Time}
 \end{subfigure}\\
 \vspace{1cm}
 \begin{subfigure}{.35\linewidth}
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dm_cts_z1}
+  \input{Figs/dm_cts_z1.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dm_dscr_z1}
+  \input{Figs/dm_dscr_z1.tikz} 
+  \caption{Discrete Time}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  \centering
+  \tikzsetnextfilename{deltalegend}
+  \input{Figs/deltalegend.tikz} 
+\end{subfigure}%
+  \caption{Optimal buy and sell depths $\delta^{\pm}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.}
+  \label{fig:comp_dm_z1}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
   \tikzsetnextfilename{dp_cts_z8}
   \input{Figs/dp_cts_z8.tikz}
-  \caption{ORCL}
+  \caption{Continuous Time}
 \end{subfigure}%
 \hfil%
 \begin{subfigure}{.35\linewidth}
@@ -152,16 +95,45 @@ We have solved the same stochastic control problem using both continuous and dis
   \setlength\figurewidth{\linewidth}
   \tikzsetnextfilename{dp_dscr_z8}
   \input{Figs/dp_dscr_z8.tikz} 
-  \caption{AAPL}
+  \caption{Discrete Time}
 \end{subfigure}\\
 \vspace{1cm}
 \begin{subfigure}{.35\linewidth}
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dm_cts_z8}
+  \input{Figs/dm_cts_z8.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dm_dscr_z8}
+  \input{Figs/dm_dscr_z8.tikz} 
+  \caption{Discrete Time}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  \centering
+  \tikzsetnextfilename{deltalegend}
+  \input{Figs/deltalegend.tikz} 
+\end{subfigure}%
+  \caption{Optimal buy and sell depths $\delta^{\pm}$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.}
+  \label{fig:comp_dm_z8}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
   \tikzsetnextfilename{dp_cts_z15}
   \input{Figs/dp_cts_z15.tikz}
-  \caption{ORCL}
+  \caption{Continuous Time}
 \end{subfigure}%
 \hfil%
 \begin{subfigure}{.35\linewidth}
@@ -170,8 +142,465 @@ We have solved the same stochastic control problem using both continuous and dis
   \setlength\figurewidth{\linewidth}
   \tikzsetnextfilename{dp_dscr_z15}
   \input{Figs/dp_dscr_z15.tikz} 
-  \caption{AAPL}
+  \caption{Discrete Time}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dm_cts_z15}
+  \input{Figs/dm_cts_z15.tikz}
+  \caption{Continuous Time}
 \end{subfigure}%
-  \caption{Comparison of Naive (red), Naive+ (blue), and Naive++ (green) trading strategies, with benchmark Midprice (black). Plotted are normalized book values against time of trading day, averaged across the trading year.}
-  \label{fig:comp_cts_dscr_delta}
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dm_dscr_z15}
+  \input{Figs/dm_dscr_z15.tikz} 
+  \caption{Discrete Time}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  \centering
+  \tikzsetnextfilename{deltalegend}
+  \input{Figs/deltalegend.tikz} 
+\end{subfigure}%
+  \caption{Optimal buy and sell depths $\delta^{\pm}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.}
+  \label{fig:comp_dm_z15}
 \end{figure}
+
+\FloatBarrier
+\subsection{Continuous Time: Standard Calibration versus \texorpdfstring{non-$\cF$-predictable}{non-F-predictable}}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dp_cts_z1}
+  \input{Figs/dp_cts_z1.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dp_cts_nFPC_z1}
+  \input{Figs/dp_cts_nFPC_z1.tikz} 
+  \caption{Continuous Time w/ nFPC}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dm_cts_z1}
+  \input{Figs/dm_cts_z1.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dm_cts_nFPC_z1}
+  \input{Figs/dm_cts_nFPC_z1.tikz} 
+  \caption{Continuous Time w/ nFPC}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  \centering
+  \tikzsetnextfilename{deltalegend}
+  \input{Figs/deltalegend.tikz} 
+\end{subfigure}%
+  \caption{Optimal buy and sell depths $\delta^{\pm}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.}
+  \label{fig:comp_calib_dm_z1}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dp_cts_z8}
+  \input{Figs/dp_cts_z8.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dp_cts_nFPC_z8}
+  \input{Figs/dp_cts_nFPC_z8.tikz} 
+  \caption{Continuous Time w/ nFPC}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dm_cts_z8}
+  \input{Figs/dm_cts_z8.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dm_cts_nFPC_z8}
+  \input{Figs/dm_cts_nFPC_z8.tikz} 
+  \caption{Continuous Time w/ nFPC}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  \centering
+  \tikzsetnextfilename{deltalegend}
+  \input{Figs/deltalegend.tikz} 
+\end{subfigure}%
+  \caption{Optimal buy and sell depths $\delta^{\pm}$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.}
+  \label{fig:comp_calib_dm_z8}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dp_cts_z15}
+  \input{Figs/dp_cts_z15.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dp_cts_nFPC_z15}
+  \input{Figs/dp_cts_nFPC_z15.tikz} 
+  \caption{Continuous Time w/ nFPC}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dm_cts_z15}
+  \input{Figs/dm_cts_z15.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfil%
+\begin{subfigure}{.35\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth}
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{dm_cts_nFPC_z15}
+  \input{Figs/dm_cts_nFPC_z15.tikz} 
+  \caption{Continuous Time w/ nFPC}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  \centering
+  \tikzsetnextfilename{deltalegend}
+  \input{Figs/deltalegend.tikz} 
+\end{subfigure}%
+  \caption{Optimal buy and sell depths $\delta^{\pm}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.}
+  \label{fig:comp_calib_dm_z15}
+\end{figure}
+
+\FloatBarrier
+\subsection{Comparing Performance}
+\begin{figure}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{ORCL_comp4stoch}
+  \input{Figs/ORCL_comp4stoch.tikz}
+  \caption{Performance comparison of the four stochastic control methods.}
+  \label{fig:ORCL_comp4stoch}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{ORCL_comp4stoch_inv}
+  \input{Figs/ORCL_comp4stoch_inv.tikz}
+  \caption{Inventory comparison of the four stochastic control methods.}
+  \label{fig:ORCL_comp4stoch_inv}
+\end{figure}
+
+Number of trades executed:
+\begin{table}
+\centering
+\ra{1.2}
+\begin{tabular}{@{} r *{2}{c} @{}}
+\toprule
+& Market Orders & Limit Orders \\
+\midrule
+Cts          &  536 & 1280 \\
+Cts w nFPC   & 1010 & 1306 \\
+Dscr         &  559 & 1285 \\
+Dscr w nFPC  &  523 & 1287 \\
+\bottomrule
+\end{tabular}
+\caption{Number of trades comparison of the four stochastic control methods.}
+\label{tbl:ORCL_comp4stoch_numt}
+\end{table}
+
+Correlation of arithmetic returns showed that the strategies were uncorrelated:
+\begin{table}
+\centering
+\ra{1.2}
+\begin{tabular}{@{} r *{4}{c} @{}}
+\toprule
+& Cts & \cellbreak{t}{c}{Cts \\ w nFPC} & Dscr & \cellbreak{t}{c}{Dscr \\ w nFPC} \\
+\cmidrule{2-5}
+Cts          &  1.0000  & & & \\
+Cts w nFPC   & -0.0109  &  1.0000 &  & \\
+Dscr         & -0.0120  &  0.0122 &   1.0000 &  \\
+Dscr w nFPC  & -0.0015  &  0.0034 &  -0.0165 &   1.0000 \\
+\bottomrule
+\end{tabular}
+\caption{Correlation of returns}
+\label{tbl:ORCL_comp4stoch_corr}
+\end{table}
+
+However, cointegrated.
+
+\begin{figure}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{cointeg_relation}
+  \input{Figs/cointeg_relation.tikz}
+  \caption{Performance comparison of the four stochastic control methods.}
+  \label{fig:cointeg_relation}
+\end{figure}
+
+\FloatBarrier
+\section{In-Sample Backtesting}
+
+\subsection{Same-Day Calibration}
+For in-sample backtesting, calibration was run for each ticker and each trading day of 2013, and backtesting was then done for each strategy using the same day's calibration. Each backtest would yield the end of day PnL, average inventory held during the day, and the number of executed market orders and filled limit orders. In \autoref{tbl:IS_sameday} we show performance values for several metrics of interest. In \autoref{fig:IS_sameday_comp} compares the day-over-day performance of the various strategies. 
+
+\begin{figure}[htb]
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{IS_sameday_FARO}
+  \input{Figs/IS_sameday_FARO.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{IS_sameday_NTAP}
+  \input{Figs/IS_sameday_NTAP.tikz} 
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{IS_sameday_ORCL}
+  \input{Figs/IS_sameday_ORCL.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{IS_sameday_INTC}
+  \input{Figs/IS_sameday_INTC.tikz} 
+\end{subfigure}\\
+
+\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+    Normalized PnL}%
+}}\hspace{0pt plus 1filll}\null
+
+Trading Day Number of 2013
+
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  %\centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{strategylegend}
+  \resizebox{\linewidth}{!}{\input{Figs/strategylegend.tikz}}
+\end{subfigure}%
+  \caption{Caption.}
+  \label{fig:IS_sameday_comp}
+\end{figure}
+
+\fxnote{tables have to be rerun: break out num of trades into MO and LO. stoch ctrl only, naive is obvious}
+\begin{table}
+\centering
+\ra{1.2}
+\begin{tabular}{@{} *{8}{r} @{}}
+\toprule
+Strategy & Return & Sharpe & Trades & Inv & \% Win & Max Loss & Max Win \\
+\midrule
+\multicolumn{8}{l}{\texttt{FARO}} \\
+Naive & -0.879 & -0.808 & 413 & 0.47 & 0.07 & -7.109 & 5.715 \\ 
+Naive+ & 0.101 & 0.107 & 213 & 2.45 & 0.74 & -8.797 & 5.336 \\ 
+Naive++ & 0.002 & 0.021 & 7 & 0.17 & 0.50 & -0.842 & 0.320 \\ 
+Cont & -0.059 & -0.551 & 201 & 0.09 & 0.18 & -0.912 & 0.071 \\ 
+Dscr & -0.064 & -0.695 & 210 & -0.02 & 0.08 & -0.914 & 0.440 \\ 
+Cont w nFPC & -0.063 & -0.571 & 204 & 0.08 & 0.14 & -1.161 & 0.077 \\ 
+Dscr w nFPC & -0.060 & -0.662 & 209 & -0.03 & 0.09 & -0.716 & 0.539 \\[2ex]
+\multicolumn{8}{l}{\texttt{NTAP}} \\
+Naive & -0.188 & -0.316 & 842 & -9.81 & 0.23 & -3.238 & 3.524 \\ 
+Naive+ & 0.388 & 0.169 & 3562 & -9.73 & 0.74 & -19.367 & 10.201 \\ 
+Naive++ & -0.005 & -0.012 & 157 & -0.90 & 0.54 & -2.888 & 2.558 \\ 
+Cont & -0.006 & -0.062 & 2265 & 0.40 & 0.56 & -0.441 & 0.215 \\ 
+Dscr & 0.099 & 0.767 & 1872 & 4.74 & 0.86 & -0.126 & 1.042 \\ 
+Cont w nFPC & -0.141 & -0.951 & 2897 & 0.65 & 0.14 & -0.935 & 0.244 \\ 
+Dscr w nFPC & 0.121 & 0.881 & 1738 & 2.82 & 0.89 & -0.139 & 0.962 \\[2ex]
+\multicolumn{8}{l}{\texttt{ORCL}} \\
+Naive & -0.105 & -0.253 & 484 & 1.40 & 0.28 & -1.837 & 2.180 \\ 
+Naive+ & -0.034 & -0.011 & 4086 & -55.18 & 0.61 & -17.501 & 18.400 \\ 
+Naive++ & 0.002 & 0.006 & 132 & 0.61 & 0.52 & -0.798 & 2.636 \\ 
+Cont & 0.115 & 1.348 & 1874 & 1.94 & 0.92 & -0.217 & 0.521 \\ 
+Dscr & 0.135 & 1.620 & 1898 & 3.93 & 0.98 & -0.063 & 0.515 \\ 
+Cont w nFPC & -0.010 & -0.100 & 2455 & 1.32 & 0.48 & -0.478 & 0.503 \\ 
+Dscr w nFPC & 0.144 & 1.501 & 1759 & 2.85 & 0.97 & -0.032 & 0.573 \\[2ex]
+\multicolumn{8}{l}{\texttt{INTC}} \\
+Naive & -0.082 & -0.228 & 258 & -5.21 & 0.33 & -1.465 & 1.425 \\ 
+Naive+ & 0.365 & 0.134 & 3962 & -32.50 & 0.63 & -11.202 & 11.669 \\ 
+Naive++ & -0.001 & -0.003 & 74 & -0.84 & 0.48 & -1.314 & 1.264 \\ 
+Cont & 0.214 & 2.159 & 1577 & 5.17 & 0.97 & -0.213 & 0.487 \\ 
+Dscr & 0.232 & 2.528 & 1642 & 4.48 & 0.98 & -0.217 & 0.611 \\ 
+Cont w nFPC & 0.114 & 1.218 & 1894 & 2.01 & 0.90 & -0.244 & 0.416 \\ 
+Dscr w nFPC &  0.226 & 2.202 & 1569 & 4.28 & 0.98 & -0.220 & 0.650 \\ 
+\bottomrule
+\end{tabular}
+\caption{Resultz}
+\label{tbl:IS_sameday}
+\end{table}
+
+\fxnote{commentary needed. compare stoch methods}
+
+\FloatBarrier
+\subsection{Week Offset Calibration}
+The first type of out-of-sample backtesting done was to calibrate for each ticker and each trading day of 2013, and to use the results to backtest on the date given by the calibration date shifted forward 7 days. Thus, the calibration obtained on Monday, January 2, 2013 would be used to backtest on Monday, January 9, 2013. Performance values are given in tables \autoref{tbl:IS_week_FARONTAP} and \autoref{tbl:IS_week_ORCLINTC}, and \autoref{fig:IS_week_comp} compares the day-over-day performance of the various strategies. 
+
+\begin{figure}[htb]
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{IS_week_FARO}
+  \input{Figs/IS_week_FARO.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{IS_week_NTAP}
+  \input{Figs/IS_week_NTAP.tikz} 
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{IS_week_ORCL}
+  \input{Figs/IS_week_ORCL.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{IS_week_INTC}
+  \input{Figs/IS_week_INTC.tikz} 
+\end{subfigure}\\
+
+\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+    Normalized PnL}%
+}}\hspace{0pt plus 1filll}\null
+
+Trading Day Number of 2013
+
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  %\centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{strategylegend}
+  \resizebox{\linewidth}{!}{\input{Figs/strategylegend.tikz}}
+\end{subfigure}%
+  \caption{Caption.}
+  \label{fig:IS_week_comp}
+\end{figure}
+
+\begin{table}
+\centering
+\ra{1.2}
+\begin{tabular}{@{} *{9}{r} @{}}
+\toprule
+Strategy & Return & Sharpe & \# MO & \# LO & Inv & \% Win & Max Loss & Max Win \\
+\midrule
+\multicolumn{9}{l}{\texttt{FARO}} \\ 
+Naive & -1.072 & -0.444 & 435 & 0 & 1.74 & 0.08 & -34.276 & 2.984 \\ 
+Naive+ & 0.045 & 0.046 & 0 & 213 & 2.26 & 0.74 & -8.764 & 5.363 \\ 
+Naive++ & -0.003 & -0.027 & 0 & 6 & 0.25 & 0.50 & -1.138 & 0.444 \\ 
+Cts & -0.060 & -0.565 & 53 & 149 & 0.08 & 0.20 & -0.955 & 0.077 \\ 
+Dscr & -0.076 & -0.764 & 80 & 133 & -0.07 & 0.07 & -1.004 & 0.084 \\ 
+Cts w nFPC & -0.065 & -0.590 & 56 & 149 & 0.09 & 0.17 & -1.022 & 0.072 \\ 
+Dscr w nFPC & -0.076 & -0.778 & 78 & 133 & 0.07 & 0.07 & -0.904 & 0.053 \\[2ex]
+\multicolumn{9}{l}{\texttt{NTAP}} \\ 
+Naive & -0.303 & -0.316 & 854 & 0 & -10.96 & 0.20 & -9.463 & 4.349 \\ 
+Naive+ & 0.290 & 0.122 & 0 & 3537 & -13.83 & 0.73 & -19.806 & 10.266 \\ 
+Naive++ & -0.048 & -0.084 & 0 & 156 & -1.79 & 0.52 & -6.310 & 2.670 \\ 
+Cts & -0.016 & -0.165 & 830 & 1405 & 0.37 & 0.52 & -0.612 & 0.158 \\ 
+Dscr & 0.070 & 0.593 & 460 & 1388 & 5.06 & 0.79 & -0.355 & 0.858 \\ 
+Cts w nFPC & -0.156 & -0.987 & 1506 & 1425 & 0.70 & 0.09 & -1.083 & 0.106 \\ 
+Dscr w nFPC & 0.091 & 0.656 & 332 & 1401 & 3.16 & 0.85 & -0.416 & 1.048 \\[2ex]
+\multicolumn{9}{l}{\texttt{ORCL}} \\ 
+Naive & -0.112 & -0.248 & 492 & 0 & 3.66 & 0.28 & -3.197 & 2.452 \\ 
+Naive+ & 0.066 & 0.022 & 0 & 4049 & -50.06 & 0.64 & -17.396 & 18.873 \\ 
+Naive++ & 0.002 & 0.005 & 0 & 134 & 0.64 & 0.49 & -1.691 & 2.537 \\ 
+Cts & 0.098 & 1.181 & 545 & 1318 & 1.86 & 0.90 & -0.203 & 0.310 \\ 
+Dscr & 0.126 & 1.547 & 578 & 1310 & 4.01 & 0.97 & -0.097 & 0.505 \\ 
+Cts w nFPC & -0.013 & -0.130 & 1069 & 1365 & 1.39 & 0.47 & -0.528 & 0.500 \\ 
+Dscr w nFPC & 0.135 & 1.459 & 416 & 1338 & 3.16 & 0.96 & -0.192 & 0.516 \\[2ex]
+\multicolumn{9}{l}{\texttt{INTC}} \\ 
+Naive & -0.057 & -0.179 & 274 & 0 & -3.63 & 0.31 & -0.954 & 1.766 \\ 
+Naive+ & 0.375 & 0.138 & 0 & 3925 & -25.43 & 0.65 & -11.060 & 11.465 \\ 
+Naive++ & 0.013 & 0.055 & 0 & 77 & -0.47 & 0.53 & -1.815 & 1.126 \\ 
+Cts & 0.202 & 1.995 & 423 & 1139 & 4.76 & 0.98 & -0.139 & 0.513 \\ 
+Dscr & 0.226 & 2.494 & 501 & 1136 & 4.62 & 1.00 & -0.029 & 0.560 \\ 
+Cts w nFPC & 0.107 & 1.111 & 681 & 1187 & 1.64 & 0.87 & -0.245 & 0.457 \\ 
+Dscr w nFPC & 0.215 & 2.027 & 401 & 1156 & 3.78 & 0.99 & -0.118 & 0.647 \\ 
+\bottomrule
+\end{tabular}
+\caption{Resultz}
+\label{tbl:IS_week}
+\end{table}
+
+\fxnote{commentary needed. compare stoch methods}
+\FloatBarrier
+\subsection{Annual Calibration}
+The second type of out-of-sample backtesting done was to calibrate using data amalgamated from the entire 2013 trading year. This was a very rich calibration source, as it effectively ensured that every possible state of the Markov chain would have had sufficient observations. Further, this caused us to fix the imbalance bins $\rho$ for the entire year, rather than having bins (and hence what it means to be `heavy buy imbalance' and `neutral imbalance') vary each day. Performance values are given in tables \autoref{tbl:IS_annual_FARONTAP} and \autoref{tbl:IS_annual_ORCLINTC}, and \autoref{fig:IS_annual_comp} compares the day-over-day performance of the various strategies. 
+
+\fxnote{commentary needed. compare stoch methods}
+
+\FloatBarrier
+\section{Out-of-Sample Backtesting}

@@ -22,6 +22,12 @@
 \BOOKMARK [2][-]{subsection.3.2.3}{Simplifying the DPE}{section.3.2}% 22
 \BOOKMARK [0][-]{chapter.4}{Results}{}% 23
 \BOOKMARK [1][-]{section.4.1}{Calibration}{chapter.4}% 24
-\BOOKMARK [1][-]{section.4.2}{In-Sample Backtesting}{chapter.4}% 25
-\BOOKMARK [1][-]{section.4.3}{Out-of-Sample Backtesting}{chapter.4}% 26
-\BOOKMARK [2][-]{subsection.4.3.1}{Weekday Calibration}{section.4.3}% 27
+\BOOKMARK [1][-]{section.4.2}{Dynamics of delta}{chapter.4}% 25
+\BOOKMARK [2][-]{subsection.4.2.1}{Continuous Time versus Discrete Time}{section.4.2}% 26
+\BOOKMARK [2][-]{subsection.4.2.2}{Continuous Time: Standard Calibration versus non-F-predictable}{section.4.2}% 27
+\BOOKMARK [2][-]{subsection.4.2.3}{Comparing Performance}{section.4.2}% 28
+\BOOKMARK [1][-]{section.4.3}{In-Sample Backtesting}{chapter.4}% 29
+\BOOKMARK [2][-]{subsection.4.3.1}{Same-Day Calibration}{section.4.3}% 30
+\BOOKMARK [2][-]{subsection.4.3.2}{Week Offset Calibration}{section.4.3}% 31
+\BOOKMARK [2][-]{subsection.4.3.3}{Annual Calibration}{section.4.3}% 32
+\BOOKMARK [1][-]{section.4.4}{Out-of-Sample Backtesting}{chapter.4}% 33

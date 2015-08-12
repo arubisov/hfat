@@ -1,0 +1,132 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+\usepackage{hyperref}
+\allowdisplaybreaks
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf Statistical Arbitrage with \\  Limit Order Book Imbalance}} \end{center}}
+\bigskip
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to establish and solve the stochastic optimal control problem that 
+captures the momentum and order imbalance dynamics of the Limit Order Book 
+(LOB). The solution will yield an optimal trading strategy that will permit
+statistical arbitrage of the underlying stock, which will then be backtested on
+historical data.
+\end{quote}
+
+\section*{Progress Timeline}
+\vspace{-10pt}
+\begin{table}[H]
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\fooo}{\color{LightSteelBlue3}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{9cm} !{\fooo} >{\raggedright\arraybackslash}p{5cm}} 
+\multicolumn{1}{@{\,}r <{\hskip 9pt}}{DATE} & \multicolumn{1}{l}{THESIS} & \multicolumn{1}{l}{STA4505} \\
+\hline
+\st{Dec 2014} & \st{Complete CTMC calibration} \\
+\st{Dec 2014} & \st{Backtest naive strategies based on CTMC} & \\
+\st{Jan-May} & \st{Study stochastic controls: ECE1639, STA4505} & \\
+\st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
+\st{Jun 12} & \st{Establish performance criteria} & \st{Exam Study} \\
+\st{Jun 15} & \st{Derive DPP/DPE} & \st{EXAM} \\
+\st{Jun 26} & \st{Derive continuous-time equations} & \\
+\st{Jul 3} & \st{Derive discrete-time equations} & \\
+\st{Jul 10} & \st{Set up MATLAB numerical integration} &  \\
+\st{Jul 17} & \st{Integrate functions and plot dynamics} & \st{Integrate and analyze} \\
+\st{Jul 24} & \st{Empty promises; zero fucks given} & \\
+\st{Jul 31} & \st{Code for numerical solutions, calibrations, plots} & \st{Simulate results} \\
+\st{Aug 7} & \st{All in-sample backtests} & \\
+Aug 14 & All out-of-sample backtests & \\
+Aug 21 & The Big Writeup Effort & \\
+{\bf Aug 24} & {\bf Submit first draft for review by panel} & \\
+Aug 28 & & Project Report \\
+Sep 2 & & Presentation
+\end{tabular}
+\end{table}
+
+\newpage
+\section*{Whiteboard Inspirational Quote of the Week}
+
+\section*{For Our Colleagues at Duke University...}
+\paragraph{Mon 10th:} holy fuck two weeks today is the unofficial submission date. 
+
+\paragraph{Tue 11th:} this morning i met up with Aerospace Adriana. she had texted me a couple days ago to say she was applying for the Forces, which i correctly guessed was for their aerospace engineering officer position, so i wanted to make sure she knew what she was getting herself into, what to expect from the application process and initially on joining, etc. turns out she literally knows nothing about anything. she didn't even bother really getting the job description, watching the little promo videos the CF has created for each job position. fucking idiot. but in other news she submitted her dissertation a month ago and her prof still hasn't even looked at it... so i dunno, i'm not even really that far behind then... \par 
+i dunno whether you bother flipping through my actual thesis pdf when i attach it, it's pretty long so i imagine you probably did the first time and now it's like ``ehhh already seen it...'' so maybe i ought to just tell you what's new in it? or just stop attaching it! \par 
+tentative meeting set up with Gabe for Monday morning. last i had talked to him, i hadn't even started doing the discrete time derivations. we're talking, i dunno, early July. holy fuck, i just realized that i've actually gotten a lot done. i still need a secondary examiner though. i contacted one prof by e-mail over the weekend and he has yet to reply, so next step will be dropping into his office, taking the foot in the door analogy to the next level. 
+
+\section*{The Academic Week in Review}
+c.f. last week, I now unveil: `a really solid todo list that i can look at and not have any individual thing be crazy daunting.'
+
+\clearpage 
+
+\begin{itemize}[topsep=0pt,itemsep=0ex,partopsep=0ex,parsep=0ex]
+\item in-sample backtest
+\begin{itemize}[topsep=0pt,itemsep=0ex,partopsep=0ex,parsep=0ex]
+\item re-run stoch tests to break out number of orders into MO/LO
+\item reprint results table
+\item plot EOD results
+\item writeup
+\end{itemize}
+
+\item out-of-sample backtest, week offset calibration
+\begin{itemize}[topsep=0pt,itemsep=0ex,partopsep=0ex,parsep=0ex]
+\item finish running overnight backtest
+\item print results table
+\item plot EOD results
+\item writeup
+\end{itemize}
+
+\item out-of-sample backtest, annual calibration
+\begin{itemize}[topsep=0pt,itemsep=0ex,partopsep=0ex,parsep=0ex]
+\item \st{write script to produce annual calibration}
+\item run backtest ... should be pretty fast
+\item print results table
+\item plot EOD results
+\item writeup
+\end{itemize}
+
+\item Dynamics of $\delta^\pm$ for continuous vs discrete time
+\begin{itemize}[topsep=0pt,itemsep=0ex,partopsep=0ex,parsep=0ex]
+\item \st{produce plots comparing for different q,z values.}
+\item writeup something intelligible about the plots
+\item mimic Seb's four plots to show mechanics of the two methods
+\end{itemize}
+
+\item Comparison of strategy performances
+\begin{itemize}[topsep=0pt,itemsep=0ex,partopsep=0ex,parsep=0ex]
+\item \st{produce plot of performance for ONE DAY}
+\item writeup something intelligible about the plots
+\item get correlation of EOD performances across trading year
+\end{itemize}
+
+\item General writing stuff
+\begin{itemize}[topsep=0pt,itemsep=0ex,partopsep=0ex,parsep=0ex]
+\item \st{write introduction}
+\item \st{write algo trading section}
+\item \st{write LOB dynamics section}
+\item write ITCH data section
+\item write intro to stochastic chapter
+\item Link STA4505 project into dissertation with lead-in blurb.
+\item re-write lead-in to continuous time section
+\item re-write lead-in to discrete time section
+\item write abstract
+\end{itemize}
+
+\item any remaining time to proof-read the bitch
+\item {\bf SUBMIT THE BITCH}
+\item write acknowledgement
+\item write dedication
+\item STA4505 project standalone write-up.
+\end{itemize}
+
+\end{document}

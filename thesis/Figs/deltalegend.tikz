@@ -1,0 +1,44 @@
+\definecolor{mycolor1}{rgb}{1.00000,0.00000,1.00000}%
+\begin{tikzpicture}[framed]
+    \begingroup
+    % inits/clears the lists (which might be populated from previous
+    % axes):
+    \csname pgfplots@init@cleared@structures\endcsname
+    \pgfplotsset{legend style={at={(0,1)},anchor=north west},legend columns=-1,legend style={draw=none,column sep=1ex},legend entries={$q=-4$,$q=-3$,$q=-2$,$q=-1$}}%
+    
+    \csname pgfplots@addlegendimage\endcsname{thick,green,dashed,sharp plot}
+    \csname pgfplots@addlegendimage\endcsname{thick,mycolor1,dashed,sharp plot}
+    \csname pgfplots@addlegendimage\endcsname{thick,red,dashed,sharp plot}
+    \csname pgfplots@addlegendimage\endcsname{thick,blue,dashed,sharp plot}
+
+    % draws the legend:
+    \csname pgfplots@createlegend\endcsname
+    \endgroup
+
+    \begingroup
+    % inits/clears the lists (which might be populated from previous
+    % axes):
+    \csname pgfplots@init@cleared@structures\endcsname
+    \pgfplotsset{legend style={at={(3.75,0.5)},anchor=north west},legend columns=-1,legend style={draw=none,column sep=1ex},legend entries={$q=0$}}%
+
+    \csname pgfplots@addlegendimage\endcsname{thick,black,sharp plot}
+
+    % draws the legend:
+    \csname pgfplots@createlegend\endcsname
+    \endgroup
+
+    \begingroup
+    % inits/clears the lists (which might be populated from previous
+    % axes):
+    \csname pgfplots@init@cleared@structures\endcsname
+    \pgfplotsset{legend style={at={(0,0)},anchor=north west},legend columns=-1,legend style={draw=none,column sep=1ex},legend entries={$q=+4$,$q=+3$,$q=+2$,$q=+1$}}%
+    
+    \csname pgfplots@addlegendimage\endcsname{thick,green,sharp plot}
+    \csname pgfplots@addlegendimage\endcsname{thick,mycolor1,sharp plot}
+    \csname pgfplots@addlegendimage\endcsname{thick,red,sharp plot}
+    \csname pgfplots@addlegendimage\endcsname{thick,blue,sharp plot}
+
+    % draws the legend:
+    \csname pgfplots@createlegend\endcsname
+    \endgroup
+\end{tikzpicture}

@@ -22,11 +22,18 @@ every outer y axis line/.append style={black},
 every y tick label/.append style={font=\color{black}},
 ymin=0,
 ymax=0.015,
-ylabel={Depth $\delta$},
+%ylabel={Depth $\delta$}
 axis background/.style={fill=white},
-title={Discrete Time\\$Z=(\rho = 0, \Delta S = 0)$},
+%title={Discrete Time $Z=(\rho = 0, \Delta S = 0)$},
 axis x line*=bottom,
 axis y line*=left,
+yticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=3
+},
+scaled y ticks=false,
+legend style={legend cell align=left,align=left,draw=black,font=\footnotesize, at={(0.98,0.02)},anchor=south east},
+every axis legend/.code={\renewcommand\addlegendentry[2][]{}}  %ignore legend locally
 ]
 \addplot [color=green,dashed]
   table[row sep=crcr]{%

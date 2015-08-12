@@ -6,9 +6,9 @@ clear;
 clc;
 
 tickers = {'FARO','NTAP','ORCL','INTC'};
-%strategies = {'Naive','Naive+','Naive++','Cts Stoch Ctrl','Dscr Stoch Ctrl','Cts Stoch Ctrl w NMC','Dscr Stoch Ctrl w NMC'};
-strategies = {'Naive','Naive+','Naive++'};
+strategies = {'Naive','Naive+','Naive++','Cts Stoch Ctrl','Dscr Stoch Ctrl','Cts Stoch Ctrl w nFPC','Dscr Stoch Ctrl w nFPC'};
 daterange = '';
+strat = 4; % 4 : cts, dsmethod1
 
 % Parameters
 T1 = 9.5 * 3600000; % Start of day
@@ -41,7 +41,7 @@ listing = dir(sprintf('./data-more/%s_%s*',tickers{1},daterange));
 X = NaN(numel(strategies),numel(tickers),numel(listing));
 %V = NaN(numel(strategies),numel(tickers),numel(listing));
 Q = NaN(numel(strategies),numel(tickers),numel(listing));
-T = NaN(numel(strategies),numel(tickers),numel(listing));
+T = NaN(numel(strategies),numel(tickers),numel(listing),2);
 
 tic;
 for tickernum = 1 : numel(tickers)
@@ -50,8 +50,9 @@ for tickernum = 1 : numel(tickers)
 
     % Calibrate run parameters off the first file found in directory.
     listing = dir(sprintf('./data-more/%s_%s*',ticker,daterange));
+    numfiles = length(listing);
 
-    for file = 1 : numel(listing)
+    for file = 1:numel(listing)
         datafile = sprintf('./data-more/%s',listing(file).name);
         thisdatestr = sscanf(listing(file).name,sprintf('%s_%s.mat',ticker,'%u'));
         thisdate = datenum(int2str(thisdatestr),'yyyymmdd');
@@ -77,18 +78,18 @@ for tickernum = 1 : numel(tickers)
             else oos_early_close = 0; end
             
             % Insert for loop over ds_method = [ 1 2 ]
-            parfor strat = 1:numel(strategies)
-                [x,q,t] = run_OOS_strategy(strat, data, oosdata, dt_Z, num_bins, ...
-                            avg_method, early_close, oos_early_close, phi, kappa, alpha, Qmax, fs_T, fs_dt );
-                X(strat,tickernum,file) = x(end);
-                %V(strat,tickernum,file) = nanstd(x);
-                Q(strat,tickernum,file) = nanmean(q);
-                T(strat,tickernum,file) = t;
-                if oos_early_close, X(strat,tickernum,file) = x((T3-T1)/dt_Z); end;
-            end
+            %parfor strat = 1:numel(strategies)
+            [x,q,t] = run_OOS_strategy(strat, data, oosdata, dt_Z, num_bins, ...
+                        avg_method, early_close, oos_early_close, phi, kappa, alpha, Qmax, fs_T, fs_dt );
+            X(strat,tickernum,file) = x(end);
+            %V(strat,tickernum,file) = nanstd(x);
+            Q(strat,tickernum,file) = nanmean(q);
+            T(strat,tickernum,file,:) = t;
+            if oos_early_close, X(strat,tickernum,file) = x((T3-T1)/dt_Z); end;
+            %end
         end
-        toc;
     end
+    toc;
 
 end
-save('./saves/outofsample/OOS-naive.mat', 'X','Q','T');
+%save('./saves/outofsample/OOS-all.mat');

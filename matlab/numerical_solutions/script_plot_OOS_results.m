@@ -1,13 +1,18 @@
 % script plot_results
 
 tickers = {'FARO','NTAP','ORCL','INTC'};
-strategies = {'Naive','Naive+','Naive++','Cts Stoch Ctrl','Dscr Stoch Ctrl','Cts Stoch Ctrl w NMC','Dscr Stoch Ctrl w NMC'};
+strategies = {'Cts Stoch Ctrl','Dscr Stoch Ctrl','Cts Stoch Ctrl w nFPC','Dscr Stoch Ctrl w nFPC'};
 
 % X - PnL
 % Q - Inventory
 % T - Number of Trades
 
-len = size(Q,4);
+% idx = ~isnan(X_OOS(1,1,:));
+% X = X_OOS(:,:,idx);
+% Q = Q_OOS(:,:,idx);
+% T = T_OOS(:,:,idx,:);
+
+len = size(X,3);
 
 red = 1/255 * [ 148 0 0 ];
 cyan = 1/255 * [ 0 89 89 ];
@@ -17,15 +22,17 @@ purple = 1/255 * [ 64 0 99 ];
 orange = 1/255 * [ 148 67 0 ];
 yellow = 1/255 * [ 148 99 0 ];
 
-colors = {red,cyan,yellow,purple,orange,blue,green};
+colors = {purple,green,cyan,orange};
 
 for ticker = 1:numel(tickers)
     figure();
     hold on;
     for strat = 1:numel(strategies)
-        plot(reshape(nanmean(X(strat,ticker,:,:),3),len,1),'Color',colors{strat},'LineWidth',1);
+        plot(reshape(X(3+strat,ticker,:),len,1),'Color',colors{strat},'LineWidth',1.5);
     end
     hold off;
     title(sprintf('%s',tickers{ticker}));
-    legend(strategies);
+    xlim([1 252]);
+    %legend(strategies);
+    matlab2tikz(sprintf('IS_sameday_%s.tikz',tickers{ticker}));
 end

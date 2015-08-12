@@ -41,6 +41,7 @@
 % *************************** Graphics and figures *****************************
 \usepackage{rotating}
 \usepackage{float}
+\usepackage{placeins} 	% For creating float barriers so figure don't span sections
 %\restylefloat{figure} % Set figure floating, use \begin{figure}[H] to fix in place.
 
 \usepackage{color}					% color!
@@ -49,7 +50,8 @@
 % figures, links, etc. 
 \usepackage{graphicx}
 \usepackage{pgfplots}
-\usetikzlibrary{external} % Externalization library to avoid plot re-generation
+\usetikzlibrary{backgrounds}	% in order to frame a tikzpic
+\usetikzlibrary{external} 		% Externalization library to avoid plot re-generation
 \tikzexternalize[prefix=Figs/] % activate
 \pgfplotsset{compat=newest} 
 \pgfplotsset{plot coordinates/math parser=false} 
@@ -242,6 +244,11 @@
 }{%
   \end{array}\right]
 }
+
+% line break within a table cell
+% pass [c] or [b] to align with center or bottom of cell
+\newcommand{\cellbreak}[3]{%
+  \begin{tabular}[#1]{@{}#2@{}}#3\end{tabular}}
 
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\R}{\mathbb{R}}
