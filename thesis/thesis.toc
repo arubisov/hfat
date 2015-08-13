@@ -28,9 +28,9 @@
 \contentsline {chapter}{\numberline {4}Results}{49}{chapter.4}
 \contentsline {section}{\numberline {4.1}Calibration}{49}{section.4.1}
 \contentsline {section}{\numberline {4.2}Dynamics of ${\delta ^{\pm }}^*$}{50}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Comparing Performance}{57}{subsection.4.2.1}
-\contentsline {section}{\numberline {4.3}In-Sample Backtesting}{60}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Same-Day Calibration}{60}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Week Offset Calibration}{64}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}Annual Calibration}{67}{subsection.4.3.3}
-\contentsline {section}{\numberline {4.4}Out-of-Sample Backtesting}{67}{section.4.4}
+\contentsline {subsection}{\numberline {4.2.1}Comparing Performance}{58}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}In-Sample Backtesting}{63}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Same-Day Calibration}{63}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Week Offset Calibration}{66}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}Annual Calibration}{69}{subsection.4.3.3}
+\contentsline {section}{\numberline {4.4}Out-of-Sample Backtesting}{71}{section.4.4}

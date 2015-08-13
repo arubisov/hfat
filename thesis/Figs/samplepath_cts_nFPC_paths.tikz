@@ -1,0 +1,748 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.65098,0.80784,0.89020}%
+\definecolor{mycolor2}{rgb}{0.69804,0.87451,0.54118}%
+\definecolor{mycolor3}{rgb}{0.20000,0.62745,0.17255}%
+\definecolor{mycolor4}{rgb}{0.12157,0.47059,0.70588}%
+%
+\begin{tikzpicture}[trim axis left, trim axis right]
+
+\begin{axis}[%
+width=\figurewidth,
+height=\figureheight,
+at={(0\figurewidth,0\figureheight)},
+scale only axis,
+every outer x axis line/.append style={black},
+every x tick label/.append style={font=\color{black}},
+xmin=10.975,
+xmax=11,
+xlabel={Time (h)},
+every outer y axis line/.append style={black},
+every y tick label/.append style={font=\color{black}},
+ymin=33.93,
+ymax=34.03,
+ylabel={Price},
+axis background/.style={fill=white},
+axis x line*=bottom,
+axis y line*=left,
+legend style={legend cell align=left,align=left,draw=black,legend pos = south west},
+every axis legend/.code={\renewcommand\addlegendentry[2][]{}}  %ignore legend locally
+]
+\addplot [color=black,solid,line width=3.0pt]
+  table[row sep=crcr]{%
+10.975	33.995\\
+10.9752777777778	33.995\\
+10.9755555555556	33.995\\
+10.9758333333333	33.995\\
+10.9761111111111	33.995\\
+10.9763888888889	33.995\\
+10.9766666666667	33.995\\
+10.9769444444444	33.995\\
+10.9772222222222	33.995\\
+10.9775	33.995\\
+10.9777777777778	33.995\\
+10.9780555555556	33.99\\
+10.9783333333333	33.99\\
+10.9786111111111	33.99\\
+10.9788888888889	33.99\\
+10.9791666666667	33.99\\
+10.9794444444444	33.995\\
+10.9797222222222	33.995\\
+10.98	33.995\\
+10.9802777777778	33.99\\
+10.9805555555556	33.99\\
+10.9808333333333	33.99\\
+10.9811111111111	33.995\\
+10.9813888888889	33.985\\
+10.9816666666667	33.985\\
+10.9819444444444	33.985\\
+10.9822222222222	33.985\\
+10.9825	33.985\\
+10.9827777777778	33.985\\
+10.9830555555556	33.985\\
+10.9833333333333	33.985\\
+10.9836111111111	33.985\\
+10.9838888888889	33.985\\
+10.9841666666667	33.985\\
+10.9844444444444	33.98\\
+10.9847222222222	33.98\\
+10.985	33.985\\
+10.9852777777778	33.985\\
+10.9855555555556	33.98\\
+10.9858333333333	33.985\\
+10.9861111111111	33.985\\
+10.9863888888889	33.975\\
+10.9866666666667	33.975\\
+10.9869444444444	33.975\\
+10.9872222222222	33.975\\
+10.9875	33.975\\
+10.9877777777778	33.975\\
+10.9880555555556	33.975\\
+10.9883333333333	33.975\\
+10.9886111111111	33.975\\
+10.9888888888889	33.975\\
+10.9891666666667	33.97\\
+10.9894444444444	33.97\\
+10.9897222222222	33.97\\
+10.99	33.97\\
+10.9902777777778	33.97\\
+10.9905555555556	33.97\\
+10.9908333333333	33.97\\
+10.9911111111111	33.975\\
+10.9913888888889	33.97\\
+10.9916666666667	33.97\\
+10.9919444444444	33.97\\
+10.9922222222222	33.965\\
+10.9925	33.965\\
+10.9927777777778	33.965\\
+10.9930555555556	33.965\\
+10.9933333333333	33.955\\
+10.9936111111111	33.965\\
+10.9938888888889	33.965\\
+10.9941666666667	33.965\\
+10.9944444444444	33.975\\
+10.9947222222222	33.975\\
+10.995	33.965\\
+10.9952777777778	33.975\\
+10.9955555555556	33.975\\
+10.9958333333333	33.975\\
+10.9961111111111	33.975\\
+10.9963888888889	33.975\\
+10.9966666666667	33.975\\
+10.9969444444444	33.97\\
+10.9972222222222	33.97\\
+10.9975	33.975\\
+10.9977777777778	33.985\\
+10.9980555555556	33.995\\
+10.9983333333333	33.995\\
+10.9986111111111	33.995\\
+10.9988888888889	33.995\\
+10.9991666666667	33.995\\
+10.9994444444444	33.995\\
+10.9997222222222	33.995\\
+11	33.995\\
+};
+\addlegendentry{$S$};
+
+\addplot [color=gray,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.975	34.01\\
+10.9752777777778	34.01\\
+10.9755555555556	34.01\\
+10.9758333333333	34.01\\
+10.9761111111111	34.01\\
+10.9763888888889	34.01\\
+10.9766666666667	34.01\\
+10.9769444444444	34.01\\
+10.9772222222222	34.01\\
+10.9775	34.0081732365245\\
+10.9777777777778	34.01\\
+10.9780555555556	34.0084246177287\\
+10.9783333333333	34.0084246177287\\
+10.9786111111111	34.0084246177287\\
+10.9788888888889	34.0084246177287\\
+10.9791666666667	34.000526743864\\
+10.9794444444444	34.01\\
+10.9797222222222	34.01\\
+10.98	34.01\\
+10.9802777777778	34.01\\
+10.9805555555556	34.01\\
+10.9808333333333	34.000526743864\\
+10.9811111111111	34.01\\
+10.9813888888889	34\\
+10.9816666666667	34\\
+10.9819444444444	34\\
+10.9822222222222	34\\
+10.9825	34\\
+10.9827777777778	34\\
+10.9830555555556	34\\
+10.9833333333333	34\\
+10.9836111111111	34\\
+10.9838888888889	34\\
+10.9841666666667	34\\
+10.9844444444444	34\\
+10.9847222222222	33.9916214350482\\
+10.985	34\\
+10.9852777777778	34\\
+10.9855555555556	33.990526743864\\
+10.9858333333333	34\\
+10.9861111111111	34\\
+10.9863888888889	33.99\\
+10.9866666666667	33.99\\
+10.9869444444444	33.99\\
+10.9872222222222	33.99\\
+10.9875	33.99\\
+10.9877777777778	33.99\\
+10.9880555555556	33.99\\
+10.9883333333333	33.99\\
+10.9886111111111	33.99\\
+10.9888888888889	33.99\\
+10.9891666666667	33.9867116094193\\
+10.9894444444444	33.9867116094193\\
+10.9897222222222	33.9867116094193\\
+10.99	33.9886320646659\\
+10.9902777777778	33.9886320646659\\
+10.9905555555556	33.9886320646659\\
+10.9908333333333	33.9805261798833\\
+10.9911111111111	33.99\\
+10.9913888888889	33.99\\
+10.9916666666667	33.99\\
+10.9919444444444	33.99\\
+10.9922222222222	33.98\\
+10.9925	33.98\\
+10.9927777777778	33.98\\
+10.9930555555556	33.98\\
+10.9933333333333	33.9616214350482\\
+10.9936111111111	33.98\\
+10.9938888888889	33.98\\
+10.9941666666667	33.9716214350482\\
+10.9944444444444	33.99\\
+10.9947222222222	33.99\\
+10.995	33.970526743864\\
+10.9952777777778	33.99\\
+10.9955555555556	33.99\\
+10.9958333333333	33.99\\
+10.9961111111111	33.99\\
+10.9963888888889	33.99\\
+10.9966666666667	33.99\\
+10.9969444444444	33.99\\
+10.9972222222222	33.9805261798833\\
+10.9975	33.983421792079\\
+10.9977777777778	33.99\\
+10.9980555555556	34.0012009559832\\
+10.9983333333333	34.0049120415607\\
+10.9986111111111	34.0064200267923\\
+10.9988888888889	34.0033430597809\\
+10.9991666666667	34.0012009559832\\
+10.9994444444444	34.0012009559832\\
+10.9997222222222	34.0012009559832\\
+11	34.0012009559832\\
+};
+\addplot [color=gray,solid,line width=2.0pt]
+  table[row sep=crcr]{%
+10.975	33.99\\
+10.9752777777778	33.99\\
+10.9755555555556	33.99\\
+10.9758333333333	33.99\\
+10.9761111111111	33.99\\
+10.9763888888889	33.99\\
+10.9766666666667	33.99\\
+10.9769444444444	33.99\\
+10.9772222222222	33.99\\
+10.9775	33.986063979387\\
+10.9777777777778	33.99\\
+10.9780555555556	33.9767116094193\\
+10.9783333333333	33.9767116094193\\
+10.9786111111111	33.9767116094193\\
+10.9788888888889	33.9767116094193\\
+10.9791666666667	33.97\\
+10.9794444444444	33.99\\
+10.9797222222222	33.99\\
+10.98	33.99\\
+10.9802777777778	33.98\\
+10.9805555555556	33.98\\
+10.9808333333333	33.97\\
+10.9811111111111	33.99\\
+10.9813888888889	33.98\\
+10.9816666666667	33.98\\
+10.9819444444444	33.98\\
+10.9822222222222	33.98\\
+10.9825	33.98\\
+10.9827777777778	33.98\\
+10.9830555555556	33.98\\
+10.9833333333333	33.9784246177287\\
+10.9836111111111	33.9784246177287\\
+10.9838888888889	33.9784246177287\\
+10.9841666666667	33.98\\
+10.9844444444444	33.9686320646659\\
+10.9847222222222	33.96\\
+10.985	33.98\\
+10.9852777777778	33.98\\
+10.9855555555556	33.96\\
+10.9858333333333	33.98\\
+10.9861111111111	33.98\\
+10.9863888888889	33.97\\
+10.9866666666667	33.97\\
+10.9869444444444	33.97\\
+10.9872222222222	33.97\\
+10.9875	33.97\\
+10.9877777777778	33.97\\
+10.9880555555556	33.97\\
+10.9883333333333	33.97\\
+10.9886111111111	33.9686320646659\\
+10.9888888888889	33.97\\
+10.9891666666667	33.95599716387\\
+10.9894444444444	33.95599716387\\
+10.9897222222222	33.95599716387\\
+10.99	33.9573430261438\\
+10.9902777777778	33.9573430261438\\
+10.9905555555556	33.9573430261438\\
+10.9908333333333	33.95\\
+10.9911111111111	33.97\\
+10.9913888888889	33.96\\
+10.9916666666667	33.96\\
+10.9919444444444	33.96\\
+10.9922222222222	33.96\\
+10.9925	33.96\\
+10.9927777777778	33.96\\
+10.9930555555556	33.96\\
+10.9933333333333	33.94\\
+10.9936111111111	33.96\\
+10.9938888888889	33.96\\
+10.9941666666667	33.95\\
+10.9944444444444	33.97\\
+10.9947222222222	33.97\\
+10.995	33.95\\
+10.9952777777778	33.97\\
+10.9955555555556	33.97\\
+10.9958333333333	33.97\\
+10.9961111111111	33.97\\
+10.9963888888889	33.9681732365245\\
+10.9966666666667	33.97\\
+10.9969444444444	33.9584246177287\\
+10.9972222222222	33.95\\
+10.9975	33.960526743864\\
+10.9977777777778	33.97\\
+10.9980555555556	33.98\\
+10.9983333333333	33.9833430597809\\
+10.9986111111111	33.9855601432366\\
+10.9988888888889	33.98\\
+10.9991666666667	33.98\\
+10.9994444444444	33.98\\
+10.9997222222222	33.98\\
+11	33.98\\
+};
+\addlegendentry{$S \pm \delta^\pm$};
+
+\addplot [color=mycolor1,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9811111111111	33.995\\
+10.9811111111111	34.01\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor1},forget plot]
+  table[row sep=crcr]{%
+10.9811111111111	34.01\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9911111111111	33.975\\
+10.9911111111111	33.99\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor1},forget plot]
+  table[row sep=crcr]{%
+10.9911111111111	33.99\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9936111111111	33.965\\
+10.9936111111111	33.98\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor1},forget plot]
+  table[row sep=crcr]{%
+10.9936111111111	33.98\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9944444444444	33.975\\
+10.9944444444444	33.99\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor1},forget plot]
+  table[row sep=crcr]{%
+10.9944444444444	33.99\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9952777777778	33.975\\
+10.9952777777778	33.99\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor1},forget plot]
+  table[row sep=crcr]{%
+10.9952777777778	33.99\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9975	33.975\\
+10.9975	33.983421792079\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor1},forget plot]
+  table[row sep=crcr]{%
+10.9975	33.983421792079\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9977777777778	33.985\\
+10.9977777777778	33.99\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor1},forget plot]
+  table[row sep=crcr]{%
+10.9977777777778	33.99\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9980555555556	33.995\\
+10.9980555555556	34.0012009559832\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor1},forget plot]
+  table[row sep=crcr]{%
+10.9980555555556	34.0012009559832\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9983333333333	33.995\\
+10.9983333333333	34.0049120415607\\
+};
+\addplot [color=mycolor1,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor1}]
+  table[row sep=crcr]{%
+10.9983333333333	34.0049120415607\\
+};
+\addlegendentry{Ext Buy MO lifts our sell LO};
+
+\addplot [color=mycolor1,dashed,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9791666666667	33.99\\
+10.9791666666667	34\\
+};
+\addplot [color=mycolor1,dashed,line width=2.0pt,mark=o,mark options={solid},forget plot]
+  table[row sep=crcr]{%
+10.9791666666667	34\\
+};
+\addplot [color=mycolor1,dashed,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9913888888889	33.97\\
+10.9913888888889	33.98\\
+};
+\addplot [color=mycolor1,dashed,line width=2.0pt,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+10.9913888888889	33.98\\
+};
+\addlegendentry{Ext Buy MO arrives};
+
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9769444444444	33.995\\
+10.9769444444444	33.99\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9769444444444	33.99\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9775	33.995\\
+10.9775	33.986063979387\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9775	33.986063979387\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9780555555556	33.99\\
+10.9780555555556	33.9767116094193\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9780555555556	33.9767116094193\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9802777777778	33.99\\
+10.9802777777778	33.98\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9802777777778	33.98\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9813888888889	33.985\\
+10.9813888888889	33.98\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9813888888889	33.98\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9833333333333	33.985\\
+10.9833333333333	33.9784246177287\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9833333333333	33.9784246177287\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9841666666667	33.985\\
+10.9841666666667	33.98\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9841666666667	33.98\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9855555555556	33.98\\
+10.9855555555556	33.96\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9855555555556	33.96\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9863888888889	33.975\\
+10.9863888888889	33.97\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9863888888889	33.97\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9880555555556	33.975\\
+10.9880555555556	33.97\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9880555555556	33.97\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9886111111111	33.975\\
+10.9886111111111	33.9686320646659\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9886111111111	33.9686320646659\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9891666666667	33.97\\
+10.9891666666667	33.95599716387\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9891666666667	33.95599716387\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9913888888889	33.97\\
+10.9913888888889	33.96\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9913888888889	33.96\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9933333333333	33.955\\
+10.9933333333333	33.94\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9933333333333	33.94\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.995	33.965\\
+10.995	33.95\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.995	33.95\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9963888888889	33.975\\
+10.9963888888889	33.9681732365245\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9963888888889	33.9681732365245\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9969444444444	33.97\\
+10.9969444444444	33.9584246177287\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2},forget plot]
+  table[row sep=crcr]{%
+10.9969444444444	33.9584246177287\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9988888888889	33.995\\
+10.9988888888889	33.98\\
+};
+\addplot [color=mycolor2,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor2}]
+  table[row sep=crcr]{%
+10.9988888888889	33.98\\
+};
+\addlegendentry{Ext Sell MO lifts our buy LO};
+
+\addplot [color=mycolor2,dashed,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9980555555556	33.995\\
+10.9980555555556	34\\
+};
+\addplot [color=mycolor2,dashed,line width=2.0pt,mark=o,mark options={solid}]
+  table[row sep=crcr]{%
+10.9980555555556	34\\
+};
+\addlegendentry{Ext Sell MO arrives};
+
+\addplot [color=mycolor3,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9811111111111	33.995\\
+10.9811111111111	34\\
+};
+\addplot [color=mycolor3,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor3},forget plot]
+  table[row sep=crcr]{%
+10.9811111111111	34\\
+};
+\addplot [color=mycolor3,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.985	33.985\\
+10.985	33.99\\
+};
+\addplot [color=mycolor3,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor3},forget plot]
+  table[row sep=crcr]{%
+10.985	33.99\\
+};
+\addplot [color=mycolor3,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9911111111111	33.975\\
+10.9911111111111	33.98\\
+};
+\addplot [color=mycolor3,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor3},forget plot]
+  table[row sep=crcr]{%
+10.9911111111111	33.98\\
+};
+\addplot [color=mycolor3,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9936111111111	33.965\\
+10.9936111111111	33.97\\
+};
+\addplot [color=mycolor3,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor3},forget plot]
+  table[row sep=crcr]{%
+10.9936111111111	33.97\\
+};
+\addplot [color=mycolor3,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9944444444444	33.975\\
+10.9944444444444	33.98\\
+};
+\addplot [color=mycolor3,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor3},forget plot]
+  table[row sep=crcr]{%
+10.9944444444444	33.98\\
+};
+\addplot [color=mycolor3,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9952777777778	33.975\\
+10.9952777777778	33.98\\
+};
+\addplot [color=mycolor3,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor3}]
+  table[row sep=crcr]{%
+10.9952777777778	33.98\\
+};
+\addlegendentry{Our Buy MO};
+
+\addplot [color=mycolor4,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9791666666667	33.99\\
+10.9791666666667	33.98\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor4},forget plot]
+  table[row sep=crcr]{%
+10.9791666666667	33.98\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9808333333333	33.99\\
+10.9808333333333	33.98\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor4},forget plot]
+  table[row sep=crcr]{%
+10.9808333333333	33.98\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9847222222222	33.98\\
+10.9847222222222	33.97\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor4},forget plot]
+  table[row sep=crcr]{%
+10.9847222222222	33.97\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9855555555556	33.98\\
+10.9855555555556	33.97\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor4},forget plot]
+  table[row sep=crcr]{%
+10.9855555555556	33.97\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9908333333333	33.97\\
+10.9908333333333	33.96\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor4},forget plot]
+  table[row sep=crcr]{%
+10.9908333333333	33.96\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9933333333333	33.955\\
+10.9933333333333	33.95\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor4},forget plot]
+  table[row sep=crcr]{%
+10.9933333333333	33.95\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9941666666667	33.965\\
+10.9941666666667	33.96\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor4},forget plot]
+  table[row sep=crcr]{%
+10.9941666666667	33.96\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.995	33.965\\
+10.995	33.96\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor4},forget plot]
+  table[row sep=crcr]{%
+10.995	33.96\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9972222222222	33.97\\
+10.9972222222222	33.96\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor4},forget plot]
+  table[row sep=crcr]{%
+10.9972222222222	33.96\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,forget plot]
+  table[row sep=crcr]{%
+10.9977777777778	33.985\\
+10.9977777777778	33.98\\
+};
+\addplot [color=mycolor4,solid,line width=2.0pt,mark=*,mark options={solid,fill=mycolor4}]
+  table[row sep=crcr]{%
+10.9977777777778	33.98\\
+};
+\addlegendentry{Our Sell MO};
+
+\end{axis}
+\end{tikzpicture}%

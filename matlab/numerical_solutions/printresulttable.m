@@ -1,7 +1,7 @@
 function [] = printresulttable( X,Q,T )
 
-tickers = {'FARO','NTAP','ORCL','INTC'};
-strategies = {'Naive','Naive+','Naive++','Cts','Dscr','Cts w nFPC','Dscr w nFPC'};
+tickers = {'ORCL','INTC'};
+strategies = {'Cts','Dscr','Cts w nFPC','Dscr w nFPC'};
 
 for ticker = 1:numel(tickers)
     fprintf('\\multicolumn{9}{l}{\\texttt{%s}} \\\\ \n',tickers{ticker});
@@ -15,9 +15,7 @@ for ticker = 1:numel(tickers)
             winidx = X(strat,ticker,:) > 0;
             lossidx = X(strat,ticker,:) < 0;
             winperc = sum(winidx) / size(X,3);
-            avgloss = mean(X(strat,ticker,lossidx));
             maxloss = min(X(strat,ticker,lossidx));
-            avgwin = mean(X(strat,ticker,winidx));
             maxwin = max(X(strat,ticker,winidx));
             
             fprintf('%s & %0.3f & %0.3f & %d & %d & %0.2f & %0.2f & %0.3f & %0.3f \\\\ \n', ...

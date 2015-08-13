@@ -1,0 +1,32 @@
+\definecolor{mycolor1}{rgb}{0.65098,0.80784,0.89020}%
+\definecolor{mycolor2}{rgb}{0.69804,0.87451,0.54118}%
+\definecolor{mycolor3}{rgb}{0.20000,0.62745,0.17255}%
+\definecolor{mycolor4}{rgb}{0.12157,0.47059,0.70588}%
+\begin{tikzpicture}
+    \begingroup
+    % inits/clears the lists (which might be populated from previous
+    % axes):
+    \csname pgfplots@init@cleared@structures\endcsname
+    \pgfplotsset{legend cell align=left,legend columns = 2,legend style={at={(0,1)},anchor=north west},legend style={draw=black,column sep=1ex},
+    legend entries={Midprice,
+    				Midprice $\pm \delta^\pm$,
+    				Our Sell MO,
+    				Our Buy MO,
+    				Ext Buy MO lifts our sell LO,
+    				Ext Sell MO lifts our buy LO,
+    				Ext Buy MO arrives,
+    				Ext Sell MO arrives}}%
+    \csname pgfplots@addlegendimage\endcsname{line width=2pt,black,solid,sharp plot}
+    \csname pgfplots@addlegendimage\endcsname{line width=2pt,gray,solid,sharp plot}
+    \csname pgfplots@addlegendimage\endcsname{line width=1.5pt,mycolor4,solid,mark=*,mark options={solid,fill=mycolor4},sharp plot}%sell
+    \csname pgfplots@addlegendimage\endcsname{line width=1.5pt,mycolor3,solid,mark=*,mark options={solid,fill=mycolor3},sharp plot}%buy
+    \csname pgfplots@addlegendimage\endcsname{line width=1.5pt,mycolor1,solid,mark=*,mark options={solid,fill=mycolor1},sharp plot}% ext buy lifts
+    \csname pgfplots@addlegendimage\endcsname{line width=1.5pt,mycolor2,solid,mark=*,mark options={solid,fill=mycolor2},sharp plot}%ext sell lifts    
+    \csname pgfplots@addlegendimage\endcsname{line width=1pt,mycolor1,dashed,mark=o,mark options={solid},sharp plot}%ext buy
+    \csname pgfplots@addlegendimage\endcsname{line width=1pt,mycolor2,dashed,mark=o,mark options={solid},sharp plot}%ext sell
+
+
+    % draws the legend:
+    \csname pgfplots@createlegend\endcsname
+    \endgroup
+\end{tikzpicture}

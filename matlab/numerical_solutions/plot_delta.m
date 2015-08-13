@@ -34,7 +34,7 @@ for z = [1,8,15]
             { '$q=-4$', '$q=-3$', '$q=-2$', '$q=-1$', '$q=0$', '$q=1$', '$q=2$', '$q=3$', '$q=4$' } );
     set(leg, 'interpreter','latex','fontsize',16);
     title(sprintf('Z=%d',z));
-    %matlab2tikz(sprintf('dp_cts_nFPC_z%d.tikz',z));
+    %matlab2tikz(sprintf('dm_dscr_nFPC_z%d.tikz',z));
 end
 
 

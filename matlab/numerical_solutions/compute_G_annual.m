@@ -21,7 +21,7 @@ function [ binseries, pricechgseries, G, rho ] = ...
 
     [~, binseries] = histc(data.IBavg, rho);
     
-    binpricechgseries = get1Dseries( binseries, data.dS, num_bins );
+    binpricechgseries = get1Dseries( binseries, pricechgseries, num_bins );
     
     G = estimateCTMC2D(binpricechgseries, num_bins);
     

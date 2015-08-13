@@ -1,24 +1,28 @@
-function [ cash, q, hist_X, hist_Q, hist_Sb, hist_Sa, hist_dp, hist_dm, hist_Mb, ...
-    hist_Ms, hist_Fillb, hist_Fills ] = cts_backtest_single( data, h, ...
+% Run an in-sample backtest with all the goodies detailed.
+function [ cash, q, hist_X, hist_Q, hist_Z, hist_Sb, hist_Sa, hist_dp, hist_dm, hist_their_Mb, ...
+    hist_their_Ms, hist_our_Mb, hist_our_Ms, hist_Fillb, hist_Fills ] = cts_backtest_single( data, h, ...
                 deltaminus, deltaplus, num_bins, avg_method, ds_method, ...
-                dt_Z, Qmax, alpha, kappa, xi, fs_T, fs_dt )
+                dt_Z, Qmax, alpha, kappa, xi, fs_T, fs_dt, rho )
 
     T1 = 9.5 * 3600000;
     T2 = 16 * 3600000;
     q = 0;
     cash = 0;
     
-    [ binseries, pricechgseries, ~, ~ ] = compute_G( data, dt_Z, num_bins, avg_method, ds_method );
+    [ binseries, pricechgseries, ~, ~ ] = compute_G( data, dt_Z, num_bins, avg_method, ds_method, 0, rho );
     [ oneDseries ] = get1Dseries( binseries, pricechgseries, num_bins );
     
     hist_X = NaN(1,length(oneDseries));
     hist_Q = NaN(1,length(oneDseries));
+    hist_Z = NaN(1,length(oneDseries));
     hist_Sb = NaN(1,length(oneDseries));
     hist_Sa = NaN(1,length(oneDseries));
     hist_dp = NaN(1,length(oneDseries));
     hist_dm = NaN(1,length(oneDseries));
-    hist_Mb = NaN(1,length(oneDseries));
-    hist_Ms = NaN(1,length(oneDseries));
+    hist_their_Mb = NaN(1,length(oneDseries));   
+    hist_their_Ms = NaN(1,length(oneDseries));
+    hist_our_Mb = NaN(1,length(oneDseries));
+    hist_our_Ms = NaN(1,length(oneDseries));
     hist_Fillb = NaN(1,length(oneDseries));
     hist_Fills = NaN(1,length(oneDseries));
     
@@ -45,13 +49,15 @@ function [ cash, q, hist_X, hist_Q, hist_Sb, hist_Sa, hist_dp, hist_dm, hist_Mb,
     for i = 1:length(oneDseries)
         z = round(oneDseries(i));
         t = T1 + dt_Z*i;
+        hist_Z(i) = mod(z,num_bins);
+        if hist_Z(i) == 0, hist_Z(i) = num_bins; end
         
         % at start of every dt, check whether our LO's had been lifted.
         try
             while MO(MO_ctr,1) <= t
                 % did we get lifted?
                 if MO(MO_ctr,2) == 1
-                    hist_Ms(i) = MO(MO_ctr,3)/10000;
+                    hist_their_Ms(i) = MO(MO_ctr,3)/10000;
                     u = rand();
                     if u < exp(-kappa*dplus)
                         % market order sell, so we buy at delta^+ (buy) price
@@ -63,7 +69,7 @@ function [ cash, q, hist_X, hist_Q, hist_Sb, hist_Sa, hist_dp, hist_dm, hist_Mb,
                         hist_Fillb(i) = 1;
                     end
                 else
-                    hist_Mb(i) = MO(MO_ctr,3)/10000;
+                    hist_their_Mb(i) = MO(MO_ctr,3)/10000;
                     u = rand();
                     if u < exp(-kappa*dminus)
                         % market order buy, so we sell at delta^- (buy) price
@@ -104,6 +110,7 @@ function [ cash, q, hist_X, hist_Q, hist_Sb, hist_Sa, hist_dp, hist_dm, hist_Mb,
             q = q + 1;
             price = data.SellPrice(time_ctr,1)/10000;
             cash = cash - price;
+            hist_our_Mb(i) = price;
             %if display, fprintf(fid, '[%d] {%d, %d, %d}.   Buy at %.2f (%d). [%d, %.2f].\n', t(timestep), IB_prev, DS_prev, IB_curr, price, price_time, q, cash); end;
             [ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
         end
@@ -113,6 +120,7 @@ function [ cash, q, hist_X, hist_Q, hist_Sb, hist_Sa, hist_dp, hist_dm, hist_Mb,
             q = q - 1;
             price = data.BuyPrice(time_ctr,1)/10000;
             cash = cash + price;
+            hist_our_Ms(i) = price;
             [ dplus, dminus ] = repost(deltaplus, deltaminus, t_h, z, q, Qmax);
         end
         
@@ -135,7 +143,9 @@ function [ cash, q, hist_X, hist_Q, hist_Sb, hist_Sa, hist_dp, hist_dm, hist_Mb,
     else            price = 0; 
     end
     cash = cash + q*(price - alpha*q);
-    q = 0;   
+    q = 0;
+    hist_X(i) = cash;
+    hist_Q(i) = q;
 end
 
 function [ bool ] = checkbuycondition(h,t_h,z,q,xi,Qmax)

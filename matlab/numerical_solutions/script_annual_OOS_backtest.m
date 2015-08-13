@@ -99,10 +99,10 @@ for tickernum = 1 : numel(tickers)
             X(strat+1,tickernum,file) = x(end);
             Q(strat+1,tickernum,file) = nanmean(q);
             T(strat+1,tickernum,file,:) = t;
-            if oos_early_close, X(strat,tickernum,file) = x((T3-T1)/dt_Z); end;
+            if oos_early_close, X(strat+1,tickernum,file) = x((T3-T1)/dt_Z); end;
         end
     end
     toc;
 
 end
-save('./saves/outofsample/annual/IS-annual-ORCL-INTC.mat', 'X','Q','T');
+save('./saves/insample/annual/IS-annual-ORCL-INTC.mat', 'X','Q','T');

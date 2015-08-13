@@ -4,47 +4,51 @@
 
 \begin{document}
 
-\begin{table}
+\begin{figure}
 \centering
-\ra{1.2}
-\begin{tabular}{@{} *{8}{r} @{}}
-\toprule
-Strategy & Return & Sharpe & Trades & Inv & \% Win & Max Loss & Max Win \\
-\midrule
-\multicolumn{8}{l}{\texttt{FARO}} \\
-Naive & -0.879 & -0.808 & 413 & 0.47 & 0.07 & -7.109 & 5.715 \\ 
-Naive+ & 0.101 & 0.107 & 213 & 2.45 & 0.74 & -8.797 & 5.336 \\ 
-Naive++ & 0.002 & 0.021 & 7 & 0.17 & 0.50 & -0.842 & 0.320 \\ 
-Cont & -0.059 & -0.551 & 201 & 0.09 & 0.18 & -0.912 & 0.071 \\ 
-Dscr & -0.064 & -0.695 & 210 & -0.02 & 0.08 & -0.914 & 0.440 \\ 
-Cont w nFPC & -0.063 & -0.571 & 204 & 0.08 & 0.14 & -1.161 & 0.077 \\ 
-Dscr w nFPC & -0.060 & -0.662 & 209 & -0.03 & 0.09 & -0.716 & 0.539 \\[2ex]
-\multicolumn{8}{l}{\texttt{NTAP}} \\
-Naive & -0.188 & -0.316 & 842 & -9.81 & 0.23 & -3.238 & 3.524 \\ 
-Naive+ & 0.388 & 0.169 & 3562 & -9.73 & 0.74 & -19.367 & 10.201 \\ 
-Naive++ & -0.005 & -0.012 & 157 & -0.90 & 0.54 & -2.888 & 2.558 \\ 
-Cont & -0.006 & -0.062 & 2265 & 0.40 & 0.56 & -0.441 & 0.215 \\ 
-Dscr & 0.099 & 0.767 & 1872 & 4.74 & 0.86 & -0.126 & 1.042 \\ 
-Cont w nFPC & -0.141 & -0.951 & 2897 & 0.65 & 0.14 & -0.935 & 0.244 \\ 
-Dscr w nFPC & 0.121 & 0.881 & 1738 & 2.82 & 0.89 & -0.139 & 0.962 \\[2ex]
-\multicolumn{8}{l}{\texttt{ORCL}} \\
-Naive & -0.105 & -0.253 & 484 & 1.40 & 0.28 & -1.837 & 2.180 \\ 
-Naive+ & -0.034 & -0.011 & 4086 & -55.18 & 0.61 & -17.501 & 18.400 \\ 
-Naive++ & 0.002 & 0.006 & 132 & 0.61 & 0.52 & -0.798 & 2.636 \\ 
-Cont & 0.115 & 1.348 & 1874 & 1.94 & 0.92 & -0.217 & 0.521 \\ 
-Dscr & 0.135 & 1.620 & 1898 & 3.93 & 0.98 & -0.063 & 0.515 \\ 
-Cont w nFPC & -0.010 & -0.100 & 2455 & 1.32 & 0.48 & -0.478 & 0.503 \\ 
-Dscr w nFPC & 0.144 & 1.501 & 1759 & 2.85 & 0.97 & -0.032 & 0.573 \\[2ex]
-\multicolumn{8}{l}{\texttt{INTC}} \\
-Naive & -0.082 & -0.228 & 258 & -5.21 & 0.33 & -1.465 & 1.425 \\ 
-Naive+ & 0.365 & 0.134 & 3962 & -32.50 & 0.63 & -11.202 & 11.669 \\ 
-Naive++ & -0.001 & -0.003 & 74 & -0.84 & 0.48 & -1.314 & 1.264 \\ 
-Cont & 0.214 & 2.159 & 1577 & 5.17 & 0.97 & -0.213 & 0.487 \\ 
-Dscr & 0.232 & 2.528 & 1642 & 4.48 & 0.98 & -0.217 & 0.611 \\ 
-Cont w nFPC & 0.114 & 1.218 & 1894 & 2.01 & 0.90 & -0.244 & 0.416 \\ 
-Dscr w nFPC &  0.226 & 2.202 & 1569 & 4.28 & 0.98 & -0.220 & 0.650 \\ 
-\bottomrule
-\end{tabular}
-\end{table}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \input{../../matlab/samplepath_cts_paths.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \input{../../matlab/samplepath_dscr_paths.tikz} 
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \input{../../matlab/samplepath_cts_nFPC_paths.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \input{../../matlab/samplepath_dscr_nFPC_paths.tikz} 
+\end{subfigure}\\
+\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{7em}% VERTICAL POSITION
+    Normalized PnL}%
+}}\hspace{0pt plus 1filll}\null
+
+Time (h)
+
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \input{../Figs/samplepathslegend.tikz}
+\end{subfigure}%
+  \caption{End of day strategy performances: in-sample backtesting using a one-week offset for calibration.}
+  \label{fig:IS_annual_comp}
+\end{figure}
 
 \end{document}

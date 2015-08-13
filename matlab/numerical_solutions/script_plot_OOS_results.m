@@ -1,16 +1,17 @@
 % script plot_results
 
-tickers = {'FARO','NTAP','ORCL','INTC'};
+%tickers = {'FARO','NTAP','ORCL','INTC'};
+tickers = {'ORCL','INTC'};
 strategies = {'Cts Stoch Ctrl','Dscr Stoch Ctrl','Cts Stoch Ctrl w nFPC','Dscr Stoch Ctrl w nFPC'};
 
 % X - PnL
 % Q - Inventory
 % T - Number of Trades
 
-% idx = ~isnan(X_OOS(1,1,:));
-% X = X_OOS(:,:,idx);
-% Q = Q_OOS(:,:,idx);
-% T = T_OOS(:,:,idx,:);
+idx = ~isnan(X_OOS(1,1,:));
+X = X_OOS(:,:,idx);
+Q = Q_OOS(:,:,idx);
+T = T_OOS(:,:,idx,:);
 
 len = size(X,3);
 
@@ -28,11 +29,11 @@ for ticker = 1:numel(tickers)
     figure();
     hold on;
     for strat = 1:numel(strategies)
-        plot(reshape(X(3+strat,ticker,:),len,1),'Color',colors{strat},'LineWidth',1.5);
+        plot(reshape(X(strat,ticker,:),len,1),'Color',colors{strat},'LineWidth',1.5);
     end
     hold off;
     title(sprintf('%s',tickers{ticker}));
     xlim([1 252]);
     %legend(strategies);
-    matlab2tikz(sprintf('IS_sameday_%s.tikz',tickers{ticker}));
+    matlab2tikz(sprintf('IS_annual_%s.tikz',tickers{ticker}));
 end
