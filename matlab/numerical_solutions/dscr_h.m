@@ -33,7 +33,7 @@ optdelm = zeros(T/dt_Z,length(Zrange),length(Qrange));
 % h(end, :, :) = repmat(-alpha*Qrange.*Qrange,num_bins*3,1);
 % h(end-1, :, :) = repmat(-xi*abs(Qrange),num_bins*3,1);
 
-%progress = waitbar(0, 'Calculating numerical solution...');
+progress = waitbar(0, 'Calculating numerical solution...');
 
 for i = round((T-2*dt_Z)/dt_Z):-1:1
     
@@ -110,7 +110,7 @@ for i = round((T-2*dt_Z)/dt_Z):-1:1
         end
         
     end
-    %waitbar( (T-i*dt_Z) / T) 
+    waitbar( (T-i*dt_Z) / T) 
 end
-%close(progress)
+close(progress)
 end

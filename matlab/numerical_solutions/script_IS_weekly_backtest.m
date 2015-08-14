@@ -79,7 +79,7 @@ for tickernum = 1 : numel(tickers)
             
             % Insert for loop over ds_method = [ 1 2 ]
             %parfor strat = 1:numel(strategies)
-            [x,q,t] = run_OOS_strategy(strat, data, oosdata, dt_Z, num_bins, ...
+            [x,q,t] = run_IS_strategy(strat, data, oosdata, dt_Z, num_bins, ...
                         avg_method, early_close, oos_early_close, phi, kappa, alpha, Qmax, fs_T, fs_dt );
             X(strat,tickernum,file) = x(end);
             %V(strat,tickernum,file) = nanstd(x);

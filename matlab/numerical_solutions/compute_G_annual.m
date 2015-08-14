@@ -1,6 +1,6 @@
 % Calculate generator matrix G, 1D Markov chain series, and imbalance bins.
 function [ binseries, pricechgseries, G, rho ] = ...
-    compute_G_annual( data, num_bins, ds_method )
+    compute_G_annual( data, num_bins, ds_method, rho )
 
     % ds_method = 1: this is the 'correct', or Markovian, method for
     % computing price change. t is the endpoint of the interval, and the
@@ -16,8 +16,10 @@ function [ binseries, pricechgseries, G, rho ] = ...
 
     % create bins for CTMC. 
     % bintype = 1 creates evenly spaced bins symmetric around zero. 
-    bintype = 3;
-    rho = createbins(num_bins, data.IBavg, bintype);
+    if isempty(rho)
+        bintype = 3;
+        rho = createbins(num_bins, data.IBavg, bintype);
+    end
 
     [~, binseries] = histc(data.IBavg, rho);
     
