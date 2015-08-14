@@ -193,6 +193,7 @@ Time (s)
   \label{fig:comp_dp_z15}
 \end{figure}
 
+\fxnote{So which of these plots do we like better? the 9 choices of q, or the colormap version of q?}
 \begin{figure}
 \centering
 \begin{subfigure}{.45\linewidth}
@@ -241,11 +242,11 @@ Time (s)
 \vspace{1cm}
 \begin{subfigure}{\linewidth}
   \centering
-  \tikzsetnextfilename{deltalegend}
-  \input{Figs/deltalegend.tikz} 
+  \tikzsetnextfilename{altdeltalegend}
+  \input{Figs/altdeltalegend.tikz} 
 \end{subfigure}%
   \caption{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.}
-  \label{fig:comp_dp_z1}
+  \label{fig:comp_dp_z1_test}
 \end{figure}
 
 \begin{figure}
@@ -296,11 +297,11 @@ Time (s)
 \vspace{1cm}
 \begin{subfigure}{\linewidth}
   \centering
-  \tikzsetnextfilename{deltalegend}
-  \input{Figs/deltalegend.tikz} 
+  \tikzsetnextfilename{altdeltalegend}
+  \input{Figs/altdeltalegend.tikz} 
 \end{subfigure}%
   \caption{Optimal buy depths $\delta^+$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.}
-  \label{fig:comp_dp_z8}
+  \label{fig:comp_dp_z8_test}
 \end{figure}
 
 \begin{figure}
@@ -351,8 +352,8 @@ Time (s)
 \vspace{1cm}
 \begin{subfigure}{\linewidth}
   \centering
-  \tikzsetnextfilename{deltalegend}
-  \input{Figs/deltalegend.tikz} 
+  \tikzsetnextfilename{altdeltalegend}
+  \input{Figs/altdeltalegend.tikz} 
 \end{subfigure}%
   \caption{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.}
   \label{fig:comp_dp_z15_test}
@@ -647,8 +648,8 @@ We now inspect the behaviour of the strategies on a finer timescale.
   \input{Figs/samplepath_dscr_nFPC_paths.tikz} 
 \end{subfigure}\\
 \leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-  \rotatebox[origin=l]{90}{\hspace{7em}% VERTICAL POSITION
-    Normalized PnL}%
+  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+    Price}%
 }}\hspace{0pt plus 1filll}\null
 
 Time (h)
@@ -661,8 +662,150 @@ Time (h)
   \tikzsetnextfilename{samplepathslegend}
   \input{Figs/samplepathslegend.tikz}
 \end{subfigure}%
-  \caption{End of day strategy performances: in-sample backtesting using a one-week offset for calibration.}
+  \caption{Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.}
   \label{fig:samplepath_paths}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_cts_bookvalue}
+  \input{Figs/samplepath_cts_bookvalue.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_dscr_bookvalue}
+  \input{Figs/samplepath_dscr_bookvalue.tikz} 
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_cts_nFPC_bookvalue}
+  \input{Figs/samplepath_cts_nFPC_bookvalue.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_dscr_nFPC_bookvalue}
+  \input{Figs/samplepath_dscr_nFPC_bookvalue.tikz} 
+\end{subfigure}\\
+\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+    PnL}%
+}}\hspace{0pt plus 1filll}\null
+
+Time (h)
+
+\vspace{1cm}%
+  \caption{Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.}
+  \label{fig:samplepath_pnl}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_cts_depths}
+  \input{Figs/samplepath_cts_depths.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_dscr_depths}
+  \input{Figs/samplepath_dscr_depths.tikz} 
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_cts_nFPC_depths}
+  \input{Figs/samplepath_cts_nFPC_depths.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_dscr_nFPC_depths}
+  \input{Figs/samplepath_dscr_nFPC_depths.tikz} 
+\end{subfigure}\\
+\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+    PnL}%
+}}\hspace{0pt plus 1filll}\null
+
+Time (h)
+
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepathslegend}
+  \input{Figs/samplepathslegend.tikz}
+\end{subfigure}%
+  \caption{Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.}
+  \label{fig:samplepath_depths}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_cts_inventory}
+  \input{Figs/samplepath_cts_inventory.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_dscr_inventory}
+  \input{Figs/samplepath_dscr_inventory.tikz} 
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_cts_nFPC_inventory}
+  \input{Figs/samplepath_cts_nFPC_inventory.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_dscr_nFPC_inventory}
+  \input{Figs/samplepath_dscr_nFPC_inventory.tikz} 
+\end{subfigure}\\
+\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{19em}% VERTICAL POSITION
+    Inventory}%
+}}\hspace{0pt plus 1filll}\null
+
+Time (h)
+
+\vspace{1cm}%
+  \caption{Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.}
+  \label{fig:samplepath_inv}
 \end{figure}
 
 \FloatBarrier
@@ -673,7 +816,7 @@ We begin our in-sample backtesting same-day calibration: calibration was run for
 
 Since we are calibrating and backtesting using the same underlying data, the calibration should be best attuned to the price dynamics for that praticular day, and hence we expect the performance using same-day calibration to exceed that of the weekly offset calibration and the annual calibration (detailed in the sections that follow). Looking at the \% Win column in \autoref{tbl:IS_sameday} we see that trading on \texttt{FARO} very rarely produces positive PnL. This is not surprising and was mentioned at the conclusion of the exploratory data analysis chapter: \texttt{FARO} is highly illiquid, with daily volume hovering around 200k, and its bid-ask spread averages approximately 20 cents. This makes it never profitable to execute market orders (due to crossing the spread), and because our optimal strategies still force us to post limit orders at depths between 0 and $1/\kappa = 0.01 = 1\text{cent}$, the most probable occurrence is that our limit orders are lifted adversely. \texttt{NTAP} seems to be a borderline case for liquidity, with average volumes around 4m, and here the strategies exhibit weak regularity of profits. The most liquid stocks, \texttt{ORCL} and \texttt{NTAP}, with average volumes around 15m and 30m respectively, post extremely promising results: the stochastic control strategies produce positive EOD PnL more than 90\% of the time. The discrete time controller outperforms its continuous time counterpart, and in particular we highlight that in the case of \texttt{INTC}, we attain a very good Sharpe ratio of 2.5.
 
-\begin{figure}[htb]
+\begin{figure}
 \centering
 \begin{subfigure}{.45\linewidth}
   \centering
@@ -722,11 +865,10 @@ Trading Day Number of 2013
   \tikzsetnextfilename{strategylegend}
   \resizebox{\linewidth}{!}{\input{Figs/strategylegend.tikz}}
 \end{subfigure}%
-  \caption{End of day strategy performances: in-sample backtesting using a one-week offset for calibration.}
+  \caption{End of day strategy performances: in-sample backtesting using same-day calibration.}
   \label{fig:IS_sameday_comp}
 \end{figure}
 
-\fxnote{tables have to be rerun: break out num of trades into MO and LO. stoch ctrl only, naive is obvious}
 \begin{table}
 \centering
 \ra{1.2}
@@ -768,7 +910,7 @@ Cont w nFPC & 0.114 & 1.218 & 1894 & 2.01 & 0.90 & -0.244 & 0.416 \\
 Dscr w nFPC &  0.226 & 2.202 & 1569 & 4.28 & 0.98 & -0.220 & 0.650 \\ 
 \bottomrule
 \end{tabular}
-\caption{Strategy performance results: in-sample backtesting using same-day calibration.}
+\caption{Averaged strategy performance results: in-sample backtesting using same-day calibration.}
 \label{tbl:IS_sameday}
 \end{table}
 
@@ -876,7 +1018,7 @@ Cts w nFPC & 0.107 & 1.111 & 681 & 1187 & 1.64 & 0.87 & -0.245 & 0.457 \\
 Dscr w nFPC & 0.215 & 2.027 & 401 & 1156 & 3.78 & 0.99 & -0.118 & 0.647 \\ 
 \bottomrule
 \end{tabular}
-\caption{Strategy performance results: in-sample backtesting using a one-week offset for calibration.}
+\caption{Averaged strategy performance results: in-sample backtesting using a one-week offset for calibration.}
 \label{tbl:IS_week}
 \end{table}
 
@@ -920,7 +1062,7 @@ Trading Day Number of 2013
   \tikzsetnextfilename{strategylegend}
   \resizebox{\linewidth}{!}{\input{Figs/strategylegend.tikz}}
 \end{subfigure}%
-  \caption{End of day strategy performances: in-sample backtesting using a one-week offset for calibration.}
+  \caption{End of day strategy performances: in-sample backtesting on 2013 data, using amalgamated annual 2013 data for calibration.}
   \label{fig:IS_annual_comp}
 \end{figure}
 
@@ -943,10 +1085,70 @@ Cts w nFPC & 0.209 & 2.030 & 396 & 1160 & 5.58 & 0.98 & -0.112 & 0.494 \\
 Dscr w nFPC & 0.197 & 2.588 & 576 & 1164 & 3.78 & 1.00 &  & 0.490 \\ 
 \bottomrule
 \end{tabular}
-\caption{Strategy performance results: in-sample backtesting using a one-week offset for calibration.}
+\caption{Averaged strategy performance results: in-sample backtesting on 2013 data, using amalgamated annual 2013 data for calibration.}
 \label{tbl:IS_annual}
 \end{table}
 
 \FloatBarrier
 \section{Out-of-Sample Backtesting}
 From the in-sample backtesting we can conclude that xxx.
+
+\begin{figure}
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{OOS_annual_INTC}
+  \input{Figs/OOS_annual_INTC.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{OOS_annual_AAPL}
+%  \input{Figs/OOS_annual_AAPL.tikz} 
+\end{subfigure}\\
+
+\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{7em}% VERTICAL POSITION
+    Normalized PnL}%
+}}\hspace{0pt plus 1filll}\null
+
+Trading Day Number of 2014
+
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  %\centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{strategylegend}
+  \resizebox{\linewidth}{!}{\input{Figs/strategylegend.tikz}}
+\end{subfigure}%
+  \caption{End of day strategy performances: out-of-sample backtesting on 2014 data, using amalgamated annual 2013 data for calibration.}
+  \label{fig:OOS_annual_comp}
+\end{figure}
+
+\begin{table}
+\centering
+\ra{1.2}
+\begin{tabular}{@{} *{9}{r} @{}}
+\toprule
+Strategy & Return & Sharpe & \# MO & \# LO & Inv & \% Win & Max Loss & Max Win \\
+\midrule
+\multicolumn{9}{l}{\texttt{INTC}} \\ 
+Cts & 0.275 & 2.426 & 1617 & 1821 & -0.00 & 1.00 & -0.013 & 0.760 \\ 
+Dscr & 0.394 & 1.727 & 987 & 1732 & -0.15 & 1.00 & -0.027 & 1.609 \\ 
+Cts w nFPC & 0.525 & 2.056 & 397 & 1611 & 0.07 & 1.00 &  & 2.145 \\ 
+Dscr w nFPC & 0.522 & 2.027 & 392 & 1611 & 0.08 & 1.00 &  & 2.277 \\ [2ex]
+\multicolumn{9}{l}{\texttt{AAPL}} \\ 
+Cts \\
+Dscr \\
+Cts w nFPC \\
+Dscr w nFPC\\
+\bottomrule
+\end{tabular}
+\caption{Averaged strategy performance results: out-of-sample backtesting on 2014 data, using amalgamated annual 2013 data for calibration.}
+\label{tbl:OOS_annual}
+\end{table}

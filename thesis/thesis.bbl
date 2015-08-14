@@ -16,6 +16,11 @@ Bensoussan, A. (2008).
 \newblock Impulse control in discrete time.
 \newblock {\em Georgian Mathematical Journal}, 15(3):439--454.
 
+\bibitem[Bertsimas and Lo, 1998]{Bertsimas98}
+Bertsimas, D. and Lo, A.~W. (1998).
+\newblock Optimal control of execution costs.
+\newblock {\em Journal of Financial Markets}, 1(1):1--50.
+
 \bibitem[Booth, 2015]{Booth15}
 Booth, A. (2015).
 \newblock {\em Automated Algorithmic Trading: Machine Learning and Agent-Based

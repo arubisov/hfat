@@ -1,9 +1,9 @@
 \chapter{Exploratory Data Analysis}
 
-\section{Modelling Imbalance: Continuous Time Markov Chain}
+\section[Modelling Imbalance: Continuous Time Markov Chain]{Modelling Imbalance: \texorpdfstring{\\}{} Continuous Time Markov Chain}
 The aim of this research project is to utilize the LOB volume imbalance $I(t)$ in an algorithmic trading application; hence, a suitable choice of model for $I(t)$ must be made. Rather than modelling imbalance directly as a real-valued process, an alternative approach, and that which is utilized herein, is to discretize the imbalance value $I(t)$ into subintervals, or bins, and fit the resulting process to a continuous-time Markov chain.
 
-The following definitions and properties are adapted from \cite{STAT455}:
+The following definitions and properties are adapted from \citet{STAT455}:
 \begin{defn}
 A continuous-time stochastic process $\left\lbrace X(t) \; | \; t \geq 0 \right\rbrace$ with state space $S$ is called a \emph{continuous-time Markov chain (CTMC)} if it has the Markov property; namely, that 
 \begin{equation}
@@ -40,14 +40,14 @@ If $X(t)$ has transition probabilities $P_{ij}(t) = \P \left[ X(t) = j \; | \; X
 Conditional on $Z(t) = k$, we assume the arrival of buy and sell market orders follow independent Poisson processes with intensities $\lambda_k^\pm$, where $\lambda_k^+$ ($\lambda_k^-$) is the rate of arrivals of market buys (resp. sells). Such processes are called \textit{Markov-modulated Poisson processes}, as the Poisson intensities are themselves stochastic processes determined by the state of the Markov chain. Thus, a timeline of observations of arrivals of buy/sell market orders and of regime switches might look like:
 \begin{figure}
   \tikzsetnextfilename{LOBtimeline}
-  \input{Figs/LOBtimeline.tikz}
+  \resizebox{\linewidth}{!}{\input{Figs/LOBtimeline.tikz}}
 \caption{Hypothetical timeline of market orders arriving during changing order imbalance regimes.}
 \label{introtimeline}
 \end{figure}
 
 In the sections that follow, I derive maximum likelihood estimations for the parameters of the CTMC, and evaluate the fit of the model to the data.
 
-\section{Maximum Likelihood Estimate of a Markov-modulated Poisson Process}
+\section[Maximum Likelihood Estimate of a Markov-Modulated Poisson Process]{Maximum Likelihood Estimate \texorpdfstring{\\}{} of a Markov-Modulated Poisson Process}
 
 \subsection{Maximum Likelihood Estimation of \texorpdfstring{$G$}{G}}
 
@@ -92,8 +92,7 @@ H_{k}(T) & \equiv \mbox{holding time in regime $k$ up to time $T$} \nonumber
 
 \section{2-Dimensional CTMC}
 \label{sec:2DCTMC}
-Next we consider a CTMC that jointly models the imbalance bin and the price change over a subsequent interval. That is, the CTMC models the joint distribution $(I(t), \Delta S(t))$ where $I(t) \in \lbrace 1,2,\dots,\#_{bins} \rbrace$ is the bin corresponding to imbalance averaged over the interval $[t-\Delta t_I, t]$, and $\Delta S(t) = \sgn(S(t+\Delta t_S)-S(t)) \in \lbrace -1, 0, 1 \rbrace$.  The pair $(I(t), \Delta S(t))$ is then reduced into one dimension with a simple encoding which we will denote $\varphi(I(t),S(t))$; for example, using 3 bins:
-
+Next we consider a CTMC that jointly models the imbalance bin and the price change over a subsequent interval. That is, the CTMC models the joint distribution $(I(t), \Delta S(t))$ where $I(t) \in \lbrace 1,2,\dots,\#_{bins} \rbrace$ is the bin corresponding to imbalance averaged over the interval $[t-\Delta t_I, t]$, and $\Delta S(t) = \sgn(S(t+\Delta t_S)-S(t)) \in \lbrace -1, 0, 1 \rbrace$.  The pair $(I(t), \Delta S(t))$ is then reduced into one dimension with a simple encoding function $\varphi$; for example, using 3 bins:
 \begin{table}[H]
 \centering
 \ra{1.2}
@@ -110,7 +109,7 @@ $Z(t)$ & Bin $I(t)$ & $\Delta S(t)$ & \phantom{abc} & $Z(t)$ & Bin $I(t)$ & $\De
 \end{table}
 
 \subsection{Cross-Validation}
-We cross-validate the CTMC calibration by means of a time-homogeneity test similar to that done in \cite{Tan02}. The null hypothesis is given by \cite{Weiss10}:
+We cross-validate the CTMC calibration by means of a time-homogeneity test similar to that done in \citet{Tan02}. The null hypothesis is given by \citep{Weiss10}:
 \begin{equation}
 H_0 = \forall i,j \in S \; : \; \exists q_{ij} \in \R^+ \; : \; q_{ij}(t) \equiv q_{ij} \forall t \in [0,T]
 \end{equation}
@@ -118,69 +117,45 @@ whereas the alternative hypothesis states that transition rates/probabilities ar
 \begin{equation}\label{eq:crossvalidnconv}
 || \mat{P}\left((n_{conv}+1)\Delta t_I \right) - \mat{P} \left( n_{conv}\Delta t_I \right) || < \epsilon
 \end{equation}
-This value $n_{conv}$ determines the size of the cross-validation timewindow into which to partition the full timeseries, yielding $K$ equal subintervals of length $n$. For comparison, we also partitioned the timeseries into 8, 4, and 2 equal intervals. For each ``removed series'' $k \in \{ 1,\dots,K \}$, we recalibrate a CTMC generator matrix $\mat{G}_{k}$. Finally, we test whether the one-step transition probabilities $p_{ij}^k$ contained in $\mat{P}_k \left(\Delta t_I \right)$ are statistically different from those of the full period. The asymptotically equivalent test statistic to the likelihood ratio test statistic is:
+This value $n_{conv}$ determines the size of the cross-validation timewindow into which to partition the full timeseries, yielding $K$ equal subintervals of length $n_{conv}$. For comparison, we also partitioned the timeseries into 8, 4, and 2 equal intervals. For each ``removed series'' $k \in \{ 1,\dots,K \}$, we recalibrate a CTMC generator matrix $\mat{G}_{k}$. Finally, we test whether the one-step transition probabilities $p_{ij}^k$ contained in $\mat{P}_k \left(\Delta t_I \right)$ are statistically different from those of the full period. The asymptotically equivalent test statistic to the likelihood ratio test statistic is:
 \begin{equation}
 D = -2 \ln (\mathcal{L})  = 2 \sum_k \sum_{i,j} n_{i,j}^k \left[ \ln(p_{ij}^k)  - \ln(p_{ij})   \right]
 \end{equation}
 where $n_{ij}^k$ is the number of observed transitions from state $i$ to $j$ in subinterval $k$. This test statistic has a $\chi^2$ distribution with $(K-1)(3 \cdot \#_{bins})(3 \cdot \#_{bins} - 1)$. The tests were run for each ticker for each trading day of 2013, and averaged over the year. \autoref{tbl:pvalues} summarizes the $p$-value scores for the tests.
-\begin{sidewaystable}
+\begin{table}
 \centering
 \ra{1.2}
-\begin{tabular}{@{}rrrrrr@{}}
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{@{} *{6}{r} r *{5}{r} @{}}
 \toprule
- &  & \multicolumn{4}{c}{subintervals} \\ 
-\cmidrule{3-6}
-$\Delta t_I$ & $n_{conv}$ & $n_{conv}$ & 8 & 4 & 2 \\
+ &  & \multicolumn{4}{c}{subintervals} & \hphantom{abc} & \multicolumn{4}{c}{subintervals} \\ 
+\cmidrule{3-6} \cmidrule{9-12}
+$\Delta t_I$ & $n_{conv}$ & $K$ & 8 & 4 & 2 & & $n_{conv}$ & $K$ & 8 & 4 & 2 \\
 \midrule
-\multicolumn{6}{c}{\texttt{FARO}} \\
-$\#_{bins}=3$ &&&&& \\
-100ms &  4933 & 0.000 & 0.000 & 0.000 & 0.003 \\
-1000ms &  727 & 0.000 & 0.002 & 0.001 & 0.005 \\
-10000ms & 149 & 0.000 & 0.005 & 0.010 & 0.017 \\
-$\#_{bins}=5$ &&&&& \\
-100ms &  6450 & 0.000 & 0.001 & 0.002 & 0.004 \\
-1000ms &  941 & 0.000 & 0.001 & 0.003 & 0.006 \\
-10000ms & 187 & 0.000 & 0.000 & 0.000 & 0.005 \\
-\multicolumn{6}{c}{\texttt{NTAP}} \\
-$\#_{bins}=3$ &&&&& \\
-100ms & 1320 & 0.000 & 0.000 & 0.000 & 0.000 \\
-1000ms & 237 & 0.000 & 0.000 & 0.000 & 0.000 \\
-10000ms & 72 & 0.000 & 0.006 & 0.003 & 0.007 \\
-$\#_{bins}=5$ &&&&& \\
-100ms & 1777 & 0.000 & 0.000 & 0.000 & 0.000 \\
-1000ms & 308 & 0.000 & 0.001 & 0.000 & 0.001 \\
-10000ms & 87 & 0.000 & 0.000 & 0.002 & 0.010 \\
-\bottomrule
-\end{tabular} \hspace{20mm}
-\begin{tabular}{@{}rrrrrr@{}}
-\toprule
- &  & \multicolumn{4}{c}{subintervals} \\ 
-\cmidrule{3-6}
-$\Delta t_I$ & $n_{conv}$ & $n_{conv}$ & 2 & 4 & 8 \\
-\midrule
-\multicolumn{6}{c}{\texttt{ORCL}} \\
-$\#_{bins}=3$ &&&&& \\
-100ms & 1803 & 0.000 & 0.000 & 0.000 & 0.000 \\
-1000ms & 303 & 0.000 & 0.000 & 0.000 & 0.001 \\
-10000ms & 84 & 0.000 & 0.007 & 0.005 & 0.010 \\
-$\#_{bins}=5$ &&&&& \\
-100ms &  2503 & 0.000 & 0.000 & 0.000 & 0.000 \\
-1000ms &  404 & 0.000 & 0.001 & 0.002 & 0.003 \\
-10000ms & 103 & 0.000 & 0.000 & 0.001 & 0.009 \\
-\multicolumn{6}{c}{\texttt{INTC}} \\
-$\#_{bins}=3$ &&&&& \\
-100ms &  2545 & 0.000 & 0.000 & 0.000 & 0.001 \\
-1000ms &  408 & 0.000 & 0.001 & 0.001 & 0.002 \\
-10000ms & 105 & 0.000 & 0.004 & 0.006 & 0.009 \\
-$\#_{bins}=5$ &&&&& \\
-100ms &  3498 & 0.000 & 0.001 & 0.001 & 0.001 \\
-1000ms &  771 & 0.000 & 0.001 & 0.002 & 0.002 \\
-10000ms & 133 & 0.000 & 0.000 & 0.000 & 0.007 \\
+& \multicolumn{5}{c}{\texttt{FARO}} & & \multicolumn{5}{c}{\texttt{ORCL}}\\
+\multicolumn{12}{l}{$\#_{bins}=3$} \\
+100ms &  4933 & 0.000 & 0.000 & 0.000 & 0.003 & & 1803 & 0.000 & 0.000 & 0.000 & 0.000 \\
+1000ms &  727 & 0.000 & 0.002 & 0.001 & 0.005 & & 303 & 0.000 & 0.000 & 0.000 & 0.001 \\
+10000ms & 149 & 0.000 & 0.005 & 0.010 & 0.017 & & 84 & 0.000 & 0.007 & 0.005 & 0.010 \\[2ex]
+\multicolumn{12}{l}{$\#_{bins}=5$} \\
+100ms &  6450 & 0.000 & 0.001 & 0.002 & 0.004 & & 2503 & 0.000 & 0.000 & 0.000 & 0.000 \\
+1000ms &  941 & 0.000 & 0.001 & 0.003 & 0.006 & & 404 & 0.000 & 0.001 & 0.002 & 0.003 \\
+10000ms & 187 & 0.000 & 0.000 & 0.000 & 0.005 & & 103 & 0.000 & 0.000 & 0.001 & 0.009 \\[2ex]
+& \multicolumn{5}{c}{\texttt{NTAP}} & & \multicolumn{5}{c}{\texttt{INTC}}\\
+\multicolumn{12}{l}{$\#_{bins}=3$} \\
+100ms & 1320 & 0.000 & 0.000 & 0.000 & 0.000 & & 2545 & 0.000 & 0.000 & 0.000 & 0.001 \\
+1000ms & 237 & 0.000 & 0.000 & 0.000 & 0.000 & & 408 & 0.000 & 0.001 & 0.001 & 0.002 \\
+10000ms & 72 & 0.000 & 0.006 & 0.003 & 0.007 & & 105 & 0.000 & 0.004 & 0.006 & 0.009 \\[2ex]
+\multicolumn{12}{l}{$\#_{bins}=5$} \\
+100ms & 1777 & 0.000 & 0.000 & 0.000 & 0.000 & &  3498 & 0.000 & 0.001 & 0.001 & 0.001 \\
+1000ms & 308 & 0.000 & 0.001 & 0.000 & 0.001 & &  771 & 0.000 & 0.001 & 0.002 & 0.002 \\
+10000ms & 87 & 0.000 & 0.000 & 0.002 & 0.010 & & 133 & 0.000 & 0.000 & 0.000 & 0.007 \\
 \bottomrule
 \end{tabular}
+\end{adjustbox}
 \caption{$\chi^2$-test $p$-values for testing the time homogeneity hypothesis. Tests were run for each ticker for each trading day of 2013, and averaged over the year. For calculating $n_{conv}$, the converge error threshold was $\epsilon = 1\times 10^{-10}$.}
 \label{tbl:pvalues}
-\end{sidewaystable}
+\end{table}
 Considering the standard cutoff $p$-value of 0.05, the cross-validation results show a strong case for the rejection of the homogeneity hypothesis. However, utilizing a non-homogeneous model falls outside of the scope of this research project, and instead suggests possible extensions to this research wherein the trading day is broken down into subintervals to better account for fluctuations and patterns in trading activity - perhaps early morning, mid-day, and final hour of trading.
 
 \section{Predicting Future Price Changes}
@@ -239,11 +214,11 @@ Immediately evident from \autoref{tbl:Qmatrix} is that in most cases we are expe
 \section{Naive Trading Strategies}
 Utilizing the key insight drawn from \eqref{eq:EDAKeyInsight}, we implemented several naive trading strategies, descriptions of which follow:
 
-\paragraph{Naive Trading Strategy}  Using the conditional probabilities obtained from $\mat{Q}$, we will execute a buy (resp. sell) market order if the probability of an upward (resp. downward) price change is $> 0.5$. Pseudocode for this strategy is given in \autoref{algo-naive}.
+\paragraph{Naive Trading Strategy}  Using the conditional probabilities obtained from $\mat{Q}$, we will execute a buy (resp. sell) market order if the probability of an upward (resp. downward) price change is $> 0.5$. Pseudocode for this strategy is given in \autoref{algo:algo-naive}.
 \begin{algorithm}
 \caption{Naive Trading Strategy}
 \input{Figs/algo-naive.tex}
-\label{algo-naive}
+\label{algo:algo-naive}
 \end{algorithm}
 
 \paragraph{Naive+ Trading Strategy} If no change in midprice is expected then we'll post buy and sell limit orders at the touch, front of the queue. We'll track MO arrival between timesteps, assume we always get executed, and immediately repost the limit orders.
@@ -261,43 +236,52 @@ Utilizing the key insight drawn from \eqref{eq:EDAKeyInsight}, we implemented se
 \section{Calibration and Backtesting}
 Backtesting these naive trading strategies required a choice of parameters for the price change observation period $\Delta t_S$, the imbalance averaging period $\Delta t_I$, and the number of imbalance bins $\#_{bins}$. We used a brute force calibration technique that, for each ticker and each day, traversed the potential parameter space searching for the highest number of timesteps at which \eqref{eq:EDAKeyInsight} could be utilized. We found that $\#_{bins} = 4$ provided the highest expected number of trades for most tickers. However, as we were utilizing percentile bins symmetric around zero, we wanted to have $\#_{bins}$ as an odd number such that all behaviour around zero imbalance was treated equally; thus all backtesting was done with either $\#_{bins} = 3$ or $\#_{bins} = 5$. Additionally, we found empirically that calibration always yielded $\Delta t_S = \Delta t_I$, so this was taken as a given. The backtest for each ticker then consisted of first calibrating the value $\Delta t_I$ from the first day of data by maximizing the intra-day Sharpe ratio, then using the calibrated parameters to backtest the entire year.
 
-\fxnote{regenerate this entire figure. it's all bullshit. also fix it so that it's actually INTC. i think these values are already run in matlab, so just reuqires a good plotting or two...}
 \begin{figure}
 \centering
-\begin{subfigure}{.35\linewidth}
+\begin{subfigure}{.45\linewidth}
   \centering
-  \setlength\figureheight{.35\linewidth} 
-  \setlength\figurewidth{.35\linewidth}
-  \tikzsetnextfilename{FARO-strat-compare}
-  \input{Figs/FARO-strategy-compare.tikz}
-  \caption{FARO}
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{FARO_naive_strat_comp}
+  \input{Figs/FARO_naive_strat_comp.tikz}
 \end{subfigure}%
-\hfil%
-\begin{subfigure}{.35\linewidth}
+\hfill%
+\begin{subfigure}{.45\linewidth}
   \centering
-  \setlength\figureheight{.35\linewidth}
-  \setlength\figurewidth{.35\linewidth}
-  \tikzsetnextfilename{NTAP-strat-compare}
-  \input{Figs/NTAP-strategy-compare.tikz} 
-  \caption{NTAP}
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{NTAP_naive_strat_comp}
+  \input{Figs/NTAP_naive_strat_comp.tikz} 
 \end{subfigure}\\
 \vspace{1cm}
-\begin{subfigure}{.35\linewidth}
+\begin{subfigure}{.45\linewidth}
   \centering
-  \setlength\figureheight{.35\linewidth} 
-  \setlength\figurewidth{.35\linewidth}
-  \tikzsetnextfilename{ORCL-strat-compare}
-  \input{Figs/ORCL-strategy-compare.tikz}
-  \caption{ORCL}
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{ORCL_naive_strat_comp}
+  \input{Figs/ORCL_naive_strat_comp.tikz} 
 \end{subfigure}%
-\hfil%
-\begin{subfigure}{.35\linewidth}
+\hfill%
+\begin{subfigure}{.45\linewidth}
   \centering
-  \setlength\figureheight{.35\linewidth}
-  \setlength\figurewidth{.35\linewidth}
-  \tikzsetnextfilename{INTC-strat-compare}
-  \input{Figs/FARO-strategy-compare.tikz} 
-  \caption{INTC}
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{INTC_naive_strat_comp}
+  \input{Figs/INTC_naive_strat_comp.tikz} 
+\end{subfigure}\\
+
+\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{18em}% VERTICAL POSITION
+	Normalized PnL}%
+}}\hspace{0pt plus 1filll}\null
+
+Time (h)
+
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  \centering
+  \tikzsetnextfilename{naivestratlegend}
+  \input{Figs/naivestratlegend.tikz} 
 \end{subfigure}%
   \caption{Comparison of Naive (red), Naive+ (blue), and Naive++ (green) trading strategies, with benchmark Midprice (black). Plotted are normalized book values against time of trading day, averaged across the trading year.}
   \label{fig:comp}

@@ -48,6 +48,7 @@
 \usepackage[x11names]{xcolor}		% ?
 
 % figures, links, etc. 
+\usepackage{adjustbox}
 \usepackage{graphicx}
 \usepackage{pgfplots}
 \usetikzlibrary{backgrounds}	% in order to frame a tikzpic
@@ -89,14 +90,16 @@
 \setcounter{secnumdepth}{2}
 \setcounter{tocdepth}{2}
 
-% ********************************* Appendix ***********************************
+% ************************* Appendix & Bibliography ****************************
 \usepackage{appendix}
+\usepackage{natbib}
 %\renewcommand{\appendixtocname}{List of appendices}
 %\renewcommand{\appendixname}{Appndx}
 
 % ******************************** Todo Notes **********************************
 \usepackage{fixme}
 \renewcommand\fixmelogo{\textsf{TODO:}}
+\fxsetup{status=draft}
 
 % ******************************************************************************
 % ************************* User Defined Commands ******************************
@@ -109,6 +112,7 @@
 \def\figureautorefname{Figure}
 \def\subsubsectionautorefname{Subsection}
 \def\sectionautorefname{Section}
+\def\algorithmautorefname{Algorithm}
 % Changes how \eqref displays the equation reference.
 \let\originaleqref\eqref
 \renewcommand{\eqref}{Equation~\originaleqref}

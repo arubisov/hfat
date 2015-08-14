@@ -56,12 +56,12 @@ for tickernum = 1 : numel(tickers)
         
         toc;
         strat = 2*(ds_method-1)+1;
-%         label = '';
-%         if ds_method == 2,label = '_nFPC'; end
-%         plot_delta( dp_cts, fs_T, fs_dt, strcat('dp_cts',label) );
-%         plot_delta( dm_cts, fs_T, fs_dt, strcat('dm_cts',label) );
-%         plot_delta( dp_dscr, fs_T, 1, strcat('dp_dscr',label) );
-%         plot_delta( dm_dscr, fs_T, 1, strcat('dm_dscr',label) );
+        label = '';
+        if ds_method == 2,label = '_nFPC'; end
+        plot_delta( dp_cts, fs_T, fs_dt, strcat('dp_cts',label) );
+        plot_delta( dm_cts, fs_T, fs_dt, strcat('dm_cts',label) );
+        plot_delta( dp_dscr, fs_T, 1, strcat('dp_dscr',label) );
+        plot_delta( dm_dscr, fs_T, 1, strcat('dm_dscr',label) );
   
         data = load(sprintf('./data-more/fullyearconsolidated/%s_2014.mat',ticker));
         

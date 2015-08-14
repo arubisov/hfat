@@ -3,7 +3,7 @@
 Hello and welcome to this limited edition chapter on stochastic optimal control. Read on if you dare subject yourself to the infinite wisdom contained herein.
 
 \section{Continuous Time}
-\fxnote{better lead in to this section.}
+\fxnote{better lead in to this section. also clean up this presentation of the stochastic processes... somehow more effectively...}
 Below we list the processes involved in the optimization problem:
 
 \begin{tabular}{lll}
@@ -69,7 +69,7 @@ H(t,x,s,\bz,q) = \sup\limits_{\btau \in \mathcal{T}_{[t,T]}} \sup\limits_{\delta
 
 \subsection{Dynamic Programming}
 The following theorems establish the dynamic programming method we will utilize to solve this type of problem:
-\begin{thm}[\cite{STA4505}] \textbf{Dynamic Programming Principle for Optimal Stopping and Control.}
+\begin{thm}[\citet{STA4505}] \textbf{Dynamic Programming Principle for Optimal Stopping and Control.}
 If an agent's performance criteria for a given admissible control $\bu$ and admissible stopping time $\tau$ are given by
 \[ H^{\tau, \bu}(t,\bx) = \E_{t,\bx} [ G (X^{\bu}_\tau)] \]
 and the value function is
@@ -80,7 +80,7 @@ H(t,\bx) = \sup\limits_{\tau \in \mathcal{T}_{[t,T]}} \sup\limits_{\bu \in \cA_{
 \end{equation}
 for all $(t,\bx) \in [0,T] \times \R^m$ and all stopping times $\theta \leq T$.
 \end{thm}
-\begin{thm}[\cite{STA4505}] \textbf{Dynamic Programming Equation for Optimal Stopping and Control.}
+\begin{thm}[\citet{STA4505}] \textbf{Dynamic Programming Equation for Optimal Stopping and Control.}
 Assume that the value function $H(t,\bx)$ is once differentiable in $t$, all second-order derivatives in $\bx$ exist, and that \myfunction{G}{\R^m}{\R} is continuous. Then $H$ solves the quasi-variational inequality
 \begin{equation}\label{eq:thmDPE}
 0 = \max \left\lbrace \partial_t H + \sup \limits_{\bu \in \cA_t} \cL^{\bu}_t H \; ; \; G - H \right\rbrace
@@ -90,7 +90,6 @@ on $\mathcal{D}$, where $\mathcal{D} = [0,T] \times \R^m$.
 
 \subsection{Maximizing Terminal Wealth (Continuous)}
 In this section we solve the DPE that results from using the maximal terminal wealth performance criteria. The quasi-variational inequality in equation \ref{eq:thmDPE} can be interpreted as follows: the max operator is choosing between posting limit orders or executing market orders; the second term, $G-H$, is the stopping region and represents the value derived from executing a market order; and the first term is the continuation region, representing the value of posting limit orders. We'll use the shorthand $H(\cdot) = H(t,x,s,\bz,q)$ and solve for $\d H$ inside the continuation region, hence $\d M^{\pm} = 0$, in order to then extract out the infinitesimal generator.
-
 \begin{align}
 \d H (t,x,s,\bz,q) & = \sum\limits_i \partial_{x_i} H \dx_i \\
 & = \partial_t H \dt + \partial_{K^{\pm}} H \d {K^{\pm}} + \partial_{\bZ} H \d {\bZ} \\
@@ -100,11 +99,10 @@ In this section we solve the DPE that results from using the maximal terminal we
 & \hphantom{{}={} \partial_t H \dt} + \sum_{\bj} \E \left[ H(t,x,s+\eta_{0,\bj},\bj,q) - H(\cdot) \right] \d Z_{\bz,\bj}
 \end{split}
 \end{align}
-
-We substitute in the following identities for the compensated processes, which are continuous-time martingales. For Poisson processes this is given by \cite{STA4505}
-\begin{align} 
+We substitute in the identities relating each process to its corresponding compensated process, each of which is a continuous-time martingales. For Poisson processes we have \citep{STA4505}
+\begin{align}
 \d K^{\pm} & = \d \tilde{K}^{\pm} + \mu^{\pm}(\bz) \dt
-\intertext{while for the Markov Chain, this is \cite{MAT833}}
+\intertext{while for the Markov Chain, this is \citep{MAT833}}
 \d Z_{\bz,\bj}  & = \d \tilde{Z}_{\bz,\bj}  + G_{\bz,\bj} \dt 
 \end{align}
 \begin{align}
@@ -249,14 +247,15 @@ Combined with the identical conditions on the sell depth, we have the conditions
 \end{equation}
 A possible interpretation of the unexpected upper bound on the posting depth is that if the calculated buy (resp. sell) depth is `sufficiently' large so as to indicate a disposition against buying (resp. selling), then it is actually optimal to sell (resp. buy) instead.
 
-From equation \eqref{eq:buyMOfeedbackcase1}, we know that a buy market order is executed under the condition:
+Combining \eqref{eq:optbuydepthfeedback} and \eqref{eq:buyMOfeedbackcase1}, we know that if $\delta^+$ is determined by its feedback form rather than being floored at zero, then a buy market order is executed under the condition:
 \begin{align}
-\text{Buy MO} & \iff -2 \xi \cdot \indicator_{q \geq 0} = h(t,\bz,q) - h(t, \bz, q+1)  \\
-& & = {\delta^+}^* - \frac{1}{\kappa} + 2 \xi \cdot \indicator_{q \leq -1} \\
-& \iff \begin{cases} -2 \xi, \quad q \geq 0 \\ 0, \quad q < 0 \end{cases} = 
-\begin{cases} {\delta^+}^* - \frac{1}{\kappa}, \quad q \geq 0 \\
-{\delta^+}^* - \frac{1}{\kappa} + 2 \xi, \quad q < 0 \end{cases} \\
-& \iff \begin{cases} {\delta^+}^* = \frac{1}{\kappa} -2 \xi, \quad q \geq 0 \\
-{\delta^+}^* =  \frac{1}{\kappa} - 2 \xi, \quad q < 0 \end{cases} \\
-& \iff {\delta^+}^* =  \frac{1}{\kappa} - 2 \xi \label{eq:ctsBuycondition}
+\text{Buy MO} & \iff & -2 \xi \cdot \indicator_{q \geq 0} & = h(t,\bz,q) - h(t, \bz, q+1)  \\
+& & & = {\delta^+}^* - \frac{1}{\kappa} + 2 \xi \cdot \indicator_{q \leq -1} \\
+& \iff &  \begin{cases} -2 \xi, \quad & q \geq 0 \\ 0, \quad & q < 0 \end{cases} & = 
+\begin{cases} {\delta^+}^* - \frac{1}{\kappa}, \quad & q \geq 0 \\
+{\delta^+}^* - \frac{1}{\kappa} + 2 \xi, \quad & q < 0 \end{cases} \\
+& \iff &  {\delta^+}^* & = \begin{cases} \frac{1}{\kappa} -2 \xi, \quad & q \geq 0 \\
+\frac{1}{\kappa} - 2 \xi, \quad & q < 0 \end{cases} \\
+& \iff & {\delta^+}^* & =  \frac{1}{\kappa} - 2 \xi \label{eq:ctsBuycondition}
 \end{align}
+An identical derivation holds for sell market orders. In the next chapter this will allow us to gauge the market order behaviour by viewing only the limit order posting depths.

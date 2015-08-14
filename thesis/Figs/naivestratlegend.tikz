@@ -1,0 +1,19 @@
+\definecolor{mycolor1}{rgb}{0.00000,0.00000,0.00000}%
+\definecolor{mycolor2}{rgb}{0.40000,0.40000,0.40000}%
+\definecolor{mycolor3}{rgb}{0.70000,0.70000,0.70000}%
+\begin{tikzpicture}
+    \begingroup
+    % inits/clears the lists (which might be populated from previous
+    % axes):
+    \csname pgfplots@init@cleared@structures\endcsname
+    \pgfplotsset{legend cell align=left,legend columns = -1,legend style={at={(0,1)},anchor=north west,draw=black,column sep=0ex,/tikz/every even column/.append style={column sep=3ex}},
+    legend entries={Naive,
+    				Naive+,
+    				Naive++}}%
+    \csname pgfplots@addlegendimage\endcsname{line width=2pt,mycolor1,solid,sharp plot}
+    \csname pgfplots@addlegendimage\endcsname{line width=2pt,mycolor2,solid,sharp plot}
+    \csname pgfplots@addlegendimage\endcsname{line width=2pt,mycolor3,solid,sharp plot}
+    % draws the legend:
+    \csname pgfplots@createlegend\endcsname
+    \endgroup
+\end{tikzpicture}

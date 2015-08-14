@@ -3,7 +3,7 @@
 \BOOKMARK [1][-]{section.1.2}{ITCH Data Set}{chapter.1}% 3
 \BOOKMARK [0][-]{chapter.2}{Exploratory Data Analysis}{}% 4
 \BOOKMARK [1][-]{section.2.1}{Modelling Imbalance: Continuous Time Markov Chain}{chapter.2}% 5
-\BOOKMARK [1][-]{section.2.2}{Maximum Likelihood Estimate of a Markov-modulated Poisson Process}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.2}{Maximum Likelihood Estimate of a Markov-Modulated Poisson Process}{chapter.2}% 6
 \BOOKMARK [2][-]{subsection.2.2.1}{Maximum Likelihood Estimation of G}{section.2.2}% 7
 \BOOKMARK [2][-]{subsection.2.2.2}{Maximum Likelihood Estimation of lpmk}{section.2.2}% 8
 \BOOKMARK [1][-]{section.2.3}{2-Dimensional CTMC}{chapter.2}% 9
@@ -22,3 +22,13 @@
 \BOOKMARK [2][-]{subsection.3.2.3}{Simplifying the DPE}{section.3.2}% 22
 \BOOKMARK [0][-]{chapter.4}{Results}{}% 23
 \BOOKMARK [1][-]{section.4.1}{Calibration}{chapter.4}% 24
+\BOOKMARK [1][-]{section.4.2}{Dynamics of delta}{chapter.4}% 25
+\BOOKMARK [2][-]{subsection.4.2.1}{Comparing Performance}{section.4.2}% 26
+\BOOKMARK [1][-]{section.4.3}{In-Sample Backtesting}{chapter.4}% 27
+\BOOKMARK [2][-]{subsection.4.3.1}{Same-Day Calibration}{section.4.3}% 28
+\BOOKMARK [2][-]{subsection.4.3.2}{Week Offset Calibration}{section.4.3}% 29
+\BOOKMARK [2][-]{subsection.4.3.3}{Annual Calibration}{section.4.3}% 30
+\BOOKMARK [1][-]{section.4.4}{Out-of-Sample Backtesting}{chapter.4}% 31
+\BOOKMARK [0][-]{chapter.5}{Conclusion}{}% 32
+\BOOKMARK [1][-]{section.5.1}{Summary of Results}{chapter.5}% 33
+\BOOKMARK [1][-]{section.5.2}{Future Work}{chapter.5}% 34

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  13 AUG 2015 18:06
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  14 AUG 2015 15:18
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1094,6 +1094,10 @@ LaTeX Warning: Reference `eq:ctsMOineq1' on page 30 undefined on input line 238
 LaTeX Warning: Reference `eq:ctsMOineq1' on page 30 undefined on input line 238
 .
 
+
+LaTeX Warning: Reference `eq:buyMOfeedbackcase1' on page 31 undefined on input 
+line 252.
+
 ) (./Ch3Numerical/discrete.tex
 FiXme Note: 'better lead in to this section.' on input line 2.
 
@@ -1199,7 +1203,7 @@ isable this.
 ) (./Figs/dp_cts_nFPC_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dp_cts_nFPC_z1.tikz
+) (./Figs/dp_dscr_nFPC_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/deltalegend.tikz
@@ -1214,7 +1218,7 @@ isable this.
 ) (./Figs/dp_cts_nFPC_z8.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dp_cts_nFPC_z8.tikz
+) (./Figs/dp_dscr_nFPC_z8.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/deltalegend.tikz
@@ -1229,21 +1233,65 @@ isable this.
 ) (./Figs/dp_cts_nFPC_z15.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dp_cts_nFPC_z15.tikz
+) (./Figs/dp_dscr_nFPC_z15.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/deltalegend.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/test/dp_cts_z1.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/test/dp_dscr_z1.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/test/dp_cts_z1.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/test/dp_dscr_z1.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/deltalegend.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/test/dp_cts_z8.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/test/dp_dscr_z8.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/test/dp_cts_z8.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/test/dp_dscr_z8.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/deltalegend.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/test/dp_cts_z15.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/test/dp_dscr_z15.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/test/dp_cts_z15.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/test/dp_dscr_z15.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/deltalegend.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
-FiXme Note: 'Comments on deltaplus!!' on input line 196.
 
-LaTeX Warning: Reference `fig:comp_dp_z1' on page 46 undefined on input line 19
-7.
+LaTeX Warning: Reference `eq:ctsBuycondition' on page 46 undefined on input lin
+e 361.
 
 
-LaTeX Warning: Reference `fig:comp_dp_z15' on page 46 undefined on input line 1
-97.
+LaTeX Warning: Reference `fig:comp_dp_z1' on page 46 undefined on input line 36
+9.
 
 (./Figs/dm_cts_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
@@ -1254,7 +1302,7 @@ isable this.
 ) (./Figs/dm_cts_nFPC_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_cts_nFPC_z1.tikz
+) (./Figs/dm_dscr_nFPC_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/deltalegend.tikz
@@ -1269,7 +1317,7 @@ isable this.
 ) (./Figs/dm_cts_nFPC_z8.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_cts_nFPC_z8.tikz
+) (./Figs/dm_dscr_nFPC_z8.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/deltalegend.tikz
@@ -1284,7 +1332,7 @@ isable this.
 ) (./Figs/dm_cts_nFPC_z15.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_cts_nFPC_z15.tikz
+) (./Figs/dm_dscr_nFPC_z15.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/deltalegend.tikz
@@ -1298,36 +1346,36 @@ A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
 
-LaTeX Warning: Reference `fig:ORCL_comp4stoch' on page 49 undefined on input li
-ne 389.
+LaTeX Warning: Reference `fig:ORCL_comp4stoch' on page 50 undefined on input li
+ne 567.
 
 
-LaTeX Warning: Reference `tbl:ORCL_comp4stoch_corr' on page 49 undefined on inp
-ut line 389.
+LaTeX Warning: Reference `tbl:ORCL_comp4stoch_corr' on page 50 undefined on inp
+ut line 567.
 
 
-LaTeX Warning: Reference `fig:cointeg_relation' on page 49 undefined on input l
-ine 406.
+LaTeX Warning: Reference `fig:cointeg_relation' on page 50 undefined on input l
+ine 584.
 
 (./Figs/cointeg_relation.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
 
-LaTeX Warning: Reference `fig:ORCL_comp4stoch_inv' on page 50 undefined on inpu
-t line 416.
+LaTeX Warning: Reference `fig:ORCL_comp4stoch_inv' on page 51 undefined on inpu
+t line 594.
 
 
-LaTeX Warning: Reference `tbl:ORCL_comp4stoch_numt' on page 50 undefined on inp
-ut line 418.
+LaTeX Warning: Reference `tbl:ORCL_comp4stoch_numt' on page 51 undefined on inp
+ut line 596.
 
 
-LaTeX Warning: Reference `fig:comp_dp_z1' on page 50 undefined on input line 41
-8.
+LaTeX Warning: Reference `fig:comp_dp_z1' on page 51 undefined on input line 59
+6.
 
 
-LaTeX Warning: Reference `fig:comp_dp_z15' on page 50 undefined on input line 4
-18.
+LaTeX Warning: Reference `fig:comp_dp_z15' on page 51 undefined on input line 5
+96.
 
 (./Figs/samplepath_cts_paths.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
@@ -1341,7 +1389,7 @@ Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
 Missing character: There is no ; in font nullfont!
-[50
+[51
 
 {/home/anton/.texmf-var/fonts/map/pdftex/updmap/pdftex.map}]) (./Figs/samplepat
 h_cts_nFPC_paths.tikz
@@ -1355,16 +1403,16 @@ A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
 
-LaTeX Warning: Reference `tbl:IS_sameday' on page 51 undefined on input line 49
+LaTeX Warning: Reference `tbl:IS_sameday' on page 52 undefined on input line 67
+2.
+
+
+LaTeX Warning: Reference `fig:IS_sameday_comp' on page 52 undefined on input li
+ne 672.
+
+
+LaTeX Warning: Reference `tbl:IS_sameday' on page 52 undefined on input line 67
 4.
-
-
-LaTeX Warning: Reference `fig:IS_sameday_comp' on page 51 undefined on input li
-ne 494.
-
-
-LaTeX Warning: Reference `tbl:IS_sameday' on page 51 undefined on input line 49
-6.
 
 (./Figs/IS_sameday_FARO.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
@@ -1382,22 +1430,22 @@ isable this.
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
-Overfull \hbox (1.2093pt too wide) in paragraph at lines 545--546
+Overfull \hbox (1.2093pt too wide) in paragraph at lines 723--724
 [][] 
  []
 
 FiXme Note: 'tables have to be rerun: break out num of trades into MO and LO. s
-toch ctrl only, naive is obvious' on input line 551.
+toch ctrl only, naive is obvious' on input line 729.
 
-LaTeX Warning: Float too large for page by 7.08467pt on input line 595.
+LaTeX Warning: Float too large for page by 7.08467pt on input line 773.
 
-FiXme Note: 'commentary needed. compare stoch methods' on input line 597.
+FiXme Note: 'commentary needed. compare stoch methods' on input line 775.
 
-LaTeX Warning: Reference `tbl:IS_week' on page 54 undefined on input line 601.
+LaTeX Warning: Reference `tbl:IS_week' on page 55 undefined on input line 779.
 
 
-LaTeX Warning: Reference `fig:IS_week_comp' on page 54 undefined on input line 
-601.
+LaTeX Warning: Reference `fig:IS_week_comp' on page 55 undefined on input line 
+779.
 
 (./Figs/IS_week_FARO.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
@@ -1415,32 +1463,32 @@ isable this.
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
-Overfull \hbox (1.2093pt too wide) in paragraph at lines 654--655
+Overfull \hbox (1.2093pt too wide) in paragraph at lines 832--833
 [][] 
  []
 
 
-Overfull \hbox (10.6562pt too wide) in paragraph at lines 663--701
+Overfull \hbox (10.6562pt too wide) in paragraph at lines 841--879
  [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 7.08467pt on input line 703.
+LaTeX Warning: Float too large for page by 7.08467pt on input line 881.
 
 
-LaTeX Warning: Reference `tbl:IS_annual' on page 56 undefined on input line 707
+LaTeX Warning: Reference `tbl:IS_annual' on page 57 undefined on input line 885
 .
 
 
-LaTeX Warning: Reference `fig:IS_annual_comp' on page 56 undefined on input lin
-e 707.
+LaTeX Warning: Reference `fig:IS_annual_comp' on page 57 undefined on input lin
+e 885.
 
 
-LaTeX Warning: Reference `tbl:IS_annual' on page 56 undefined on input line 709
+LaTeX Warning: Reference `tbl:IS_annual' on page 57 undefined on input line 887
 .
 
 
-LaTeX Warning: Reference `tbl:IS_week' on page 56 undefined on input line 709.
+LaTeX Warning: Reference `tbl:IS_week' on page 57 undefined on input line 887.
 
 (./Figs/IS_annual_ORCL.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
@@ -1452,23 +1500,42 @@ isable this.
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
-Overfull \hbox (1.2093pt too wide) in paragraph at lines 743--744
+Overfull \hbox (1.2093pt too wide) in paragraph at lines 921--922
 [][] 
  []
 
 
-Overfull \hbox (0.86464pt too wide) in paragraph at lines 752--768
+Overfull \hbox (0.86464pt too wide) in paragraph at lines 930--946
+ [][] 
+ []
+
+(./Figs/OOS_annual_INTC.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/IS_annual_INTC.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/strategylegend.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+)
+Overfull \hbox (1.2093pt too wide) in paragraph at lines 985--986
+[][] 
+ []
+
+
+Overfull \hbox (4.78127pt too wide) in paragraph at lines 994--1010
  [][] 
  []
 
 )
 No file Figs/samplepath_dscr_paths.bbl.
 
-FiXme Summary: Number of notes: 8,
+FiXme Summary: Number of notes: 7,
 (FiXme)        Number of warnings: 0,
 (FiXme)        Number of errors: 0,
 (FiXme)        Number of fatal errors: 0,
-(FiXme)        Total: 8.
+(FiXme)        Total: 7.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 44.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 44.
@@ -1480,16 +1547,16 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 44.
  ) 
 Here is how much of TeX's memory you used:
- 27427 strings out of 495028
- 600616 string characters out of 6181497
- 1270589 words of memory out of 7000000
- 29900 multiletter control sequences out of 15000+600000
+ 27490 strings out of 495028
+ 601826 string characters out of 6181497
+ 2732703 words of memory out of 7000000
+ 29919 multiletter control sequences out of 15000+600000
  22826 words of font info for 87 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 66i,23n,91p,3294b,2106s stack positions out of 5000i,500n,10000p,7000000b,80000s
+ 66i,23n,91p,3294b,2102s stack positions out of 5000i,500n,10000p,7000000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on Figs/samplepath_dscr_paths.pdf (1 page, 24257 bytes).
+Output written on Figs/samplepath_dscr_paths.pdf (1 page, 22232 bytes).
 PDF statistics:
  24 PDF objects out of 1000 (max. 8388607)
  18 compressed objects within 1 object stream
