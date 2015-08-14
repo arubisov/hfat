@@ -248,3 +248,15 @@ Combined with the identical conditions on the sell depth, we have the conditions
 \boxed{ \frac{1}{\kappa} - 2\xi  \leq {\delta^\pm}^* \leq \frac{1}{\kappa} }
 \end{equation}
 A possible interpretation of the unexpected upper bound on the posting depth is that if the calculated buy (resp. sell) depth is `sufficiently' large so as to indicate a disposition against buying (resp. selling), then it is actually optimal to sell (resp. buy) instead.
+
+From equation \eqref{eq:buyMOfeedbackcase1}, we know that a buy market order is executed under the condition:
+\begin{align}
+\text{Buy MO} & \iff -2 \xi \cdot \indicator_{q \geq 0} = h(t,\bz,q) - h(t, \bz, q+1)  \\
+& & = {\delta^+}^* - \frac{1}{\kappa} + 2 \xi \cdot \indicator_{q \leq -1} \\
+& \iff \begin{cases} -2 \xi, \quad q \geq 0 \\ 0, \quad q < 0 \end{cases} = 
+\begin{cases} {\delta^+}^* - \frac{1}{\kappa}, \quad q \geq 0 \\
+{\delta^+}^* - \frac{1}{\kappa} + 2 \xi, \quad q < 0 \end{cases} \\
+& \iff \begin{cases} {\delta^+}^* = \frac{1}{\kappa} -2 \xi, \quad q \geq 0 \\
+{\delta^+}^* =  \frac{1}{\kappa} - 2 \xi, \quad q < 0 \end{cases} \\
+& \iff {\delta^+}^* =  \frac{1}{\kappa} - 2 \xi \label{eq:ctsBuycondition}
+\end{align}

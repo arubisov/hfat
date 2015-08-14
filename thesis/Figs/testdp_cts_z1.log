@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.3)  14 AUG 2015 17:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.3)  14 AUG 2015 17:47
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -891,7 +891,7 @@ File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 )
 \c@thm=\count183
 )
-No file Figs/dp_dscr_z15.aux.
+No file Figs/testdp_cts_z1.aux.
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
 LaTeX Font Info:    ... okay on input line 10.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
@@ -1286,21 +1286,9 @@ isable this.
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/dp_dscr_z15.tikz
-\openout4 = `Figs/dp_dscr_z15.dpth'.
-
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-Missing character: There is no ; in font nullfont!
-[46
-
-{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]) (./Fig
-s/dp_cts_nFPC_z15.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/dp_cts_nFPC_z15.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/dp_dscr_nFPC_z15.tikz
@@ -1310,15 +1298,23 @@ isable this.
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/test/dp_cts_z1.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/test/dp_dscr_z1.tikz
+\openout4 = `Figs/testdp_cts_z1.dpth'.
+
+[46
+
+{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]) (./Fig
+s/test/dp_dscr_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/test/dp_cts_z1.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/test/dp_dscr_z1.tikz
+\openout4 = `Figs/testdp_cts_z1.dpth'.
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.46}) has
+ been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.27429 \end{tikzpicture}
+                         % [46]) (./Figs/test/dp_dscr_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/deltalegend.tikz
@@ -1558,7 +1554,7 @@ Overfull \hbox (0.86464pt too wide) in paragraph at lines 917--933
  []
 
 )
-No file Figs/dp_dscr_z15.bbl.
+No file Figs/testdp_cts_z1.bbl.
 
 FiXme Summary: Number of notes: 8,
 (FiXme)        Number of warnings: 0,
@@ -1576,19 +1572,22 @@ LaTeX Warning: There were undefined references.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 44.
  ) 
 Here is how much of TeX's memory you used:
- 30324 strings out of 495109
- 699140 string characters out of 6182810
- 2870505 words of memory out of 5000000
- 32693 multiletter control sequences out of 15000+600000
+ 30338 strings out of 495109
+ 699459 string characters out of 6182810
+ 3234510 words of memory out of 5000000
+ 32706 multiletter control sequences out of 15000+600000
  22826 words of font info for 87 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 65i,23n,84p,1649b,2223s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 65i,23n,84p,1649b,2231s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb
-></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on Figs/dp_dscr_z15.pdf (1 page, 19239 bytes).
+></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
+/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></us
+r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr
+/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
+Output written on Figs/testdp_cts_z1.pdf (2 pages, 77594 bytes).
 PDF statistics:
- 24 PDF objects out of 1000 (max. 8388607)
- 18 compressed objects within 1 object stream
+ 39 PDF objects out of 1000 (max. 8388607)
+ 29 compressed objects within 1 object stream
  2 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

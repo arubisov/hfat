@@ -193,8 +193,186 @@ Time (s)
   \label{fig:comp_dp_z15}
 \end{figure}
 
-\fxnote{Comments on deltaplus!!}
- The surge in market orders seen for the Cts w nFPC strategy can be explained by the difference in the $\delta^\pm$ plots. From the stochastic analysis chapter, we know that if $q < 0 $ and $\delta^+ =0$, or if $q > 0$ and $\delta^+ = 1/\kappa$, then we execute a buy MO. Likewise, if $q < 0 $ and $\delta^- =1/\kappa$, or if $q > 0$ and $\delta^- = 0$, then we execute a sell MO. In \autoref{fig:comp_dp_z1} we see that we have $\delta^+ = 0$ for almost all inventory values, and in \autoref{fig:comp_dp_z15} we have  $\delta^+ = 1/\kappa$ for almost all inventory values. This tells us that when the Markov chain state is in one of the non-neutral states, the Cts w nFPC strategy will execute market orders when possible, as it expects prices to move in the corresponding direction.
+\begin{figure}
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{testdp_cts_z1}
+  \input{Figs/test/dp_cts_z1.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{testdp_dscr_z1}
+  \input{Figs/test/dp_dscr_z1.tikz} 
+  \caption{Discrete Time}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{testdp_cts_z1}
+  \input{Figs/test/dp_cts_z1.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{testdp_dscr_z1}
+  \input{Figs/test/dp_dscr_z1.tikz} 
+  \caption{Discrete Time}
+\end{subfigure}\\
+
+\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+    Depth $\delta^+$}%
+}}\hspace{0pt plus 1filll}\null
+
+Time (s)
+
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  \centering
+  \tikzsetnextfilename{deltalegend}
+  \input{Figs/deltalegend.tikz} 
+\end{subfigure}%
+  \caption{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.}
+  \label{fig:comp_dp_z1}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{testdp_cts_z8}
+  \input{Figs/test/dp_cts_z8.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{testdp_dscr_z8}
+  \input{Figs/test/dp_dscr_z8.tikz} 
+  \caption{Discrete Time}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{testdp_cts_z8}
+  \input{Figs/test/dp_cts_z8.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{testdp_dscr_z8}
+  \input{Figs/test/dp_dscr_z8.tikz} 
+  \caption{Discrete Time}
+\end{subfigure}\\
+
+\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+    Depth $\delta^+$}%
+}}\hspace{0pt plus 1filll}\null
+
+Time (s)
+
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  \centering
+  \tikzsetnextfilename{deltalegend}
+  \input{Figs/deltalegend.tikz} 
+\end{subfigure}%
+  \caption{Optimal buy depths $\delta^+$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.}
+  \label{fig:comp_dp_z8}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{testdp_cts_z15}
+  \input{Figs/test/dp_cts_z15.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{testdp_dscr_z15}
+  \input{Figs/test/dp_dscr_z15.tikz} 
+  \caption{Discrete Time}
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{testdp_cts_z15}
+  \input{Figs/test/dp_cts_z15.tikz}
+  \caption{Continuous Time}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{testdp_dscr_z15}
+  \input{Figs/test/dp_dscr_z15.tikz} 
+  \caption{Discrete Time}
+\end{subfigure}\\
+
+\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+    Depth $\delta^+$}%
+}}\hspace{0pt plus 1filll}\null
+
+Time (s)
+
+\vspace{1cm}
+\begin{subfigure}{\linewidth}
+  \centering
+  \tikzsetnextfilename{deltalegend}
+  \input{Figs/deltalegend.tikz} 
+\end{subfigure}%
+  \caption{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.}
+  \label{fig:comp_dp_z15_test}
+\end{figure}
+
+From \eqref{eq:ctsBuycondition}, we know that a buy market order is executed whenever
+\begin{equation}
+{\delta^+}^* =  \frac{1}{\kappa} - 2 \xi
+\end{equation}
+and likewise, a sell market order whenever
+\begin{equation}
+{\delta^-}^* =  \frac{1}{\kappa} - 2 \xi
+\end{equation}
+In \autoref{fig:comp_dp_z1} under continuous time, we see that we have $\delta^+ = 0$ for almost all inventory values. This tells us that when the Markov chain state is in one of the non-neutral states, the Cts w nFPC strategy will execute market orders when possible, as it expects prices to move in the corresponding direction.
+
+A symmetry is evident between $\delta^\pm$ for opposite Markov chain states. For example, in figure <INSERT HERE> we compare $\delta^+$ for z=1 with $\delta^-$ for z = 15. It's almost a mirror image. Also o
+
+- symmetry between delta pm
+- stability beyond 600s, which is 10min
+- propensity for executing MOs
 
 \begin{figure}
 \centering
