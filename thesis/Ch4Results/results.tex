@@ -218,8 +218,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_cts_z1}
-  \input{Figs/test/dp_cts_z1.tikz}
+  \tikzsetnextfilename{testdp_cts_nFPC_z1}
+  \input{Figs/test/dp_cts_nFPC_z1.tikz}
   \caption{Continuous Time}
 \end{subfigure}%
 \hfill%
@@ -227,8 +227,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_dscr_z1}
-  \input{Figs/test/dp_dscr_z1.tikz} 
+  \tikzsetnextfilename{testdp_dscr_nFPC_z1}
+  \input{Figs/test/dp_dscr_nFPC_z1.tikz} 
   \caption{Discrete Time}
 \end{subfigure}\\
 
@@ -273,8 +273,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_cts_z8}
-  \input{Figs/test/dp_cts_z8.tikz}
+  \tikzsetnextfilename{testdp_cts_nFPC_z8}
+  \input{Figs/test/dp_cts_nFPC_z8.tikz}
   \caption{Continuous Time}
 \end{subfigure}%
 \hfill%
@@ -282,8 +282,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_dscr_z8}
-  \input{Figs/test/dp_dscr_z8.tikz} 
+  \tikzsetnextfilename{testdp_dscr_nFPC_z8}
+  \input{Figs/test/dp_dscr_nFPC_z8.tikz} 
   \caption{Discrete Time}
 \end{subfigure}\\
 
@@ -328,8 +328,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_cts_z15}
-  \input{Figs/test/dp_cts_z15.tikz}
+  \tikzsetnextfilename{testdp_cts_nFPC_z15}
+  \input{Figs/test/dp_cts_nFPC_z15.tikz}
   \caption{Continuous Time}
 \end{subfigure}%
 \hfill%
@@ -337,8 +337,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_dscr_z15}
-  \input{Figs/test/dp_dscr_z15.tikz} 
+  \tikzsetnextfilename{testdp_dscr_nFPC_z15}
+  \input{Figs/test/dp_dscr_nFPC_z15.tikz} 
   \caption{Discrete Time}
 \end{subfigure}\\
 
@@ -358,22 +358,24 @@ Time (s)
   \caption{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.}
   \label{fig:comp_dp_z15_test}
 \end{figure}
+The first notable conclusion we can make is the symmetry that has emerged between $\delta^+$ and $\delta^-$ in `opposite' Markov states. This is evident when comparing $\delta^+$ in $Z=(-1,-1)$ (\autoref{fig:comp_dp_z1}) with $\delta^-$ in $Z=(+1,+1)$ (\autoref{fig:comp_dm_z15}), $\delta^+$ in $Z=(0,0)$ (\autoref{fig:comp_dp_z8}) with $\delta^-$ in $Z=(0,0)$ (\autoref{fig:comp_dm_z8}), and $\delta^+$ in $Z=(+1,+1)$ (\autoref{fig:comp_dp_z15}) with $\delta^-$ in $Z=(-1,-1)$ (\autoref{fig:comp_dm_z1}). Thus, we focus the discussion here on the behavior of $\delta^+$.
 
-From \eqref{eq:ctsBuycondition}, we know that a buy market order is executed whenever
-\begin{equation}
-{\delta^+}^* =  \frac{1}{\kappa} - 2 \xi
-\end{equation}
-and likewise, a sell market order whenever
-\begin{equation}
-{\delta^-}^* =  \frac{1}{\kappa} - 2 \xi
-\end{equation}
-In \autoref{fig:comp_dp_z1} under continuous time, we see that we have $\delta^+ = 0$ for almost all inventory values. This tells us that when the Markov chain state is in one of the non-neutral states, the Cts w nFPC strategy will execute market orders when possible, as it expects prices to move in the corresponding direction.
+In this calibration we have taken $\kappa=100$ and $\xi = 0.005$. From \eqref{eq:ctsBuycondition}, we thus know that a necessary condition for a buy market order to be executed is ${\delta^+}^* =  \frac{1}{\kappa} - 2 \xi = 0$.
 
-A symmetry is evident between $\delta^\pm$ for opposite Markov chain states. For example, in figure <INSERT HERE> we compare $\delta^+$ for z=1 with $\delta^-$ for z = 15. It's almost a mirror image. Also o
+{\bf Markov State $Z=(-1,-1)$ (\autoref{fig:comp_dp_z1})} \\
+{\bf Cts versus Cts w nFPC:} For $q \geq 0$, both strategies post aggressive bid depths that suggest an inclination to buy. The nFPC strategy is less aggressive for $q<0$, posting closer to zero depth only for larger short positions.  \\
+{\bf Dscr versus Dscr w nFPC:} The behaviour of these two calibrations is very similar. Both models show a discontinuity in dynamics at $q=0$, where at $q=-1$ it is posting at maximal depth, at $q=0$ it jumps to approximately \$0.006, and at $q=1$ again jumps lower. Otherwise, the nFPC strategy posts slightly more aggressively only when $q=1$ or 2. \\
+{\bf Cts vs Dscr:} These models produce behaviours that are worlds apart. Whereas the Cts model seems to be saying that it wants to take this opportunity to go long, perhaps stocking up inventory while prices are low, the Dscr strategy suggests it's pulling out and avoiding purchasing. 
 
-- symmetry between delta pm
-- stability beyond 600s, which is 10min
-- propensity for executing MOs
+{\bf Markov State $Z=(0,0)$ (\autoref{fig:comp_dp_z8})}\\
+Here we see near identical model behaviour. Similarities or correlations in backtesting performance can likely be attributed to this behaviour, as the majority of the day is spent in a Markov state for which $\Delta S = 0$, as seen here. (Recall that $\rho$, by contrast, is computed via evenly spaced percentiles symmetric around zero, so that time spent in each imbalance state is evenly distributed.)
+
+{\bf Markov State $Z=(+1,+1)$ (\autoref{fig:comp_dp_z15})}\\
+{\bf Cts versus Cts w nFPC:} We see a nearly symmetric behaviour compared with the opposite Markov state. Here for $q \leq 0$, both strategies post maximal bid depths, suggesting a disinclination toward buying. The nFPC strategy is more aggressive for $q>0$ and small inventory positions.\\
+{\bf Dscr versus Dscr w nFPC:} Again these calibrations yield very similar behaviours, and as in the Cts case, it is near opposite to what was seen in the opposite Markov state.\\
+{\bf Cts vs Dscr:} As before, these two models display near opposite behaviours between each other. The Dscr model is posting aggressive depths near zero in an attempt to purchase, while the Cts model is posting deeper into the book to avoid purchasing.
+
+Finally, we note that we see stability in the posting depths beyond a time horizon of 600 seconds. This is consistent with the findings in \autoref{tbl:pvalues}, where we saw that the transition probability matrix $\mat{P}(t)$ converged for $\texttt{ORCL}$ within 404 timesteps of 1s each. \fxnote{If gonna use the colorbar, change to INTC and 771 timesteps, but note error threshold $10^{-10}$}
 
 \begin{figure}
 \centering
@@ -585,8 +587,8 @@ Dscr w nFPC  & -0.0015  &  0.0034 &  -0.0165 &   1.0000 \\
 However, we find instead that the returns are co-integrated. On running the Engle-Granger cointegration test with statistics computed using an augmented Dickey-Fuller test of residuals, the $\tau$-test and $z$-test both returned $p$-values of 0.001, thus rejecting the null hypothesis of no co-integration. Indeed, the co-integration relation plotted in \autoref{fig:cointeg_relation} displays stationarity, thus confirming the existence of a co-integration relation.
 \begin{figure}[H]
   \centering
-  \setlength\figureheight{0.5\linewidth} 
-  \setlength\figurewidth{0.5\linewidth}
+  \setlength\figureheight{0.2\linewidth} 
+  \setlength\figurewidth{0.35\linewidth}
   \tikzsetnextfilename{cointeg_relation}
   \input{Figs/cointeg_relation.tikz}
   \caption{Co-integration relation of the four stochastic control methods.}
@@ -612,7 +614,7 @@ Dscr w nFPC  &  523 & 1287 \\
 \label{tbl:ORCL_comp4stoch_numt}
 \end{table}
 
-We now inspect the behaviour of the strategies on a finer timescale. 
+To better see how the strategies differ in behaviour, in the figures that follow we show a short sample path on a fine timescale spanning about 2 minutes. In \autoref{fig:samplepath_paths} we plot the midprice path (black line), the optimal posting depths on either side of the real bid/ask prices (gray lines), our execution of market orders (dark blue and dark green), and track incoming external market orders (light blue and light green) that either fill our limit orders (solid lines) or do not (dashed lines). \autoref{fig:samplepath_depths} plots just the optimal depths as they react to the changing Markov state, allowing a better comparison of the behaviours, as well as highlighting the almost-symmetric behaviour between $\delta^+$ and $delta^-$. \autoref{fig:samplepath_pnl} and \autoref{fig:samplepath_inv} show the effect on PnL and inventory, respectively. 
 
 \begin{figure}
 \centering
@@ -672,51 +674,6 @@ Time (h)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{samplepath_cts_bookvalue}
-  \input{Figs/samplepath_cts_bookvalue.tikz}
-\end{subfigure}%
-\hfill%
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{samplepath_dscr_bookvalue}
-  \input{Figs/samplepath_dscr_bookvalue.tikz} 
-\end{subfigure}\\
-\vspace{1cm}
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{samplepath_cts_nFPC_bookvalue}
-  \input{Figs/samplepath_cts_nFPC_bookvalue.tikz}
-\end{subfigure}%
-\hfill%
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{samplepath_dscr_nFPC_bookvalue}
-  \input{Figs/samplepath_dscr_nFPC_bookvalue.tikz} 
-\end{subfigure}\\
-\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
-    PnL}%
-}}\hspace{0pt plus 1filll}\null
-
-Time (h)
-
-\vspace{1cm}%
-  \caption{Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.}
-  \label{fig:samplepath_pnl}
-\end{figure}
-
-\begin{figure}
-\centering
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
   \tikzsetnextfilename{samplepath_cts_depths}
   \input{Figs/samplepath_cts_depths.tikz}
 \end{subfigure}%
@@ -761,6 +718,51 @@ Time (h)
 \end{subfigure}%
   \caption{Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.}
   \label{fig:samplepath_depths}
+\end{figure}
+
+\begin{figure}
+\centering
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_cts_bookvalue}
+  \input{Figs/samplepath_cts_bookvalue.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_dscr_bookvalue}
+  \input{Figs/samplepath_dscr_bookvalue.tikz} 
+\end{subfigure}\\
+\vspace{1cm}
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_cts_nFPC_bookvalue}
+  \input{Figs/samplepath_cts_nFPC_bookvalue.tikz}
+\end{subfigure}%
+\hfill%
+\begin{subfigure}{.45\linewidth}
+  \centering
+  \setlength\figureheight{\linewidth} 
+  \setlength\figurewidth{\linewidth}
+  \tikzsetnextfilename{samplepath_dscr_nFPC_bookvalue}
+  \input{Figs/samplepath_dscr_nFPC_bookvalue.tikz} 
+\end{subfigure}\\
+\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+    PnL}%
+}}\hspace{0pt plus 1filll}\null
+
+Time (h)
+
+\vspace{1cm}%
+  \caption{Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.}
+  \label{fig:samplepath_pnl}
 \end{figure}
 
 \begin{figure}

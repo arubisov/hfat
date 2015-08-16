@@ -9,11 +9,12 @@ A level-1 auxiliary file: Ch2Exploratory/exploratory.aux
 A level-1 auxiliary file: Ch3Numerical/continuous.aux
 A level-1 auxiliary file: Ch3Numerical/discrete.aux
 A level-1 auxiliary file: Ch4Results/results.aux
+A level-1 auxiliary file: Ch5Conclusion/conclusion.aux
 The style file: apalike.bst
 Database file #1: References/references.bib
 You've used 15 entries,
             1935 wiz_defined-function locations,
-            587 strings with 6187 characters,
+            588 strings with 6215 characters,
 and the built_in function-call counts, 5362 in all, are:
 = -- 520
 > -- 199

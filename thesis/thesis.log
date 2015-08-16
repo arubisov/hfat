@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  14 AUG 2015 18:44
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  16 AUG 2015 16:04
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -329,6 +329,7 @@ File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
+Package hyperref Info: Option `final' set `true' on input line 4319.
 Package hyperref Info: Option `colorlinks' set `true' on input line 4319.
 Package hyperref Info: Hyper figures OFF on input line 4443.
 Package hyperref Info: Link nesting OFF on input line 4448.
@@ -1333,43 +1334,43 @@ the colormap version of q?' on input line 196.
 ===== Image 'Figs/testdp_cts_z1' is up-to-date. ======
 ) (./Figs/test/dp_dscr_z1.tikz
 ===== Image 'Figs/testdp_dscr_z1' is up-to-date. ======
-) (./Figs/test/dp_cts_z1.tikz
-===== Image 'Figs/testdp_cts_z1' is up-to-date. ======
-) (./Figs/test/dp_dscr_z1.tikz
-===== Image 'Figs/testdp_dscr_z1' is up-to-date. ======
+) (./Figs/test/dp_cts_nFPC_z1.tikz
+===== Image 'Figs/testdp_cts_nFPC_z1' is up-to-date. ======
+) (./Figs/test/dp_dscr_nFPC_z1.tikz
+===== Image 'Figs/testdp_dscr_nFPC_z1' is up-to-date. ======
 ) (./Figs/altdeltalegend.tikz
 ===== Image 'Figs/altdeltalegend' is up-to-date. ======
 )
 
-LaTeX Warning: Float too large for page by 32.21426pt on input line 250.
+LaTeX Warning: Float too large for page by 16.06796pt on input line 250.
 
 (./Figs/test/dp_cts_z8.tikz
 ===== Image 'Figs/testdp_cts_z8' is up-to-date. ======
 ) (./Figs/test/dp_dscr_z8.tikz
 ===== Image 'Figs/testdp_dscr_z8' is up-to-date. ======
-) (./Figs/test/dp_cts_z8.tikz
-===== Image 'Figs/testdp_cts_z8' is up-to-date. ======
-) (./Figs/test/dp_dscr_z8.tikz
-===== Image 'Figs/testdp_dscr_z8' is up-to-date. ======
+) (./Figs/test/dp_cts_nFPC_z8.tikz
+===== Image 'Figs/testdp_cts_nFPC_z8' is up-to-date. ======
+) (./Figs/test/dp_dscr_nFPC_z8.tikz
+===== Image 'Figs/testdp_dscr_nFPC_z8' is up-to-date. ======
 ) (./Figs/altdeltalegend.tikz
 ===== Image 'Figs/altdeltalegend' is up-to-date. ======
 )
 
-LaTeX Warning: Float too large for page by 17.71426pt on input line 305.
+LaTeX Warning: Float too large for page by 1.56796pt on input line 305.
 
 (./Figs/test/dp_cts_z15.tikz
 ===== Image 'Figs/testdp_cts_z15' is up-to-date. ======
 ) (./Figs/test/dp_dscr_z15.tikz
 ===== Image 'Figs/testdp_dscr_z15' is up-to-date. ======
-) (./Figs/test/dp_cts_z15.tikz
-===== Image 'Figs/testdp_cts_z15' is up-to-date. ======
-) (./Figs/test/dp_dscr_z15.tikz
-===== Image 'Figs/testdp_dscr_z15' is up-to-date. ======
+) (./Figs/test/dp_cts_nFPC_z15.tikz
+===== Image 'Figs/testdp_cts_nFPC_z15' is up-to-date. ======
+) (./Figs/test/dp_dscr_nFPC_z15.tikz
+===== Image 'Figs/testdp_dscr_nFPC_z15' is up-to-date. ======
 ) (./Figs/altdeltalegend.tikz
 ===== Image 'Figs/altdeltalegend' is up-to-date. ======
 )
 
-LaTeX Warning: Float too large for page by 32.21426pt on input line 360.
+LaTeX Warning: Float too large for page by 16.06796pt on input line 360.
 
 [52] [53 <./Figs/dp_cts_z1.pdf> <./Figs/dp_dscr_z1.pdf> <./Figs/dp_cts_nFPC_z1.
 pdf> <./Figs/dp_dscr_nFPC_z1.pdf> <./Figs/deltalegend.pdf>] [54 <./Figs/dp_cts_
@@ -1377,11 +1378,15 @@ z8.pdf> <./Figs/dp_dscr_z8.pdf> <./Figs/dp_cts_nFPC_z8.pdf> <./Figs/dp_dscr_nFP
 C_z8.pdf> <./Figs/deltalegend.pdf>] [55 <./Figs/dp_cts_z15.pdf> <./Figs/dp_dscr
 _z15.pdf> <./Figs/dp_cts_nFPC_z15.pdf> <./Figs/dp_dscr_nFPC_z15.pdf> <./Figs/de
 ltalegend.pdf>] [56 <./Figs/testdp_cts_z1.pdf> <./Figs/testdp_dscr_z1.pdf> <./F
-igs/testdp_cts_z1.pdf> <./Figs/testdp_dscr_z1.pdf> <./Figs/altdeltalegend.pdf>]
-[57 <./Figs/testdp_cts_z8.pdf> <./Figs/testdp_dscr_z8.pdf> <./Figs/testdp_cts_z
-8.pdf> <./Figs/testdp_dscr_z8.pdf> <./Figs/altdeltalegend.pdf>] [58 <./Figs/tes
-tdp_cts_z15.pdf> <./Figs/testdp_dscr_z15.pdf> <./Figs/testdp_cts_z15.pdf> <./Fi
-gs/testdp_dscr_z15.pdf> <./Figs/altdeltalegend.pdf>] (./Figs/dm_cts_z1.tikz
+igs/testdp_cts_nFPC_z1.pdf> <./Figs/testdp_dscr_nFPC_z1.pdf> <./Figs/altdeltale
+gend.pdf>] [57 <./Figs/testdp_cts_z8.pdf> <./Figs/testdp_dscr_z8.pdf> <./Figs/t
+estdp_cts_nFPC_z8.pdf> <./Figs/testdp_dscr_nFPC_z8.pdf> <./Figs/altdeltalegend.
+pdf>] [58 <./Figs/testdp_cts_z15.pdf> <./Figs/testdp_dscr_z15.pdf> <./Figs/test
+dp_cts_nFPC_z15.pdf> <./Figs/testdp_dscr_nFPC_z15.pdf> <./Figs/altdeltalegend.p
+df>]
+FiXme Note: 'If gonna use the colorbar, change to INTC and 771 timesteps, but n
+ote error threshold $10^{-10}$' on input line 378.
+ (./Figs/dm_cts_z1.tikz
 ===== Image 'Figs/dm_cts_z1' is up-to-date. ======
 ) (./Figs/dm_dscr_z1.tikz
 ===== Image 'Figs/dm_dscr_z1' is up-to-date. ======
@@ -1393,7 +1398,7 @@ gs/testdp_dscr_z15.pdf> <./Figs/altdeltalegend.pdf>] (./Figs/dm_cts_z1.tikz
 ===== Image 'Figs/deltalegend' is up-to-date. ======
 )
 
-LaTeX Warning: Float too large for page by 18.05539pt on input line 431.
+LaTeX Warning: Float too large for page by 18.05539pt on input line 433.
 
 (./Figs/dm_cts_z8.tikz
 ===== Image 'Figs/dm_cts_z8' is up-to-date. ======
@@ -1407,7 +1412,7 @@ LaTeX Warning: Float too large for page by 18.05539pt on input line 431.
 ===== Image 'Figs/deltalegend' is up-to-date. ======
 )
 
-LaTeX Warning: Float too large for page by 3.55539pt on input line 486.
+LaTeX Warning: Float too large for page by 3.55539pt on input line 488.
 
 (./Figs/dm_cts_z15.tikz
 ===== Image 'Figs/dm_cts_z15' is up-to-date. ======
@@ -1421,7 +1426,7 @@ LaTeX Warning: Float too large for page by 3.55539pt on input line 486.
 ===== Image 'Figs/deltalegend' is up-to-date. ======
 )
 
-LaTeX Warning: Float too large for page by 18.05539pt on input line 541.
+LaTeX Warning: Float too large for page by 18.05539pt on input line 543.
 
 [59] [60 <./Figs/dm_cts_z1.pdf> <./Figs/dm_dscr_z1.pdf> <./Figs/dm_cts_nFPC_z1.
 pdf> <./Figs/dm_dscr_nFPC_z1.pdf> <./Figs/deltalegend.pdf>] [61 <./Figs/dm_cts_
@@ -1434,12 +1439,12 @@ ltalegend.pdf>] (./Figs/ORCL_comp4stoch.tikz
 ===== Image 'Figs/ORCL_comp4stoch_inv' is up-to-date. ======
 )
 
-LaTeX Warning: Float too large for page by 19.01372pt on input line 567.
+LaTeX Warning: Float too large for page by 19.01372pt on input line 569.
 
 (./Figs/cointeg_relation.tikz
 ===== Image 'Figs/cointeg_relation' is up-to-date. ======
-) [63] [64 <./Figs/ORCL_comp4stoch.pdf> <./Figs/ORCL_comp4stoch_inv.pdf>]
-[65 <./Figs/cointeg_relation.pdf>] (./Figs/samplepath_cts_paths.tikz
+) [63 <./Figs/cointeg_relation.pdf>] [64 <./Figs/ORCL_comp4stoch.pdf> <./Figs/O
+RCL_comp4stoch_inv.pdf>] [65] (./Figs/samplepath_cts_paths.tikz
 ===== Image 'Figs/samplepath_cts_paths' is up-to-date. ======
 ) (./Figs/samplepath_dscr_paths.tikz
 ===== Image 'Figs/samplepath_dscr_paths' is up-to-date. ======
@@ -1449,14 +1454,6 @@ LaTeX Warning: Float too large for page by 19.01372pt on input line 567.
 ===== Image 'Figs/samplepath_dscr_nFPC_paths' is up-to-date. ======
 ) (./Figs/samplepathslegend.tikz
 ===== Image 'Figs/samplepathslegend' is up-to-date. ======
-) (./Figs/samplepath_cts_bookvalue.tikz
-===== Image 'Figs/samplepath_cts_bookvalue' is up-to-date. ======
-) (./Figs/samplepath_dscr_bookvalue.tikz
-===== Image 'Figs/samplepath_dscr_bookvalue' is up-to-date. ======
-) (./Figs/samplepath_cts_nFPC_bookvalue.tikz
-===== Image 'Figs/samplepath_cts_nFPC_bookvalue' is up-to-date. ======
-) (./Figs/samplepath_dscr_nFPC_bookvalue.tikz
-===== Image 'Figs/samplepath_dscr_nFPC_bookvalue' is up-to-date. ======
 ) (./Figs/samplepath_cts_depths.tikz
 ===== Image 'Figs/samplepath_cts_depths' is up-to-date. ======
 ) (./Figs/samplepath_dscr_depths.tikz
@@ -1467,6 +1464,14 @@ LaTeX Warning: Float too large for page by 19.01372pt on input line 567.
 ===== Image 'Figs/samplepath_dscr_nFPC_depths' is up-to-date. ======
 ) (./Figs/samplepathslegend.tikz
 ===== Image 'Figs/samplepathslegend' is up-to-date. ======
+) (./Figs/samplepath_cts_bookvalue.tikz
+===== Image 'Figs/samplepath_cts_bookvalue' is up-to-date. ======
+) (./Figs/samplepath_dscr_bookvalue.tikz
+===== Image 'Figs/samplepath_dscr_bookvalue' is up-to-date. ======
+) (./Figs/samplepath_cts_nFPC_bookvalue.tikz
+===== Image 'Figs/samplepath_cts_nFPC_bookvalue' is up-to-date. ======
+) (./Figs/samplepath_dscr_nFPC_bookvalue.tikz
+===== Image 'Figs/samplepath_dscr_nFPC_bookvalue' is up-to-date. ======
 ) (./Figs/samplepath_cts_inventory.tikz
 ===== Image 'Figs/samplepath_cts_inventory' is up-to-date. ======
 ) (./Figs/samplepath_dscr_inventory.tikz
@@ -1477,11 +1482,11 @@ LaTeX Warning: Float too large for page by 19.01372pt on input line 567.
 ===== Image 'Figs/samplepath_dscr_nFPC_inventory' is up-to-date. ======
 ) [66] [67 <./Figs/samplepath_cts_paths.pdf> <./Figs/samplepath_dscr_paths.pdf>
  <./Figs/samplepath_cts_nFPC_paths.pdf> <./Figs/samplepath_dscr_nFPC_paths.pdf>
- <./Figs/samplepathslegend.pdf>] [68 <./Figs/samplepath_cts_bookvalue.pdf> <./F
-igs/samplepath_dscr_bookvalue.pdf> <./Figs/samplepath_cts_nFPC_bookvalue.pdf> <
-./Figs/samplepath_dscr_nFPC_bookvalue.pdf>] [69 <./Figs/samplepath_cts_depths.p
-df> <./Figs/samplepath_dscr_depths.pdf> <./Figs/samplepath_cts_nFPC_depths.pdf>
- <./Figs/samplepath_dscr_nFPC_depths.pdf> <./Figs/samplepathslegend.pdf>]
+ <./Figs/samplepathslegend.pdf>] [68 <./Figs/samplepath_cts_depths.pdf> <./Figs
+/samplepath_dscr_depths.pdf> <./Figs/samplepath_cts_nFPC_depths.pdf> <./Figs/sa
+mplepath_dscr_nFPC_depths.pdf> <./Figs/samplepathslegend.pdf>] [69 <./Figs/samp
+lepath_cts_bookvalue.pdf> <./Figs/samplepath_dscr_bookvalue.pdf> <./Figs/sample
+path_cts_nFPC_bookvalue.pdf> <./Figs/samplepath_dscr_nFPC_bookvalue.pdf>]
 [70 <./Figs/samplepath_cts_inventory.pdf> <./Figs/samplepath_dscr_inventory.pdf
 > <./Figs/samplepath_cts_nFPC_inventory.pdf> <./Figs/samplepath_dscr_nFPC_inven
 tory.pdf>] (./Figs/IS_sameday_FARO.tikz
@@ -1496,9 +1501,9 @@ tory.pdf>] (./Figs/IS_sameday_FARO.tikz
 ===== Image 'Figs/strategylegend' is up-to-date. ======
 )
 
-LaTeX Warning: Float too large for page by 7.08467pt on input line 915.
+LaTeX Warning: Float too large for page by 7.08467pt on input line 917.
 
-FiXme Note: 'commentary needed. compare stoch methods' on input line 917.
+FiXme Note: 'commentary needed. compare stoch methods' on input line 919.
 [71] [72 <./Figs/IS_sameday_FARO.pdf> <./Figs/IS_sameday_NTAP.pdf> <./Figs/IS_s
 ameday_ORCL.pdf> <./Figs/IS_sameday_INTC.pdf> <./Figs/strategylegend.pdf>]
 [73] (./Figs/IS_week_FARO.tikz
@@ -1512,12 +1517,12 @@ ameday_ORCL.pdf> <./Figs/IS_sameday_INTC.pdf> <./Figs/strategylegend.pdf>]
 ) (./Figs/strategylegend.tikz
 ===== Image 'Figs/strategylegend' is up-to-date. ======
 )
-Overfull \hbox (10.6562pt too wide) in paragraph at lines 983--1021
+Overfull \hbox (10.6562pt too wide) in paragraph at lines 985--1023
  [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 7.08467pt on input line 1023.
+LaTeX Warning: Float too large for page by 7.08467pt on input line 1025.
 
 [74] [75 <./Figs/IS_week_FARO.pdf> <./Figs/IS_week_NTAP.pdf> <./Figs/IS_week_OR
 CL.pdf> <./Figs/IS_week_INTC.pdf> <./Figs/strategylegend.pdf>] [76]
@@ -1528,7 +1533,7 @@ CL.pdf> <./Figs/IS_week_INTC.pdf> <./Figs/strategylegend.pdf>] [76]
 ) (./Figs/strategylegend.tikz
 ===== Image 'Figs/strategylegend' is up-to-date. ======
 )
-Overfull \hbox (0.86464pt too wide) in paragraph at lines 1072--1088
+Overfull \hbox (0.86464pt too wide) in paragraph at lines 1074--1090
  [][] 
  []
 
@@ -1538,7 +1543,7 @@ gylegend.pdf>] (./Figs/OOS_annual_INTC.tikz
 ) (./Figs/strategylegend.tikz
 ===== Image 'Figs/strategylegend' is up-to-date. ======
 )
-Overfull \hbox (4.78127pt too wide) in paragraph at lines 1136--1152
+Overfull \hbox (4.78127pt too wide) in paragraph at lines 1138--1154
  [][] 
  []
 
@@ -1561,11 +1566,11 @@ Missing character: There is no ± in font cmr12!
 
 ])
 
-FiXme Summary: Number of notes: 6,
+FiXme Summary: Number of notes: 7,
 (FiXme)        Number of warnings: 0,
 (FiXme)        Number of errors: 0,
 (FiXme)        Number of fatal errors: 0,
-(FiXme)        Total: 6.
+(FiXme)        Total: 7.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 45.
 [83]
@@ -1582,11 +1587,11 @@ Package rerunfilecheck Info: File `thesis.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 45.
  ) 
 Here is how much of TeX's memory you used:
- 28365 strings out of 495028
- 597776 string characters out of 6181497
- 2786386 words of memory out of 7000000
- 30319 multiletter control sequences out of 15000+600000
- 22830 words of font info for 87 fonts, out of 8000000 for 9000
+ 28385 strings out of 495028
+ 598105 string characters out of 6181497
+ 2846183 words of memory out of 7000000
+ 30330 multiletter control sequences out of 15000+600000
+ 24583 words of font info for 95 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  65i,23n,81p,1614b,609s stack positions out of 5000i,500n,10000p,7000000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></us
@@ -1605,20 +1610,21 @@ xtra/cmmib8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pf
 b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmtt12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/doublestr
-oke/dsrom12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/doublestroke/
-dsrom8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/m
-sbm10.pfb>
-Output written on thesis.pdf (83 pages, 1908501 bytes).
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/doublestroke/dsrom12.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/doublestroke/dsrom8.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on thesis.pdf (83 pages, 1965823 bytes).
 PDF statistics:
- 1905 PDF objects out of 2073 (max. 8388607)
- 1681 compressed objects within 17 object streams
- 341 named destinations out of 1000 (max. 500000)
+ 1914 PDF objects out of 2073 (max. 8388607)
+ 1688 compressed objects within 17 object streams
+ 339 named destinations out of 1000 (max. 500000)
  730 words of extra memory for PDF output out of 10000 (max. 10000000)
 

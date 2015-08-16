@@ -7,7 +7,7 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {4.1}{\ignorespaces Correlation of returns\relax }}{63}{table.caption.28}
-\contentsline {table}{\numberline {4.2}{\ignorespaces Number of trades comparison of the four stochastic control methods.\relax }}{66}{table.caption.30}
+\contentsline {table}{\numberline {4.2}{\ignorespaces Number of trades comparison of the four stochastic control methods.\relax }}{65}{table.caption.30}
 \contentsline {table}{\numberline {4.3}{\ignorespaces Averaged strategy performance results: in-sample backtesting using same-day calibration.\relax }}{73}{table.caption.36}
 \contentsline {table}{\numberline {4.4}{\ignorespaces Averaged strategy performance results: in-sample backtesting using a one-week offset for calibration.\relax }}{76}{table.caption.38}
 \contentsline {table}{\numberline {4.5}{\ignorespaces Averaged strategy performance results: in-sample backtesting on 2013 data, using amalgamated annual 2013 data for calibration.\relax }}{78}{table.caption.40}

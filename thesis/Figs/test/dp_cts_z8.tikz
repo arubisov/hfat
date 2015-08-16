@@ -33,8 +33,6 @@ width=\figurewidth,
 height=\figureheight,
 at={(0\figurewidth,0\figureheight)},
 scale only axis,
-point meta min=0,
-point meta max=1,
 every outer x axis line/.append style={black},
 every x tick label/.append style={font=\color{black}},
 xmin=0,
@@ -46,6 +44,11 @@ ymax=0.014,
 axis background/.style={fill=white},
 axis x line*=bottom,
 axis y line*=left,
+yticklabel style={
+        /pgf/number format/fixed,
+        /pgf/number format/precision=3
+},
+scaled y ticks=false
 ]
 \addplot [color=green,solid,forget plot]
   table[row sep=crcr]{%
