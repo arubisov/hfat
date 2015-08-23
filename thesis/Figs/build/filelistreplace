@@ -1,0 +1,15 @@
+IS_annual_INTC.tikz
+IS_annual_ORCL.tikz
+IS_sameday_FARO.tikz
+IS_sameday_INTC.tikz
+IS_sameday_NTAP.tikz
+IS_sameday_ORCL.tikz
+IS_week_FARO.tikz
+IS_week_INTC.tikz
+IS_week_NTAP.tikz
+IS_week_ORCL.tikz
+OOS_annual_AAPL.tikz
+OOS_annual_INTC.tikz
+ORCL_comp4stoch_inv.tikz
+ORCL_comp4stoch.tikz
+strategylegend.tikz

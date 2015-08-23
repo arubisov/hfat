@@ -4,4 +4,7 @@ To change start-up directory, edit:
 To edit global userpath, edit:
 /usr/local/MATLAB/R2013a_Student/toolbox/local/pathdef.m
 
+cat filelistreplace | xargs sed -i -- 's/mycolor4/dscr_nFPC_plot_color/g'
+
+find . -maxdepth 1 -type f -name "*NTAP*" -and -not -name "*.tikz" -exec rm -vf {} \;
 

@@ -26,7 +26,7 @@
 \usepackage{sidecap} % Typeset captions sideways
 \usepackage{subcaption}  % Support for sub-captions
 \usepackage{url} % Verbatim with URL-sensitive line breaks
-\usepackage[colorlinks = true, linkcolor = blue, urlcolor=blue, citecolor = blue]{hyperref}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue,citecolor=black]{hyperref}
 
 % Fixes a problem with how hyperref records item labels
 \makeatletter
@@ -51,9 +51,10 @@
 \usepackage{adjustbox}
 \usepackage{graphicx}
 \usepackage{pgfplots}
+\usetikzlibrary{patterns}	    % in order to define the diagonal hatching
 \usetikzlibrary{backgrounds}	% in order to frame a tikzpic
 \usetikzlibrary{external} 		% Externalization library to avoid plot re-generation
-\tikzexternalize[prefix=Figs/] % activate
+\tikzexternalize[prefix=Figs/build/] % activate
 \pgfplotsset{compat=newest} 
 \pgfplotsset{plot coordinates/math parser=false} 
 \newlength\figureheight 
@@ -62,12 +63,13 @@
 
 % ********************************** Tables ************************************
 \usepackage{booktabs}
+\usepackage{longtable}
 \newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
 
 %\restylefloat{table} % Set table floating, use \begin{table}[H] to fix its position.
 
 \usepackage{multicol}
-%\usepackage{multirow}
+\usepackage{multirow}
 \usepackage{relsize}	% For \mathsmaller command
 
 % ******************************* Line Spacing *********************************

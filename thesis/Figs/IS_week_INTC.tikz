@@ -4,10 +4,6 @@
 %  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
 %where you can also make suggestions and rate matlab2tikz.
 %
-\definecolor{mycolor1}{rgb}{0.25098,0.00000,0.38824}%
-\definecolor{mycolor2}{rgb}{0.00000,0.46275,0.00000}%
-\definecolor{mycolor3}{rgb}{0.00000,0.34902,0.34902}%
-\definecolor{mycolor4}{rgb}{0.58039,0.26275,0.00000}%
 %
 \begin{tikzpicture}[trim axis left, trim axis right]
 
@@ -38,7 +34,7 @@ scaled y ticks=false,
 legend style={legend cell align=left,align=left,draw=black,font=\small, legend pos=north west},
 every axis legend/.code={\renewcommand\addlegendentry[2][]{}}  %ignore legend locally
 ]
-\addplot [color=mycolor1,solid,line width=1.5pt]
+\addplot [color=cts_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
 1	0.331396165929232\\
 2	0.339499560527892\\
@@ -283,7 +279,7 @@ every axis legend/.code={\renewcommand\addlegendentry[2][]{}}  %ignore legend lo
 };
 \addlegendentry{Cts Stoch Ctrl};
 
-\addplot [color=mycolor2,solid,line width=1.5pt]
+\addplot [color=dscr_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
 1	0.258333332954965\\
 2	0.298395915529189\\
@@ -528,7 +524,7 @@ every axis legend/.code={\renewcommand\addlegendentry[2][]{}}  %ignore legend lo
 };
 \addlegendentry{Dscr Stoch Ctrl};
 
-\addplot [color=mycolor3,solid,line width=1.5pt]
+\addplot [color=cts_nFPC_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
 1	0.222263544979983\\
 2	0.198970727955836\\
@@ -773,7 +769,7 @@ every axis legend/.code={\renewcommand\addlegendentry[2][]{}}  %ignore legend lo
 };
 \addlegendentry{Cts Stoch Ctrl w NMC};
 
-\addplot [color=mycolor4,solid,line width=1.5pt]
+\addplot [color=dscr_nFPC_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
 1	0.336471609378567\\
 2	0.321901294212283\\

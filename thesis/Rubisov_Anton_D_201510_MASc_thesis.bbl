@@ -1,0 +1,152 @@
+\begin{thebibliography}{}
+
+\bibitem[Almgren and Chriss, 2001]{Almgren01}
+Almgren, R. and Chriss, N. (2001).
+\newblock Optimal execution of portfolio transactions.
+\newblock {\em Journal of Risk}, 3:5--40.
+
+\bibitem[Bak et~al., 1997]{Bak97}
+Bak, P., Paczuski, M., and Shubik, M. (1997).
+\newblock Price variations in a stock market with many agents.
+\newblock {\em Physica A: Statistical Mechanics and its Applications},
+  246(3):430--453.
+
+\bibitem[Bensoussan, 2008]{Bens08}
+Bensoussan, A. (2008).
+\newblock Impulse control in discrete time.
+\newblock {\em Georgian Mathematical Journal}, 15(3):439--454.
+
+\bibitem[Bertsimas and Lo, 1998]{Bertsimas98}
+Bertsimas, D. and Lo, A.~W. (1998).
+\newblock Optimal control of execution costs.
+\newblock {\em Journal of Financial Markets}, 1(1):1--50.
+
+\bibitem[Booth, 2015]{Booth15}
+Booth, A. (2015).
+\newblock {\em Automated Algorithmic Trading: Machine Learning and Agent-Based
+  Modelling in Complex Adaptive Financial Markets}.
+\newblock PhD thesis, University of Southampton.
+
+\bibitem[Cartea and Jaimungal, 2013]{cartea2013modelling}
+Cartea, {\'A}. and Jaimungal, S. (2013).
+\newblock Modelling asset prices for algorithmic and high-frequency trading.
+\newblock {\em Applied Mathematical Finance}, 20(6):512--547.
+
+\bibitem[Cartea and Jaimungal, 2015]{cartea2015incorporating}
+Cartea, {\'A}. and Jaimungal, S. (2015).
+\newblock Incorporating order-flow into optimal execution.
+\newblock {\em Available at SSRN 2557457}.
+
+\bibitem[Cartea et~al., 2015]{STA4505}
+Cartea, {\'A}., Jaimungal, S., and Penalva, J. (2015).
+\newblock {\em Algorithmic and High-Frequency Trading}.
+\newblock Cambridge University Press.
+
+\bibitem[Cartea et~al., 2014]{cartea2014buy}
+Cartea, {\'A}., Jaimungal, S., and Ricci, J. (2014).
+\newblock Buy low, sell high: A high frequency trading perspective.
+\newblock {\em SIAM Journal on Financial Mathematics}, 5(1):415--444.
+
+\bibitem[Coleman and Jarrow, 1998]{CS522}
+Coleman, T. and Jarrow, R.~A. (1998).
+\newblock Cs522 computational tools and methods for finance.
+\newblock Lecture Notes, Cornell University, Department of Computer Science.
+
+\bibitem[Cont et~al., 2010]{Cont10}
+Cont, R., Stoikov, S., and Talreja, R. (2010).
+\newblock A stochastic model for order book dynamics.
+\newblock {\em Operations Research}, 58(3):549--563.
+
+\bibitem[Gosavi, 2009]{gosavi2009reinforcement}
+Gosavi, A. (2009).
+\newblock Reinforcement learning: A tutorial survey and recent advances.
+\newblock {\em INFORMS Journal on Computing}, 21(2):178--192.
+
+\bibitem[Gould et~al., 2013]{Summary2013}
+Gould, M.~D., Porter, M.~A., Williams, S., McDonald, M., Fenn, D.~J., and
+  Howison, S.~D. (2013).
+\newblock Limit order books.
+\newblock {\em Quantitative Finance}, 13(11):1709--1742.
+
+\bibitem[Guilbaud and Pham, 2013]{guilbaud2013optimal}
+Guilbaud, F. and Pham, H. (2013).
+\newblock Optimal high-frequency trading with limit and market orders.
+\newblock {\em Quantitative Finance}, 13(1):79--94.
+
+\bibitem[Hasbrouck and Saar, 2013]{hasbrouck2013low}
+Hasbrouck, J. and Saar, G. (2013).
+\newblock Low-latency trading.
+\newblock {\em Journal of Financial Markets}, 16(4):646--679.
+
+\bibitem[Inamura, 2006]{inamura2006estimating}
+Inamura, Y. (2006).
+\newblock Estimating continuous time transition matrices from discretely
+  observed data.
+\newblock Technical report, Bank of Japan.
+
+\bibitem[Kurtz, 2004]{MAT833}
+Kurtz, T. (2004).
+\newblock Mat833 martingale problems and stochastic equations for markov
+  processes.
+\newblock Lecture Notes, University of Wisconsin - Madison, Department of
+  Mathematics.
+
+\bibitem[Kwong, 2015]{Kwong15}
+Kwong, R. (2015).
+\newblock Ece1639 analysis and control of stochastic systems.
+\newblock Lecture Notes, University of Toronto, Department of Electrical \&
+  Computer Engineering.
+
+\bibitem[Kyle, 1989]{Kyle1989}
+Kyle, A.~S. (1989).
+\newblock Informed speculation with imperfect competition.
+\newblock {\em The Review of Economic Studies}, 56(3):317--355.
+
+\bibitem[Laughlin et~al., 2014]{Laughlin14}
+Laughlin, G., Aguirre, A., and Grundfest, J. (2014).
+\newblock Information transmission between financial markets in chicago and new
+  york.
+\newblock {\em Financial Review}, 49(2):283--312.
+
+\bibitem[Lorenz, 2008]{lorenz2008optimal}
+Lorenz, J.~M. (2008).
+\newblock {\em Optimal trading algorithms: Portfolio transactions, multiperiod
+  portfolio selection, and competitive online search}.
+\newblock PhD thesis, Technische Universit{\"a}t M{\"u}nchen.
+
+\bibitem[Manyika et~al., 2011]{manyika2011big}
+Manyika, J., Chui, M., Brown, B., Bughin, J., Dobbs, R., Roxburgh, C., and
+  Byers, A.~H. (2011).
+\newblock Big data: The next frontier for innovation, competition, and
+  productivity.
+\newblock Technical report, McKinsey Global Institute.
+
+\bibitem[Rabiner, 1989]{rabiner1989tutorial}
+Rabiner, L.~R. (1989).
+\newblock A tutorial on hidden markov models and selected applications in
+  speech recognition.
+\newblock {\em Proceedings of the IEEE}, 77(2):257--286.
+
+\bibitem[Rubin and Collins, 2015]{rentech}
+Rubin, R. and Collins, M. (2015).
+\newblock How an exclusive hedge fund turbocharged its retirement plan.
+\newblock {\em Bloomberg Business}.
+
+\bibitem[Takahara, 2014]{STAT455}
+Takahara, G. (2014).
+\newblock Stat455 stochastic processes.
+\newblock Lecture Notes, Queen's University, Department of Mathematics and
+  Statistics.
+
+\bibitem[Tan and Yılmaz, 2002]{Tan02}
+Tan, B. and Yılmaz, K. (2002).
+\newblock Markov chain test for time dependence and homogeneity: An analytical
+  and empirical evaluation.
+\newblock {\em European Journal of Operational Research}, 137(3):524--543.
+
+\bibitem[Wei{\ss}bach and Walter, 2010]{Weiss10}
+Wei{\ss}bach, R. and Walter, R. (2010).
+\newblock A likelihood ratio test for stationarity of rating transitions.
+\newblock {\em Journal of Econometrics}, 155(2):188--194.
+
+\end{thebibliography}

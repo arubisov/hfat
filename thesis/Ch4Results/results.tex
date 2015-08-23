@@ -1,3 +1,7 @@
+\definecolor{cts_plot_color}{rgb}{ 0.9019608 , 0.3803922 , 0.0039216}%
+\definecolor{dscr_plot_color}{rgb}{ 0.3686275 , 0.2352941 , 0.6000000}%
+\definecolor{cts_nFPC_plot_color}{rgb}{ 0.9921569 , 0.7215686 , 0.3882353}%
+\definecolor{dscr_nFPC_plot_color}{rgb}{ 0.6980392 , 0.6705882 , 0.8235294}%
 \chapter{Results}
 
 In this chapter we explore the dynamics of the continuous time and discrete time models, and perform in-sample and out-of-sample backtests to compare the performance of the continuous and discrete time solutions to the stochastic optimal control problem.
@@ -12,7 +16,7 @@ time window for averaging order imbalance & $\Delta t_I$ & 1000ms \\
 number of imbalance bins & $\#_{bins}$ & 5 \\
 fill probability constant & $\kappa$ & 100 \\
 && \\
-\multicolumn{3}{p{\linewidth}}{For each daily calibration, we then computed the remaining parameters utilizing the following formulae:} \\
+\multicolumn{3}{p{\linewidth}}{For each daily calibration, we then computed the remaining parameters using the following formulae:} \\
 && \\
 infinitesimal generator matrix & $\mat{G}$ & \autoref{eq:MLEG} \\
 transition probability matrix & $\mat{P}$ & \autoref{eq:CTMCPG} \\
@@ -24,18 +28,184 @@ Additionally, $\xi$ was computed as half of the simple average of the bid-ask sp
 
 As was mentioned in Chapter 2, the exploratory data analysis done on the data made use of an unorthodox Markov chain, where its state at time $t$ was actually not determinable at time $t$ because the price change $\Delta S(t)$ was computed over the \emph{future} time interval $\Delta t_S$. (See \autoref{sec:2DCTMC}.) In the optimal stochastic control formulations, the Markov chain was defined instead such the price change was computed over the \emph{past} interval $\Delta t_S$. However, it was of interest to explore what results would be obtained if the calibration was still done using the non $\cF$-predictable method. A justification for doing so is that in a given Markov state $Z$, there is a state-dependent arrival rate of price updates, and there is a state-dependent distribution of jumps when a price update occurs. So that although the price change is measured over the future when calibrating, this really is a way of getting at the state-dependence of those price changes. In the following tests, this calibration method is denoted `w nFPC', standing for `with non-$\cF$-predictable calibration'.
 
-\section{Dynamics of \texorpdfstring{${\delta^{\pm}}^*$}{delta}}
+\section{Dynamics of the Optimal Posting Depths}
 
-We have solved the same stochastic control problem using both continuous and discrete time, which have yielded markedly different resulting formulae for the optimal limit order posting depths. In this section we explore the calibrated results obtained on an in-sample backtest on \texttt{ORCL}, both calibrating and backtesting using data from 2013-05-15. The dynamics of $\delta^\pm$ were obtained using a time-to-maturity of 100sec to best depict the behavior as we approached the end of day trading; as the time-to-maturity horizon increases, the postings depths tend to stabilize. 
+We have solved the same stochastic control problem using both continuous and discrete time, which have yielded markedly different resulting formulae for the optimal limit order posting depths. In this section we explore the calibrated results obtained on an in-sample backtest on \texttt{INTC}, calibrating on amalgamated data for the entire 2013 trading year. The dynamics of $\delta^\pm$ were obtained using a time-to-maturity of 600sec to best depict the behavior as we approached the end of day trading; as the time-to-maturity horizon increases, the postings depths tend to stabilize. 
 
+%\begin{figure}
+%\centering
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dp_cts_z1}
+%  \input{Figs/dp_cts_z1.tikz}
+%  \caption{Continuous Time}
+%\end{subfigure}%
+%\hfill%
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dp_dscr_z1}
+%  \input{Figs/dp_dscr_z1.tikz} 
+%  \caption{Discrete Time}
+%\end{subfigure}\\
+%\vspace{1cm}
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dp_cts_nFPC_z1}
+%  \input{Figs/dp_cts_nFPC_z1.tikz} 
+%  \caption{Continuous Time w/ nFPC}
+%\end{subfigure}%
+%\hfill%
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dp_dscr_nFPC_z1}
+%  \input{Figs/dp_dscr_nFPC_z1.tikz} 
+%  \caption{Discrete Time w/ nFPC}
+%\end{subfigure}\\
+%
+%\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+%  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+%    Depth $\delta^+$}%
+%}}\hspace{0pt plus 1filll}\null
+%
+%Time (s)
+%
+%\vspace{1cm}
+%\begin{subfigure}{\linewidth}
+%  \centering
+%  \tikzsetnextfilename{deltalegend}
+%  \input{Figs/deltalegend.tikz} 
+%\end{subfigure}%
+%  \caption{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.}
+%  \label{fig:comp_dp_z1}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dp_cts_z8}
+%  \input{Figs/dp_cts_z8.tikz}
+%  \caption{Continuous Time}
+%\end{subfigure}%
+%\hfill%
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dp_dscr_z8}
+%  \input{Figs/dp_dscr_z8.tikz} 
+%  \caption{Discrete Time}
+%\end{subfigure}\\
+%\vspace{1cm}
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dp_cts_nFPC_z8}
+%  \input{Figs/dp_cts_nFPC_z8.tikz} 
+%  \caption{Continuous Time w/ nFPC}
+%\end{subfigure}%
+%\hfill%
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dp_dscr_nFPC_z8}
+%  \input{Figs/dp_dscr_nFPC_z8.tikz} 
+%  \caption{Discrete Time w/ nFPC}
+%\end{subfigure}\\
+%
+%\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+%  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+%    Depth $\delta^+$}%
+%}}\hspace{0pt plus 1filll}\null
+%
+%Time (s)
+%
+%\vspace{1cm}
+%\begin{subfigure}{\linewidth}
+%  \centering
+%  \tikzsetnextfilename{deltalegend}
+%  \input{Figs/deltalegend.tikz} 
+%\end{subfigure}%
+%  \caption{Optimal buy depths $\delta^+$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.}
+%  \label{fig:comp_dp_z8}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dp_cts_z15}
+%  \input{Figs/dp_cts_z15.tikz}
+%  \caption{Continuous Time}
+%\end{subfigure}%
+%\hfill%
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dp_dscr_z15}
+%  \input{Figs/dp_dscr_z15.tikz} 
+%  \caption{Discrete Time}
+%\end{subfigure}\\
+%\vspace{1cm}
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dp_cts_nFPC_z15}
+%  \input{Figs/dp_cts_nFPC_z15.tikz} 
+%  \caption{Continuous Time w/ nFPC}
+%\end{subfigure}%
+%\hfill%
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dp_dscr_nFPC_z15}
+%  \input{Figs/dp_dscr_nFPC_z15.tikz} 
+%  \caption{Discrete Time w/ nFPC}
+%\end{subfigure}\\
+%
+%\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+%  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+%    Depth $\delta^+$}%
+%}}\hspace{0pt plus 1filll}\null
+%
+%Time (s)
+%
+%\vspace{1cm}
+%\begin{subfigure}{\linewidth}
+%  \centering
+%  \tikzsetnextfilename{deltalegend}
+%  \input{Figs/deltalegend.tikz} 
+%\end{subfigure}%
+%  \caption{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.}
+%  \label{fig:comp_dp_z15}
+%\end{figure}
+%
+%\fxnote{So which of these plots do we like better? the 9 choices of q, or the colormap version of q?}
 \begin{figure}
 \centering
 \begin{subfigure}{.45\linewidth}
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dp_cts_z1}
-  \input{Figs/dp_cts_z1.tikz}
+  \tikzsetnextfilename{dp_colorbar/dp_cts_z1}
+  \input{Figs/dp_colorbar/dp_cts_z1.tikz}
   \caption{Continuous Time}
 \end{subfigure}%
 \hfill%
@@ -43,8 +213,8 @@ We have solved the same stochastic control problem using both continuous and dis
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dp_dscr_z1}
-  \input{Figs/dp_dscr_z1.tikz} 
+  \tikzsetnextfilename{dp_colorbar/dp_dscr_z1}
+  \input{Figs/dp_colorbar/dp_dscr_z1.tikz} 
   \caption{Discrete Time}
 \end{subfigure}\\
 \vspace{1cm}
@@ -52,18 +222,18 @@ We have solved the same stochastic control problem using both continuous and dis
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dp_cts_nFPC_z1}
-  \input{Figs/dp_cts_nFPC_z1.tikz} 
-  \caption{Continuous Time w/ nFPC}
+  \tikzsetnextfilename{dp_colorbar/dp_cts_nFPC_z1}
+  \input{Figs/dp_colorbar/dp_cts_nFPC_z1.tikz}
+  \caption{Continuous Time}
 \end{subfigure}%
 \hfill%
 \begin{subfigure}{.45\linewidth}
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dp_dscr_nFPC_z1}
-  \input{Figs/dp_dscr_nFPC_z1.tikz} 
-  \caption{Discrete Time w/ nFPC}
+  \tikzsetnextfilename{dp_colorbar/dp_dscr_nFPC_z1}
+  \input{Figs/dp_colorbar/dp_dscr_nFPC_z1.tikz} 
+  \caption{Discrete Time}
 \end{subfigure}\\
 
 \leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
@@ -76,8 +246,8 @@ Time (s)
 \vspace{1cm}
 \begin{subfigure}{\linewidth}
   \centering
-  \tikzsetnextfilename{deltalegend}
-  \input{Figs/deltalegend.tikz} 
+  \tikzsetnextfilename{altdeltalegend}
+  \input{Figs/altdeltalegend.tikz} 
 \end{subfigure}%
   \caption{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.}
   \label{fig:comp_dp_z1}
@@ -89,8 +259,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dp_cts_z8}
-  \input{Figs/dp_cts_z8.tikz}
+  \tikzsetnextfilename{dp_colorbar/dp_cts_z8}
+  \input{Figs/dp_colorbar/dp_cts_z8.tikz}
   \caption{Continuous Time}
 \end{subfigure}%
 \hfill%
@@ -98,8 +268,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dp_dscr_z8}
-  \input{Figs/dp_dscr_z8.tikz} 
+  \tikzsetnextfilename{dp_colorbar/dp_dscr_z8}
+  \input{Figs/dp_colorbar/dp_dscr_z8.tikz} 
   \caption{Discrete Time}
 \end{subfigure}\\
 \vspace{1cm}
@@ -107,18 +277,18 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dp_cts_nFPC_z8}
-  \input{Figs/dp_cts_nFPC_z8.tikz} 
-  \caption{Continuous Time w/ nFPC}
+  \tikzsetnextfilename{dp_colorbar/dp_cts_nFPC_z8}
+  \input{Figs/dp_colorbar/dp_cts_nFPC_z8.tikz}
+  \caption{Continuous Time}
 \end{subfigure}%
 \hfill%
 \begin{subfigure}{.45\linewidth}
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dp_dscr_nFPC_z8}
-  \input{Figs/dp_dscr_nFPC_z8.tikz} 
-  \caption{Discrete Time w/ nFPC}
+  \tikzsetnextfilename{dp_colorbar/dp_dscr_nFPC_z8}
+  \input{Figs/dp_colorbar/dp_dscr_nFPC_z8.tikz} 
+  \caption{Discrete Time}
 \end{subfigure}\\
 
 \leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
@@ -131,8 +301,8 @@ Time (s)
 \vspace{1cm}
 \begin{subfigure}{\linewidth}
   \centering
-  \tikzsetnextfilename{deltalegend}
-  \input{Figs/deltalegend.tikz} 
+  \tikzsetnextfilename{altdeltalegend}
+  \input{Figs/altdeltalegend.tikz} 
 \end{subfigure}%
   \caption{Optimal buy depths $\delta^+$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.}
   \label{fig:comp_dp_z8}
@@ -144,8 +314,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dp_cts_z15}
-  \input{Figs/dp_cts_z15.tikz}
+  \tikzsetnextfilename{dp_colorbar/dp_cts_z15}
+  \input{Figs/dp_colorbar/dp_cts_z15.tikz}
   \caption{Continuous Time}
 \end{subfigure}%
 \hfill%
@@ -153,8 +323,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dp_dscr_z15}
-  \input{Figs/dp_dscr_z15.tikz} 
+  \tikzsetnextfilename{dp_colorbar/dp_dscr_z15}
+  \input{Figs/dp_colorbar/dp_dscr_z15.tikz} 
   \caption{Discrete Time}
 \end{subfigure}\\
 \vspace{1cm}
@@ -162,18 +332,18 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dp_cts_nFPC_z15}
-  \input{Figs/dp_cts_nFPC_z15.tikz} 
-  \caption{Continuous Time w/ nFPC}
+  \tikzsetnextfilename{dp_colorbar/dp_cts_nFPC_z15}
+  \input{Figs/dp_colorbar/dp_cts_nFPC_z15.tikz}
+  \caption{Continuous Time}
 \end{subfigure}%
 \hfill%
 \begin{subfigure}{.45\linewidth}
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dp_dscr_nFPC_z15}
-  \input{Figs/dp_dscr_nFPC_z15.tikz} 
-  \caption{Discrete Time w/ nFPC}
+  \tikzsetnextfilename{dp_colorbar/dp_dscr_nFPC_z15}
+  \input{Figs/dp_colorbar/dp_dscr_nFPC_z15.tikz} 
+  \caption{Discrete Time}
 \end{subfigure}\\
 
 \leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
@@ -186,177 +356,11 @@ Time (s)
 \vspace{1cm}
 \begin{subfigure}{\linewidth}
   \centering
-  \tikzsetnextfilename{deltalegend}
-  \input{Figs/deltalegend.tikz} 
+  \tikzsetnextfilename{altdeltalegend}
+  \input{Figs/altdeltalegend.tikz} 
 \end{subfigure}%
   \caption{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.}
   \label{fig:comp_dp_z15}
-\end{figure}
-
-\fxnote{So which of these plots do we like better? the 9 choices of q, or the colormap version of q?}
-\begin{figure}
-\centering
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_cts_z1}
-  \input{Figs/test/dp_cts_z1.tikz}
-  \caption{Continuous Time}
-\end{subfigure}%
-\hfill%
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_dscr_z1}
-  \input{Figs/test/dp_dscr_z1.tikz} 
-  \caption{Discrete Time}
-\end{subfigure}\\
-\vspace{1cm}
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_cts_nFPC_z1}
-  \input{Figs/test/dp_cts_nFPC_z1.tikz}
-  \caption{Continuous Time}
-\end{subfigure}%
-\hfill%
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_dscr_nFPC_z1}
-  \input{Figs/test/dp_dscr_nFPC_z1.tikz} 
-  \caption{Discrete Time}
-\end{subfigure}\\
-
-\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
-    Depth $\delta^+$}%
-}}\hspace{0pt plus 1filll}\null
-
-Time (s)
-
-\vspace{1cm}
-\begin{subfigure}{\linewidth}
-  \centering
-  \tikzsetnextfilename{altdeltalegend}
-  \input{Figs/altdeltalegend.tikz} 
-\end{subfigure}%
-  \caption{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.}
-  \label{fig:comp_dp_z1_test}
-\end{figure}
-
-\begin{figure}
-\centering
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_cts_z8}
-  \input{Figs/test/dp_cts_z8.tikz}
-  \caption{Continuous Time}
-\end{subfigure}%
-\hfill%
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_dscr_z8}
-  \input{Figs/test/dp_dscr_z8.tikz} 
-  \caption{Discrete Time}
-\end{subfigure}\\
-\vspace{1cm}
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_cts_nFPC_z8}
-  \input{Figs/test/dp_cts_nFPC_z8.tikz}
-  \caption{Continuous Time}
-\end{subfigure}%
-\hfill%
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_dscr_nFPC_z8}
-  \input{Figs/test/dp_dscr_nFPC_z8.tikz} 
-  \caption{Discrete Time}
-\end{subfigure}\\
-
-\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
-    Depth $\delta^+$}%
-}}\hspace{0pt plus 1filll}\null
-
-Time (s)
-
-\vspace{1cm}
-\begin{subfigure}{\linewidth}
-  \centering
-  \tikzsetnextfilename{altdeltalegend}
-  \input{Figs/altdeltalegend.tikz} 
-\end{subfigure}%
-  \caption{Optimal buy depths $\delta^+$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.}
-  \label{fig:comp_dp_z8_test}
-\end{figure}
-
-\begin{figure}
-\centering
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_cts_z15}
-  \input{Figs/test/dp_cts_z15.tikz}
-  \caption{Continuous Time}
-\end{subfigure}%
-\hfill%
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_dscr_z15}
-  \input{Figs/test/dp_dscr_z15.tikz} 
-  \caption{Discrete Time}
-\end{subfigure}\\
-\vspace{1cm}
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_cts_nFPC_z15}
-  \input{Figs/test/dp_cts_nFPC_z15.tikz}
-  \caption{Continuous Time}
-\end{subfigure}%
-\hfill%
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{testdp_dscr_nFPC_z15}
-  \input{Figs/test/dp_dscr_nFPC_z15.tikz} 
-  \caption{Discrete Time}
-\end{subfigure}\\
-
-\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
-    Depth $\delta^+$}%
-}}\hspace{0pt plus 1filll}\null
-
-Time (s)
-
-\vspace{1cm}
-\begin{subfigure}{\linewidth}
-  \centering
-  \tikzsetnextfilename{altdeltalegend}
-  \input{Figs/altdeltalegend.tikz} 
-\end{subfigure}%
-  \caption{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.}
-  \label{fig:comp_dp_z15_test}
 \end{figure}
 The first notable conclusion we can make is the symmetry that has emerged between $\delta^+$ and $\delta^-$ in `opposite' Markov states. This is evident when comparing $\delta^+$ in $Z=(-1,-1)$ (\autoref{fig:comp_dp_z1}) with $\delta^-$ in $Z=(+1,+1)$ (\autoref{fig:comp_dm_z15}), $\delta^+$ in $Z=(0,0)$ (\autoref{fig:comp_dp_z8}) with $\delta^-$ in $Z=(0,0)$ (\autoref{fig:comp_dm_z8}), and $\delta^+$ in $Z=(+1,+1)$ (\autoref{fig:comp_dp_z15}) with $\delta^-$ in $Z=(-1,-1)$ (\autoref{fig:comp_dm_z1}). Thus, we focus the discussion here on the behavior of $\delta^+$.
 
@@ -375,7 +379,172 @@ Here we see near identical model behaviour. Similarities or correlations in back
 {\bf Dscr versus Dscr w nFPC:} Again these calibrations yield very similar behaviours, and as in the Cts case, it is near opposite to what was seen in the opposite Markov state.\\
 {\bf Cts vs Dscr:} As before, these two models display near opposite behaviours between each other. The Dscr model is posting aggressive depths near zero in an attempt to purchase, while the Cts model is posting deeper into the book to avoid purchasing.
 
-Finally, we note that we see stability in the posting depths beyond a time horizon of 600 seconds. This is consistent with the findings in \autoref{tbl:pvalues}, where we saw that the transition probability matrix $\mat{P}(t)$ converged for $\texttt{ORCL}$ within 404 timesteps of 1s each. \fxnote{If gonna use the colorbar, change to INTC and 771 timesteps, but note error threshold $10^{-10}$}
+Finally, we note that we see relative stability in the posting depths at a time horizon of 600 seconds. This is consistent with the findings in \autoref{tbl:pvalues}, where we saw that the transition probability matrix $\mat{P}(t)$ converged for $\texttt{INTC}$ to an error threshold of $10^{-10}$ within 771 timesteps of 1s each.
+
+%\begin{figure}
+%\centering
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dm_cts_z1}
+%  \input{Figs/dm_cts_z1.tikz}
+%  \caption{Continuous Time}
+%\end{subfigure}%
+%\hfill%
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dm_dscr_z1}
+%  \input{Figs/dm_dscr_z1.tikz} 
+%  \caption{Discrete Time}
+%\end{subfigure}\\
+%\vspace{1cm}
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dm_cts_nFPC_z1}
+%  \input{Figs/dm_cts_nFPC_z1.tikz} 
+%  \caption{Continuous Time w/ nFPC}
+%\end{subfigure}%
+%\hfill%
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dm_dscr_nFPC_z1}
+%  \input{Figs/dm_dscr_nFPC_z1.tikz} 
+%  \caption{Discrete Time w/ nFPC}
+%\end{subfigure}\\
+%
+%\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+%  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+%    Depth $\delta^-$}%
+%}}\hspace{0pt plus 1filll}\null
+%
+%Time (s)
+%
+%\vspace{1cm}
+%\begin{subfigure}{\linewidth}
+%  \centering
+%  \tikzsetnextfilename{deltalegend}
+%  \input{Figs/deltalegend.tikz} 
+%\end{subfigure}%
+%  \caption{Optimal sell depths $\delta^{-}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.}
+%  \label{fig:comp_dm_z1}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dm_cts_z8}
+%  \input{Figs/dm_cts_z8.tikz}
+%  \caption{Continuous Time}
+%\end{subfigure}%
+%\hfill%
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dm_dscr_z8}
+%  \input{Figs/dm_dscr_z8.tikz} 
+%  \caption{Discrete Time}
+%\end{subfigure}\\
+%\vspace{1cm}
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dm_cts_nFPC_z8}
+%  \input{Figs/dm_cts_nFPC_z8.tikz} 
+%  \caption{Continuous Time w/ nFPC}
+%\end{subfigure}%
+%\hfill%
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dm_dscr_nFPC_z8}
+%  \input{Figs/dm_dscr_nFPC_z8.tikz} 
+%  \caption{Discrete Time w/ nFPC}
+%\end{subfigure}\\
+%
+%\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+%  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+%    Depth $\delta^-$}%
+%}}\hspace{0pt plus 1filll}\null
+%
+%Time (s)
+%
+%\vspace{1cm}
+%\begin{subfigure}{\linewidth}
+%  \centering
+%  \tikzsetnextfilename{deltalegend}
+%  \input{Figs/deltalegend.tikz} 
+%\end{subfigure}%
+%  \caption{Optimal sell depths $\delta^-$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.}
+%  \label{fig:comp_dm_z8}
+%\end{figure}
+%
+%\begin{figure}
+%\centering
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dm_cts_z15}
+%  \input{Figs/dm_cts_z15.tikz}
+%  \caption{Continuous Time}
+%\end{subfigure}%
+%\hfill%
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dm_dscr_z15}
+%  \input{Figs/dm_dscr_z15.tikz} 
+%  \caption{Discrete Time}
+%\end{subfigure}\\
+%\vspace{1cm}
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dm_cts_nFPC_z15}
+%  \input{Figs/dm_cts_nFPC_z15.tikz} 
+%  \caption{Continuous Time w/ nFPC}
+%\end{subfigure}%
+%\hfill%
+%\begin{subfigure}{.45\linewidth}
+%  \centering
+%  \setlength\figureheight{\linewidth} 
+%  \setlength\figurewidth{\linewidth}
+%  \tikzsetnextfilename{dm_dscr_nFPC_z15}
+%  \input{Figs/dm_dscr_nFPC_z15.tikz} 
+%  \caption{Discrete Time w/ nFPC}
+%\end{subfigure}\\
+%
+%\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
+%  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+%    Depth $\delta^-$}%
+%}}\hspace{0pt plus 1filll}\null
+%
+%Time (s)
+%
+%\vspace{1cm}
+%\begin{subfigure}{\linewidth}
+%  \centering
+%  \tikzsetnextfilename{deltalegend}
+%  \input{Figs/deltalegend.tikz} 
+%\end{subfigure}%
+%  \caption{Optimal sell depths $\delta^{-}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.}
+%  \label{fig:comp_dm_z15}
+%\end{figure}
 
 \begin{figure}
 \centering
@@ -383,8 +552,8 @@ Finally, we note that we see stability in the posting depths beyond a time horiz
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dm_cts_z1}
-  \input{Figs/dm_cts_z1.tikz}
+  \tikzsetnextfilename{dp_colorbar/dm_cts_z1}
+  \input{Figs/dp_colorbar/dm_cts_z1.tikz}
   \caption{Continuous Time}
 \end{subfigure}%
 \hfill%
@@ -392,8 +561,8 @@ Finally, we note that we see stability in the posting depths beyond a time horiz
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dm_dscr_z1}
-  \input{Figs/dm_dscr_z1.tikz} 
+  \tikzsetnextfilename{dp_colorbar/dm_dscr_z1}
+  \input{Figs/dp_colorbar/dm_dscr_z1.tikz} 
   \caption{Discrete Time}
 \end{subfigure}\\
 \vspace{1cm}
@@ -401,8 +570,8 @@ Finally, we note that we see stability in the posting depths beyond a time horiz
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dm_cts_nFPC_z1}
-  \input{Figs/dm_cts_nFPC_z1.tikz} 
+  \tikzsetnextfilename{dp_colorbar/dm_cts_nFPC_z1}
+  \input{Figs/dp_colorbar/dm_cts_nFPC_z1.tikz} 
   \caption{Continuous Time w/ nFPC}
 \end{subfigure}%
 \hfill%
@@ -410,8 +579,8 @@ Finally, we note that we see stability in the posting depths beyond a time horiz
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dm_dscr_nFPC_z1}
-  \input{Figs/dm_dscr_nFPC_z1.tikz} 
+  \tikzsetnextfilename{dp_colorbar/dm_dscr_nFPC_z1}
+  \input{Figs/dp_colorbar/dm_dscr_nFPC_z1.tikz} 
   \caption{Discrete Time w/ nFPC}
 \end{subfigure}\\
 
@@ -425,8 +594,8 @@ Time (s)
 \vspace{1cm}
 \begin{subfigure}{\linewidth}
   \centering
-  \tikzsetnextfilename{deltalegend}
-  \input{Figs/deltalegend.tikz} 
+  \tikzsetnextfilename{altdeltalegend}
+  \input{Figs/altdeltalegend.tikz} 
 \end{subfigure}%
   \caption{Optimal sell depths $\delta^{-}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.}
   \label{fig:comp_dm_z1}
@@ -438,8 +607,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dm_cts_z8}
-  \input{Figs/dm_cts_z8.tikz}
+  \tikzsetnextfilename{dp_colorbar/dm_cts_z8}
+  \input{Figs/dp_colorbar/dm_cts_z8.tikz}
   \caption{Continuous Time}
 \end{subfigure}%
 \hfill%
@@ -447,8 +616,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dm_dscr_z8}
-  \input{Figs/dm_dscr_z8.tikz} 
+  \tikzsetnextfilename{dp_colorbar/dm_dscr_z8}
+  \input{Figs/dp_colorbar/dm_dscr_z8.tikz} 
   \caption{Discrete Time}
 \end{subfigure}\\
 \vspace{1cm}
@@ -456,8 +625,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dm_cts_nFPC_z8}
-  \input{Figs/dm_cts_nFPC_z8.tikz} 
+  \tikzsetnextfilename{dp_colorbar/dm_cts_nFPC_z8}
+  \input{Figs/dp_colorbar/dm_cts_nFPC_z8.tikz} 
   \caption{Continuous Time w/ nFPC}
 \end{subfigure}%
 \hfill%
@@ -465,8 +634,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dm_dscr_nFPC_z8}
-  \input{Figs/dm_dscr_nFPC_z8.tikz} 
+  \tikzsetnextfilename{dp_colorbar/dm_dscr_nFPC_z8}
+  \input{Figs/dp_colorbar/dm_dscr_nFPC_z8.tikz} 
   \caption{Discrete Time w/ nFPC}
 \end{subfigure}\\
 
@@ -480,8 +649,8 @@ Time (s)
 \vspace{1cm}
 \begin{subfigure}{\linewidth}
   \centering
-  \tikzsetnextfilename{deltalegend}
-  \input{Figs/deltalegend.tikz} 
+  \tikzsetnextfilename{altdeltalegend}
+  \input{Figs/altdeltalegend.tikz} 
 \end{subfigure}%
   \caption{Optimal sell depths $\delta^-$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.}
   \label{fig:comp_dm_z8}
@@ -493,8 +662,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dm_cts_z15}
-  \input{Figs/dm_cts_z15.tikz}
+  \tikzsetnextfilename{dp_colorbar/dm_cts_z15}
+  \input{Figs/dp_colorbar/dm_cts_z15.tikz}
   \caption{Continuous Time}
 \end{subfigure}%
 \hfill%
@@ -502,8 +671,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dm_dscr_z15}
-  \input{Figs/dm_dscr_z15.tikz} 
+  \tikzsetnextfilename{dp_colorbar/dm_dscr_z15}
+  \input{Figs/dp_colorbar/dm_dscr_z15.tikz} 
   \caption{Discrete Time}
 \end{subfigure}\\
 \vspace{1cm}
@@ -511,8 +680,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dm_cts_nFPC_z15}
-  \input{Figs/dm_cts_nFPC_z15.tikz} 
+  \tikzsetnextfilename{dp_colorbar/dm_cts_nFPC_z15}
+  \input{Figs/dp_colorbar/dm_cts_nFPC_z15.tikz} 
   \caption{Continuous Time w/ nFPC}
 \end{subfigure}%
 \hfill%
@@ -520,8 +689,8 @@ Time (s)
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{dm_dscr_nFPC_z15}
-  \input{Figs/dm_dscr_nFPC_z15.tikz} 
+  \tikzsetnextfilename{dp_colorbar/dm_dscr_nFPC_z15}
+  \input{Figs/dp_colorbar/dm_dscr_nFPC_z15.tikz} 
   \caption{Discrete Time w/ nFPC}
 \end{subfigure}\\
 
@@ -535,15 +704,15 @@ Time (s)
 \vspace{1cm}
 \begin{subfigure}{\linewidth}
   \centering
-  \tikzsetnextfilename{deltalegend}
-  \input{Figs/deltalegend.tikz} 
+  \tikzsetnextfilename{altdeltalegend}
+  \input{Figs/altdeltalegend.tikz} 
 \end{subfigure}%
   \caption{Optimal sell depths $\delta^{-}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.}
   \label{fig:comp_dm_z15}
 \end{figure}
 
 \FloatBarrier
-\subsection{Comparing Performance}
+\subsection{Comparing Optimal Control Performance}
 
 \begin{figure}
   \centering
@@ -614,7 +783,7 @@ Dscr w nFPC  &  523 & 1287 \\
 \label{tbl:ORCL_comp4stoch_numt}
 \end{table}
 
-To better see how the strategies differ in behaviour, in the figures that follow we show a short sample path on a fine timescale spanning about 2 minutes. In \autoref{fig:samplepath_paths} we plot the midprice path (black line), the optimal posting depths on either side of the real bid/ask prices (gray lines), our execution of market orders (dark blue and dark green), and track incoming external market orders (light blue and light green) that either fill our limit orders (solid lines) or do not (dashed lines). \autoref{fig:samplepath_depths} plots just the optimal depths as they react to the changing Markov state, allowing a better comparison of the behaviours, as well as highlighting the almost-symmetric behaviour between $\delta^+$ and $delta^-$. \autoref{fig:samplepath_pnl} and \autoref{fig:samplepath_inv} show the effect on PnL and inventory, respectively. 
+To better see how the strategies differ in behaviour, in the figures that follow we show a short sample path on a fine timescale spanning about 2 minutes. In \autoref{fig:samplepath_paths} we plot the midprice path (black line), the optimal posting depths on either side of the real bid/ask prices (gray lines), our execution of market orders (dark blue and dark green), and track incoming external market orders (light blue and light green) that either fill our limit orders (solid lines) or do not (dashed lines). \autoref{fig:samplepath_depths} plots just the optimal depths as they react to the changing Markov state, allowing a better comparison of the behaviours, as well as highlighting the almost-symmetric behaviour between $\delta^+$ and $\delta^-$. \autoref{fig:samplepath_pnl} and \autoref{fig:samplepath_inv} show the effect on PnL and inventory, respectively. 
 
 \begin{figure}
 \centering
@@ -916,8 +1085,6 @@ Dscr w nFPC &  0.226 & 2.202 & 1569 & 4.28 & 0.98 & -0.220 & 0.650 \\
 \label{tbl:IS_sameday}
 \end{table}
 
-\fxnote{commentary needed. compare stoch methods}
-
 \FloatBarrier
 \subsection{Week Offset Calibration}
 The next type of in-sample backtesting done was to calibrate for each ticker and each trading day of 2013, and to use the results to backtest on the date given by the calibration date shifted forward 7 days. Thus, the calibration obtained on Monday, January 2, 2013 would be used to backtest on Monday, January 9, 2013. Performance values are given in \autoref{tbl:IS_week}, and \autoref{fig:IS_week_comp} compares the day-over-day performance of the various strategies. 
@@ -1028,7 +1195,7 @@ Dscr w nFPC & 0.215 & 2.027 & 401 & 1156 & 3.78 & 0.99 & -0.118 & 0.647 \\
 \subsection{Annual Calibration}
 The second type of out-of-sample backtesting done was to calibrate using data amalgamated from the entire 2013 trading year. This was a very rich calibration source, as it effectively ensured that every possible state of the Markov chain would have had sufficient observations. Further, this caused us to fix the imbalance bins $\rho$ for the entire year, rather than having bins (and hence what it means to be `heavy buy imbalance' and `neutral imbalance') vary each day. Performance values are given in \autoref{tbl:IS_annual}, and \autoref{fig:IS_annual_comp} compares the day-over-day performance of the various strategies. 
 
-Here we backtest only the more liquid of the stocks, \texttt{ORCL} and \texttt{INTC}. In comparing \autoref{tbl:IS_annual} with \autoref{tbl:IS_week}, we note some interesting observations. Again we see the most liquid stock, \texttt{INTC}, posting on average the better results using the strategies, suggesting that utilizing a liquid stock is key.  (\texttt{INTC} started the year at \$21.38 and gained 21.42\% over the year, while \texttt{ORCL} started at \$34.69 and climbed 10.29\%. However, \texttt{NTAP} started at \$34.30 and gained 19.94\%, similar in performance to \texttt{INTC}, and yet performed substantially worse.) Whereas we have seen thus far that the nFPC strategies underperform the regular calibration, here the roles were reversed in terms of performance, number of market orders used, and average inventory held. Across the strategies we see stability in the number of limit orders used, which suggests that this isn't so much strategy dependent as it is externally dependent on outside agents submitting their market orders. In the case of \texttt{ORCL} we see that the Cts Stoch Ctrl strategy was particularly susceptible to the sharp downward spikes on days 55, 100, and 119, which corresponded to large sell-offs in the market. 
+Here we backtest only the more liquid of the stocks, \texttt{ORCL} and \texttt{INTC}. In comparing \autoref{tbl:IS_annual} with \autoref{tbl:IS_week}, we note some interesting observations. Again we see the most liquid stock, \texttt{INTC}, posting on average the better results using the strategies, suggesting that using a liquid stock is key.  (\texttt{INTC} started the year at \$21.38 and gained 21.42\% over the year, while \texttt{ORCL} started at \$34.69 and climbed 10.29\%. However, \texttt{NTAP} started at \$34.30 and gained 19.94\%, similar in performance to \texttt{INTC}, and yet performed substantially worse.) Whereas we have seen thus far that the nFPC strategies underperform the regular calibration, here the roles were reversed in terms of performance, number of market orders used, and average inventory held. Across the strategies we see stability in the number of limit orders used, which suggests that this isn't so much strategy dependent as it is externally dependent on outside agents submitting their market orders. In the case of \texttt{ORCL} we see that the Cts Stoch Ctrl strategy was particularly susceptible to the sharp downward spikes on days 55, 100, and 119, which corresponded to large sell-offs in the market. 
 
 
 \begin{figure}
@@ -1093,7 +1260,14 @@ Dscr w nFPC & 0.197 & 2.588 & 576 & 1164 & 3.78 & 1.00 &  & 0.490 \\
 
 \FloatBarrier
 \section{Out-of-Sample Backtesting}
-From the in-sample backtesting we can conclude that xxx.
+From the in-sample backtesting we draw several conclusions:
+\begin{itemize}
+\item underlying stocks need to be highly liquid;
+\item underlying stocks need to have the smallest possible bid-ask spread;
+\item calibrating over a larger period of time produces comparable returns and slightly improved Sharpe ratios, and is therefore preferred;
+\item there is no clear victor between regular calibration and the nFPC method.
+\end{itemize}
+For out-of-sample backtesting we move to using 2014 data that has hitherto remained untouched. We elect to test all four strategies on two stocks, \texttt{INTC} and \texttt{AAPL}, that have average daily trading volumes of 30m and 45m respectively, and each have a typical bid-ask spread of the minimum 1 cent. \texttt{AAPL} underwent a 7-for-1 stock split on 2014-06-09, and prices are adjusted correspondingly in the underlying data; although prior to the split the bid-ask spread was an order of magnitude greater than 1 cent, we retain the 1 cent spread assumption on the adjusted pre-split prices to stay consistent with what was observed after the split. Additionally, we use a sliding calibration window of 1 month (21 trading days) and thus begin trading on the 22nd trading day of the year. 
 
 \begin{figure}
 \centering
@@ -1109,8 +1283,8 @@ From the in-sample backtesting we can conclude that xxx.
   \centering
   \setlength\figureheight{\linewidth} 
   \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{OOS_annual_AAPL}
-%  \input{Figs/OOS_annual_AAPL.tikz} 
+  \tikzsetnextfilename{OOS_annual_AAPL}
+  \input{Figs/OOS_annual_AAPL.tikz} 
 \end{subfigure}\\
 
 \leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
@@ -1140,17 +1314,26 @@ Trading Day Number of 2014
 Strategy & Return & Sharpe & \# MO & \# LO & Inv & \% Win & Max Loss & Max Win \\
 \midrule
 \multicolumn{9}{l}{\texttt{INTC}} \\ 
-Cts & 0.275 & 2.426 & 1617 & 1821 & -0.00 & 1.00 & -0.013 & 0.760 \\ 
-Dscr & 0.394 & 1.727 & 987 & 1732 & -0.15 & 1.00 & -0.027 & 1.609 \\ 
-Cts w nFPC & 0.525 & 2.056 & 397 & 1611 & 0.07 & 1.00 &  & 2.145 \\ 
-Dscr w nFPC & 0.522 & 2.027 & 392 & 1611 & 0.08 & 1.00 &  & 2.277 \\ [2ex]
+Cts & 0.209 & 2.112 & 2118 & 1758 & 0.44 & 0.98 & -0.169 & 0.502 \\ 
+Dscr & 0.372 & 1.591 & 949 & 1770 & -5.89 & 0.98 & -0.041 & 1.418 \\ 
+Cts w nFPC & 0.483 & 2.364 & 704 & 1693 & 1.46 & 1.00 & -0.156 & 1.194 \\ 
+Dscr w nFPC & 0.515 & 2.033 & 490 & 1629 & 2.81 & 1.00 &  & 2.072 \\  [2ex]
 \multicolumn{9}{l}{\texttt{AAPL}} \\ 
-Cts \\
-Dscr \\
-Cts w nFPC \\
-Dscr w nFPC\\
+Cts & 0.378 & 1.571 & 3853 & 6297 & -5.80 & 0.96 & -0.094 & 1.392 \\ 
+Dscr & 0.761 & 2.457 & 830 & 5566 & 4.05 & 1.00 &  & 2.039 \\ 
+Cts w nFPC & 0.710 & 2.479 & 1276 & 5689 & 2.93 & 1.00 &  & 1.803 \\ 
+Dscr w nFPC & 0.764 & 2.442 & 796 & 5559 & 3.85 & 1.00 &  & 2.180 \\
 \bottomrule
 \end{tabular}
 \caption{Averaged strategy performance results: out-of-sample backtesting on 2014 data, using amalgamated annual 2013 data for calibration.}
 \label{tbl:OOS_annual}
 \end{table}
+
+The results in \autoref{tbl:OOS_annual} show the incredible out-of-sample results. The strategies post very solid returns and Sharpe ratios, and provide positive returns on almost every day that was tested. The strategies were run assuming our trade volume was 1 stock for every market order or limit order executed. Thus, to quantify these results in dollar terms, we can do a back of the envelope calculation by assuming for each of the 249 trading days of 2014, we trade 100 shares at a time, and multiply the average return (0.4 and 0.7 for \texttt{INTC} and \texttt{AAPL}, respectively) by the average share price during the year (\$30 and \$95, respectively). Thus, we conclude:
+
+\begin{center}
+{\bf Trading \texttt{INTC} would have generated revenue of \$298,800.} \par
+{\bf Trading \texttt{AAPL} would have generated revenue of \$1,655,850.}
+\end{center}
+
+The capital requirements would have been the full price of the shares, \$30 and \$100 each, multiplied by the maximum long/short inventory of $20 \times 100$ shares - thus \$260,000. This represents both a compound annual growth rate (CAGR) and return on investment (ROI) of 652\%.

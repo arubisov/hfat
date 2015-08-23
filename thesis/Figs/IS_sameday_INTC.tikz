@@ -4,10 +4,6 @@
 %  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
 %where you can also make suggestions and rate matlab2tikz.
 %
-\definecolor{mycolor1}{rgb}{0.25098,0.00000,0.38824}%
-\definecolor{mycolor2}{rgb}{0.00000,0.46275,0.00000}%
-\definecolor{mycolor3}{rgb}{0.00000,0.34902,0.34902}%
-\definecolor{mycolor4}{rgb}{0.58039,0.26275,0.00000}%
 %
 \begin{tikzpicture}[trim axis left, trim axis right]
 
@@ -36,7 +32,7 @@ yticklabel style={
 },
 scaled y ticks=false,
 ]
-\addplot [color=mycolor1,solid,line width=1.5pt,forget plot]
+\addplot [color=cts_plot_color,solid,line width=1.5pt,forget plot]
   table[row sep=crcr]{%
 1	0.391589743909999\\
 2	0.293083529682506\\
@@ -291,7 +287,7 @@ scaled y ticks=false,
 251	0.228637802663637\\
 252	0.136383000925083\\
 };
-\addplot [color=mycolor2,solid,line width=1.5pt,forget plot]
+\addplot [color=dscr_plot_color,solid,line width=1.5pt,forget plot]
   table[row sep=crcr]{%
 1	0.333768911677547\\
 2	0.232727472512196\\
@@ -546,7 +542,7 @@ scaled y ticks=false,
 251	0.244697683538711\\
 252	0.171282281300026\\
 };
-\addplot [color=mycolor3,solid,line width=1.5pt,forget plot]
+\addplot [color=cts_nFPC_plot_color,solid,line width=1.5pt,forget plot]
   table[row sep=crcr]{%
 1	0.208572316405276\\
 2	0.14833928522974\\
@@ -801,7 +797,7 @@ scaled y ticks=false,
 251	0.14948722704969\\
 252	0.0751563761642884\\
 };
-\addplot [color=mycolor4,solid,line width=1.5pt,forget plot]
+\addplot [color=dscr_nFPC_plot_color,solid,line width=1.5pt,forget plot]
   table[row sep=crcr]{%
 1	0.392998953875574\\
 2	0.285368606498711\\

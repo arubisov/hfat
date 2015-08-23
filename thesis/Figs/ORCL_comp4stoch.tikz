@@ -4,10 +4,6 @@
 %  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
 %where you can also make suggestions and rate matlab2tikz.
 %
-\definecolor{mycolor1}{rgb}{0.25098,0.00000,0.38824}%
-\definecolor{mycolor2}{rgb}{0.00000,0.11765,0.38824}%
-\definecolor{mycolor3}{rgb}{0.58039,0.26275,0.00000}%
-\definecolor{mycolor4}{rgb}{0.58039,0.38824,0.00000}%
 %
 \begin{tikzpicture}[trim axis left, trim axis right]
 
@@ -37,7 +33,7 @@ yticklabel style={
 scaled y ticks=false,
 legend style={legend cell align=left,align=left,draw=black,font=\small, legend pos=north west},
 ]
-\addplot [color=mycolor1,solid,line width=1.5pt]
+\addplot [color=cts_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
 9.50027777777778	0.013029315960912\\
 9.50583333333333	0.027864698814415\\
@@ -1212,7 +1208,7 @@ legend style={legend cell align=left,align=left,draw=black,font=\small, legend p
 };
 \addlegendentry{Cts Stoch Ctrl};
 
-\addplot [color=mycolor2,solid,line width=1.5pt]
+\addplot [color=dscr_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
 9.50027777777778	0.013029315960912\\
 9.50583333333333	0.0197210736578596\\
@@ -2387,7 +2383,7 @@ legend style={legend cell align=left,align=left,draw=black,font=\small, legend p
 };
 \addlegendentry{Cts Stoch Ctrl w nFPC};
 
-\addplot [color=mycolor3,solid,line width=1.5pt]
+\addplot [color=cts_nFPC_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
 9.50027777777778	0.00651465798045599\\
 9.50583333333333	0.0200445396026153\\
@@ -3562,7 +3558,7 @@ legend style={legend cell align=left,align=left,draw=black,font=\small, legend p
 };
 \addlegendentry{Dscr Stoch Ctrl};
 
-\addplot [color=mycolor4,solid,line width=1.5pt]
+\addplot [color=dscr_nFPC_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
 9.50027777777778	-0.0142137992300856\\
 9.50583333333333	-0.0153761969429108\\

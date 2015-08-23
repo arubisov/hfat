@@ -5,7 +5,7 @@
 clear;
 clc;
 
-tickers = {'AAPL'};
+tickers = {'INTC'};
 strategies = {'Cts','Dscr','Cts w nFPC','Dscr w nFPC'};
 
 % Parameters
@@ -17,7 +17,7 @@ num_bins = 5;       % Markov chain number of bins.
 avg_method = 5;     % Order imbalance calculation method
 kappa = 100;        % Fill probability constant, exp(-kappa*delta)
 alpha = 0.01;       % Liquidation penalty
-xi = 0.01;          % Half the bid-ask spread
+xi = 0.005G3;          % Half the bid-ask spread
 phi = 0;            % Running inventory penalty (0 for continuous Case 1)
 
 % Explicit finite difference scheme setup
@@ -59,4 +59,4 @@ for tickernum = 1 : numel(tickers)
     end
     toc;
 end
-save('./saves/outofsample/OOS-annual-AAPL.mat', 'X','Q','T');
+save('./saves/outofsample/OOS-annual-INTC-donetheappleway.mat', 'X','Q','T');

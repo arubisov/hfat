@@ -1,0 +1,46 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MASc Thesis by Anton Rubisov. 
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98) and
+% from the Cambridge University PhD thesis template v2.0 by Krishna Kumar.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt,letterpaper,final]{report}
+
+% ********************************** Preamble **********************************
+\input{Preamble/preamble}
+\begin{document}
+
+% ******************************** Front Matter ********************************
+\include{Ch0Front/title}
+\include{Ch0Front/abstract}
+\include{Ch0Front/acknowledgement}
+%\include{Ch0Front/dedication}
+
+% *********************** Adding TOC and List of Figures ***********************
+\tableofcontents
+\listoffigures
+\listoftables
+\listoffixmes
+
+% ******************************** Main Matter *********************************
+\include{Ch1Introduction/introduction}
+\include{Ch2Exploratory/exploratory}
+%\include{Ch3Numerical/sta4505}
+\include{Ch3Numerical/continuous}
+\include{Ch3Numerical/discrete}
+\include{Ch4Results/results}
+\include{Ch5Conclusion/conclusion}
+
+% ********************************** Bibliography ******************************
+\begin{spacing}{0.9}
+\bibliographystyle{apalike}
+\cleardoublepage
+\nocite{*}
+\bibliography{References/references} % Path to your References.bib file
+\end{spacing}
+
+% ********************************** Appendices ********************************
+\begin{appendices}
+%\include{Appendix1/appendix1}
+\end{appendices}
+
+\end{document}

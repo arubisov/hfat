@@ -1,0 +1,25 @@
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Structure and mechanics of the limit order book}}{13}{figure.caption.6}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Hypothetical timeline of market orders arriving during changing order imbalance regimes.\relax }}{19}{figure.caption.8}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Time intervals for time-weighted averaging of imbalance and for price change.\relax }}{21}{figure.caption.9}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Comparison of Naive (black), Naive+ (dark gray), and Naive++ (light gray) trading strategies. Plotted are normalized book values, averaged across the trading year, against the time of the day between market open and close.\relax }}{28}{figure.caption.16}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Optimal buy depths $\delta ^{+}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.\relax }}{58}{figure.caption.20}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Optimal buy depths $\delta ^+$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.\relax }}{59}{figure.caption.21}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Optimal buy depths $\delta ^{+}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.\relax }}{60}{figure.caption.22}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Optimal sell depths $\delta ^{-}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.\relax }}{62}{figure.caption.23}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Optimal sell depths $\delta ^-$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.\relax }}{63}{figure.caption.24}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Optimal sell depths $\delta ^{-}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.\relax }}{64}{figure.caption.25}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Co-integration relation of the four stochastic control methods.\relax }}{65}{figure.caption.28}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Comparison of the four stochastic control methods.\relax }}{66}{figure.caption.26}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.\relax }}{69}{figure.caption.30}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.\relax }}{70}{figure.caption.31}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.\relax }}{71}{figure.caption.32}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.\relax }}{72}{figure.caption.33}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces End of day strategy performances: in-sample backtesting using same-day calibration.\relax }}{74}{figure.caption.34}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces End of day strategy performances: in-sample backtesting using a one-week offset for calibration.\relax }}{77}{figure.caption.36}
+\contentsline {figure}{\numberline {4.15}{\ignorespaces End of day strategy performances: in-sample backtesting on 2013 data, using amalgamated annual 2013 data for calibration.\relax }}{80}{figure.caption.38}
+\contentsline {figure}{\numberline {4.16}{\ignorespaces End of day strategy performances: out-of-sample backtesting on 2014 data, using amalgamated annual 2013 data for calibration.\relax }}{82}{figure.caption.40}
+\addvspace {10\p@ }

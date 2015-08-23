@@ -36,7 +36,7 @@ for tickernum = 1 : numel(tickers)
     calibdata = load(sprintf('./data-more/fullyearconsolidated/%s_2013.mat',ticker));
     calibdata = calibdata.data;
     
-    for ds_method = [1 2]
+    for ds_method = [1]
         
         % calibrate annual here
         [ binseries, pricechgseries, G, rho ] = compute_G_annual( calibdata, num_bins, ds_method, [] );
@@ -49,19 +49,23 @@ for tickernum = 1 : numel(tickers)
                                       G, eta, muplus, muminus, fs_T, fs_dt  );
         [ dp_cts, dm_cts ] = cts_delta_case1( h_cts, Qmax, kappa, xi );
         
-        % DISCRETE TIME
-        [ P ] = onestep( G, dt_Z );
-        [ h_dscr, dp_dscr, dm_dscr ] = dscr_h( num_bins, Qmax, kappa, alpha, xi, ...
-                              P, eta, muplus, muminus, fs_T, dt_Z/1000);
+        dp_cts = 1/100 * round(dp_cts*100);
+        dm_cts = 1/100 * round(dm_cts*100);
+        
+        
+%         % DISCRETE TIME
+%         [ P ] = onestep( G, dt_Z );
+%         [ h_dscr, dp_dscr, dm_dscr ] = dscr_h( num_bins, Qmax, kappa, alpha, xi, ...
+%                               P, eta, muplus, muminus, fs_T, dt_Z/1000);
         
         toc;
         strat = 2*(ds_method-1)+1;
-        label = '';
-        if ds_method == 2,label = '_nFPC'; end
-        plot_delta( dp_cts, fs_T, fs_dt, strcat('dp_cts',label) );
-        plot_delta( dm_cts, fs_T, fs_dt, strcat('dm_cts',label) );
-        plot_delta( dp_dscr, fs_T, 1, strcat('dp_dscr',label) );
-        plot_delta( dm_dscr, fs_T, 1, strcat('dm_dscr',label) );
+%         label = '';
+%         if ds_method == 2,label = '_nFPC'; end
+%         plot_delta( dp_cts, fs_T, fs_dt, strcat('dp_cts',label) );
+%         plot_delta( dm_cts, fs_T, fs_dt, strcat('dm_cts',label) );
+%         plot_delta( dp_dscr, fs_T, 1, strcat('dp_dscr',label) );
+%         plot_delta( dm_dscr, fs_T, 1, strcat('dm_dscr',label) );
   
         data = load(sprintf('./data-more/fullyearconsolidated/%s_2014.mat',ticker));
         
@@ -78,12 +82,12 @@ for tickernum = 1 : numel(tickers)
         T(strat,tickernum,:,:) = t;
             
         %%% RUN DSCR
-        [ x, q, t ] = cts_backtest_fullyear( data, h_dscr, dm_dscr, dp_dscr, ...
-            num_bins, dt_Z, Qmax, alpha, kappa, xi, fs_T, 1, rho );
-        X(strat+1,tickernum,:) = x;
-        Q(strat+1,tickernum,:) = q;
-        T(strat+1,tickernum,:,:) = t;
+%         [ x, q, t ] = cts_backtest_fullyear( data, h_dscr, dm_dscr, dp_dscr, ...
+%             num_bins, dt_Z, Qmax, alpha, kappa, xi, fs_T, 1, rho );
+%         X(strat+1,tickernum,:) = x;
+%         Q(strat+1,tickernum,:) = q;
+%         T(strat+1,tickernum,:,:) = t;
     end
     toc;
 end
-save('./saves/outofsample/OOS-annual-INTC.mat', 'X','Q','T');
+save('./saves/outofsample/OOS-annual-INTC-rounded.mat', 'X','Q','T');

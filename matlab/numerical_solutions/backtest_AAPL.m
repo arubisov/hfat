@@ -3,12 +3,14 @@ function [ X, Q, T ] = backtest_AAPL( flag, data, ds_method, num_bins, dt_Z, Qma
     T1 = 9.5 * 3600000;
     T2 = 16 * 3600000;
     
+    start_price = 30;
+    
     % data cleanup! irregular behavior at EOD for each day.
     day_size = (T2-T1)/dt_Z;
     day_idx = day_size:day_size:numel(data.dS);
     data.dS(day_idx) = 0;
     % adjust for 7-to-1 stock split on day 108
-    data.dS(1:day_idx(108)) = data.dS(1:day_idx(108)) / 7;
+    %data.dS(1:day_idx(108)) = data.dS(1:day_idx(108)) / 7;
     
     calib_days = 21;
     num_test_days = numel(day_idx) - calib_days;
@@ -52,7 +54,7 @@ function [ X, Q, T ] = backtest_AAPL( flag, data, ds_method, num_bins, dt_Z, Qma
     
         % set up valuation prices. starts at zero.
         midprice = cumsum(data.dS(from_idx:to_idx));
-        midprice = midprice + 95 * 10000;
+        midprice = midprice + start_price * 10000;
         
         hist_Q = zeros(1,day_size);
         q = 0;
@@ -151,7 +153,7 @@ function [ X, Q, T ] = backtest_AAPL( flag, data, ds_method, num_bins, dt_Z, Qma
         Q(day) = mean(hist_Q);
     end
     % normalize the NPVs
-    X = 1/95 * X;
+    X = 1/start_price * X;
 end
 
 function [ bool ] = checkbuycondition(h,t_h,z,q,xi,Qmax)

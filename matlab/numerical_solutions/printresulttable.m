@@ -1,6 +1,6 @@
 function [] = printresulttable( X,Q,T )
 
-tickers = {'ORCL','INTC'};
+tickers = {'AAPL'};
 strategies = {'Cts','Dscr','Cts w nFPC','Dscr w nFPC'};
 
 for ticker = 1:numel(tickers)

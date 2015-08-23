@@ -22,11 +22,11 @@ for ticker = 1:numel(tickers)
     set(gca, 'ColorOrder', ColorSet);
     hold all;
     for strat = 1:numel(strategies)
-        plot(reshape(X(strat,ticker,:),len,1),'Color',colors{strat},'LineWidth',1.5);
+        plot(reshape(X(strat,ticker,:),len,1),'-','LineWidth',1.5);
     end
     hold off;
     title(sprintf('%s',tickers{ticker}));
     xlim([1 252]);
     %legend(strategies);
-    matlab2tikz(sprintf('IS_annual_%s.tikz',tickers{ticker}));
+    matlab2tikz(sprintf('OOS_annual_%s_theappleway.tikz',tickers{ticker}));
 end

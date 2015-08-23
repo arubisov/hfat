@@ -1,42 +1,63 @@
 \section{Discrete Time}
-\fxnote{better lead in to this section.}
-Reminder of our processes (a little bit of abuse of notation going on):
+We now consider the same optimization problem but in discrete time, and we will attempt to reuse the same variable definitions and notation where it makes sense; namely, the constants $\Delta_{t_{I}}, \Delta_{t_{S}}, \#_{bins}, \xi$ are defined as before. We will be analysing the embedded discrete time Markov chain, which for any time interval of size $
+\Delta t$ can be obtained from the CTMC by considering the transition probability matrix obtained by $\mat{P} = e^{\mat{G}\Delta t}$. We have derived the below results with the consideration that $\Delta t = \Delta_{t_{I}} = \Delta_{t_{S}} = 1000ms$, though this is not strictly necessary. For convenience, we relist in discrete-time form the processes we will consider for this control problem:
 
-$\bz_k = (\rho_k, \Delta_k)$ - 2-D time-homogenous Markov Chain with transition probabilities $\bP_{ij}$, where $\rho_k \in \Gamma$ and $\Gamma$ represents the set of imbalance bins, and $\Delta_k = \sgn(s_k - s_{k-1}) \in \{-1,0,1\}$.
+\setlength{\LTpost}{0pt}
+\begin{longtable}{ll}
+Imbalance & $\rho_k$ \\
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{The finite, discrete stochastic process that results from sorting $I(t)$ into $\{1, \dots, \#_{bins} \}$, and which evolves in accordance with the Markov chain $\bz$.}  \vspace{6pt} \\ 
+Midprice & $S_k$ \\
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A stochastic process that evolves in accordance with the Markov chain $\bz$.}  \vspace{6pt} \\ 
+Midprice Change & $\Delta S_k = \sgn(S_k - S_{k-1})$  \vspace{6pt} \\ 
+Imbalance \& Midprice Change & $\bz_k = (\rho_k, \Delta S_k)$ \\
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A discrete-time 2-dimensional time-homogenous Markov chain with transition probabilities $\bP_{ij}$.} \vspace{6pt} \\ 
+$\Delta S$ when LOB Shuffles & $\{ \eta_{0,\bz}, \eta_{1,\bz}, \dots \} \sim F_{\bz}$ \\
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{i.i.d. random variables, where the distribution is dependent on the Markov chain state. This is the price change that accompanies a change in Markov chain state.} \vspace{6pt} \\ 
+Other Agent Market Orders & $K^{\pm}_k$ \\
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{The sum of the Poisson process with rate $\mu^{\pm}(\bz_k)$ over the past time interval $\Delta t$. This allows us to consider a continuous time process in discrete time by looking at how many arrivals there were since the previous timestep. $K^+$ represents the arrival of other agents' buy market orders.} \vspace{6pt} \\ 
+Our Limit Order Posting Depth & $\delta^{\pm}_k$ \\
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{One of the $\cF$-predictable processes that we will control. The value of $\delta^+$ dictates how deep on the buy side we will post our buy limit order - if $\delta^+ = 0$ then we are posting at-the-touch.}  \vspace{6pt} \\ 
+Our LO fill count & $L^{\pm}_k$ \\
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A binary random processes (not Poisson) identifying whether our buy ($L^+$) or sell ($L^-$) limit orders were filled. This process is considered in greater detail later in this section.}  \vspace{6pt} \\ 
+Our MOs & $M^{\pm}_k$ \\
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{Our other controlled process. $M^+$ represents our executing a buy market order. In executing market orders, we assume that the size of the MOs is small enough to achieve the best bid/ask price, and not walk the book.}  \vspace{6pt} \\ 
+Cash & $X^{\btau, \delta}_k$ \\
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A stochastic variable representing our cash, initially zero.}  \vspace{6pt} \\ 
+Inventory & $Q^{\btau, \delta}_k$ \\
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A stochastic process representing our assets, initially zero.}
+\end{longtable}
 
-State $\vec{x}_{k} = \begin{pmatrix}
+As per a typical discrete-time stochastic control problem, we will consider the following state, control, and random vectors: 
+
+\begin{tabular}{rl}
+\multirow{4}{*}{State $\vec{x}_{k} = \begin{pmatrix}
 x_k \\
 s_k \\
 \bz_k \\
 q_k 
-\end{pmatrix} \qquad \begin{matrix}
-\text{cash} \\
-\text{stock price} \\
-\text{Markov chain state, as above} \\
-\text{inventory} \\
-\end{matrix}$
-
-Control $\vec{u}_{k} = \begin{pmatrix}
+\end{pmatrix}$} & cash \\
+& stock price \\
+& Markov chain state, as above \\
+& inventory \\[4ex]
+\multirow{4}{*}{Control $\vec{u}_{k} = \begin{pmatrix}
 \delta_k^+ \\
 \delta_k^- \\
 M_k^+ \\
 M_k^-
-\end{pmatrix} \qquad \begin{matrix}
-\text{bid posting depth} \\
-\text{ask posting depth} \\
-\text{buy MO - binary control} \\
-\text{sell MO - binary control} \\
-\end{matrix}$
-
+\end{pmatrix}$} & bid posting depth \\
+& ask posting depth \\
+& buy MO - binary control \\
+& sell MO - binary control \\[4ex]
+\multirow{3}{*}{
 Random $\vec{w}_{k} = \begin{pmatrix}
 K_k^+ \\
 K_k^- \\
 \omega_k
-\end{pmatrix} \qquad \begin{matrix}
-\text{other agent buy MOs - binary} \\
-\text{other agent sell MOs - binary} \\
-\text{random variable uniformly distributed on [0,1]} \\
-\end{matrix}$
+\end{pmatrix}$}
+& other agent buy MOs - binary \\
+& other agent sell MOs - binary \\
+& random variable uniformly distributed on [0,1]
+\end{tabular}
 
 Following \cite{Kwong15}, we'll write the evolution of the Markov chain as a function of the current state and a uniformly distributed random variable $\omega$:
 \begin{equation}
