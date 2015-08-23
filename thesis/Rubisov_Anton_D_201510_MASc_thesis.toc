@@ -6,12 +6,12 @@
 \contentsline {chapter}{\numberline {2}Exploratory Data Analysis}{17}{chapter.2}
 \contentsline {section}{\numberline {2.1}Modelling Imbalance: Continuous Time Markov Chain}{17}{section.2.1}
 \contentsline {section}{\numberline {2.2}Maximum Likelihood Estimate of a Markov-Modulated Poisson Process}{19}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}MLE of the Infinitesimal Generator Matrix}{19}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}MLE of the Arrival Rate}{20}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Infinitesimal Generator Matrix}{19}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Arrival Rates}{20}{subsection.2.2.2}
 \contentsline {section}{\numberline {2.3}2-Dimensional CTMC}{21}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Cross-Validation}{22}{subsection.2.3.1}
 \contentsline {section}{\numberline {2.4}Predicting Future Price Changes}{24}{section.2.4}
-\contentsline {section}{\numberline {2.5}Naive Trading Strategies}{26}{section.2.5}
+\contentsline {section}{\numberline {2.5}Naive Trading Strategies}{25}{section.2.5}
 \contentsline {paragraph}{Naive Trading Strategy}{26}{section*.13}
 \contentsline {paragraph}{Naive+ Trading Strategy}{26}{section*.14}
 \contentsline {paragraph}{Naive++ Trading Strategy}{26}{section*.15}

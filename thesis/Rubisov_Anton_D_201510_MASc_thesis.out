@@ -6,8 +6,8 @@
 \BOOKMARK [0][-]{chapter.2}{Exploratory Data Analysis}{}% 6
 \BOOKMARK [1][-]{section.2.1}{Modelling Imbalance: Continuous Time Markov Chain}{chapter.2}% 7
 \BOOKMARK [1][-]{section.2.2}{Maximum Likelihood Estimate of a Markov-Modulated Poisson Process}{chapter.2}% 8
-\BOOKMARK [2][-]{subsection.2.2.1}{MLE of the Infinitesimal Generator Matrix}{section.2.2}% 9
-\BOOKMARK [2][-]{subsection.2.2.2}{MLE of the Arrival Rate}{section.2.2}% 10
+\BOOKMARK [2][-]{subsection.2.2.1}{Infinitesimal Generator Matrix}{section.2.2}% 9
+\BOOKMARK [2][-]{subsection.2.2.2}{Arrival Rates}{section.2.2}% 10
 \BOOKMARK [1][-]{section.2.3}{2-Dimensional CTMC}{chapter.2}% 11
 \BOOKMARK [2][-]{subsection.2.3.1}{Cross-Validation}{section.2.3}% 12
 \BOOKMARK [1][-]{section.2.4}{Predicting Future Price Changes}{chapter.2}% 13

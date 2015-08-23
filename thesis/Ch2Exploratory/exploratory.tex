@@ -37,22 +37,22 @@ If $X(t)$ has transition probabilities $P_{ij}(t) = \P \left[ X(t) = j \; | \; X
 \end{align}
 \end{defn}
 
-Conditional on $X(t) = k$, we assume the arrival of buy and sell market orders follow independent Poisson processes with intensities $\lambda_k^\pm$, where $\lambda_k^+$ ($\lambda_k^-$) is the rate of arrivals of market buys (sells). Such processes are called \textit{Markov-modulated Poisson processes}, as the Poisson intensities are themselves stochastic processes determined by the state of the Markov chain. Thus, a timeline of observations of arrivals of buy/sell market orders and of regime switches might look as in \eqref{introtimeline}.
+Conditional on $X(t) = k$, we assume the arrival of buy and sell market orders follow independent Poisson processes with intensities $\lambda_k^\pm$, where $\lambda_k^+$ ($\lambda_k^-$) is the rate of arrivals of market buys (sells). Such processes are called \textit{Markov-modulated Poisson processes}, as the Poisson intensities are themselves stochastic processes determined by the state of the Markov chain. Thus, a timeline of observations of arrivals of buy/sell market orders and of regime switches might look as in \autoref{introtimeline}.
 
 \begin{figure}
   \tikzsetnextfilename{Ch2/LOBtimeline}
   \resizebox{\linewidth}{!}{\input{Figs/Ch2/LOBtimeline.tikz}}
-\caption{Hypothetical timeline of market orders arriving during changing order imbalance regimes.}
+\caption[Hypothetical timeline of market orders and imbalance regime switches]{Hypothetical timeline of market orders arriving during changing order imbalance regimes. The $\tau$ nodes represent regime switch times, and appear in unequally spaced intervals. Regime $i$ occurs twice, and market order arrivals behave similarly in both instances.}
 \label{introtimeline}
 \end{figure}
 
-In the sections that follow, I derive maximum likelihood estimations for the parameters of the CTMC, and evaluate the fit of the model to the data.
+In the sections that follow, we derive maximum likelihood estimations for the parameters of the CTMC, and evaluate the fit of the model to the data.
 
 \section[Maximum Likelihood Estimate of a Markov-Modulated Poisson Process]{Maximum Likelihood Estimate \texorpdfstring{\\}{} of a Markov-Modulated Poisson Process}
 
-\subsection{MLE of the Infinitesimal Generator Matrix}
+\subsection{Infinitesimal Generator Matrix}
 
-Let $\mat{G}$ be the generator matrix for a CTMC $X(t)$ with state space $K$. From observations, e.g. the fictional events in the timeline given in Figure \ref{introtimeline}, we want to estimate the entries of $\mat{G}$. Since the holding time in a given state $i$ has pdf $f(t;v_i) = v_i e^{-v_i t}$, the likelihood function (allowing for repetition of terms) is therefore
+Let $\mat{G}$ be the generator matrix for a CTMC $X(t)$ with state space $K$. From observations, e.g. the fictional events in the timeline given in \autoref{introtimeline}, we want to estimate the entries of $\mat{G}$. Since the holding time in a given state $i$ has probability density function $f(t;v_i) = v_i e^{-v_i t}$, the likelihood function (allowing for repetition of terms) is therefore
 \begin{align}
 \mathcal{L}(\mat{G}) &= (v_{i} e^{-v_{i}(\tau_2 - \tau_1)} p_{ij}) (v_{j} e^{-v_{j}(\tau_3 - \tau_2)} p_{ji}) (v_{i} e^{-v_{i}(\tau_4 - \tau_3)} p_{ik}) \dots \\
 &= \prod\limits_{i=1}^{K} \prod\limits_{i \neq j} (v_{i}p_{ij})^{N_{ij}(T)} e^{-v_{i}H_i(T)} \\
@@ -72,7 +72,7 @@ To get a maximum likelihood estimate $\hat{q}_{ij}$ for transition rates and the
 \Rightarrow \hat{q}_{ij} = \dfrac{N_{ij}(T)}{H_i(T)}
 \end{equation}
 
-\subsection{MLE of the Arrival Rate}
+\subsection{Arrival Rates}
 
 Now we want to derive an estimate for the intensity of the Poisson process of market order arrivals conditional on being in state $k$. We'll look at just the buy market orders for some regime $k$, as the sell case is identical. Let the buy market order arrival times be indexed by $b_i$. Since we're assuming that the arrival process is Poisson with the same intensity throughout trials, we can consider the inter-arrival time of events conditional on being in state $k$. The MLE derivation then follows just as it did for the generator matrix.
 \begin{align}
@@ -93,9 +93,9 @@ H_{k}(T) & \equiv \mbox{holding time in regime $k$ up to time $T$} \nonumber
 
 \section{2-Dimensional CTMC}
 \label{sec:2DCTMC}
-Next we consider a CTMC $Z(t)$ that jointly models the imbalance bin $\rho(t)$ and the price change $\Delta S(t)$. The raw imbalance timeseries is very erratic, so to smooth it we taken the time-weighted average of imbalance over the past time inteval $\Delta t_I$. We compute price change as the \emph{sign} of the change in midprice of the \emph{future} time interval $\Delta t_S$. These time intervals are illustrated in \autoref{fig:timewindows}.
+Next we consider a CTMC $Z(t)$ that jointly models the imbalance bin $\rho(t)$ and the price change $\Delta S(t)$. The raw imbalance timeseries is very erratic, so to smooth it we take the time-weighted average of imbalance over the past time inteval $\Delta t_I$. We compute price change as the \emph{sign} of the change in midprice of the \emph{future} time interval $\Delta t_S$. These time intervals are illustrated in \autoref{fig:timewindows}.
 
-\begin{figure}
+\begin{figure}[H]
   \centering
   \tikzsetnextfilename{Ch2/timewindows}
   \input{Figs/Ch2/timewindows.tikz}
@@ -115,12 +115,12 @@ For simplicity of computation, the pair $(\rho(t), \Delta S(t))$ is then reduced
 \toprule
 $Z(t)$ & Bin $\rho(t)$ & $\Delta S(t)$ & \phantom{abc} & $Z(t)$ & Bin $\rho(t)$ & $\Delta S(t)$ & \phantom{abc} & $Z(t)$ & Bin $\rho(t)$ & $\Delta S(t)$ \\
 \cmidrule{1-3} \cmidrule{5-7} \cmidrule{9-11}
-1 & Bin 1 & $<0$ && 4 & Bin 1 & $0$ && 7 & Bin 1 & $>0$ \\
-2 & Bin 2 & $<0$ && 5 & Bin 2 & $0$ && 8 & Bin 2 & $>0$ \\
-3 & Bin 3 & $<0$ && 6 & Bin 3 & $0$ && 9 & Bin 3 & $>0$ \\
+1 & Bin 1 & $-1$ && 4 & Bin 1 & $0$ && 7 & Bin 1 & $+1$ \\
+2 & Bin 2 & $-1$ && 5 & Bin 2 & $0$ && 8 & Bin 2 & $+1$ \\
+3 & Bin 3 & $-1$ && 6 & Bin 3 & $0$ && 9 & Bin 3 & $+1$ \\
 \bottomrule
 \end{tabular}
-\caption{$\varphi(\rho(t),S(t))$: 1-Dimensional Encoding of 2-Dimensional CTMC}
+\caption[1-dimensional encoding of 2-dimensional CTMC]{$\varphi(\rho(t),S(t))$: 1-dimensional encoding of 2-dimensional CTMC.}
 \end{table}
 
 \subsection{Cross-Validation}
@@ -128,7 +128,7 @@ We cross-validate the CTMC calibration by means of a time-homogeneity test simil
 \begin{equation}
 H_0 = \forall i,j \in S \; : \; \exists q_{ij} \in \R^+ \; : \; q_{ij}(t) \equiv q_{ij} \; \forall t \in [0,T]
 \end{equation}
-whereas the alternative hypothesis states that transition rates/probabilities are time-dependent. To test the hypothesis, we fix $\Delta t_I = \Delta t_S$ at some value, choose a number of imbalance bins, and calculate the MLE estimate of the infinitesimal generator matrix $\mat{G}$ on the full timeseries. For a chosen error threshold $\epsilon$, we use the relationship in \eqref{eq:CTMCPG} to calculate the number of timesteps $n_{conv}$ of size $\Delta t_I$ such that
+whereas the alternative hypothesis states that transition rates/probabilities are time-dependent. To test the hypothesis, we fix $\Delta t_I = \Delta t_S$ at some value, choose a number of imbalance bins, and calculate the maximum likelihood estimate of the infinitesimal generator matrix $\mat{G}$ on the full timeseries using \eqref{eq:MLEG}. For a chosen error threshold $\epsilon$, we use the relationship in \eqref{eq:CTMCPG} to calculate the number of timesteps $n_{conv}$ of size $\Delta t_I$ such that
 \begin{equation}\label{eq:crossvalidnconv}
 || \mat{P}\left((n_{conv}+1)\Delta t_I \right) - \mat{P} \left( n_{conv}\Delta t_I \right) || < \epsilon
 \end{equation}
@@ -171,7 +171,7 @@ $\Delta t_I$ & $n_{conv}$ & $K$ & 8 & 4 & 2 & & $n_{conv}$ & $K$ & 8 & 4 & 2 \\
 \caption{$\chi^2$-test $p$-values for testing the time homogeneity hypothesis. Tests were run for each ticker for each trading day of 2013, and averaged over the year. For calculating $n_{conv}$, the converge error threshold was $\epsilon = 1\times 10^{-10}$.}
 \label{tbl:pvalues}
 \end{table}
-Considering the standard cutoff $p$-value of 0.05, the cross-validation results show a strong case for the rejection of the homogeneity hypothesis. However, utilizing a non-homogeneous model falls outside of the scope of this research project, and instead suggests possible extensions to this research wherein the trading day is broken down into subintervals to better account for fluctuations and patterns in trading activity - perhaps early morning, mid-day, and final hour of trading.
+Considering the standard cutoff $p$-value of 0.05, the cross-validation results show a strong case for the rejection of the homogeneity hypothesis. However, using a non-homogeneous model falls outside of the scope of this research project, and instead suggests possible extensions to this research wherein the trading day is broken down into subintervals to better account for fluctuations and patterns in trading activity - perhaps early morning, mid-day, and final hour of trading. The severity of proceeding with the homogeneity hypothesis is not known \textit{a priori}, and may instead emerge with the backtesting results done later in this chapter and in Chapter 4.
 
 \section{Predicting Future Price Changes}
 It is crucial to note that the value $\Delta S(t)$ contains the price change from time $t$ over the \textit{future} $\Delta t_S$ seconds - hence in real-time one cannot know the state of the Markov Chain. However, the analytic results do prove enlightening: from the resulting timeseries we estimate a generator matrix $\mat{G}$, and transform it into a one-step transition probability matrix $\mat{P} = e^{\mat{G}\Delta t_I}$. The entries of $\mat{P}$ are the conditional probabilities 
@@ -217,7 +217,7 @@ $\rho_{prev} = 2$ & 0.10 & 0.06 & 0.15 & 0.10 & 0.04 & 0.08 & 0.12 & \bf 0.57 & 
 $\rho_{prev} = 3$ & 0.13 & 0.14 & 0.08 & 0.10 & 0.11 & 0.05 & 0.19 & 0.14 & \bf 0.56 \\
 \bottomrule
 \end{tabular}
-\caption{The $\mat{Q}$ matrix: probabilities of future price changes, conditioned on current imbalance, current price change, and previous imbalance.}
+\caption[Probabilities of future price changes]{The $\mat{Q}$ matrix: conditional probabilities of future price changes, conditioned on current imbalance, current price change, and previous imbalance.}
 \label{tbl:Qmatrix}
 \end{table}
 
@@ -229,7 +229,7 @@ The three middle rows of \autoref{tbl:Qmatrix} contain the majority of values $>
 \section{Naive Trading Strategies}
 Using the key insight drawn from \eqref{eq:EDAKeyInsight}, we implemented several naive trading strategies, descriptions of which follow:
 
-\paragraph{Naive Trading Strategy}  Using the conditional probabilities obtained from $\mat{Q}$, we will execute a buy (resp. sell) market order if the probability of an upward (resp. downward) price change is $> 0.5$. Pseudocode for this strategy is given in \autoref{algo:algo-naive}.
+\paragraph{Naive Trading Strategy}  Using the conditional probabilities obtained from $\mat{Q}$, we will execute a buy (resp. sell) market order if the probability of an upward (resp. downward) price change is $> 0.5$. Pseudocode for this strategy is given in \autoref{algo:algo-naive}. In lines 4-6 we are forecasting a downward price move, and therefore sell one share at the best bid price. In lines 7-9, we are forecasting an upward price move, and buy one share at the best ask price. In lines 12-16 we have reached the end of the trading day, and liquidate our position at the at-the-touch price.
 \begin{algorithm}
 \caption{Naive Trading Strategy}
 \input{Figs/Ch2/algo-naive.tex}
@@ -249,7 +249,7 @@ Using the key insight drawn from \eqref{eq:EDAKeyInsight}, we implemented severa
 %\end{algorithm}
 
 \section{Calibration and Backtesting}
-Backtesting these naive trading strategies required a choice of parameters for the price change observation period $\Delta t_S$, the imbalance averaging period $\Delta t_I$, and the number of imbalance bins $\#_{bins}$. We used a brute force calibration technique that, for each ticker and each day, traversed the potential parameter space searching for the highest number of timesteps at which \eqref{eq:EDAKeyInsight} could be used. We found that $\#_{bins} = 4$ provided the highest expected number of trades for most tickers. However, as we were utilizing percentile bins symmetric around zero, we wanted to have $\#_{bins}$ as an odd number such that all behaviour around zero imbalance was treated equally; thus all backtesting was done with either $\#_{bins} = 3$ or $\#_{bins} = 5$. Additionally, we found empirically that calibration always yielded $\Delta t_S = \Delta t_I$, so this was taken as a given. The backtest for each ticker then consisted of first calibrating the value $\Delta t_I$ from the first day of data by maximizing the intra-day Sharpe ratio, then using the calibrated parameters to backtest the entire year.
+Backtesting these naive trading strategies required a choice of parameters for the price change observation period $\Delta t_S$, the imbalance averaging period $\Delta t_I$, and the number of imbalance bins $\#_{bins}$. We used a brute force calibration technique that, for each ticker and each day, traversed the potential parameter space searching for the highest number of timesteps at which \eqref{eq:EDAKeyInsight} could be used. We found that $\#_{bins} = 4$ provided the highest expected number of trades for most tickers. However, as we were using percentile bins symmetric around zero, we wanted to have $\#_{bins}$ as an odd number such that all behaviour around zero imbalance was treated equally; thus all backtesting was done with either $\#_{bins} = 3$ or $\#_{bins} = 5$. Additionally, we found empirically that calibration always yielded $\Delta t_S = \Delta t_I$, so this was taken as a given. The backtest for each ticker then consisted of first calibrating the value $\Delta t_I$ from the first day of data by maximizing the intra-day Sharpe ratio, then using the calibrated parameters to backtest the entire year.
 
 \begin{figure}
 \centering

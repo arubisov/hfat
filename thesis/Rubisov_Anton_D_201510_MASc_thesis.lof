@@ -1,7 +1,7 @@
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Structure and mechanics of the limit order book}}{13}{figure.caption.6}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Hypothetical timeline of market orders arriving during changing order imbalance regimes.\relax }}{19}{figure.caption.8}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Hypothetical timeline of market orders and imbalance regime switches}}{19}{figure.caption.8}
 \contentsline {figure}{\numberline {2.2}{\ignorespaces Time intervals for time-weighted averaging of imbalance and for price change.\relax }}{21}{figure.caption.9}
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Comparison of Naive (black), Naive+ (dark gray), and Naive++ (light gray) trading strategies. Plotted are normalized book values, averaged across the trading year, against the time of the day between market open and close.\relax }}{28}{figure.caption.16}
 \addvspace {10\p@ }

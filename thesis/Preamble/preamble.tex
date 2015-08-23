@@ -26,7 +26,7 @@
 \usepackage{sidecap} % Typeset captions sideways
 \usepackage{subcaption}  % Support for sub-captions
 \usepackage{url} % Verbatim with URL-sensitive line breaks
-\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue,citecolor=black]{hyperref}
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue]{hyperref}
 
 % Fixes a problem with how hyperref records item labels
 \makeatletter
@@ -109,15 +109,17 @@
 % See http://tex.stackexchange.com/questions/1050/whats-the-difference-between-newcommand-and-newcommand for info difference between newcommand and newcommand*
 
 % Changes how \autoref displays the equation reference.
-\def\equationautorefname{Equation}
+\def\equationautorefname~#1\null{Equation~(#1)\null}
+%\def\equationautorefname{Equation}
 \def\tableautorefname{Table}
 \def\figureautorefname{Figure}
 \def\subsubsectionautorefname{Subsection}
 \def\sectionautorefname{Section}
 \def\algorithmautorefname{Algorithm}
 % Changes how \eqref displays the equation reference.
-\let\originaleqref\eqref
-\renewcommand{\eqref}{Equation~\originaleqref}
+%\let\originaleqref\eqref
+%\renewcommand{\eqref}{Equation~\originaleqref}
+\renewcommand{\eqref}{\autoref}
 % Note: autoref makes all of the text link-able, while eqref
 % inserts an Eq.~ that cannot be clicked, and a number that can. 
 %  i.e., denoting links by [['s, autoref gives something like

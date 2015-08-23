@@ -1,8 +1,8 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces $\varphi (\rho (t),S(t))$: 1-Dimensional Encoding of 2-Dimensional CTMC\relax }}{22}{table.caption.10}
+\contentsline {table}{\numberline {2.1}{\ignorespaces 1-dimensional encoding of 2-dimensional CTMC}}{22}{table.caption.10}
 \contentsline {table}{\numberline {2.2}{\ignorespaces $\chi ^2$-test $p$-values for testing the time homogeneity hypothesis. Tests were run for each ticker for each trading day of 2013, and averaged over the year. For calculating $n_{conv}$, the converge error threshold was $\epsilon = 1\times 10^{-10}$.\relax }}{23}{table.caption.11}
-\contentsline {table}{\numberline {2.3}{\ignorespaces The $\bm {Q}$ matrix: probabilities of future price changes, conditioned on current imbalance, current price change, and previous imbalance.\relax }}{25}{table.caption.12}
+\contentsline {table}{\numberline {2.3}{\ignorespaces Probabilities of future price changes}}{25}{table.caption.12}
 \contentsline {table}{\numberline {2.4}{\ignorespaces Hypothetical timeline of adverse selection with market orders.\relax }}{29}{table.caption.19}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
