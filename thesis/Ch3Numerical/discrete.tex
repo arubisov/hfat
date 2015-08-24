@@ -1,6 +1,6 @@
 \section{Discrete Time}
-We now consider the same optimization problem but in discrete time, and we will attempt to reuse the same variable definitions and notation where it makes sense; namely, the constants $\Delta_{t_{I}}, \Delta_{t_{S}}, \#_{bins}, \xi$ are defined as before. We will be analysing the embedded discrete time Markov chain, which for any time interval of size $
-\Delta t$ can be obtained from the CTMC by considering the transition probability matrix obtained by $\mat{P} = e^{\mat{G}\Delta t}$. We have derived the below results with the consideration that $\Delta t = \Delta_{t_{I}} = \Delta_{t_{S}} = 1000ms$, though this is not strictly necessary. For convenience, we relist in discrete-time form the processes we will consider for this control problem:
+We now consider the same optimization problem but in discrete time, and we will attempt to reuse the same variable definitions and notation where it makes sense; namely, the constants $\Delta {t_{I}}, \Delta {t_{S}}, \#_{bins}, \xi$ are defined as before. We will be analysing the embedded discrete time Markov chain, which for any time interval of size $
+\Delta t$ can be obtained from the CTMC by considering the transition probability matrix obtained by $\mat{P} = e^{\mat{G}\Delta t}$. We have derived the below results with the consideration that $\Delta t = \Delta {t_{I}} = \Delta {t_{S}} = 1000ms$, though this is not strictly necessary. For convenience, we re-list in discrete-time form the processes we will consider for this control problem:
 
 \setlength{\LTpost}{0pt}
 \begin{longtable}{ll}
@@ -11,8 +11,8 @@ Midprice & $S_k$ \\
 Midprice Change & $\Delta S_k = \sgn(S_k - S_{k-1})$  \vspace{6pt} \\ 
 Imbalance \& Midprice Change & $\bz_k = (\rho_k, \Delta S_k)$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A discrete-time 2-dimensional time-homogenous Markov chain with transition probabilities $\bP_{ij}$.} \vspace{6pt} \\ 
-$\Delta S$ when LOB Shuffles & $\{ \eta_{0,\bz}, \eta_{1,\bz}, \dots \} \sim F_{\bz}$ \\
-\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{i.i.d. random variables, where the distribution is dependent on the Markov chain state. This is the price change that accompanies a change in Markov chain state.} \vspace{6pt} \\ 
+Midprice Change when $\Delta S \neq 0$ & $\{ \eta_{0,\bz}, \eta_{1,\bz}, \dots \} \sim F_{\bz}$ \\
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{Independent, identically-distributed random variables, where the distribution is dependent on the Markov chain state. This is the price change that accompanies a change in Markov chain state.} \vspace{6pt} \\ 
 Other Agent Market Orders & $K^{\pm}_k$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{The sum of the Poisson process with rate $\mu^{\pm}(\bz_k)$ over the past time interval $\Delta t$. This allows us to consider a continuous time process in discrete time by looking at how many arrivals there were since the previous timestep. $K^+$ represents the arrival of other agents' buy market orders.} \vspace{6pt} \\ 
 Our Limit Order Posting Depth & $\delta^{\pm}_k$ \\
@@ -124,9 +124,9 @@ s_k - \xi \\
 Our market orders assume immediate execution, and are assumed to be sufficiently small in volume so as to not affect order imbalance or the midprice. 
 
 \subsection{Dynamic Programming}
-The system formulation allows both continuous and impulse control to mimic what was done in the continuous time section, though in discrete time there is no \textit{a priori} distinction between the two \cite{Bens08}. The following theorem shows that in this case a quasi-variational inequality formulation does exist, and that it is equivalent to the standard dynamic programming formulation. The result is a simplified expression that mirrors the continuous time analysis.
+The system formulation allows both continuous and impulse control to mimic what was done in the continuous time section, though in discrete time there is no \textit{a priori} distinction between the two \citep{Bens08}. The following theorem shows that in this case a quasi-variational inequality formulation does exist, and that it is equivalent to the standard dynamic programming formulation. The result is a simplified expression that mirrors the continuous time analysis.
 
-\begin{thm}[\cite{Bens08}] \textbf{Dynamic Programming with Impulse Control in Discrete Time.} Consider a controlled Markov Chain with state space $X = \R^d$, transition probability $\pi(x, v, \d \eta)$, and positive, bounded, uniformly continuous cost function $l(x,v)$.
+\begin{thm}[\citet{Bens08}] \textbf{Dynamic Programming with Impulse Control in Discrete Time.} Consider a controlled Markov Chain with state space $X = \R^d$, transition probability $\pi(x, v, \d \eta)$, and positive, bounded, uniformly continuous cost function $l(x,v)$.
 
 Introduce an impulse control $w$. Define the extended cost function by $l(x, v, w) = l(x + w, v) + c(w)$, the extended transition probability by $\pi (x, v, w, \d \eta) =  \pi (x+w, v, \d \eta)$ with the associated operator $\Phi^{v,w} f (x) = \int_{\R^d} f (\eta) \pi (x, v, w, \d \eta) = \Phi^{v} f (x+w)$.
 
@@ -174,7 +174,7 @@ To simplify the DPEs, we introduce a now familiar ansatz:
 \label{eq:ansatzHdscr}
 V_k (x,s,\bz,q) = x + q(s-\sgn(q)\xi) + h_k(\bz,q)
 \end{equation}
-with boundary condition $h_k(\bz,0) = 0$ and terminal condition $h_T(\bz,q) = -\alpha q^2$. Substituting this ansatz into the \eqref{eq:discreteDPEinitial}, we obtain
+with boundary condition $h_k(\bz,0) = 0$ and terminal condition $h_T(\bz,q) = -\alpha q^2$. Substituting this ansatz into \eqref{eq:discreteDPEinitial}, we obtain
 \begin{align}
 \begin{split}
 0 & = \max \biggl\lbrace \sup_{\delta^\pm} \bigl\lbrace \E_{\bw} \left[ V_{k+1} (f((x,s,\bz,q),\bu,\bw_k) \right] - V_k (x,s,\bz,q) \bigr\rbrace \; ; \\
@@ -357,7 +357,7 @@ and its partial derivatives as
 \end{split}
 \end{align}
 
-Now we tackle solving the supremum in equation $\ref{eq:discretesup1}$ and thus finding the optimal posting depths, again denoted by a subscript asterisk. First we consider the first-order condition on $\delta^-$, namely that the partial derivative with respect to it must be equal to zero.
+Now we tackle solving the supremum in \autoref{eq:discretesup1} and thus finding the optimal posting depths, again denoted by a subscript asterisk. First we consider the first-order condition on $\delta^-$, namely that the partial derivative with respect to it must be equal to zero.
 \begin{align}
 \begin{split}
 0 & = \partial_{\delta^-} \biggl\lbrace 
@@ -405,7 +405,7 @@ And similarly, the optimal buy posting depth is given by:
 & \hphantom{{}={}} -p(\delta^-) \left( 2 \xi \indicator_{q = 0} - \sum_\bj \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \bigr] \right) \biggr\rbrace
 \end{split}
 \end{equation}
-For ease of notation we'll write $\aleph(q) = \sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \right]$. Now, assuming we behave optimally on both the buy and sell sides simultaneously, we can substitute equation \ref{eq:discretedeltaplusreferential} into equation \ref{eq:discretedeltaminusreferential}, while evaluating both at ${\delta^+}^*$ and ${\delta^-}^*$ to obtain the optimal posting depth in feedback form:
+For ease of notation we'll write $\aleph(q) = \sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \right]$. Now, assuming we behave optimally on both the buy and sell sides simultaneously, we can substitute \autoref{eq:discretedeltaplusreferential} into \autoref{eq:discretedeltaminusreferential}, while evaluating both at ${\delta^+}^*$ and ${\delta^-}^*$ to obtain the optimal posting depth in feedback form:
 \begin{equation}\label{eq:discretedeltaminusfeedback}
 \begin{split}
 {\delta^-}^* & = \frac{1}{\kappa} + \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \geq 1} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q-1) \biggr] \\
@@ -415,7 +415,7 @@ For ease of notation we'll write $\aleph(q) = \sum_\bj \bP_{\bz,\bj} \left[ h_{k
 \end{equation}
 This equation will need to be solved numerically due to the difficulty in isolating ${\delta^{-}}^*$ on one side of the equality. Once a solution has been obtained, the value can be substituted back into \eqref{eq:discretedeltaplusreferential} to solve for ${\delta^{+}}^*$.
 
-\subsection{Simplifying the DPE}
+\subsection{Simplifying and Interpreting the DPE}
 We now turn to simplifying the DPE in \eqref{eq:discreteDPE} by substituting in the optimal posting depths as written in recursive form: \eqref{eq:discretedeltaplusreferential} and \eqref{eq:discretedeltaminusreferential}. In doing so we see a incredible amount of cancellation and simplification, and we obtain the rather elegant, and surprisingly simple form of the DPE:
 \begin{equation}
 \label{eq:discreteDPEfinal}

@@ -1,5 +1,5 @@
 \chapter{Stochastic Optimal Control}
-Leveraging the insights gained from the exploratory data analysis in the previous chapter, I turn my attention now to casting the statistical arbitrage problem into a mathematical framework. With our underlying process of interest being a Markov chain, the problem lends itself naturally to being considered in the context of stochastic optimal control. Stochastic control problems are common in finance, where many of the underlying processes have a random nature; the goal is to maximize the expectation of some target function, representing profit, by converging on a set of optimal controls that drive the dynamics of the stochastic system to whichever state attains that maximum expectation. [Of course, the problem can conversely be aimed at minimizing expected cost.]
+Leveraging the insights gained from the exploratory data analysis in the previous chapter, we turn our attention now to casting the statistical arbitrage problem into a mathematical framework. With our underlying process of interest being a Markov chain, the problem lends itself naturally to being considered in the context of stochastic optimal control. Stochastic control problems are common in finance, where many of the underlying processes have a random nature; the goal is to maximize the expectation of some target function, representing profit, by converging on a set of optimal controls that drive the dynamics of the stochastic system to whichever state attains that maximum expectation. [Of course, the problem can conversely be aimed at minimizing expected cost.]
 
 The principal tool in stochastic optimal control is the dynamic programming principle. Under the requisite conditions, the principle allows the optimal controls to be solved from the terminal timestep backward, one step at a time, rather than attempting to simultaneously solve for the controls over the entire time horizon. In most cases, where an analytic solution does not exist, this produces a lookup table for the optimal control conditional on all state variables. 
 
@@ -12,9 +12,9 @@ In order to set up the optimization problem we require an aforementioned `profit
 
 \setlength{\LTpost}{-24pt}
 \begin{longtable}{ll}
-Imbalance Averaging Time & $\Delta_{t_{I}}$ \\
+Imbalance Averaging Time & $\Delta {t_{I}}$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A constant, specifying the time window over which the imbalance ratio $I(t)$ (\eqref{eq:LOBImbalance}) will be averaged.} \vspace{6pt} \\ 
-Price Change Time & $\Delta_{t_{S}}$ \\
+Price Change Time & $\Delta {t_{S}}$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A constant, specifying the time window over which price changes will be computed.}  \vspace{6pt} \\ 
 Number of Imbalance Bins & $\#_{bins}$ \\ 
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A constant, specifying the number of bins (spaced by percentiles, symmetric around zero) into which $I(t)$ will be sorted.}  \vspace{6pt} \\ 
@@ -22,24 +22,15 @@ Imbalance & $\rho_t$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{The finite, discrete stochastic process that results from sorting $I(t)$ into the imbalance bins $\{1, \dots, \#_{bins} \}$, and which evolves in accordance with the CTMC $\bZ$.}  \vspace{6pt} \\ 
 Midprice & $S_t$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A stochastic process that evolves in accordance with the CTMC $\bZ$.}  \vspace{6pt} \\ 
-Midprice Change & $\Delta S_t = \sgn(S_t - S_{t-\Delta_{t_{S}}})$  \vspace{6pt} \\ 
+Midprice Change & $\Delta S_t = \sgn(S_t - S_{t-\Delta {t_{S}}})$  \vspace{6pt} \\ 
 Imbalance \& Midprice Change & $\bZ_t = (\rho_t, \Delta S_t) $ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A continuous-time Markov chain with generator $\mat{G}$.} \vspace{6pt} \\ 
 Bid-Ask Half-Spread & $\xi$ \\
-\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A constant, such that $2\xi$ is equal to the best ask price minus the best bid price.} \vspace{6pt} \\ 
-$\Delta S$ when LOB Shuffles & $\{ \eta_{0,\bz}, \eta_{1,\bz}, \dots \} \sim F_{\bz}$ \\
-\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{i.i.d. random variables, where the distribution is dependent on the Markov chain state. These variables represent the sign and magnitude of the midprice change when such a change occurs.} \vspace{6pt} \\ 
-LOB Shuffling & $N_t$ \\
-\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A Poisson process with rate $\lambda(\bZ_t)$. This process accounts for all events in the LOB that affect midprice, be it from executions, cancellations, or order modifications within the LOB. Together with the previous definition, we thus have that the stock midprice $S_t$ evolves according to the SDE:
-\begin{equation}\label{eq:stockprocess}
-\d S_t = \eta_{N_{t^-},Z_{t^-}} \d N_t
-\end{equation}
-Additionally, the midprice satisfies:
-\begin{equation}\label{eq:stockintegral} 
-S_t = S_{t_0} + \int\limits_{t_0 + s}^t \Delta_u \du
-\end{equation}} \vspace{6pt} \\ 
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{As a modelling assumption, this is taken to be a constant. $2\xi$ is equal to the best ask price minus the best bid price.} \vspace{6pt} \\ 
+Midprice Change when $\Delta S \neq 0$ & $\{ \eta_{0,\bz}, \eta_{1,\bz}, \dots \} \sim F_{\bz}$ \\
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{Independent, identically-distributed random variables, where the distribution is dependent on the Markov chain state. These variables represent the sign and magnitude of the midprice change when such a change occurs.} \vspace{6pt} \\ 
 Other Agent Market Orders & $K^{\pm}_t$ \\
-\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{Poisson processes with rate $\mu^{\pm}(\bZ_t)$. $K^+$ represents the arrival of an other agent's buy market order.} \vspace{6pt} \\ 
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{Poisson processes with rate $\mu^{\pm}(\bZ_t)$. $K^+$ represents the arrival of another agent's buy market order.} \vspace{6pt} \\ 
 Our Limit Order Posting Depth & $\delta^{\pm}_t$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{One of the $\cF$-predictable processes that we will control. The value of $\delta^+$ dictates how deep on the buy side we will post our buy limit order - if $\delta^+ = 0$ then we are posting at-the-touch.}  \vspace{6pt} \\ 
 Our LO fill count & $L^{\pm}_t$ \\
@@ -49,15 +40,15 @@ Our LO fill count & $L^{\pm}_t$ \\
 \end{equation}
 Note that $L^-$, our sell limit order being filled, depends on $K^+$, an external buy order arriving.}  \vspace{6pt} \\ 
 Our MOs & $M^{\pm}_t$ \\
-\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{Our other controlled process. $M^+$ represents our executing a buy market order. In executing market orders, we assume that the size of the MOs is small enough to achieve the best bid/ask price, and not walk the book.}  \vspace{6pt} \\ 
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{Our other controlled process. $M^+$ represents our executing a buy market order. In executing market orders, we assume that the size of the MOs is small enough to achieve the best bid/ask price.}  \vspace{6pt} \\ 
 Our MO execution times & $\btau^\pm = \{ \tau^\pm_k : k = 1, \dots \}$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{An increasing sequence of $\cF$-stopping times, representing the time at which we execute market orders.} \vspace{6pt} \\ 
 Cash & $X^{\btau, \delta}_t$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A stochastic variable representing our cash, initially zero, that evolves according to
 \begin{equation}\label{eq:cashprocess}
 \begin{aligned}
-\d X^{\btau, \delta}_t = & \underbrace{(S_t + \xi_t + \delta^{-}_t) \d L^{-}_t}_{\text{sell limit order}} - \underbrace{(S_t - \xi_t - \delta^{+}_t) \d L^{+}_t}_{\text{buy limit order}} \\
-                         & + \underbrace{(S_t - \xi_t) \d M^{-}_t}_{\text{sell market order}} - \underbrace{(S_t + \xi_t) \d M^{+}_t}_{\text{buy market order}}
+\d X^{\btau, \delta}_t = & \underbrace{(S_t + \xi + \delta^{-}_t) \d L^{-}_t}_{\text{sell limit order}} - \underbrace{(S_t - \xi - \delta^{+}_t) \d L^{+}_t}_{\text{buy limit order}} \\
+                         & + \underbrace{(S_t - \xi) \d M^{-}_t}_{\text{sell market order}} - \underbrace{(S_t + \xi) \d M^{+}_t}_{\text{buy market order}}
 \end{aligned}
 \end{equation}}  \vspace{6pt} \\ 
 Inventory & $Q^{\btau, \delta}_t$ \\
@@ -67,9 +58,9 @@ Q^{\btau, \delta}_0 = 0, \qquad Q^{\btau, \delta}_t = L^+_t + M^+_t - L^-_t - M^
 \end{equation}}
 \end{longtable}
 
-We define a new variable for our net present value (NPV) at time $t$, call it $W^{\btau, \delta}_t$, and hence $W^{\btau, \delta}_T$ at terminal time $T$ is our `terminal wealth'. In algorithmic trading, we want to finish the trading day with zero inventory, and assume that at the terminal time $T$ we will submit a market order (of a possibly large volume) to liquidate remaining stock. Here we do not assume that we can receive the best bid/ask price - instead, the price achieved will be $(S - \mathrm{sgn}(Q)\xi - \alpha Q)$, where $\mathrm{sgn}(Q)\xi$ represents crossing the spread in the direction of trading, and $\alpha Q$ represents receiving a worse price linearly in $Q$ due to walking the book. Hence, $W^{\btau, \delta}_t$ satisfies:
+We define a new variable for our net present value (NPV) at time $t$, call it $W^{\btau, \delta}_t$, and hence $W^{\btau, \delta}_T$ at terminal time $T$ is our `terminal wealth'. In algorithmic trading, we want to finish the trading day with zero inventory, and assume that at the terminal time $T$ we will submit a market order (of a possibly large volume) to liquidate remaining stock. Here we do not assume that we can receive the best bid/ask price - instead, the price achieved will be $(S - \mathrm{sgn}(Q)\xi - \alpha Q)$, where $\mathrm{sgn}(Q)\xi$ represents crossing the spread in the direction of trading, and $\alpha$ is a penalty constant so that $\alpha Q$ represents receiving a worse price linearly in $Q$ due to walking the book. Hence, $W^{\btau, \delta}_t$ satisfies:
 \begin{equation}\label{eq:terminalwealth}
-W^{\btau, \delta}_t = \underbrace{\vphantom{\left( Q^{\btau, \delta}_t) \right)}X^{\btau, \delta}_t}_{\text{cash}}+ \underbrace{Q^{\btau, \delta}_t \left( S_t - \mathrm{sgn}(Q^{\btau, \delta}_t)\xi_t \right)}_{\text{book value of assets}} - \underbrace{\alpha \left( Q^{\btau, \delta}_t \right)^2}_{\text{liquidation penalty}}
+W^{\btau, \delta}_t = \underbrace{\vphantom{\left( Q^{\btau, \delta}_t) \right)}X^{\btau, \delta}_t}_{\text{cash}}+ \underbrace{Q^{\btau, \delta}_t \left( S_t - \mathrm{sgn}(Q^{\btau, \delta}_t)\xi \right)}_{\text{book value of assets}} - \underbrace{\alpha \left( Q^{\btau, \delta}_t \right)^2}_{\text{liquidation penalty}}
 \end{equation}
 The set of admissible trading strategies is the product of the sets $\mathcal{T}$, the set of all $\cF$-stopping times, and $\cA$, the set of all $\cF$-predictable, bounded-from-below depths $\delta$. We only consider $\delta^\pm \geq 0$, since at $\delta=0$ our fill probability is $e^{-\kappa\delta}=1$, so we cannot increase the chance of our limit order being filled by posting any lower than at-the-touch; doing so would only diminish our profit.
 
@@ -104,14 +95,14 @@ on $\mathcal{D}$, where $\mathcal{D} = [0,T] \times \R^m$.
 \end{thm}
 
 \subsection{Maximizing Terminal Wealth (Continuous)}
-In this section we solve the DPE that results from using the maximal terminal wealth performance criteria. The quasi-variational inequality in equation \ref{eq:thmDPE} can be interpreted as follows: the max operator is choosing between posting limit orders or executing market orders; the second term, $G-H$, is the stopping region and represents the value derived from executing a market order; and the first term is the continuation region, representing the value of posting limit orders. We'll use the shorthand $H(\cdot) = H(t,x,s,\bz,q)$ and solve for $\d H$ inside the continuation region, hence $\d M^{\pm} = 0$, in order to then extract out the infinitesimal generator.
+In this section we solve the dynamic programming equation (DPE) that results from using the maximal terminal wealth performance criteria. The quasi-variational inequality in \autoref{eq:thmDPE} can be interpreted as follows: the max operator is choosing between posting limit orders or executing market orders; the second term, $G-H$, is the stopping region and represents the value derived from executing a market order; and the first term is the continuation region, representing the value of posting limit orders. We'll use the shorthand $H(\cdot) = H(t,x,s,\bz,q)$ and solve for $\d H$ inside the continuation region, hence $\d M^{\pm} = 0$, in order to then extract out the infinitesimal generator.
 \begin{align}
 \d H (t,x,s,\bz,q) & = \sum\limits_i \partial_{x_i} H \dx_i \\
 & = \partial_t H \dt + \partial_{K^{\pm}} H \d {K^{\pm}} + \partial_{\bZ} H \d {\bZ} \\
 \begin{split}
-& = \partial_t H \dt + e^{ -\kappa \delta^{-}} \bigl[ H(t,x+(s+\xi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \d K^+\\
-& \hphantom{{}={} \partial_t H \dt} + e^{ -\kappa \delta^{+}} \bigl[ H(t,x-(s-\xi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \d K^-\\
-& \hphantom{{}={} \partial_t H \dt} + \sum_{\bj} \E \left[ H(t,x,s+\eta_{0,\bj},\bj,q) - H(\cdot) \right] \d Z_{\bz,\bj}
+& = \partial_t H \dt + \underbrace{e^{ -\kappa \delta^{-}} \bigl[ H(t,x+(s+\xi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \d K^+}_{\text{probability of our sell limit order being filled, times the change in value}} \\
+& \hphantom{{}={} \partial_t H \dt} + \underbrace{e^{ -\kappa \delta^{+}} \bigl[ H(t,x-(s-\xi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \d K^-}_{\text{probability of our buy limit order being filled, times the change in value}} \\
+& \hphantom{{}={} \partial_t H \dt} + \sum_{\bj} \underbrace{\E \left[ H(t,x,s+\eta_{0,\bj},\bj,q) - H(\cdot) \right] \d Z_{\bz,\bj}}_{\text{change in value resulting from a CTMC state switch}}
 \end{split}
 \end{align}
 We substitute in the identities relating each process to its corresponding compensated process, each of which is a continuous-time martingales. For Poisson processes we have \citep{STA4505}
@@ -157,7 +148,7 @@ Let's introduce the ansatz $H(\cdot) = x + q(s - \mathrm{sgn}(q)\xi) + h(t,\bz,q
 h(T, \bz, q) & = - \alpha q^2 \\
 h(t, \bz, 0) & = 0
 \end{align}
-Substituting this ansatz into equation \ref{eq:infgen}, we get:
+Substituting this ansatz into \autoref{eq:infgen}, we get:
 \begin{equation}
 \begin{split}
 \cL^{\delta}_t H & = \mu^+(\bz) e^{ -\kappa \delta^{-}} \bigl[ \delta^- + \xi [ 1 + \mathrm{sgn}(q-1) + q(\mathrm{sgn}(q) - \mathrm{sgn}(q-1) ) ] \\
@@ -222,6 +213,9 @@ Substituting all these results and simplifications into the DPE, we find that $h
 & -2 \xi \cdot \indicator_{q \leq 0} + h(t, \bz, q-1) - h(t,\bz,q)  \biggr\rbrace
 \end{split}
 \end{equation}
+
+\subsection{Interpreting the DPE}
+
 Looking at the simplified feedback form in the stopping region, we see that a buy market order will be executed at time $\tau^+_q$ whenever
 \begin{equation}\label{eq:buyMOfeedbackcase1}
 h(\tau^+_q, \bz, q+1) - h(\tau^+_q,\bz,q) = 2 \xi \cdot \indicator_{q \geq 0}
@@ -232,7 +226,7 @@ h(\tau^+_q, \bz, q-1) - h(\tau^+_q,\bz,q) = 2 \xi \cdot \indicator_{q \leq 0}
 \end{equation}
 Consider than when our inventory is positive, we can purchase a stock at $s+\xi$, but it will be marked-to-market at $s-\xi$, resulting in a value difference of $2\xi$. With negative inventory, we will still purchase at $s_\xi$, but will now also value at $s+\xi$ because our overall position is still negative, producing no value difference. In particular, with negative inventory, we will execute a buy market order so long as it does not change our value function; and with zero or positive inventory, only if it increases the value function by the value of the spread. The opposite holds for sell market orders. Together, these indicate a penchant for using market orders to drive inventory levels back toward zero when it has no effect on value, and using them to gain extra value only when the expected gain is equal to the size of the spread. This is reminiscent of what we saw in the exploratory data analysis: if a stock is worth $S$, we can purchase it at $S+\xi$ and immediately be able to sell it at $S-\xi$, at a loss of $2 \xi$; this was the most significant source of loss in the naive trading market order strategy. Hence we need to expect our value to increase by at least $2\xi$ when executing market orders for gain.
 
-The variational inequality in \eqref{eq:PDEcase1} yields that whilst in the continuation region, we instead have
+The variational inequality in \eqref{eq:PDEcase1} yields that while in the continuation region, we instead have
 \begin{align}
 h(\tau^+_q, \bz, q+1) - h(\tau^+_q,\bz,q) & \leq 2 \xi \cdot \indicator_{q \geq 0} \\
 h(\tau^+_q, \bz, q-1) - h(\tau^+_q,\bz,q) & \leq 2 \xi \cdot \indicator_{q \leq 0}
@@ -248,7 +242,7 @@ h(t,\bz,q) \overset{\text{\makebox[0pt]{sell if =}}}{\overset{\downarrow}{\leq}}
 h(t,\bz,q) \underset{\text{\makebox[0pt]{buy if =}}}{\underset{\uparrow}{\leq}} h(t,\bz,q-1) \underset{\text{\makebox[0pt]{sell if =}}}{\underset{\uparrow}{\leq}} h(t,\bz,q) + 2\xi, \qquad q \leq 0 \label{eq:ctsMOineq4}
 \end{align}
 
-Recalling the boundary condition $h(t,\bz,0) = 0$, \eqref{eq:ctsMOineq3} and \eqref{eq:ctsMOineq4} tell us that the function $h$ is non-negative everywhere. Furthermore, noting the feedback form of our optimal buy limit order depth given in equation \eqref{eq:optbuydepthfeedback}, together with the inequalities in \eqref{eq:ctsMOineq1} and \eqref{eq:ctsMOineq1}, we obtain bounds on our posting depths given by
+Recalling the boundary condition $h(t,\bz,0) = 0$, \eqref{eq:ctsMOineq3} and \eqref{eq:ctsMOineq4} tell us that the function $h$ is non-negative everywhere. Furthermore, noting the feedback form of our optimal buy limit order depth given in \eqref{eq:optbuydepthfeedback}, together with the inequalities in \eqref{eq:ctsMOineq1} and \eqref{eq:ctsMOineq1}, we obtain bounds on our posting depths given by
 \begin{align}
 {\delta^+}^* & = \frac{1}{\kappa} - 2 \xi \cdot \indicator_{q \leq -1} - h(t,\bz,q+1) + h(t,\bz,q) \\
 & \geq \frac{1}{\kappa} - 2 \xi \cdot \indicator_{q \leq -1} - 2 \xi \cdot \indicator_{q \geq 0} \\

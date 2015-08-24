@@ -229,27 +229,25 @@ The three middle rows of \autoref{tbl:Qmatrix} contain the majority of values $>
 \section{Naive Trading Strategies}
 Using the key insight drawn from \eqref{eq:EDAKeyInsight}, we implemented several naive trading strategies, descriptions of which follow:
 
-\paragraph{Naive Trading Strategy}  Using the conditional probabilities obtained from $\mat{Q}$, we will execute a buy (resp. sell) market order if the probability of an upward (resp. downward) price change is $> 0.5$. Pseudocode for this strategy is given in \autoref{algo:algo-naive}. In lines 4-6 we are forecasting a downward price move, and therefore sell one share at the best bid price. In lines 7-9, we are forecasting an upward price move, and buy one share at the best ask price. In lines 12-16 we have reached the end of the trading day, and liquidate our position at the at-the-touch price.
+\paragraph{Naive Trading Strategy}  This strategy seeks to profit from expected price changes by using market orders. Using the conditional probabilities obtained from $\mat{Q}$, we will execute a buy (resp. sell) market order if the probability of an upward (resp. downward) price change is $> 0.5$. Pseudocode for this strategy is given in \autoref{algo:algo-naive}. In lines 4-6 we are forecasting a downward price move, and therefore sell one share with a market order at the best bid price. In lines 7-9, we are forecasting an upward price move, and buy one share with a market order at the best ask price. In lines 12-16 we have reached the end of the trading day, and liquidate our position at the at-the-touch price.
 \begin{algorithm}
-\caption{Naive Trading Strategy}
-\input{Figs/Ch2/algo-naive.tex}
-\label{algo:algo-naive}
+	\caption{Naive Trading Strategy}
+	\input{Figs/Ch2/algo-naive.tex}
+	\label{algo:algo-naive}
 \end{algorithm}
 
-\paragraph{Naive+ Trading Strategy} If no change in midprice is expected then we'll post buy and sell limit orders at the touch, front of the queue. We'll track MO arrival between timesteps, assume we always get executed, and immediately repost the limit orders.
-%\begin{algorithm}[H]
-%\caption{Naive+ Trading Strategy}
-%\input{Figs/algo-naiveplus.tex}
-%\end{algorithm}
+\clearpage
+\paragraph{Naive+ Trading Strategy} This strategy seeks to profit from no expected changes in price by using limit orders. If no change in midprice is expected then we'll post buy and sell limit orders at the touch. For every market order that arrives, we'll assume that our limit order is always filled, following which we will immediately repost whichever limit order was filled. Pseudocode for this strategy is given in \autoref{algo:algo-naive-plus}. In lines 11-13, since a sell market order is arriving, our buy limit order is being filled and we are paying the bid price. 
+\begin{algorithm}
+	\caption{Naive+ Trading Strategy}
+	\input{Figs/Ch2/algo-naiveplus.tex}
+	\label{algo:algo-naive-plus}
+\end{algorithm}
 
-\paragraph{Naive++ Trading Strategy} As a reformulation of the Naive strategy to use limit orders instead of market orders, if we expect a downward (resp. upward) price change then we'll post an at-the-touch sell (resp. buy) limit order, which may be lifted by an agent who is executing a market order going against the price change momentum. 
-%\begin{algorithm}[H]
-%\caption{Naive++ Trading Strategy}
-%\input{Figs/algo-naiveplusplus.tex}
-%\end{algorithm}
+\paragraph{Naive++ Trading Strategy} Like the Naive strategy, this strategy seeks to profit from expected price changes, but using limit orders (and therefore buying/selling at better prices). If we expect a downward (resp. upward) price change then we'll post an at-the-touch sell (resp. buy) limit order, which may be lifted by an agent who is executing a market order going against the price change momentum. 
 
 \section{Calibration and Backtesting}
-Backtesting these naive trading strategies required a choice of parameters for the price change observation period $\Delta t_S$, the imbalance averaging period $\Delta t_I$, and the number of imbalance bins $\#_{bins}$. We used a brute force calibration technique that, for each ticker and each day, traversed the potential parameter space searching for the highest number of timesteps at which \eqref{eq:EDAKeyInsight} could be used. We found that $\#_{bins} = 4$ provided the highest expected number of trades for most tickers. However, as we were using percentile bins symmetric around zero, we wanted to have $\#_{bins}$ as an odd number such that all behaviour around zero imbalance was treated equally; thus all backtesting was done with either $\#_{bins} = 3$ or $\#_{bins} = 5$. Additionally, we found empirically that calibration always yielded $\Delta t_S = \Delta t_I$, so this was taken as a given. The backtest for each ticker then consisted of first calibrating the value $\Delta t_I$ from the first day of data by maximizing the intra-day Sharpe ratio, then using the calibrated parameters to backtest the entire year.
+Backtesting these naive trading strategies required a choice of parameters for the price change observation period $\Delta t_S$, the imbalance averaging period $\Delta t_I$, and the number of imbalance bins $\#_{bins}$. We used a brute force calibration technique that, for each ticker and each day, traversed the potential parameter space searching for the highest number of timesteps at which \eqref{eq:EDAKeyInsight} could be used. We found that $\#_{bins} = 4$ provided the highest expected number of trades for most tickers. However, as we were using percentile bins symmetric around zero, we wanted to have $\#_{bins}$ as an odd number such that all behaviour around zero imbalance was treated equally; thus all backtesting was done with either $\#_{bins} = 3$ or $\#_{bins} = 5$. Additionally, we found empirically that calibration always yielded $\Delta t_S = \Delta t_I$, so this was taken as a given. The backtest for each ticker then consisted of first calibrating the value $\Delta t_I$ from the first day of data by maximizing the intra-day Sharpe ratio (average of returns divided by standard deviation of returns), then using the calibrated parameters to backtest the entire year.
 
 \begin{figure}
 \centering
@@ -286,8 +284,8 @@ Backtesting these naive trading strategies required a choice of parameters for t
 \end{subfigure}\\
 
 \leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-  \rotatebox[origin=l]{90}{\hspace{18em}% VERTICAL POSITION
-	Normalized PnL}%
+  \rotatebox[origin=l]{90}{\hspace{15em}% VERTICAL POSITION
+	Normalized Profit and Loss (P\&L)}%
 }}\hspace{0pt plus 1filll}\null
 
 Time (h)
@@ -298,17 +296,17 @@ Time (h)
   \tikzsetnextfilename{Ch2/naivestratlegend}
   \input{Figs/Ch2/naivestratlegend.tikz} 
 \end{subfigure}%
-  \caption{Comparison of Naive (black), Naive+ (dark gray), and Naive++ (light gray) trading strategies. Plotted are normalized book values, averaged across the trading year, against the time of the day between market open and close.}
+  \caption[Comparison of the naive trading strategies]{Comparison of Naive (black), Naive+ (dark gray), and Naive++ (light gray) trading strategies. Plotted are normalized book values, averaged across the trading year, between 0930h (market open) and 1600h (market close). Book value is the sum of cash and market value of assets. Each day begins with zero book value, and all book values are normalized by dividing by the stock price at the start of each trading day.}
   \label{fig:comp}
 \end{figure}
 
 \section{Conclusions from the Naive Trading Strategies}
 
-As seen in Figure \ref{fig:comp}, the Naive strategy on average underperformed the average mid price, while the Naive+ (at-the-touch limit orders when no change was expected) and Naive++ (adding limit orders to adversely select agents that traded against the price change momentum) strategies both on average generated revenue.
+\autoref{fig:comp} plots the average daily performance of the naive strategies for four stocks listed on the NASDAQ. The performance is normalized via division by the initial stock price on each trading day. The Naive strategy on average lost revenue, the Naive+ strategy (at-the-touch limit orders when no change was expected) on average generated revenue, and the Naive++ strategy (using limit orders to adversely select agents that traded against the price change momentum) on average neither profited nor lost.
 
-\paragraph{Question 1} Why is the Naive strategy producing, on average, normalized losses? On calibration, we see that our intra-day Sharpe ratio is around 0.01 or 0.02 when we choose our optimal parameters, so at the very least on the calibration date the strategy produces positive returns. The remainder of the calendar days are out-of-sample, and the parameters are (likely) not optimal. This suggests non-stationary data, and in particular not every day can be modelled by the same Markov chain. The problem may be exaggerated by the fact that we're calibrating on the first trading day of the calendar year, when we might expect reduced, or at least non-representative, trading activity. Further, we are using midprices to obtain the $\mat{Q}$ probability matrix while ignoring the bid-ask spread. Thus predicting a ``price change'' may be insufficient when considering a monetizable opportunity, as we won't be able to profit off a predicted increase followed by a predicted decrease unless the interim mid-price move is greater than the bid-ask spread (assuming constant spread); this flaw affects trading on \texttt{FARO} in particular, which has a spread of about 15 cents.
+{\bf Why is the Naive strategy producing, on average, normalized losses?} On calibration, we see that our intra-day Sharpe ratio is around 0.01 or 0.02 when we choose our optimal parameters, so at the very least on the calibration date the strategy produces positive returns. The remainder of the calendar days are out-of-sample to the calibration, meaning the parameters are not specifically tuned to that data, and thus the parameters are (likely) not optimal. This adds evidence to rejecting the time homogeneity assumption, and in particular suggests that not every day can be modelled by the same Markov chain. The problem may be exaggerated by the fact that we're calibrating on the first trading day of the calendar year, when we might expect reduced, or at least non-representative, trading activity. Further, we are using midprices to obtain the $\mat{Q}$ probability matrix while ignoring the bid-ask spread. Thus predicting a ``price change'' may be insufficient when considering a monetizable opportunity, as we won't be able to profit off a predicted increase followed by a predicted decrease unless the interim mid-price move is greater than the bid-ask spread (assuming constant spread); this flaw affects trading on \texttt{FARO} in particular, which has a spread of about 15 cents.
 
-\paragraph{Question 2} Why do the Naive+ and Naive++ strategies outperform the Naive strategy? This is particularly interesting since the probabilities are being obtained from the same matrix. The obvious difference between the successful and unsuccessful strategies is that the former (a) uses limit orders, and (b) executes when we predict a zero change, whereas the latter uses (a) market orders, and (b) executes when we predict non-zero changes.
+{\bf Why do the Naive+ and Naive++ strategies outperform the Naive strategy?} This is particularly interesting since the probabilities are being obtained from the same matrix. The obvious difference between the successful and unsuccessful strategies is that the former (a) uses limit orders, and (b) executes when we predict a zero change, whereas the latter uses (a) market orders, and (b) executes when we predict non-zero changes.
 
 (a) leads to a different transaction price being used: a stock purchase with a limit order is executed at the bid price, while a purchase with a market order is at the ask price. Since the asset is marked-to-market at the more conservative price, and the mid price doesn't move as a result of the transaction, then a limit order purchases the share for the same value at which it is marked-to-market, whereas a market order `crosses the spread' and loses value.
 
@@ -319,7 +317,7 @@ As seen in Figure \ref{fig:comp}, the Naive strategy on average underperformed t
 \ra{1.2}
 \begin{tabular}{@{} *{7}{c} @{}}
 \toprule
-$t$ & $I(t)$ & Bid/Ask & Prediction & Action & Inv & PnL \\
+$t$ & $I(t)$ & Bid/Ask & Prediction & Action & Inv & P\&L \\
 \midrule
 0 & 1 & \hphantom{1}9.99/10.01 & $\P[\Delta S_{future} = 0] > 0.5$ & None & 0 & 0 \\
 1 & 1 & 10.00/10.02 & $\P[\Delta S_{future} > 0] > 0.5$ & BUY @ 10.02 & 1 & -0.02 \\

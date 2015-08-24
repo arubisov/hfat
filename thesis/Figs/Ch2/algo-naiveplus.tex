@@ -10,18 +10,18 @@
 	\If {$LO_{posted}$}
 		\For{$MO \in ArrivedMarketOrders(t,t+1)$}		
 			\If {$MO == Sell$}
-				\State $cash \mineq data.BuyPrice(\textit{t})$	
+				\State $cash \mineq BidPrice(\textit{t})$	
 				\State $asset \pluseq 1$
 			\ElsIf {$MO == Buy$}
-				\State $cash \pluseq data.SellPrice(\textit{t})$
+				\State $cash \pluseq AskPrice(\textit{t})$
 				\State $asset \mineq 1$
 			\EndIf
 		\EndFor
 	\EndIf
 \EndFor
 \If {$asset > 0$} 
-\State $cash \pluseq asset \times data.BuyPrice(\textit{t})$
+\State $cash \pluseq asset \times BidPrice(\textit{EndOfDay})$
 \ElsIf {$asset < 0$} 
-\State $cash \pluseq asset \times data.SellPrice(\textit{t})$	
+\State $cash \pluseq asset \times AskPrice(\textit{EndOfDay})$	
 \EndIf
 \end{algorithmic}
