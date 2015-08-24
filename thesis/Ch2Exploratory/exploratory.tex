@@ -168,7 +168,7 @@ $\Delta t_I$ & $n_{conv}$ & $K$ & 8 & 4 & 2 & & $n_{conv}$ & $K$ & 8 & 4 & 2 \\
 \bottomrule
 \end{tabular}
 \end{adjustbox}
-\caption{$\chi^2$-test $p$-values for testing the time homogeneity hypothesis. Tests were run for each ticker for each trading day of 2013, and averaged over the year. For calculating $n_{conv}$, the converge error threshold was $\epsilon = 1\times 10^{-10}$.}
+\caption[$p$-values for testing the time homogeneity hypothesis]{$\chi^2$-test $p$-values for testing the time homogeneity hypothesis. Tests were run for each ticker for each trading day of 2013, and averaged over the year. For calculating $n_{conv}$, the converge error threshold was $\epsilon = 1\times 10^{-10}$.}
 \label{tbl:pvalues}
 \end{table}
 Considering the standard cutoff $p$-value of 0.05, the cross-validation results show a strong case for the rejection of the homogeneity hypothesis. However, using a non-homogeneous model falls outside of the scope of this research project, and instead suggests possible extensions to this research wherein the trading day is broken down into subintervals to better account for fluctuations and patterns in trading activity - perhaps early morning, mid-day, and final hour of trading. The severity of proceeding with the homogeneity hypothesis is not known \textit{a priori}, and may instead emerge with the backtesting results done later in this chapter and in Chapter 4.
@@ -249,55 +249,54 @@ Using the key insight drawn from \eqref{eq:EDAKeyInsight}, we implemented severa
 \section{Calibration and Backtesting}
 Backtesting these naive trading strategies required a choice of parameters for the price change observation period $\Delta t_S$, the imbalance averaging period $\Delta t_I$, and the number of imbalance bins $\#_{bins}$. We used a brute force calibration technique that, for each ticker and each day, traversed the potential parameter space searching for the highest number of timesteps at which \eqref{eq:EDAKeyInsight} could be used. We found that $\#_{bins} = 4$ provided the highest expected number of trades for most tickers. However, as we were using percentile bins symmetric around zero, we wanted to have $\#_{bins}$ as an odd number such that all behaviour around zero imbalance was treated equally; thus all backtesting was done with either $\#_{bins} = 3$ or $\#_{bins} = 5$. Additionally, we found empirically that calibration always yielded $\Delta t_S = \Delta t_I$, so this was taken as a given. The backtest for each ticker then consisted of first calibrating the value $\Delta t_I$ from the first day of data by maximizing the intra-day Sharpe ratio (average of returns divided by standard deviation of returns), then using the calibrated parameters to backtest the entire year.
 
-\begin{figure}
-\centering
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{Ch2/FARO_naive_strat_comp}
-  \input{Figs/Ch2/FARO_naive_strat_comp.tikz}
+\begin{figure}%
+\centering%
+\begin{subfigure}[b]{.4\linewidth}%
+  %\centering
+  \setlength\figureheight{\linewidth}%
+  \setlength\figurewidth{\linewidth}%
+  \tikzsetnextfilename{Ch2/FARO_naive_strat_comp}%
+  \input{Figs/Ch2/FARO_naive_strat_comp.tikz}%
 \end{subfigure}%
-\hfill%
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{Ch2/NTAP_naive_strat_comp}
-  \input{Figs/Ch2/NTAP_naive_strat_comp.tikz} 
-\end{subfigure}\\
-\vspace{1cm}
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{Ch2/ORCL_naive_strat_comp}
-  \input{Figs/Ch2/ORCL_naive_strat_comp.tikz} 
+\hspace{1.5cm}%
+\begin{subfigure}[b]{.4\linewidth}%
+  %\centering
+  \setlength\figureheight{\linewidth}%
+  \setlength\figurewidth{\linewidth}%
+  \tikzsetnextfilename{Ch2/NTAP_naive_strat_comp}%
+  \input{Figs/Ch2/NTAP_naive_strat_comp.tikz}%
+\end{subfigure}\\%
+\vspace{1cm}%
+\begin{subfigure}[b]{.4\linewidth}%
+  %\centering
+  \setlength\figureheight{\linewidth}%
+  \setlength\figurewidth{\linewidth}%
+  \tikzsetnextfilename{Ch2/ORCL_naive_strat_comp}%
+  \input{Figs/Ch2/ORCL_naive_strat_comp.tikz}%
 \end{subfigure}%
-\hfill%
-\begin{subfigure}{.45\linewidth}
-  \centering
-  \setlength\figureheight{\linewidth} 
-  \setlength\figurewidth{\linewidth}
-  \tikzsetnextfilename{Ch2/INTC_naive_strat_comp}
-  \input{Figs/Ch2/INTC_naive_strat_comp.tikz} 
-\end{subfigure}\\
-
-\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-  \rotatebox[origin=l]{90}{\hspace{15em}% VERTICAL POSITION
+\hspace{1.5cm}%
+\begin{subfigure}[b]{.4\linewidth}%
+  %\centering
+  \setlength\figureheight{\linewidth}%
+  \setlength\figurewidth{\linewidth}%
+  \tikzsetnextfilename{Ch2/INTC_naive_strat_comp}%
+  \input{Figs/Ch2/INTC_naive_strat_comp.tikz}%
+\end{subfigure}\\%
+%
+\leavevmode\smash{\makebox[0pt]{\hspace{-3em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{13em}% VERTICAL POSITION
 	Normalized Profit and Loss (P\&L)}%
-}}\hspace{0pt plus 1filll}\null
+}}\hspace{0pt plus 1filll}\null%
 
 Time (h)
 
-\vspace{1cm}
-\begin{subfigure}{\linewidth}
-  \centering
-  \tikzsetnextfilename{Ch2/naivestratlegend}
-  \input{Figs/Ch2/naivestratlegend.tikz} 
+\vspace{1cm}%
+\begin{subfigure}{\linewidth}%
+  \centering%
+  \tikzsetnextfilename{Ch2/naivestratlegend}%
+  \input{Figs/Ch2/naivestratlegend.tikz}%
 \end{subfigure}%
-  \caption[Comparison of the naive trading strategies]{Comparison of Naive (black), Naive+ (dark gray), and Naive++ (light gray) trading strategies. Plotted are normalized book values, averaged across the trading year, between 0930h (market open) and 1600h (market close). Book value is the sum of cash and market value of assets. Each day begins with zero book value, and all book values are normalized by dividing by the stock price at the start of each trading day.}
-  \label{fig:comp}
+  \caption[Comparison of the naive trading strategies]{Comparison of Naive (black), Naive+ (dark gray), and Naive++ (light gray) trading strategies. Plotted are normalized book values, averaged across the trading year, between 0930h (market open) and 1600h (market close). Book value is the sum of cash and market value of assets. Each day begins with zero book value, and all book values are normalized by dividing by the stock price at the start of each trading day.}\label{fig:comp}%
 \end{figure}
 
 \section{Conclusions from the Naive Trading Strategies}
@@ -326,6 +325,6 @@ $t$ & $I(t)$ & Bid/Ask & Prediction & Action & Inv & P\&L \\
 4 & -1 & 10.00/10.02 & $\P[\Delta S_{future} < 0] > 0.5$ & SELL @ 10.00 & 0 & -0.02 \\
 \bottomrule
 \end{tabular}
-\caption{Hypothetical timeline of adverse selection with market orders.}
+\caption[Hypothetical timeline of adverse selection with market orders]{Hypothetical timeline of adverse selection with market orders.}
 \label{tbl:adverse}
 \end{table}

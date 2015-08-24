@@ -1,9 +1,11 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  14 AUG 2015 18:35
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  24 AUG 2015 13:57
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
-**\def\tikzexternalrealjob{thesis}\input{thesis}
-(./thesis.tex (/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
+**\def\tikzexternalrealjob{Rubisov_Anton_D_201510_MASc_thesis}\input{Rubisov_An
+ton_D_201510_MASc_thesis}
+(./Rubisov_Anton_D_201510_MASc_thesis.tex (/usr/share/texlive/texmf-dist/tex/la
+tex/base/report.cls
 Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo
 File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
@@ -289,6 +291,7 @@ File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
 )
+Package hyperref Info: Option `final' set `true' on input line 4319.
 Package hyperref Info: Option `colorlinks' set `true' on input line 4319.
 Package hyperref Info: Hyper figures OFF on input line 4443.
 Package hyperref Info: Link nesting OFF on input line 4448.
@@ -738,6 +741,12 @@ File: tikzlibraryplotmarks.code.tex 2008/01/09 v2.10 (rcs-revision 1.1)
 (/usr/share/texmf/tex/generic/pgf/libraries/pgflibraryplotmarks.code.tex
 File: pgflibraryplotmarks.code.tex 2010/10/15 v2.10 (rcs-revision 1.12)
 )))
+(/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarypatte
+rns.code.tex
+File: tikzlibrarypatterns.code.tex 2008/01/15 v2.10 (rcs-revision 1.2)
+(/usr/share/texmf/tex/generic/pgf/libraries/pgflibrarypatterns.code.tex
+File: pgflibrarypatterns.code.tex 2008/03/03 v2.10 (rcs-revision 1.13)
+))
 (/usr/share/texmf/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrarybackg
 rounds.code.tex
 File: tikzlibrarybackgrounds.code.tex 2010/02/08 v2.10 (rcs-revision 1.2)
@@ -774,32 +783,45 @@ Package: booktabs 2005/04/14 v1.61803 publication quality tables
 \@thisruleclass=\count168
 \@lastruleclass=\count169
 \@thisrulewidth=\dimen227
+) (/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2004/02/01 v4.11 Multi-page Table package (DPC)
+\LTleft=\skip62
+\LTright=\skip63
+\LTpre=\skip64
+\LTpost=\skip65
+\LTchunksize=\count170
+\LTcapwidth=\dimen228
+\LT@head=\box50
+\LT@firsthead=\box51
+\LT@foot=\box52
+\LT@lastfoot=\box53
+\LT@cols=\count171
+\LT@rows=\count172
+\c@LT@tables=\count173
+\c@LT@chunks=\count174
+\LT@p@ftn=\toks51
 ) (/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
 Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
-\c@tracingmulticols=\count170
-\mult@box=\box50
-\multicol@leftmargin=\dimen228
-\c@unbalance=\count171
-\c@collectmore=\count172
-\doublecol@number=\count173
-\multicoltolerance=\count174
-\multicolpretolerance=\count175
-\full@width=\dimen229
-\page@free=\dimen230
-\premulticols=\dimen231
-\postmulticols=\dimen232
-\multicolsep=\skip62
-\multicolbaselineskip=\skip63
-\partial@page=\box51
-\last@line=\box52
-\mult@rightbox=\box53
-\mult@grightbox=\box54
-\mult@gfirstbox=\box55
-\mult@firstbox=\box56
-\@tempa=\box57
-\@tempa=\box58
-\@tempa=\box59
-\@tempa=\box60
+\c@tracingmulticols=\count175
+\mult@box=\box54
+\multicol@leftmargin=\dimen229
+\c@unbalance=\count176
+\c@collectmore=\count177
+\doublecol@number=\count178
+\multicoltolerance=\count179
+\multicolpretolerance=\count180
+\full@width=\dimen230
+\page@free=\dimen231
+\premulticols=\dimen232
+\postmulticols=\dimen233
+\multicolsep=\skip66
+\multicolbaselineskip=\skip67
+\partial@page=\box55
+\last@line=\box56
+\mult@rightbox=\box57
+\mult@grightbox=\box58
+\mult@gfirstbox=\box59
+\mult@firstbox=\box60
 \@tempa=\box61
 \@tempa=\box62
 \@tempa=\box63
@@ -813,47 +835,53 @@ Package: multicol 2011/06/27 v1.7a multicolumn formatting (FMi)
 \@tempa=\box71
 \@tempa=\box72
 \@tempa=\box73
-\c@columnbadness=\count176
-\c@finalcolumnbadness=\count177
-\last@try=\dimen233
+\@tempa=\box74
+\@tempa=\box75
+\@tempa=\box76
+\@tempa=\box77
+\c@columnbadness=\count181
+\c@finalcolumnbadness=\count182
 Normal \dimen register pool exhausted, switching to extended pool.
-\multicolovershoot=\dimen256
-\multicolundershoot=\dimen257
-\mult@nat@firstbox=\box74
-\colbreak@box=\box75
-\multicol@sort@counter=\count178
+\last@try=\dimen256
+\multicolovershoot=\dimen257
+\multicolundershoot=\dimen258
+\mult@nat@firstbox=\box78
+\colbreak@box=\box79
+\multicol@sort@counter=\count183
+) (/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen259
 ) (/usr/share/texlive/texmf-dist/tex/latex/relsize/relsize.sty
 Package: relsize 2013/03/29 ver 4.1
 ) (/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
 Package: setspace 2011/12/19 v6.7a set line spacing
 ) (/usr/share/texlive/texmf-dist/tex/latex/appendix/appendix.sty
 Package: appendix 2009/09/02 v1.2b extra appendix facilities
-\c@@pps=\count179
-\c@@ppsavesec=\count180
-\c@@ppsaveapp=\count181
+\c@@pps=\count184
+\c@@ppsavesec=\count185
+\c@@ppsaveapp=\count186
 ) (/home/anton/texmf/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip64
-\bibsep=\skip65
+\bibhang=\skip68
+\bibsep=\skip69
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count182
+\c@NAT@ctr=\count187
 ) (/home/anton/texmf/tex/latex/fixme/fixme.sty
 Package: fixme 2013/01/28 v4.2 Collaborative annotations for LaTeX2e
 (/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty
 Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
-\every@verbatim=\toks51
-\verbatim@line=\toks52
+\every@verbatim=\toks52
+\verbatim@line=\toks53
 \verbatim@in@stream=\read2
 )
-\c@fixmecount=\count183
-\c@fxnotecount=\count184
-\c@fxwarningcount=\count185
-\c@fxerrorcount=\count186
-\c@fxfatalcount=\count187
+\c@fixmecount=\count188
+\c@fxnotecount=\count189
+\c@fxwarningcount=\count190
+\c@fxerrorcount=\count191
+\c@fxfatalcount=\count192
 )
-\c@thm=\count188
+\c@thm=\count193
 )
-No file Figs/samplepath_cts_bookvalue.aux.
+No file Figs/build/Rubisov_Anton_D_201510_MASc_thesis-figure5.aux.
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
 LaTeX Font Info:    ... okay on input line 10.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
@@ -910,50 +938,54 @@ Package: everysel 2011/10/28 v1.2 EverySelectfont Package (MS)
 ABD: EverySelectfont initializing macros
 LaTeX Info: Redefining \selectfont on input line 126.
 )
-\CenteringLeftskip=\skip66
-\RaggedLeftLeftskip=\skip67
-\RaggedRightLeftskip=\skip68
-\CenteringRightskip=\skip69
-\RaggedLeftRightskip=\skip70
-\RaggedRightRightskip=\skip71
-\CenteringParfillskip=\skip72
-\RaggedLeftParfillskip=\skip73
-\RaggedRightParfillskip=\skip74
-\JustifyingParfillskip=\skip75
-\CenteringParindent=\skip76
-\RaggedLeftParindent=\skip77
-\RaggedRightParindent=\skip78
-\JustifyingParindent=\skip79
+\CenteringLeftskip=\skip70
+\RaggedLeftLeftskip=\skip71
+\RaggedRightLeftskip=\skip72
+\CenteringRightskip=\skip73
+\RaggedLeftRightskip=\skip74
+\RaggedRightRightskip=\skip75
+\CenteringParfillskip=\skip76
+\RaggedLeftParfillskip=\skip77
+\RaggedRightParfillskip=\skip78
+\JustifyingParfillskip=\skip79
+\CenteringParindent=\skip80
+\RaggedLeftParindent=\skip81
+\RaggedRightParindent=\skip82
+\JustifyingParindent=\skip83
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
+Package caption Info: longtable package is loaded.
+(/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2013/02/03 v1.3-62 longtable captions (AR)
+)
 Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\AtBeginShipoutBox=\box76
+\AtBeginShipoutBox=\box80
 Package hyperref Info: Link coloring ON on input line 10.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count189
+\c@section@level=\count194
 )
 LaTeX Info: Redefining \ref on input line 10.
 LaTeX Info: Redefining \pageref on input line 10.
 LaTeX Info: Redefining \nameref on input line 10.
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count190
-\scratchdimen=\dimen258
-\scratchbox=\box77
-\nofMPsegments=\count191
-\nofMParguments=\count192
-\everyMPshowfont=\toks53
-\MPscratchCnt=\count193
-\MPscratchDim=\dimen259
-\MPnumerator=\count194
-\makeMPintoPDFobject=\count195
-\everyMPtoPDFconversion=\toks54
+\scratchcounter=\count195
+\scratchdimen=\dimen260
+\scratchbox=\box81
+\nofMPsegments=\count196
+\nofMParguments=\count197
+\everyMPshowfont=\toks54
+\MPscratchCnt=\count198
+\MPscratchDim=\dimen261
+\MPnumerator=\count199
+\makeMPintoPDFobject=\count200
+\everyMPtoPDFconversion=\toks55
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
@@ -970,7 +1002,7 @@ Package pgfplots notification 'compat/show suggested version=true': document ha
 s been generated with the most recent feature set (\pgfplotsset{compat=1.9}).
 
 (./Ch0Front/title.tex
-\titlepgtitle=\box78
+\titlepgtitle=\box82
 LaTeX Font Info:    Try loading font information for U+msa on input line 107.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -979,14 +1011,14 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 107.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-\titlepgcrest=\box79
-The command '\includegraphics [width=0.3\textwidth ]{Figs/spacemoosethesis.png}
+\titlepgcrest=\box83
+The command '\includegraphics [width=0.2\textwidth ]{Figs/utias-logo-black.png}
 ' has been optimized away. Use '/tikz/external/optimize=false' to disable this.
 
-\titlepgauthor=\box80
-\titlepgdept=\box81
-\titlepgsubmission=\box82
-\titlepggraddate=\box83
+\titlepgauthor=\box84
+\titlepgdept=\box85
+\titlepgsubmission=\box86
+\titlepggraddate=\box87
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 107.
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
@@ -994,7 +1026,7 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 107.
-\titlepgspacing=\skip80
+\titlepgspacing=\skip84
 
 Overfull \hbox (70.1968pt too wide) in paragraph at lines 107--107
  [][] 
@@ -1004,391 +1036,399 @@ Overfull \hbox (70.1968pt too wide) in paragraph at lines 107--107
 /introduction.tex
 Chapter 1.
 
-Package natbib Warning: Citation `Laughlin14' on page 7 undefined on input line
- 7.
-
-
 Package natbib Warning: Citation `Bertsimas98' on page 7 undefined on input lin
-e 9.
+e 7.
 
 
 Package natbib Warning: Citation `Almgren01' on page 7 undefined on input line 
-9.
-
-
-Package natbib Warning: Citation `Kyle1989' on page 8 undefined on input line 1
 7.
 
 
-LaTeX Warning: Reference `fig:LOB' on page 8 undefined on input line 19.
+Package natbib Warning: Citation `Laughlin14' on page 8 undefined on input line
+ 9.
 
-(./Figs/LOB.tikz
+
+Package natbib Warning: Citation `rentech' on page 8 undefined on input line 11
+.
+
+
+Package natbib Warning: Citation `Kyle1989' on page 8 undefined on input line 1
+5.
+
+
+LaTeX Warning: Reference `fig:LOB' on page 9 undefined on input line 17.
+
+(./Figs/Ch1/LOB.tikz
+\LineSpace=\dimen262
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
 
-Package natbib Warning: Citation `Booth15' on page 9 undefined on input line 25
+Package natbib Warning: Citation `Booth15' on page 9 undefined on input line 23
 .
 
 
-Package natbib Warning: Citation `Booth15' on page 9 undefined on input line 25
+Package natbib Warning: Citation `Booth15' on page 9 undefined on input line 23
 .
 
 
 Package natbib Warning: Citation `Summary2013' on page 9 undefined on input lin
-e 29.
+e 27.
 
 
-Package natbib Warning: Citation `Bak97' on page 9 undefined on input line 29.
+Package natbib Warning: Citation `Bak97' on page 9 undefined on input line 27.
 
 
-Package natbib Warning: Citation `Cont10' on page 9 undefined on input line 29.
+Package natbib Warning: Citation `Cont10' on page 9 undefined on input line 27.
 
 
 
 Package natbib Warning: Citation `Summary2013' on page 9 undefined on input lin
-e 29.
+e 27.
 
-Package hyperref Info: bookmark level for unknown fixme defaults to 0 on input 
-line 38.
-FiXme Note: 'write ITCH data set section.' on input line 38.
+
+LaTeX Warning: Reference `fig:LOB' on page 11 undefined on input line 64.
+
+
+LaTeX Warning: Reference `fig:LOB' on page 11 undefined on input line 72.
+
 ) (./Ch2Exploratory/exploratory.tex
 Chapter 2.
 
-Package natbib Warning: Citation `STAT455' on page 10 undefined on input line 6
+Package natbib Warning: Citation `STAT455' on page 13 undefined on input line 6
 .
 
-(./Figs/LOBtimeline.tikz
+
+LaTeX Warning: Reference `introtimeline' on page 14 undefined on input line 40.
+
+
+(./Figs/Ch2/LOBtimeline.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
-Overfull \hbox (1.2093pt too wide) in paragraph at lines 43--44
+Overfull \hbox (1.2093pt too wide) in paragraph at lines 44--45
 [][] 
  []
 
 
-LaTeX Warning: Reference `introtimeline' on page 11 undefined on input line 54.
+LaTeX Warning: Reference `introtimeline' on page 14 undefined on input line 55.
 
 
 
-Package natbib Warning: Citation `Tan02' on page 14 undefined on input line 112
-.
+LaTeX Warning: Reference `fig:timewindows' on page 16 undefined on input line 9
+6.
 
-
-Package natbib Warning: Citation `Weiss10' on page 14 undefined on input line 1
-12.
-
-
-LaTeX Warning: Reference `eq:CTMCPG' on page 14 undefined on input line 116.
-
-
-LaTeX Warning: Reference `tbl:pvalues' on page 14 undefined on input line 124.
-
-
-LaTeX Warning: Reference `eq:POneStepBayes' on page 16 undefined on input line 
-179.
-
-
-LaTeX Warning: Reference `tbl:Qmatrix' on page 17 undefined on input line 209.
-
-
-LaTeX Warning: Reference `eq:EDAKeyInsight' on page 17 undefined on input line 
-215.
-
-
-LaTeX Warning: Reference `algo:algo-naive' on page 17 undefined on input line 2
-17.
-
-Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 219.
-(./Figs/algo-naive.tex)
-
-LaTeX Warning: Reference `eq:EDAKeyInsight' on page 18 undefined on input line 
-237.
-
-(./Figs/FARO_naive_strat_comp.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/NTAP_naive_strat_comp.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/ORCL_naive_strat_comp.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/INTC_naive_strat_comp.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/naivestratlegend.tikz
+(./Figs/Ch2/timewindows.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
 
-LaTeX Warning: Reference `fig:comp' on page 19 undefined on input line 292.
+Package natbib Warning: Citation `Tan02' on page 17 undefined on input line 127
+.
 
 
-LaTeX Warning: Reference `tbl:adverse' on page 20 undefined on input line 300.
+Package natbib Warning: Citation `Weiss10' on page 17 undefined on input line 1
+27.
+
+
+LaTeX Warning: Reference `eq:MLEG' on page 17 undefined on input line 131.
+
+
+LaTeX Warning: Reference `eq:CTMCPG' on page 17 undefined on input line 131.
+
+
+LaTeX Warning: Reference `tbl:pvalues' on page 18 undefined on input line 139.
+
+
+LaTeX Warning: Reference `eq:POneStepBayes' on page 20 undefined on input line 
+194.
+
+
+LaTeX Warning: Reference `eq:POneStepBayes' on page 20 undefined on input line 
+194.
+
+
+LaTeX Warning: Reference `tbl:Qmatrix' on page 20 undefined on input line 196.
+
+
+LaTeX Warning: Reference `tbl:Qmatrix' on page 20 undefined on input line 224.
+
+
+LaTeX Warning: Reference `eq:EDAKeyInsight' on page 20 undefined on input line 
+230.
+
+
+LaTeX Warning: Reference `algo:algo-naive' on page 21 undefined on input line 2
+32.
+
+Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
+put line 234.
+(./Figs/Ch2/algo-naive.tex)
+
+LaTeX Warning: Reference `algo:algo-naive-plus' on page 23 undefined on input l
+ine 240.
+
+(./Figs/Ch2/algo-naiveplus.tex)
+
+LaTeX Warning: Reference `eq:EDAKeyInsight' on page 23 undefined on input line 
+250.
+
+(./Figs/Ch2/FARO_naive_strat_comp.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/Ch2/NTAP_naive_strat_comp.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/Ch2/ORCL_naive_strat_comp.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/Ch2/INTC_naive_strat_comp.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+) (./Figs/Ch2/naivestratlegend.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
+)
+
+LaTeX Warning: Reference `fig:comp' on page 24 undefined on input line 304.
+
+
+LaTeX Warning: Reference `tbl:adverse' on page 25 undefined on input line 312.
 
 ) (./Ch3Numerical/continuous.tex
 Chapter 3.
-FiXme Note: 'write intro section.' on input line 2.
-FiXme Note: 'better lead in to this section. also clean up this presentation of
- the stochastic processes... somehow more effectively...' on input line 6.
 
-Overfull \hbox (59.10823pt too wide) in paragraph at lines 9--26
-[][] 
+LaTeX Warning: Reference `eq:LOBImbalance' on page 28 undefined on input line 1
+6.
+
+
+Overfull \hbox (9.91663pt too wide) in alignment at lines 14--35
+ [] [] 
  []
 
 
-Package natbib Warning: Citation `STA4505' on page 24 undefined on input line 7
-2.
+Overfull \hbox (9.91663pt too wide) in alignment at lines 35--59
+ [] [] 
+ []
 
-LaTeX Font Info:    Try loading font information for U+dsrom on input line 79.
+
+Package natbib Warning: Citation `STA4505' on page 31 undefined on input line 7
+8.
+
+LaTeX Font Info:    Try loading font information for U+dsrom on input line 85.
 (/usr/share/texlive/texmf-dist/tex/latex/doublestroke/Udsrom.fd
 File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
 )
 
-Package natbib Warning: Citation `STA4505' on page 25 undefined on input line 8
+Package natbib Warning: Citation `STA4505' on page 31 undefined on input line 8
+9.
+
+
+LaTeX Warning: Reference `eq:thmDPE' on page 31 undefined on input line 98.
+
+
+Package natbib Warning: Citation `STA4505' on page 32 undefined on input line 1
+08.
+
+
+Package natbib Warning: Citation `MAT833' on page 32 undefined on input line 11
 3.
 
 
-LaTeX Warning: Reference `eq:thmDPE' on page 25 undefined on input line 92.
+Package natbib Warning: Citation `MAT833' on page 32 undefined on input line 11
+3.
 
 
-Package natbib Warning: Citation `STA4505' on page 26 undefined on input line 1
-02.
+LaTeX Warning: Reference `eq:infgen' on page 33 undefined on input line 151.
 
 
-Package natbib Warning: Citation `MAT833' on page 26 undefined on input line 10
-7.
+LaTeX Warning: Reference `eq:PDEcase1' on page 36 undefined on input line 229.
 
 
-Package natbib Warning: Citation `MAT833' on page 26 undefined on input line 10
-7.
-
-
-LaTeX Warning: Reference `eq:infgen' on page 27 undefined on input line 145.
-
-
-LaTeX Warning: Reference `eq:PDEcase1' on page 30 undefined on input line 220.
-
-
-LaTeX Warning: Reference `eq:ctsMOineq3' on page 30 undefined on input line 236
+LaTeX Warning: Reference `eq:ctsMOineq3' on page 37 undefined on input line 245
 .
 
 
-LaTeX Warning: Reference `eq:ctsMOineq4' on page 30 undefined on input line 236
+LaTeX Warning: Reference `eq:ctsMOineq4' on page 37 undefined on input line 245
 .
 
 
-LaTeX Warning: Reference `eq:optbuydepthfeedback' on page 30 undefined on input
- line 236.
+LaTeX Warning: Reference `eq:optbuydepthfeedback' on page 37 undefined on input
+ line 245.
 
 
-LaTeX Warning: Reference `eq:ctsMOineq1' on page 30 undefined on input line 236
+LaTeX Warning: Reference `eq:ctsMOineq1' on page 37 undefined on input line 245
 .
 
 
-LaTeX Warning: Reference `eq:ctsMOineq1' on page 30 undefined on input line 236
+LaTeX Warning: Reference `eq:ctsMOineq1' on page 37 undefined on input line 245
 .
 
 
-LaTeX Warning: Reference `eq:optbuydepthfeedback' on page 31 undefined on input
- line 250.
+LaTeX Warning: Reference `eq:optbuydepthfeedback' on page 37 undefined on input
+ line 259.
 
 
-LaTeX Warning: Reference `eq:buyMOfeedbackcase1' on page 31 undefined on input 
-line 250.
+LaTeX Warning: Reference `eq:buyMOfeedbackcase1' on page 37 undefined on input 
+line 259.
+
+
+Package natbib Warning: Citation `CS522' on page 38 undefined on input line 272
+.
+
+
+LaTeX Warning: Reference `eq:PDEcase1' on page 38 undefined on input line 272.
 
 ) (./Ch3Numerical/discrete.tex
-FiXme Note: 'better lead in to this section.' on input line 2.
-
-Package natbib Warning: Citation `Kwong15' on page 32 undefined on input line 4
-1.
-
-
-Package natbib Warning: Citation `Bens08' on page 33 undefined on input line 10
-6.
+Overfull \hbox (9.91663pt too wide) in alignment at lines 6--27
+ [] [] 
+ []
 
 
-Package natbib Warning: Citation `Bens08' on page 33 undefined on input line 10
-8.
+Overfull \hbox (9.91663pt too wide) in alignment at lines 27--28
+ [] [] 
+ []
 
 
-LaTeX Warning: Reference `eq:DPDscrBellman' on page 34 undefined on input line 
-126.
+Package natbib Warning: Citation `Kwong15' on page 40 undefined on input line 6
+2.
 
 
-LaTeX Warning: Reference `eq:discreteDPEinitial' on page 35 undefined on input 
-line 156.
+Package natbib Warning: Citation `Bens08' on page 41 undefined on input line 12
+7.
 
 
-LaTeX Warning: Reference `eq:discretesup1' on page 40 undefined on input line 3
-39.
+Package natbib Warning: Citation `Bens08' on page 42 undefined on input line 12
+9.
 
 
-Overfull \hbox (24.20595pt too wide) in paragraph at lines 372--372
+LaTeX Warning: Reference `eq:DPDscrBellman' on page 42 undefined on input line 
+147.
+
+
+LaTeX Warning: Reference `eq:discreteDPEinitial' on page 43 undefined on input 
+line 177.
+
+
+LaTeX Warning: Reference `eq:discretesup1' on page 48 undefined on input line 3
+60.
+
+
+Overfull \hbox (24.20595pt too wide) in paragraph at lines 393--393
 [] 
  []
 
 
-LaTeX Warning: Reference `eq:discretedeltaplusreferential' on page 42 undefined
- on input line 387.
+LaTeX Warning: Reference `eq:discretedeltaplusreferential' on page 50 undefined
+ on input line 408.
 
 
-LaTeX Warning: Reference `eq:discretedeltaminusreferential' on page 42 undefine
-d on input line 387.
+LaTeX Warning: Reference `eq:discretedeltaminusreferential' on page 50 undefine
+d on input line 408.
 
 
-Overfull \hbox (4.43831pt too wide) in paragraph at lines 386--388
+Overfull \hbox (4.43831pt too wide) in paragraph at lines 407--409
 \OT1/cmr/m/n/12 For ease of no-ta-tion we'll write $\OMS/cmsy/m/n/12 @\OT1/cmr/
 m/n/12 (\OML/cmm/m/it/12 q\OT1/cmr/m/n/12 ) = [][] \OML/cmm/b/it/12 P[] []$\OT1
 /cmr/m/n/12 .
  []
 
 
-LaTeX Warning: Reference `eq:discretedeltaplusreferential' on page 42 undefined
- on input line 395.
+LaTeX Warning: Reference `eq:discretedeltaplusreferential' on page 50 undefined
+ on input line 416.
 
 
-LaTeX Warning: Reference `eq:discreteDPE' on page 42 undefined on input line 39
-8.
+LaTeX Warning: Reference `eq:discreteDPE' on page 50 undefined on input line 41
+9.
 
 
-LaTeX Warning: Reference `eq:discretedeltaplusreferential' on page 42 undefined
- on input line 398.
+LaTeX Warning: Reference `eq:discretedeltaplusreferential' on page 50 undefined
+ on input line 419.
 
 
-LaTeX Warning: Reference `eq:discretedeltaminusreferential' on page 42 undefine
-d on input line 398.
+LaTeX Warning: Reference `eq:discretedeltaminusreferential' on page 50 undefine
+d on input line 419.
 
 
-Overfull \hbox (1.27225pt too wide) in paragraph at lines 411--411
+Overfull \hbox (1.27225pt too wide) in paragraph at lines 432--432
 [] 
  []
 
 
-LaTeX Warning: Reference `eq:discreteDPEfinal' on page 43 undefined on input li
-ne 413.
+LaTeX Warning: Reference `eq:discreteDPEfinal' on page 51 undefined on input li
+ne 434.
 
 
-LaTeX Warning: Reference `eq:dscrMOineq3' on page 43 undefined on input line 42
-5.
+LaTeX Warning: Reference `eq:dscrMOineq3' on page 51 undefined on input line 44
+6.
 
 
-LaTeX Warning: Reference `eq:dscrMOineq4' on page 43 undefined on input line 42
-5.
+LaTeX Warning: Reference `eq:dscrMOineq4' on page 51 undefined on input line 44
+6.
 
 
-LaTeX Warning: Reference `eq:discreteDPEfinal' on page 43 undefined on input li
-ne 429.
+LaTeX Warning: Reference `eq:discreteDPEfinal' on page 51 undefined on input li
+ne 450.
 
 ) (./Ch4Results/results.tex
 Chapter 4.
 
-LaTeX Warning: Reference `eq:MLEG' on page 45 undefined on input line 17.
+LaTeX Warning: Reference `eq:MLEG' on page 53 undefined on input line 37.
 
 
-LaTeX Warning: Reference `eq:CTMCPG' on page 45 undefined on input line 18.
+LaTeX Warning: Reference `eq:CTMCPG' on page 53 undefined on input line 38.
 
 
-LaTeX Warning: Reference `eq:MLElambda' on page 45 undefined on input line 19.
+LaTeX Warning: Reference `eq:MLElambda' on page 53 undefined on input line 39.
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 9--21
+Overfull \hbox (1.66666pt too wide) in paragraph at lines 29--41
  [] 
  []
 
 
-LaTeX Warning: Reference `sec:2DCTMC' on page 46 undefined on input line 25.
+LaTeX Warning: Reference `sec:2DCTMC' on page 54 undefined on input line 45.
 
-(./Figs/dp_cts_z1.tikz
+(./Figs/dp_colorbar/dp_cts_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dp_dscr_z1.tikz
+) (./Figs/dp_colorbar/dp_dscr_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dp_cts_nFPC_z1.tikz
+) (./Figs/dp_colorbar/dp_cts_nFPC_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dp_dscr_nFPC_z1.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/deltalegend.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/dp_cts_z8.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/dp_dscr_z8.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/dp_cts_nFPC_z8.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/dp_dscr_nFPC_z8.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/deltalegend.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/dp_cts_z15.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/dp_dscr_z15.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/dp_cts_nFPC_z15.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/dp_dscr_nFPC_z15.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/deltalegend.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-)
-FiXme Note: 'So which of these plots do we like better? the 9 choices of q, or 
-the colormap version of q?' on input line 196.
-(./Figs/test/dp_cts_z1.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/test/dp_dscr_z1.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/test/dp_cts_z1.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/test/dp_dscr_z1.tikz
+) (./Figs/dp_colorbar/dp_dscr_nFPC_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/altdeltalegend.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/test/dp_cts_z8.tikz
+) (./Figs/dp_colorbar/dp_cts_z8.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/test/dp_dscr_z8.tikz
+) (./Figs/dp_colorbar/dp_dscr_z8.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/test/dp_cts_z8.tikz
+) (./Figs/dp_colorbar/dp_cts_nFPC_z8.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/test/dp_dscr_z8.tikz
+) (./Figs/dp_colorbar/dp_dscr_nFPC_z8.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/altdeltalegend.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/test/dp_cts_z15.tikz
+) (./Figs/dp_colorbar/dp_cts_z15.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/test/dp_dscr_z15.tikz
+) (./Figs/dp_colorbar/dp_dscr_z15.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/test/dp_cts_z15.tikz
+) (./Figs/dp_colorbar/dp_cts_nFPC_z15.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/test/dp_dscr_z15.tikz
+) (./Figs/dp_colorbar/dp_dscr_nFPC_z15.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/altdeltalegend.tikz
@@ -1396,56 +1436,91 @@ A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
 
-LaTeX Warning: Reference `eq:ctsBuycondition' on page 46 undefined on input lin
-e 362.
+LaTeX Warning: Reference `fig:comp_dp_z1' on page 55 undefined on input line 37
+6.
 
 
-LaTeX Warning: Reference `fig:comp_dp_z1' on page 46 undefined on input line 37
+LaTeX Warning: Reference `fig:comp_dm_z15' on page 55 undefined on input line 3
+76.
+
+
+LaTeX Warning: Reference `fig:comp_dp_z8' on page 55 undefined on input line 37
+6.
+
+
+LaTeX Warning: Reference `fig:comp_dm_z8' on page 55 undefined on input line 37
+6.
+
+
+LaTeX Warning: Reference `fig:comp_dp_z15' on page 55 undefined on input line 3
+76.
+
+
+LaTeX Warning: Reference `fig:comp_dm_z1' on page 55 undefined on input line 37
+6.
+
+
+LaTeX Warning: Reference `eq:ctsBuycondition' on page 55 undefined on input lin
+e 378.
+
+
+LaTeX Warning: Reference `fig:comp_dp_z1' on page 55 undefined on input line 38
 0.
 
-(./Figs/dm_cts_z1.tikz
+
+LaTeX Warning: Reference `fig:comp_dp_z8' on page 56 undefined on input line 38
+5.
+
+
+LaTeX Warning: Reference `fig:comp_dp_z15' on page 56 undefined on input line 3
+88.
+
+
+LaTeX Warning: Reference `tbl:pvalues' on page 57 undefined on input line 393.
+
+(./Figs/dp_colorbar/dm_cts_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_dscr_z1.tikz
+) (./Figs/dp_colorbar/dm_dscr_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_cts_nFPC_z1.tikz
+) (./Figs/dp_colorbar/dm_cts_nFPC_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_dscr_nFPC_z1.tikz
+) (./Figs/dp_colorbar/dm_dscr_nFPC_z1.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/deltalegend.tikz
+) (./Figs/altdeltalegend.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_cts_z8.tikz
+) (./Figs/dp_colorbar/dm_cts_z8.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_dscr_z8.tikz
+) (./Figs/dp_colorbar/dm_dscr_z8.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_cts_nFPC_z8.tikz
+) (./Figs/dp_colorbar/dm_cts_nFPC_z8.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_dscr_nFPC_z8.tikz
+) (./Figs/dp_colorbar/dm_dscr_nFPC_z8.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/deltalegend.tikz
+) (./Figs/altdeltalegend.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_cts_z15.tikz
+) (./Figs/dp_colorbar/dm_cts_z15.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_dscr_z15.tikz
+) (./Figs/dp_colorbar/dm_dscr_z15.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_cts_nFPC_z15.tikz
+) (./Figs/dp_colorbar/dm_cts_nFPC_z15.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/dm_dscr_nFPC_z15.tikz
+) (./Figs/dp_colorbar/dm_dscr_nFPC_z15.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/deltalegend.tikz
+) (./Figs/altdeltalegend.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/ORCL_comp4stoch.tikz
@@ -1456,36 +1531,52 @@ A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
 
-LaTeX Warning: Reference `fig:ORCL_comp4stoch' on page 50 undefined on input li
-ne 568.
+LaTeX Warning: Reference `fig:ORCL_comp4stoch' on page 58 undefined on input li
+ne 741.
 
 
-LaTeX Warning: Reference `tbl:ORCL_comp4stoch_corr' on page 50 undefined on inp
-ut line 568.
+LaTeX Warning: Reference `tbl:ORCL_comp4stoch_corr' on page 58 undefined on inp
+ut line 741.
 
 
-LaTeX Warning: Reference `fig:cointeg_relation' on page 50 undefined on input l
-ine 585.
+LaTeX Warning: Reference `fig:cointeg_relation' on page 58 undefined on input l
+ine 758.
 
 (./Figs/cointeg_relation.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
 
-LaTeX Warning: Reference `fig:ORCL_comp4stoch_inv' on page 51 undefined on inpu
-t line 595.
+LaTeX Warning: Reference `fig:ORCL_comp4stoch_inv' on page 59 undefined on inpu
+t line 769.
 
 
-LaTeX Warning: Reference `tbl:ORCL_comp4stoch_numt' on page 51 undefined on inp
-ut line 597.
+LaTeX Warning: Reference `tbl:ORCL_comp4stoch_numt' on page 59 undefined on inp
+ut line 771.
 
 
-LaTeX Warning: Reference `fig:comp_dp_z1' on page 51 undefined on input line 59
-7.
+LaTeX Warning: Reference `fig:comp_dp_z1' on page 59 undefined on input line 77
+1.
 
 
-LaTeX Warning: Reference `fig:comp_dp_z15' on page 51 undefined on input line 5
-97.
+LaTeX Warning: Reference `fig:comp_dp_z15' on page 59 undefined on input line 7
+71.
+
+
+LaTeX Warning: Reference `fig:samplepath_paths' on page 59 undefined on input l
+ine 789.
+
+
+LaTeX Warning: Reference `fig:samplepath_depths' on page 59 undefined on input 
+line 789.
+
+
+LaTeX Warning: Reference `fig:samplepath_pnl' on page 59 undefined on input lin
+e 789.
+
+
+LaTeX Warning: Reference `fig:samplepath_inv' on page 59 undefined on input lin
+e 789.
 
 (./Figs/samplepath_cts_paths.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
@@ -1502,22 +1593,6 @@ isable this.
 ) (./Figs/samplepathslegend.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/samplepath_cts_bookvalue.tikz
-\openout5 = `Figs/samplepath_cts_bookvalue.dpth'.
-
-[51
-
-\providecommand \oddpage@label [2]{}
-{/home/anton/.texmf-var/fonts/map/pdftex/updmap/pdftex.map}]) (./Figs/samplepat
-h_dscr_bookvalue.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/samplepath_cts_nFPC_bookvalue.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
-) (./Figs/samplepath_dscr_nFPC_bookvalue.tikz
-A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
-isable this.
 ) (./Figs/samplepath_cts_depths.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
@@ -1530,16 +1605,38 @@ isable this.
 ) (./Figs/samplepath_dscr_nFPC_depths.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/samplepathslegend.tikz
+)
+
+LaTeX Warning: Reference `fig:samplepath_paths' on page 60 undefined on input l
+ine 890.
+
+
+LaTeX Warning: Reference `fig:samplepath_paths' on page 60 undefined on input l
+ine 890.
+
+(./Figs/samplepath_cts_bookvalue.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/samplepath_cts_inventory.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
+) (./Figs/samplepath_dscr_bookvalue.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
 ) (./Figs/samplepath_dscr_inventory.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
+) (./Figs/samplepath_cts_nFPC_bookvalue.tikz
+A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
+isable this.
 ) (./Figs/samplepath_cts_nFPC_inventory.tikz
+\openout5 = `Figs/build/Rubisov_Anton_D_201510_MASc_thesis-figure5.dpth'.
+
+[60
+
+\providecommand \oddpage@label [2]{}
+{/home/anton/.texmf-var/fonts/map/pdftex/updmap/pdftex.map}]) (./Figs/samplepat
+h_dscr_nFPC_bookvalue.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/samplepath_dscr_nFPC_inventory.tikz
@@ -1547,16 +1644,24 @@ A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
 
-LaTeX Warning: Reference `tbl:IS_sameday' on page 53 undefined on input line 81
+LaTeX Warning: Reference `fig:samplepath_paths' on page 60 undefined on input l
+ine 946.
+
+
+LaTeX Warning: Reference `fig:samplepath_paths' on page 60 undefined on input l
+ine 946.
+
+
+LaTeX Warning: Reference `tbl:IS_sameday' on page 62 undefined on input line 95
+3.
+
+
+LaTeX Warning: Reference `fig:IS_sameday_comp' on page 62 undefined on input li
+ne 953.
+
+
+LaTeX Warning: Reference `tbl:IS_sameday' on page 62 undefined on input line 95
 5.
-
-
-LaTeX Warning: Reference `fig:IS_sameday_comp' on page 53 undefined on input li
-ne 815.
-
-
-LaTeX Warning: Reference `tbl:IS_sameday' on page 53 undefined on input line 81
-7.
 
 (./Figs/IS_sameday_FARO.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
@@ -1574,20 +1679,17 @@ isable this.
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
-Overfull \hbox (1.2093pt too wide) in paragraph at lines 866--867
+Overfull \hbox (1.2093pt too wide) in paragraph at lines 1004--1005
 [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 7.08467pt on input line 915.
-
-FiXme Note: 'commentary needed. compare stoch methods' on input line 917.
-
-LaTeX Warning: Reference `tbl:IS_week' on page 56 undefined on input line 921.
+LaTeX Warning: Reference `tbl:IS_week' on page 64 undefined on input line 1058.
 
 
-LaTeX Warning: Reference `fig:IS_week_comp' on page 56 undefined on input line 
-921.
+
+LaTeX Warning: Reference `fig:IS_week_comp' on page 64 undefined on input line 
+1058.
 
 (./Figs/IS_week_FARO.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
@@ -1605,32 +1707,24 @@ isable this.
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
-Overfull \hbox (1.2093pt too wide) in paragraph at lines 974--975
+Overfull \hbox (1.2093pt too wide) in paragraph at lines 1111--1112
 [][] 
  []
 
 
-Overfull \hbox (10.6562pt too wide) in paragraph at lines 983--1021
- [][] 
- []
+LaTeX Warning: Reference `tbl:IS_annual' on page 66 undefined on input line 116
+5.
 
 
-LaTeX Warning: Float too large for page by 7.08467pt on input line 1023.
+LaTeX Warning: Reference `fig:IS_annual_comp' on page 66 undefined on input lin
+e 1165.
 
 
-LaTeX Warning: Reference `tbl:IS_annual' on page 58 undefined on input line 102
+LaTeX Warning: Reference `tbl:IS_annual' on page 66 undefined on input line 116
 7.
 
 
-LaTeX Warning: Reference `fig:IS_annual_comp' on page 58 undefined on input lin
-e 1027.
-
-
-LaTeX Warning: Reference `tbl:IS_annual' on page 58 undefined on input line 102
-9.
-
-
-LaTeX Warning: Reference `tbl:IS_week' on page 58 undefined on input line 1029.
+LaTeX Warning: Reference `tbl:IS_week' on page 66 undefined on input line 1167.
 
 
 (./Figs/IS_annual_ORCL.tikz
@@ -1643,69 +1737,82 @@ isable this.
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
-Overfull \hbox (1.2093pt too wide) in paragraph at lines 1063--1064
+Overfull \hbox (1.2093pt too wide) in paragraph at lines 1201--1202
 [][] 
- []
-
-
-Overfull \hbox (0.86464pt too wide) in paragraph at lines 1072--1088
- [][] 
  []
 
 (./Figs/OOS_annual_INTC.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
-) (./Figs/IS_annual_INTC.tikz
+) (./Figs/OOS_annual_AAPL.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 ) (./Figs/strategylegend.tikz
 A tikzpicture has been optimized away. Use '/tikz/external/optimize=false' to d
 isable this.
 )
-Overfull \hbox (1.2093pt too wide) in paragraph at lines 1127--1128
+Overfull \hbox (1.2093pt too wide) in paragraph at lines 1275--1276
 [][] 
  []
 
 
-Overfull \hbox (4.78127pt too wide) in paragraph at lines 1136--1152
- [][] 
- []
+LaTeX Warning: Reference `tbl:OOS_annual' on page 68 undefined on input line 13
+05.
+
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 1308.
+
+) (./Ch5Conclusion/conclusion.tex
+Chapter 5.
+
+LaTeX Warning: Reference `fig:comp_dp_z8' on page 71 undefined on input line 10
+.
+
+
+Package natbib Warning: Citation `almgren2003optimal' on page 71 undefined on i
+nput line 12.
+
+
+Package natbib Warning: Citation `hasbrouck2013low' on page 72 undefined on inp
+ut line 20.
 
 )
-No file Figs/samplepath_cts_bookvalue.bbl.
+No file Figs/build/Rubisov_Anton_D_201510_MASc_thesis-figure5.bbl.
 
 Package natbib Warning: There were undefined citations.
 
 
-FiXme Summary: Number of notes: 6,
+FiXme Summary: Number of notes: 0,
 (FiXme)        Number of warnings: 0,
 (FiXme)        Number of errors: 0,
 (FiXme)        Number of fatal errors: 0,
-(FiXme)        Total: 6.
+(FiXme)        Total: 0.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 44.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 44.
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 44.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 44.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 46.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 46.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 46.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 46.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 44.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 46.
  ) 
 Here is how much of TeX's memory you used:
- 28331 strings out of 495028
- 607637 string characters out of 6181497
- 2764492 words of memory out of 7000000
- 30686 multiletter control sequences out of 15000+600000
- 23131 words of font info for 88 fonts, out of 8000000 for 9000
+ 28563 strings out of 495028
+ 613120 string characters out of 6181497
+ 2827470 words of memory out of 7000000
+ 30918 multiletter control sequences out of 15000+600000
+ 20475 words of font info for 77 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 66i,23n,81p,3274b,2061s stack positions out of 5000i,500n,10000p,7000000b,80000s
+ 66i,25n,81p,2008b,2062s stack positions out of 5000i,500n,10000p,7000000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on Figs/samplepath_cts_bookvalue.pdf (1 page, 18604 bytes).
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on Figs/build/Rubisov_Anton_D_201510_MASc_thesis-figure5.pdf (1 
+page, 24985 bytes).
 PDF statistics:
- 24 PDF objects out of 1000 (max. 8388607)
- 18 compressed objects within 1 object stream
+ 29 PDF objects out of 1000 (max. 8388607)
+ 21 compressed objects within 1 object stream
  2 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,16 +1,78 @@
 \documentclass[12pt,letterpaper]{report}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+\geometry{bindingoffset=0.2in}
 \usepackage{pgfplots}
-\usetikzlibrary{decorations.pathmorphing, patterns}
+\usepackage{subcaption}
+\usepackage{hyperref}
+\pgfplotsset{compat=newest} 
+\pgfplotsset{plot coordinates/math parser=false} 
+\newlength\figureheight 
+\newlength\figurewidth 
 \begin{document}
 
-
-
 \begin{figure}
-%  \tikzsetnextfilename{timewindows}
-%  \resizebox{\linewidth}{!}{\input{../Figs/Ch1/LOB.tikz}}
-	\input{../Figs/Ch1/LOB.tikz}
-\caption{A caption.}
-\label{introtimeline}
+A
+\caption{turds}\label{fig:samplepath_paths}
+\end{figure}
+
+
+
+\clearpage
+\begin{figure}%
+\centering%
+\setlength\figureheight{0.16\linewidth}%
+\setlength\figurewidth{0.4\linewidth}%
+\begin{subfigure}[b]{\linewidth}%
+  \centering%
+  %\tikzsetnextfilename{samplepath_cts_bookvalue}%
+  \input{../Figs/samplepath_cts_bookvalue.tikz}%
+  \hspace{1.5cm}%
+  %\tikzsetnextfilename{samplepath_cts_inventory}%
+  \input{../Figs/samplepath_cts_inventory.tikz}%
+  \caption{Continuous Time}%
+\end{subfigure}\\%
+\vspace{1cm}%
+\begin{subfigure}[b]{\linewidth}%
+  \centering
+  %\tikzsetnextfilename{samplepath_dscr_bookvalue}%
+  \input{../Figs/samplepath_dscr_bookvalue.tikz}%
+  \hspace{1.5cm}%
+  %\tikzsetnextfilename{samplepath_dscr_inventory}%
+  \input{../Figs/samplepath_dscr_inventory.tikz}%
+  \caption{Discrete Time}%
+\end{subfigure}\\%
+\vspace{1cm}%
+\begin{subfigure}[b]{\linewidth}%
+  \centering%
+  %\tikzsetnextfilename{samplepath_cts_nFPC_bookvalue}%
+  \input{../Figs/samplepath_cts_nFPC_bookvalue.tikz}%
+  \hspace{1.5cm}%
+  %\tikzsetnextfilename{samplepath_cts_nFPC_inventory}%
+  \input{../Figs/samplepath_cts_nFPC_inventory.tikz}%
+  \caption{Continuous Time w/ nFPC}%
+\end{subfigure}\\%
+\vspace{1cm}%
+\begin{subfigure}[b]{\linewidth}%
+  \centering%
+  %\tikzsetnextfilename{samplepath_dscr_nFPC_bookvalue}%
+  \input{../Figs/samplepath_dscr_nFPC_bookvalue.tikz}%
+  \hspace{1.5cm}%
+  %\tikzsetnextfilename{samplepath_dscr_nFPC_inventory}%
+  \input{../Figs/samplepath_dscr_nFPC_inventory.tikz}%
+  \caption{Discrete Time w/ nFPC}%
+\end{subfigure}\\%
+\leavevmode\smash{\makebox[0pt]{\hspace{-4em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+    Profit and Loss (P\&L) (\$)}%
+}}\smash{\makebox[0pt]{\hspace{2.05\linewidth}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{23em}% VERTICAL POSITION
+	Inventory}%
+}}\hspace{0pt plus 1filll}\null%
+
+Time (h)
+
+\vspace{1cm}%
+  \caption[Comparison of P\&L and inventory on the sample path]{Profit and loss and inventory levels resulting from each of the stochastic optimal control strategies, corresponding to the sample paths in \autoref{fig:samplepath_paths}.}\label{fig:samplepath_pnl_inv}%
 \end{figure}
 
 \end{document}

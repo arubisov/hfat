@@ -5,7 +5,7 @@ We now consider the same optimization problem but in discrete time, and we will 
 \setlength{\LTpost}{0pt}
 \begin{longtable}{ll}
 Imbalance & $\rho_k$ \\
-\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{The finite, discrete stochastic process that results from sorting $I(t)$ into $\{1, \dots, \#_{bins} \}$, and which evolves in accordance with the Markov chain $\bz$.}  \vspace{6pt} \\ 
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{The finite, discrete stochastic process that results from sorting the imbalance ratio $I(t)$ into $\{1, \dots, \#_{bins} \}$, and which evolves in accordance with the Markov chain $\bz$.}  \vspace{6pt} \\ 
 Midprice & $S_k$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A stochastic process that evolves in accordance with the Markov chain $\bz$.}  \vspace{6pt} \\ 
 Midprice Change & $\Delta S_k = \sgn(S_k - S_{k-1})$  \vspace{6pt} \\ 
@@ -408,9 +408,9 @@ And similarly, the optimal buy posting depth is given by:
 For ease of notation we'll write $\aleph(q) = \sum_\bj \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \right]$. Now, assuming we behave optimally on both the buy and sell sides simultaneously, we can substitute \autoref{eq:discretedeltaplusreferential} into \autoref{eq:discretedeltaminusreferential}, while evaluating both at ${\delta^+}^*$ and ${\delta^-}^*$ to obtain the optimal posting depth in feedback form:
 \begin{equation}\label{eq:discretedeltaminusfeedback}
 \begin{split}
-{\delta^-}^* & = \frac{1}{\kappa} + \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \geq 1} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q-1) \biggr] \\
+{\delta^-}^* & = \max \biggl\lbrace 0 \; ; \; \frac{1}{\kappa} + \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \geq 1} + \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q-1) \biggr] \\
 & \hphantom{{}={}} - (1-e^{\mu^-(\bz) \Delta t})e^{-\kappa \max \bigl\lbrace 0 \; ; \; \frac{1}{\kappa} - \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \leq -1} + \sum_\bj \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q+1) \bigr]} \\
-& \hphantom{{}={} {}-{}} {}^{-(1-e^{\mu^+ (\bz) \Delta t})e^{-\kappa {\delta^-}^*} \left( 2 \xi \indicator_{q = 0} - \aleph(q) \right) \bigr\rbrace } \left( 2 \xi \indicator_{q = 0} - \aleph(q) \right)
+& \hphantom{{}={} {}-{}} {}^{-(1-e^{\mu^+ (\bz) \Delta t})e^{-\kappa {\delta^-}^*} \left( 2 \xi \indicator_{q = 0} - \aleph(q) \right) \bigr\rbrace } \left( 2 \xi \indicator_{q = 0} - \aleph(q) \right) \biggr\rbrace
 \end{split}
 \end{equation}
 This equation will need to be solved numerically due to the difficulty in isolating ${\delta^{-}}^*$ on one side of the equality. Once a solution has been obtained, the value can be substituted back into \eqref{eq:discretedeltaplusreferential} to solve for ${\delta^{+}}^*$.

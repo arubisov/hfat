@@ -6,20 +6,19 @@
 \contentsline {figure}{\numberline {2.3}{\ignorespaces Comparison of the naive trading strategies}}{29}{figure.caption.16}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Optimal buy depths $\delta ^{+}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.\relax }}{60}{figure.caption.19}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Optimal buy depths $\delta ^+$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.\relax }}{61}{figure.caption.20}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Optimal buy depths $\delta ^{+}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.\relax }}{62}{figure.caption.21}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Optimal sell depths $\delta ^{-}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.\relax }}{64}{figure.caption.22}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Optimal sell depths $\delta ^-$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.\relax }}{65}{figure.caption.23}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Optimal sell depths $\delta ^{-}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.\relax }}{66}{figure.caption.24}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces Co-integration relation of the four stochastic control methods.\relax }}{67}{figure.caption.27}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces Comparison of the four stochastic control methods.\relax }}{68}{figure.caption.25}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.\relax }}{71}{figure.caption.29}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.\relax }}{72}{figure.caption.30}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.\relax }}{73}{figure.caption.31}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Sample paths of the optimal trading strategies, showing price, limit order posting depths, executed market orders, and filled limit orders.\relax }}{74}{figure.caption.32}
-\contentsline {figure}{\numberline {4.13}{\ignorespaces End of day strategy performances: in-sample backtesting using same-day calibration.\relax }}{76}{figure.caption.33}
-\contentsline {figure}{\numberline {4.14}{\ignorespaces End of day strategy performances: in-sample backtesting using a one-week offset for calibration.\relax }}{79}{figure.caption.35}
-\contentsline {figure}{\numberline {4.15}{\ignorespaces End of day strategy performances: in-sample backtesting on 2013 data, using amalgamated annual 2013 data for calibration.\relax }}{82}{figure.caption.37}
-\contentsline {figure}{\numberline {4.16}{\ignorespaces End of day strategy performances: out-of-sample backtesting on 2014 data, using amalgamated annual 2013 data for calibration.\relax }}{84}{figure.caption.39}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Optimal buy LO depths for sell pressure imbalance}}{60}{figure.caption.19}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Optimal buy LO depths for neutral imbalance}}{61}{figure.caption.20}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Optimal buy LO depths for buy pressure imbalance}}{62}{figure.caption.21}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Optimal sell LO depths for sell pressure imbalance}}{64}{figure.caption.22}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Optimal sell LO depths for neutral imbalance}}{65}{figure.caption.23}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Optimal sell LO depths for buy pressure imbalance}}{66}{figure.caption.24}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Co-integration relation of the four stochastic control methods}}{67}{figure.caption.27}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Comparison of the four stochastic optimal control methods}}{68}{figure.caption.25}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Detailed sample paths of the stochastic optimal control strategies}}{71}{figure.caption.29}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Comparison of optimal posting depths on the sample path}}{72}{figure.caption.30}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Comparison of P\&L and inventory on the sample path}}{73}{figure.caption.31}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces In-sample backtesting performance using same-day calibration}}{75}{figure.caption.32}
+\contentsline {figure}{\numberline {4.13}{\ignorespaces In-sample backtesting performance using week-offset calibration}}{78}{figure.caption.34}
+\contentsline {figure}{\numberline {4.14}{\ignorespaces In-sample backtesting performance using annual calibration}}{81}{figure.caption.36}
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Out-of-sample backtesting performance using annual calibration}}{83}{figure.caption.38}
 \addvspace {10\p@ }
