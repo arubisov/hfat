@@ -1,4 +1,6 @@
-\section{Discrete Time}
+\chapter{Stochastic Optimal Control in Discrete Time}
+
+\section{System Description}
 We now consider the same optimization problem but in discrete time, and we will attempt to reuse the same variable definitions and notation where it makes sense; namely, the constants $\Delta {t_{I}}, \Delta {t_{S}}, \#_{bins}, \xi$ are defined as before. We will be analysing the embedded discrete time Markov chain, which for any time interval of size $
 \Delta t$ can be obtained from the CTMC by considering the transition probability matrix obtained by $\mat{P} = e^{\mat{G}\Delta t}$. We have derived the below results with the consideration that $\Delta t = \Delta {t_{I}} = \Delta {t_{S}} = 1000ms$, though this is not strictly necessary. For convenience, we re-list in discrete-time form the processes we will consider for this control problem:
 
@@ -17,10 +19,10 @@ Other Agent Market Orders & $K^{\pm}_k$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{The sum of the Poisson process with rate $\mu^{\pm}(\bz_k)$ over the past time interval $\Delta t$. This allows us to consider a continuous time process in discrete time by looking at how many arrivals there were since the previous timestep. $K^+$ represents the arrival of other agents' buy market orders.} \vspace{6pt} \\ 
 Our Limit Order Posting Depth & $\delta^{\pm}_k$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{One of the $\cF$-predictable processes that we will control. The value of $\delta^+$ dictates how deep on the buy side we will post our buy limit order - if $\delta^+ = 0$ then we are posting at-the-touch.}  \vspace{6pt} \\ 
-Our LO fill count & $L^{\pm}_k$ \\
+Our Limit Order fill count & $L^{\pm}_k$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A binary random processes (not Poisson) identifying whether our buy ($L^+$) or sell ($L^-$) limit orders were filled. This process is considered in greater detail later in this section.}  \vspace{6pt} \\ 
-Our MOs & $M^{\pm}_k$ \\
-\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{Our other controlled process. $M^+$ represents our executing a buy market order. In executing market orders, we assume that the size of the MOs is small enough to achieve the best bid/ask price, and not walk the book.}  \vspace{6pt} \\ 
+Our Market Orders & $M^{\pm}_k$ \\
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{Our other controlled process. $M^+$ represents our executing a buy market order. In executing market orders, we assume that the volume of the order is small enough to achieve the best bid/ask price, and not walk the book.}  \vspace{6pt} \\ 
 Cash & $X^{\btau, \delta}_k$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A stochastic variable representing our cash, initially zero.}  \vspace{6pt} \\ 
 Inventory & $Q^{\btau, \delta}_k$ \\
@@ -46,26 +48,24 @@ M_k^+ \\
 M_k^-
 \end{pmatrix}$} & bid posting depth \\
 & ask posting depth \\
-& buy MO - binary control \\
-& sell MO - binary control \\[4ex]
+& buy market order - binary control \\
+& sell market order - binary control \\[4ex]
 \multirow{3}{*}{
 Random $\vec{w}_{k} = \begin{pmatrix}
 K_k^+ \\
 K_k^- \\
 \omega_k
 \end{pmatrix}$}
-& other agent buy MOs - binary \\
-& other agent sell MOs - binary \\
+& other agent buy market orders \\
+& other agent sell market orders \\
 & random variable uniformly distributed on [0,1]
 \end{tabular}
 
 Following \cite{Kwong15}, we'll write the evolution of the Markov chain as a function of the current state and a uniformly distributed random variable $\omega$:
 \begin{equation}
-\bz_{k+1} = T(\bz_k, \omega_k) = \sum_{i=0}^{|\Gamma|} i \cdot \indicator_{\left( \sum_{j=0}^{i-1} \bP_{\bz_k,j} , \sum_{j=0}^{i} \bP_{\bz_k,j} \right]} (\omega_k)
+\bz_{k+1} = T(\bz_k, \omega_k) = \sum_{i=0}^{|\Gamma|} i \cdot \indicator_{\omega_k \in \left( \sum_{j=0}^{i-1} \bP_{\bz_k,j} , \sum_{j=0}^{i} \bP_{\bz_k,j} \right]}
 \end{equation}
-Here $\indicator_A(\omega) = \begin{cases} 1 & \text{if } \omega \in A \\
-0 & \text{if } \omega \not\in A
-\end{cases}$, and hence $Z_{k+1}$ is assigned to the value $i$ for which $\omega_k$ is in the indicated interval of probabilities.
+Hence, $Z_{k+1}$ is assigned to the value $i$ for which $\omega_k$ is in the indicated interval of probabilities.
 
 Our Markovian state evolution function $f$, given by $\vec{x}_{k+1} = f \left( \vec{x}_{k},\vec{u}_{k}, \vec{w}_{k} \right)$, can be written explicitly as
 \begin{equation}\label{eq:discretestateevolution}
@@ -123,10 +123,10 @@ s_k - \xi \\
 \end{equation}
 Our market orders assume immediate execution, and are assumed to be sufficiently small in volume so as to not affect order imbalance or the midprice. 
 
-\subsection{Dynamic Programming}
+\section{Dynamic Programming}
 The system formulation allows both continuous and impulse control to mimic what was done in the continuous time section, though in discrete time there is no \textit{a priori} distinction between the two \citep{Bens08}. The following theorem shows that in this case a quasi-variational inequality formulation does exist, and that it is equivalent to the standard dynamic programming formulation. The result is a simplified expression that mirrors the continuous time analysis.
 
-\begin{thm}[\citet{Bens08}] \textbf{Dynamic Programming with Impulse Control in Discrete Time.} Consider a controlled Markov Chain with state space $X = \R^d$, transition probability $\pi(x, v, \d \eta)$, and positive, bounded, uniformly continuous cost function $l(x,v)$.
+\begin{thm}{\bf Dynamic Programming with Impulse Control in Discrete Time.} \citep{Bens08} Consider a controlled Markov Chain with state space $X = \R^d$, transition probability $\pi(x, v, \d \eta)$, and positive, bounded, uniformly continuous cost function $l(x,v)$.
 
 Introduce an impulse control $w$. Define the extended cost function by $l(x, v, w) = l(x + w, v) + c(w)$, the extended transition probability by $\pi (x, v, w, \d \eta) =  \pi (x+w, v, \d \eta)$ with the associated operator $\Phi^{v,w} f (x) = \int_{\R^d} f (\eta) \pi (x, v, w, \d \eta) = \Phi^{v} f (x+w)$.
 
@@ -150,16 +150,16 @@ u(x) = \min \left\lbrace K + \inf\limits_{w \geq 0} [c_0(w) + u(x+w)] \; ; \; \i
 \end{equation}
 \end{thm}
 
-\subsection{Maximizing Terminal Wealth (Discrete)}
+\section{Maximizing Terminal Wealth}
 Following the dynamic programming with impulse control programme, we introduce the value function $V_k^{\delta^\pm}$. Here, as in the continuous-time formulation, our objective is to maximize the terminal wealth performance criteria given by
-\begin{equation}
-V_k^{\delta^\pm} (x,s,\bz,q) = \E \left[ W_T^{\delta^\pm} \right] = \E_{k,x,s,\bz,q}\left[ X_T^{\delta^\pm} + Q_T^{\delta^\pm}(S_T - \sgn(Q_T^{\delta^\pm})\xi) - \alpha {(Q_T^{\delta^\pm})}^2 \right]
-\end{equation}
+\begin{align}
+V_k^{\delta^\pm} (x,s,\bz,q) & = \E_{k,x,s,\bz,q} \left[ W_T^{\delta^\pm} \right] \\ & = \E_{k,x,s,\bz,q}\left[ X_T^{\delta^\pm} + Q_T^{\delta^\pm}(S_T - \xi\sgn(Q_T^{\delta^\pm})) - \alpha {(Q_T^{\delta^\pm})}^2 \right]
+\end{align}
 where, as before, the notation $\E_{k,x,s,\bz,q}[ \; \cdot \; ]$ represents the conditional expectation
 \[ \E [ \; \cdot \; | \; X_k = x, S_k = s, \bZ_k = \bz, Q_k = q] \]
 In this case, our dynamic programming equations (DPEs) are given by
 \begin{align}
-V_T (x,s,\bz,q) & = x + q(s-\sgn(q)\xi) - \alpha q^2 \\
+V_T (x,s,\bz,q) & = x + q(s-\xi\sgn(q)) - \alpha q^2 \\
 \label{eq:discreteDPEinitial}
 \begin{split}
 V_k (x,s,\bz,q) & = \max \biggl\lbrace \sup_{\delta^\pm} \bigl\lbrace \E_{\bw} \left[ V_{k+1} (f((x,s,\bz,q),\bu,\bw_k) \right] \bigr\rbrace \; ; \\
@@ -172,7 +172,7 @@ where expectation is with respect to the random vector $\bw_k$. Note that in thi
 To simplify the DPEs, we introduce a now familiar ansatz:
 \begin{equation}
 \label{eq:ansatzHdscr}
-V_k (x,s,\bz,q) = x + q(s-\sgn(q)\xi) + h_k(\bz,q)
+V_k (x,s,\bz,q) = x + q(s-\xi\sgn(q)) + h_k(\bz,q)
 \end{equation}
 with boundary condition $h_k(\bz,0) = 0$ and terminal condition $h_T(\bz,q) = -\alpha q^2$. Substituting this ansatz into \eqref{eq:discreteDPEinitial}, we obtain
 \begin{align}
@@ -187,8 +187,8 @@ with boundary condition $h_k(\bz,0) = 0$ and terminal condition $h_T(\bz,q) = -\
 %%% Only Limit Orders
 \sup_{\delta^\pm} \bigl\lbrace \E_{\bw} \bigl[
 (s + \xi + \delta^-)L_k^- - (s - \xi - \delta^+)L_k^+ \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,T(\bz, \omega)}  -\sgn( q + L_k^+ - L_k^-)\xi   \bigr) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,T(\bz, \omega)}  -\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \xi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,T(\bz, \omega)}  -\xi\sgn( q + L_k^+ - L_k^-)   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,T(\bz, \omega)}  -\xi \left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \right) \\
 & \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \bigr] \bigr\rbrace \; ;\\
 %%% Market Buy
 & \hphantom{{}={} \max \biggl\lbrace } -2\xi \cdot \indicator_{q \geq 0} + h_k(\bz,q+1) \; ; \\
@@ -203,8 +203,8 @@ We'll begin by concentrating on the first term in the quasi-variational inequali
 \begin{split}
 & \sup_{\delta^\pm} \biggl\lbrace \E_{\bw} \biggl[
 (s + \xi + \delta^-)L_k^- - (s - \xi - \delta^+)L_k^+ \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,T(\bz, \omega)}  -\sgn( q + L_k^+ - L_k^-)\xi   \bigr) \\
-& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,T(\bz, \omega)}  -\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \xi \right) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,T(\bz, \omega)}  -\xi\sgn( q + L_k^+ - L_k^-)   \bigr) \\
+& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,T(\bz, \omega)}  -\xi\left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right)  \right) \\
 & \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \biggr] \biggr\rbrace
 \end{split}
 \end{equation}
@@ -384,11 +384,13 @@ Dividing through by $\kappa p({\delta^-}^*)$, which is nonzero, and re-arranging
 \begin{align}
 \begin{split}
 {\delta^-}^* & = \frac{1}{\kappa} + \E[\eta_{0,T(\bz, \omega)}] - \xi \left( 1 + p(\delta^+)\Psi_-(q) + \Upsilon(q,\delta^+) + q \Phi_-(q,\delta^+) \right) \\
-& \hphantom{{}={}} +  \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - 2 p(\delta^+) \bigr] + h_{k+1}(\bj, q-1) \bigl[-1 + p(\delta^+) \bigr] + h_{k+1}(\bj, q+1) \bigl[ p(\delta^+) \bigr] \biggr]
+& \hphantom{{}={}} +  \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - 2 p(\delta^+) \bigr] + h_{k+1}(\bj, q-1) \bigl[-1 + p(\delta^+) \bigr] \\
+& \hphantom{{}={} +  \sum_\bj \bP_{\bz,\bj} \biggl[} + h_{k+1}(\bj, q+1) \bigl[ p(\delta^+) \bigr] \biggr]
 \end{split} \\
 \begin{split}
 & = \frac{1}{\kappa} + \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \left( \indicator_{q \geq 1} + p(\delta^+)\indicator_{q = 0} \right) \\
-& \hphantom{{}={}} +  \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - 2 p(\delta^+) \bigr] + h_{k+1}(\bj, q-1) \bigl[-1 + p(\delta^+) \bigr] + h_{k+1}(\bj, q+1) \bigl[ p(\delta^+) \bigr] \biggr]
+& \hphantom{{}={}} +  \sum_\bj \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) \bigl[ 1 - 2 p(\delta^+) \bigr] + h_{k+1}(\bj, q-1) \bigl[-1 + p(\delta^+) \bigr] \\
+& \hphantom{{}={} +  \sum_\bj \bP_{\bz,\bj} \biggl[} + h_{k+1}(\bj, q+1) \bigl[ p(\delta^+) \bigr] \biggr]
 \end{split}
 \end{align}
 Recalling that we want $\delta^\pm \geq 0$, we find:
@@ -415,7 +417,7 @@ For ease of notation we'll write $\aleph(q) = \sum_\bj \bP_{\bz,\bj} \left[ h_{k
 \end{equation}
 This equation will need to be solved numerically due to the difficulty in isolating ${\delta^{-}}^*$ on one side of the equality. Once a solution has been obtained, the value can be substituted back into \eqref{eq:discretedeltaplusreferential} to solve for ${\delta^{+}}^*$.
 
-\subsection{Simplifying and Interpreting the DPE}
+\section{Simplifying and Interpreting the DPE}
 We now turn to simplifying the DPE in \eqref{eq:discreteDPE} by substituting in the optimal posting depths as written in recursive form: \eqref{eq:discretedeltaplusreferential} and \eqref{eq:discretedeltaminusreferential}. In doing so we see a incredible amount of cancellation and simplification, and we obtain the rather elegant, and surprisingly simple form of the DPE:
 \begin{equation}
 \label{eq:discreteDPEfinal}

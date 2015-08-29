@@ -1,0 +1,83 @@
+% LaTeX set-up adapted from a template by Alan T. Sherman (9/9/98)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article}
+\input{/home/anton/Documents/latex/LaTeXHeader.tex} % put hard path to header.
+\usepackage{soul}
+\usepackage{hyperref}
+\usepackage[scale=1,opacity=0.15,angle=0]{background}
+\allowdisplaybreaks
+
+%%%%%% Begin document with header and title %%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\mymascheader
+\pagestyle{plain}
+{\begin{center} {\large {\bf Statistical Arbitrage with \\  Limit Order Book Imbalance}} \end{center}}
+\bigskip
+
+\backgroundsetup{
+contents={\includegraphics[height=0.58\textheight,width=0.58\textwidth,keepaspectratio]{/home/anton/Documents/masc/ml/thesis/Figs/utias-logo-black.png}}
+}
+
+%%%%% Begin body %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{quote}
+My goal is to establish and solve the stochastic optimal control problem that 
+captures the momentum and order imbalance dynamics of the Limit Order Book 
+(LOB). The solution will yield an optimal trading strategy that will permit
+statistical arbitrage of the underlying stock, which will then be backtested on
+historical data.
+\end{quote}
+
+\section*{Progress Timeline}
+\vspace{-10pt}
+\begin{table}[H]
+\renewcommand\arraystretch{1.4}\arrayrulecolor{LightSteelBlue3}
+\newcommand{\foo}{\color{LightSteelBlue3}\makebox[0pt]{\textbullet}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\newcommand{\fooo}{\color{LightSteelBlue3}\hskip-0.5pt\vrule width 1pt\hspace{\labelsep}}
+\begin{tabular}{@{\,}r <{\hskip 2pt} !{\foo} >{\raggedright\arraybackslash}p{9cm} !{\fooo} >{\raggedright\arraybackslash}p{5cm}} 
+\multicolumn{1}{@{\,}r <{\hskip 9pt}}{DATE} & \multicolumn{1}{l}{THESIS} & \multicolumn{1}{l}{STA4505} \\
+\hline
+\st{Dec 2014} & \st{Complete CTMC calibration} \\
+\st{Dec 2014} & \st{Backtest naive strategies based on CTMC} & \\
+\st{Jan-May} & \st{Study stochastic controls: ECE1639, STA4505} & \\
+\st{Jun 5} & \st{Establish models} & \st{Exam Study} \\
+\st{Jun 12} & \st{Establish performance criteria} & \st{Exam Study} \\
+\st{Jun 15} & \st{Derive DPP/DPE} & \st{EXAM} \\
+\st{Jun 26} & \st{Derive continuous-time equations} & \\
+\st{Jul 3} & \st{Derive discrete-time equations} & \\
+\st{Jul 10} & \st{Set up MATLAB numerical integration} &  \\
+\st{Jul 17} & \st{Integrate functions and plot dynamics} & \st{Integrate and analyze} \\
+\st{Jul 24} & \st{Empty promises; zero fucks given} & \\
+\st{Jul 31} & \st{Code for numerical solutions, calibrations, plots} & \st{Simulate results} \\
+\st{Aug 7} & \st{All in-sample backtests} & \\
+\st{Aug 14} & \st{All out-of-sample backtests} & \\
+\st{Aug 21} & \st{The Big Writeup Effort} & \\
+\st{Aug 24} & \st{Submit first draft for review by panel} & \\
+\st{Aug 28} & & \st{Project Report} \\
+Sep 2 & & Presentation
+\end{tabular}
+\end{table}
+
+\newpage
+\backgroundsetup{contents={}}
+\section*{Whiteboard Inspirational Quote of the Week}
+\begin{quote}
+\textit{Unacceptable? Did you see the pool? They flipped the bitch!} \\ -- Clone High, the origins of my `they flipped the bitch' line, at \url{https://youtu.be/yv_ptXgAzZA}
+\end{quote}
+\section*{For Our Colleagues at Duke University...}
+Man it feels fucking foreign to be doing this without an accompanying cup of coffee. Pretty sure I won't make it past a few sentences before deciding that that just has to remedied. But let's give it a shot shall we. \par 
+Generally speaking, you're right, it really never does get any easier. It's still a bitch to go get it done regardless how many days in a row you've now been doing it, and really it does come at the sacrifice of doing other (perhaps seemingly more useful) things. But, one, having hit the Caroline threshold [I think we can now safely adopt that expression without further explanation] you've got the driving force of habit; so while it's just as much of a nuisance, perhaps the decision to follow through with it comes just that little bit easier. You're slowly just reprogramming yourself to a mode where it's a requirement, it just has to be done, and maybe by the end you'll be deciding to do it without even evaluating whether you \emph{want} to. Two, with the overall effect it has on your life, it might become easier to really see it as a high priority task that's requisite for everything else, in which case fewer and fewer things can be said to seem more useful of have higher priority. Again, that oughta make things easier. And three, it ties in with the ego-check, kool-aid-drinking attitude you're realizing has some value to it. This has its analogies with the AA program, where you're highly encouraged to just do it without questioning it, and at the end evaluate whether it worked for you - and while it's a bullshit way to live, the reality is that it's incredibly effective. So the real evaluation point is going to be at the terminal time, at the maturity of the accord -- and by then it might be a Ted 3.0 delivering the news. \par 
+Setting yourself up for success versus setting yourself up for failure (aka self-sabotage). Some years ago, at a new years ceremony at the Buddhist temple on College St, I swore to myself that I would stop my tendencies toward self-sabotage. I've come a long way with that. But last night I got home and had a small epiphany ... that just because I'm not setting myself up for failure, doesn't mean I'm setting myself up for success. As I'd mentioned I had charted myself a set of guidelines for the month of August in an effort to stay healthy during the thesis crunch time, and yesterday when I got home before circus class absolutely ravenous, I opened the fridge to find pretty much nothing. No exaggeration. I had a small container of cream cheese, so I walked over to buy an eponymous goodie from What-A-Bagel. Still hungry, I had absolutely no other snackable things, so I contended myself with a handful of PC Decadent chocolate chips that are otherwise used for baking. Really, an all-time low. And my point is this: that while I've done a very solid job of sticking to the guidelines, which entailed things like no sugar, no eating late, no peanut butter (yeah it's insane how long I've gone without PB, this must be a record, and I miss it every fucking day), I realized the list is a set of no's. And the no's go an incredibly far way in not setting myself up for failure since they're a guideline for what \emph{not} to do, but they don't go anywhere for setting myself up for success, because they're not at all a guideline for what \emph{to} do. I conclude, simply, that I've learned something here. \par 
+
+\section*{The Academic Week in Review}
+My second examiner contacted me this week and requested that I submit my abstract for a conference he's organizing: \url{http://www.optimization-in-finance.ca/}. Dude: I might give a talk at Fields. Fucking \emph{Fields}. 
+
+\begin{itemize}[topsep=0pt,itemsep=0ex,partopsep=0ex,parsep=0ex]
+\item implement feedback from Gabe
+\item submit draft 1.1
+\item rest on my laurels for a little while
+\item write acknowledgement section
+\end{itemize}
+
+\end{document}

@@ -16,13 +16,51 @@
 \usepackage{dsfont} 		% Doublestroke font
 \usepackage{bm} 			% Bold math fonts
 %\usepackage{soul} 			 % Hyphenation for letterspacing, underlining, and more
+
+% Palatino for rm and math | Helvetica for ss | Courier for tt
+\usepackage{mathpazo} % math & rm
+\linespread{1.05}        % Palatino needs more leading (space between lines)
+\usepackage[scaled]{helvet} % ss
+\usepackage{courier} % tt
+\normalfont
+\usepackage[T1]{fontenc}
+
 \allowdisplaybreaks
+
+
+%% test%%
+\makeatletter
+\def\@makechapterhead#1{%
+  %\vspace*{10\p@}%
+  {\parindent \z@ 
+    {\raggedleft \reset@font
+      \fontsize{15ex}{15ex}\selectfont %Problème avec les substitutions...
+      \bfseries\thechapter\par\nobreak}%
+    \par\nobreak
+    \interlinepenalty\@M
+    {\raggedright \Huge \bfseries \sffamily #1}%
+    \par\nobreak
+    \vskip 50\p@
+  }}
+\def\@makeschapterhead#1{%
+  %\vspace*{10\p@}%
+  {\parindent \z@ 
+    {\raggedleft \reset@font
+      \fontsize{15ex}{15ex}\selectfont %Problème avec les substitutions...
+      \bfseries\vphantom{\thechapter}\par\nobreak}%
+    \par\nobreak
+    \interlinepenalty\@M
+    {\raggedright \Huge \bfseries \sffamily #1}%
+    \par\nobreak
+    \vskip 50\p@
+  }}
 
 % ************************* Algorithms and Pseudocode **************************
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 
 % ********************Captions and Hyperreferencing / URL **********************
+\usepackage[labelfont=bf,font={small,stretch=0.90},width=0.9\textwidth]{caption}
 \usepackage{sidecap} % Typeset captions sideways
 \usepackage{subcaption}  % Support for sub-figures and sub-captions
 \usepackage{url} % Verbatim with URL-sensitive line breaks
@@ -41,6 +79,7 @@
 % *************************** Graphics and figures *****************************
 \usepackage{rotating}
 \usepackage{float}
+\usepackage{flafter}	% Ensure floats appear after their definitions.
 \usepackage{placeins} 	% For creating float barriers so figure don't span sections
 %\restylefloat{figure} % Set figure floating, use \begin{figure}[H] to fix in place.
 
@@ -109,7 +148,7 @@
 % See http://tex.stackexchange.com/questions/1050/whats-the-difference-between-newcommand-and-newcommand for info difference between newcommand and newcommand*
 
 % Changes how \autoref displays the equation reference.
-\def\equationautorefname~#1\null{Equation~(#1)\null}
+\def\equationautorefname~#1\null{(#1)\null}
 %\def\equationautorefname{Equation}
 \def\tableautorefname{Table}
 \def\figureautorefname{Figure}
@@ -180,6 +219,7 @@
 \newtheorem{coro}[thm]{Corollary}
 \newtheorem{lem}[thm]{Lemma}
 \newtheorem{defn}[thm]{Definition}
+\newtheorem*{ctmcprops}{Properties of a CTMC}
 
 \DeclareMathOperator{\sgn}{\mathrm{sgn}}
 \DeclareMathOperator*{\argmax}{arg\,max}

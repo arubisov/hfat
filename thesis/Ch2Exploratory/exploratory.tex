@@ -1,43 +1,68 @@
 \chapter{Exploratory Data Analysis}
 
+In this chapter we explore the possibility of constructing naive trading strategies from the statistical properties that emerge from our model of the limit-order book imbalance. The strategies will be tested on the stocks listed in \autoref{tbl:backtesttickersexploratory}. The chosen stocks are a good sample group of the population of stocks listed on the NASDAQ in that they span the spectrum of low liquidity to high liquidity stocks.
+
+\begin{table}[H]%
+\centering%
+\ra{1.2}%
+\caption[Stocks used in the exploratory data analysis]{List of stocks used in the exploratory data analysis, along with the daily average trading volume of each.}\label{tbl:backtesttickersexploratory}%
+\begin{tabular}{@{} rlr @{}}%
+\toprule
+Ticker & Company & Average Daily Volume \\
+\midrule
+\texttt{FARO} & FARO Technologies Inc. & 200,000 \\
+\texttt{MMM} & 3M Company & 2,000,000 \\
+\texttt{NTAP} & NetApp, Inc. & 4,000,000 \\
+\texttt{ORCL} & Oracle Corporation & 15,000,000 \\
+\texttt{INTC} & Intel Corporation & 30,000,000 \\
+\bottomrule
+\end{tabular}%
+\end{table}%
+
 \section[Modelling Imbalance: Continuous Time Markov Chain]{Modelling Imbalance: \texorpdfstring{\\}{} Continuous Time Markov Chain}
 The aim of this research project is to use the LOB volume imbalance $I(t)$ in an algorithmic trading application; hence, a suitable choice of model for $I(t)$ must be made. Rather than modelling imbalance directly as a real-valued process, an alternative approach, and that which is used herein, is to discretize the imbalance value $I(t)$ into subintervals, or bins, and fit the resulting process to a continuous-time Markov chain.
 
 The following definitions and properties are adapted from \citet{STAT455}:
 \begin{defn}
-A continuous-time stochastic process $\left\lbrace X(t) \; | \; t \geq 0 \right\rbrace$ with state space $S$ is called a \emph{continuous-time Markov chain (CTMC)} if it has the Markov property; namely, that 
+A continuous-time stochastic process $\left\lbrace X(t) \; | \; t \geq 0 \right\rbrace$ with finite or countable state space $K$, so that $X(t) \in K$, is called a \emph{continuous-time Markov chain (CTMC)} if it has the Markov property, namely, that 
 \begin{equation}
-\P \left[ X(t) = j \; | \; X(s) = i, X(t_{n-1} = i_{n-1}, \dots , X(t_1) = i_1 \right] = \P \left[ X(t) = j \; | \; X(s) = i \right]
+\P \left[ X(t) = j \; | \; X(s) = i, X(t_{n-1}) = i_{n-1}, \dots , X(t_1) = i_1 \right] = \P \left[ X(t) = j \; | \; X(s) = i \right]
 \end{equation}
-where for any integer $n \geq 1$, $0 \leq t_1 \leq \dots \leq t_{n-1} \leq s \leq t$ is any non-decreasing sequence of $n+1$ times, and $i_1,\dots,i_{n-1}, i, j \in S$ are any $n+1$ states.
+where for any integer $n \geq 1$, $0 \leq t_1 \leq \dots \leq t_{n-1} \leq s \leq t$ is any nondecreasing sequence of $n+1$ times, and $i_1,\dots,i_{n-1}, i, j \in K$ are any $n+1$ states.
 \end{defn}
-\begin{defn} A CTMC $X(t)$ is \emph{time homogeneous} if for any $s \leq t$ and any states $i,j \in S$,
+\begin{defn} A continuous-time Markov chain $\left\lbrace X(t) \; | \; t \geq 0 \right\rbrace$ is \emph{time homogeneous} if for any $s \leq t$ and any states $i,j \in K$,
 \begin{equation}
 \P \left[ X(t) = j \; | \; X(s) = i \right] = \P \left[ X(t-s) = j \; | \; X(0) = i \right]
 \end{equation}
 \end{defn}
-\begin{defn}
-The key quantities that determine a CTMC $X(t)$ are the \emph{transition rates} $q_{ij}$, which specify the rate at which $X$ jumps from state $i$ to $j$. Conditional on leaving state $i$, $X$ transitions to state $j$ with \emph{conditional transition probability} $p_{ij}$. The amount of time that $X$ spends in state $i$, called the \emph{holding time}, is exponentially distributed with rate $v_i$. These quantities are related by
+\begin{ctmcprops}
+Let $\left\lbrace X(t) \; | \; t \geq 0 \right\rbrace$ be a time-homogeneous CTMC. Its key defining quantities are
+\begin{enumerate}
+\item the \emph{transition rates} $q_{ij}$, which specify the rate at which $X$ jumps from state $i$ to $j$;
+\item the \emph{conditional transition probabilities} $p_{ij}$, which specify the probability with which $X$ transitions to state $j$ conditional on leaving state $i$;
+\item the \emph{holding times} $v_i$, where upon entering state $i$, the amount of time that $X$ will spend in state $i$ prior to transitioning is exponentially distributed with rate $v_i$.
+\end{enumerate} 
+These quantities are related by
 \begin{align}
 v_i & = \sum_{\substack{j \in S \\ j \neq i}} q_{ij} \\
 q_{ij} & = v_i \cdot p_{ij} \\
 p_{ij} & = \frac{q_{ij}}{v_i}
 \end{align} 
-\end{defn}
+\end{ctmcprops}
 \begin{defn}
-A CTMC $X(t)$ has an \emph{infinitesimal generator matrix} $\mat{G}$, whose entries are
+A continuous-time Markov chain $\left\lbrace X(t) \; | \; t \geq 0 \right\rbrace$  has an \emph{infinitesimal generator matrix} $\mat{G}$, whose entries are
 \begin{align}
-g_{ij} &= q_{ij}, \qquad i \neq j \\
-g_{ii} & = -v_i
+g_{ij} = \begin{cases} q_{ij}, \qquad & i \neq j \\
+						-v_i, & i = j \end{cases}
 \end{align}
 If $X(t)$ has transition probabilities $P_{ij}(t) = \P \left[ X(t) = j \; | \; X(0) = i \right]$ and matrix $\mat{P}(t) = \lbrace P_{ij}(t) \rbrace$, then $\mat{P}(t)$ and $\mat{G}$ are related by
 \begin{align}
-\dot{\mat{P}}(t) & = \mat{G} \cdot \mat{P}(t) \\
+\dot{\mat{P}}(t) & = \mat{G} \mat{P}(t) \\
 \mat{P}(t)  &= e^{\mat{G}t} \label{eq:CTMCPG}
 \end{align}
 \end{defn}
 
-Conditional on $X(t) = k$, we assume the arrival of buy and sell market orders follow independent Poisson processes with intensities $\lambda_k^\pm$, where $\lambda_k^+$ ($\lambda_k^-$) is the rate of arrivals of market buys (sells). Such processes are called \textit{Markov-modulated Poisson processes}, as the Poisson intensities are themselves stochastic processes determined by the state of the Markov chain. Thus, a timeline of observations of arrivals of buy/sell market orders and of regime switches might look as in \autoref{introtimeline}.
+Conditional on $X(t) = k$, we assume the arrival of buy and sell market orders follow independent Poisson processes with intensities $\lambda_k^\pm$, where $\lambda_k^+$ ($\lambda_k^-$) is the rate of arrivals of market buys (respectively, sells). Such processes are called \textit{Markov-modulated Poisson processes}, as the Poisson intensities are themselves stochastic processes determined by the state of the Markov chain. Thus, a timeline of observations of arrivals of buy/sell market orders and of regime switches might look as in \autoref{introtimeline}.
 
 \begin{figure}
   \tikzsetnextfilename{Ch2/LOBtimeline}
@@ -52,15 +77,12 @@ In the sections that follow, we derive maximum likelihood estimations for the pa
 
 \subsection{Infinitesimal Generator Matrix}
 
-Let $\mat{G}$ be the generator matrix for a CTMC $X(t)$ with state space $K$. From observations, e.g. the fictional events in the timeline given in \autoref{introtimeline}, we want to estimate the entries of $\mat{G}$. Since the holding time in a given state $i$ has probability density function $f(t;v_i) = v_i e^{-v_i t}$, the likelihood function (allowing for repetition of terms) is therefore
+Let $\mat{G}$ be the generator matrix for a CTMC $X(t)$ with finite-dimensional state space $K$. From observations, e.g., the fictional events in the timeline given in \autoref{introtimeline}, we want to estimate the entries of $\mat{G}$. As the holding time in a given state $i$ has probability density function $f(t;v_i) = v_i e^{-v_i t}$, the likelihood function (allowing for repetition of terms) is therefore
 \begin{align}
 \mathcal{L}(\mat{G}) &= (v_{i} e^{-v_{i}(\tau_2 - \tau_1)} p_{ij}) (v_{j} e^{-v_{j}(\tau_3 - \tau_2)} p_{ji}) (v_{i} e^{-v_{i}(\tau_4 - \tau_3)} p_{ik}) \dots \\
 &= \prod\limits_{i=1}^{K} \prod\limits_{i \neq j} (v_{i}p_{ij})^{N_{ij}(T)} e^{-v_{i}H_i(T)} \\
 &= \prod\limits_{i=1}^{K} \prod\limits_{i \neq j} (q_{ij})^{N_{ij}(T)} e^{-v_{i}H_i(T)}
-\intertext{where}
-N_{ij}(T) & \equiv \mbox{number of transitions from regime $i$ to $j$ up to time $T$} \nonumber \\
-H_{i}(T) & \equiv \mbox{holding time in regime $i$ up to time $T$} \nonumber
-\intertext{Therefore the log-likelihood becomes} 
+\intertext{where $N_{ij}(T)$ is the number of transitions from regime $i$ to $j$ up to time $T$, and $H_{i}(T)$ is the holding time in regime $i$ up to time $T$. Therefore, the log-likelihood becomes} 
 \ln \mathcal{L}(\mat{G}) & = \sum\limits_{i=1}^{K} \sum\limits_{i \neq j} \left[ N_{ij}(T) \ln(q_{ij}) - v_{i} H_i(T) \right] \\
 &= \sum\limits_{i=1}^{K} \sum\limits_{i \neq j} \left[ N_{ij}(T) \ln(q_{ij}) - \left( \sum\limits_{i \neq k} q_{ik} H_i(T) \right) \right]
 \end{align}
@@ -68,28 +90,29 @@ To get a maximum likelihood estimate $\hat{q}_{ij}$ for transition rates and the
 \begin{equation}
 \dfrac{\partial \ln \mathcal{L}(\mat{G})}{\partial \hat{q}_{ij}} = \dfrac{N_{ij}(T)}{q_{ij}} - H_i(T) = 0
 \end{equation}
+Solving gives
 \begin{equation}\label{eq:MLEG}
-\Rightarrow \hat{q}_{ij} = \dfrac{N_{ij}(T)}{H_i(T)}
+\hat{q}_{ij} = \dfrac{N_{ij}(T)}{H_i(T)}
 \end{equation}
+as the maximum likelihood estimate. This has the simple and intuitive interpretation that the estimated rate of transition from state $i$ to $j$ is equal to the number of transitions from $i$ to $j$ divided by the total time spent in $i$. 
 
 \subsection{Arrival Rates}
 
-Now we want to derive an estimate for the intensity of the Poisson process of market order arrivals conditional on being in state $k$. We'll look at just the buy market orders for some regime $k$, as the sell case is identical. Let the buy market order arrival times be indexed by $b_i$. Since we're assuming that the arrival process is Poisson with the same intensity throughout trials, we can consider the inter-arrival time of events conditional on being in state $k$. The MLE derivation then follows just as it did for the generator matrix.
+Now we want to derive an estimate for the intensity of the Poisson process of market order arrivals conditional on being in state $k$. We'll look at just the buy market orders for some regime $k$, as the sell case is identical. Let the buy market order arrival times be indexed by $b_i$. Since we're assuming that the arrival process is Poisson with the same intensity throughout trials, we can consider the interarrival time of events conditional on being in state $k$. The MLE derivation then follows just as it did for the generator matrix.
 \begin{align}
 \mathcal{L}(\lambda^{+}_k ; b_1, \dots, b_N) &= \prod\limits_{i=2}^{N} \lambda^{+}_k e^{-\lambda^{+}_k (b_{i} - b_{i-1})} \\
 &= (\lambda^{+}_k)^{N^{+}_k(T)} e^{-\lambda^{+}_k H_k(T)}
-\intertext{where}
-N^{+}_{k}(T) & \equiv \mbox{number of market order arrivals in regime $k$ up to time $T$} \nonumber \\
-H_{k}(T) & \equiv \mbox{holding time in regime $k$ up to time $T$} \nonumber
-\intertext{Therefore the log-likelihood becomes:} 
+\intertext{where $N^{+}_{k}(T)$ is the number of market order arrivals in regime $k$ up to time $T$, and $H_{k}(T)$ is the holding time in regime $k$ up to time $T$. Therefore, the log-likelihood becomes:} 
 \ln \mathcal{L}(\lambda^{+}_k) & = N^{+}_k(T) \ln(\lambda^{+}_k) -\lambda^{+}_k H_k(T)
-\intertext{By setting the partial derivative of $\ln \mathcal{L}$ with respect to ${\lambda}^{+}_k$ equal to zero, we get that the ML estimate for $\hat{\lambda}^{+}_k$ is:} 
+\intertext{By setting the partial derivative of $\ln \mathcal{L}$ with respect to ${\lambda}^{+}_k$ equal to zero, we get that the maximum likelihood estimate for $\hat{\lambda}^{+}_k$ is:} 
 \dfrac{\partial \ln\mathcal{L} }{\partial \lambda^{+}_k} & = 
 \dfrac{N^{+}_k(T)}{\hat{\lambda}^{+}_k} - H_k(T) = 0
 \end{align}
+Solving gives
 \begin{equation}\label{eq:MLElambda}
-\Rightarrow \hat{\lambda}^{+}_k = \dfrac{N^{+}_k(T)}{H_k(T)}
+\hat{\lambda}^{+}_k = \dfrac{N^{+}_k(T)}{H_k(T)}
 \end{equation}
+as the maximum likelihood estimate. Again this has the intuitive interpretation that the estimated rate of arrivals while in state $k$ is equal to the number of observed arrivals while in $k$ divided by the total time spent in $k$. 
 
 \section{2-Dimensional CTMC}
 \label{sec:2DCTMC}
@@ -107,24 +130,24 @@ Thus, the CTMC models the joint distribution $(\rho(t), \Delta S(t))$ where
 \[ \rho(t) \in \lbrace 1,2,\dots,\#_{bins} \rbrace \]
 is the bin corresponding to imbalance averaged over the interval $[t-\Delta t_I, t]$, and
 \[ \Delta S(t) = \sgn(S(t+\Delta t_S)-S(t)) \in \lbrace -1, 0, 1 \rbrace \]
-For simplicity of computation, the pair $(\rho(t), \Delta S(t))$ is then reduced into one dimension with a simple encoding function $\varphi$; for example, using 3 bins:
-\begin{table}[H]
-\centering
-\ra{1.2}
-\begin{tabular}{@{} *{11}{c} @{}}
+For simplicity of computation, the pair $(\rho(t), \Delta S(t))$ is then reduced into one dimension with a simple encoding function $\varphi$. An example of this reduction using three bins is presented in \autoref{tbl:onedimreduction}.
+\begin{table}[H]%
+\centering%
+\ra{1.2}%
+\caption[1-dimensional encoding of 2-dimensional CTMC]{$\varphi(\rho(t),S(t))$: 1-dimensional encoding of 2-dimensional CTMC.}\label{tbl:onedimreduction}%
+\begin{tabular}{@{} *{11}{c} @{}}%
 \toprule
 $Z(t)$ & Bin $\rho(t)$ & $\Delta S(t)$ & \phantom{abc} & $Z(t)$ & Bin $\rho(t)$ & $\Delta S(t)$ & \phantom{abc} & $Z(t)$ & Bin $\rho(t)$ & $\Delta S(t)$ \\
 \cmidrule{1-3} \cmidrule{5-7} \cmidrule{9-11}
 1 & Bin 1 & $-1$ && 4 & Bin 1 & $0$ && 7 & Bin 1 & $+1$ \\
 2 & Bin 2 & $-1$ && 5 & Bin 2 & $0$ && 8 & Bin 2 & $+1$ \\
 3 & Bin 3 & $-1$ && 6 & Bin 3 & $0$ && 9 & Bin 3 & $+1$ \\
-\bottomrule
-\end{tabular}
-\caption[1-dimensional encoding of 2-dimensional CTMC]{$\varphi(\rho(t),S(t))$: 1-dimensional encoding of 2-dimensional CTMC.}
-\end{table}
+\bottomrule%
+\end{tabular}%
+\end{table}%
 
 \subsection{Cross-Validation}
-We cross-validate the CTMC calibration by means of a time-homogeneity test similar to that done in \citet{Tan02}. The null hypothesis is given by \citep{Weiss10}
+We cross-validate the CTMC calibration by means of a time-homogeneity test similar to that done in \citet{Tan02}. The homogeneity hypothesis is given by \citep{Weiss10}
 \begin{equation}
 H_0 = \forall i,j \in S \; : \; \exists q_{ij} \in \R^+ \; : \; q_{ij}(t) \equiv q_{ij} \; \forall t \in [0,T]
 \end{equation}
@@ -136,12 +159,13 @@ This value $n_{conv}$ determines the size of the cross-validation timewindow int
 \begin{equation}
 D = -2 \ln (\mathcal{L})  = 2 \sum_k \sum_{i,j} n_{i,j}^k \left[ \ln(p_{ij}^k)  - \ln(p_{ij})   \right]
 \end{equation}
-where $n_{ij}^k$ is the number of observed transitions from state $i$ to $j$ in subinterval $k$. This test statistic has a $\chi^2$ distribution with $(K-1)(3 \cdot \#_{bins})(3 \cdot \#_{bins} - 1)$. The tests were run for each ticker for each trading day of 2013, and averaged over the year. \autoref{tbl:pvalues} shows the $p$-value scores for the tests.
-\begin{table}
-\centering
-\ra{1.2}
-\begin{adjustbox}{max width=\textwidth}
-\begin{tabular}{@{} *{6}{r} r *{5}{r} @{}}
+where $n_{ij}^k$ is the number of observed transitions from state $i$ to $j$ in subinterval $k$. This test statistic has a $\chi^2$ distribution with $(K-1)(3 \cdot \#_{bins})(3 \cdot \#_{bins} - 1)$ degrees of freedom. The tests were run for each ticker for each trading day of 2013, and averaged over the year. \autoref{tbl:pvalues} shows the $p$-value scores for the tests.
+\begin{table}%
+\centering%
+\ra{1.2}%
+\caption[$p$-values for testing the time homogeneity hypothesis]{$\chi^2$-test $p$-values for testing the time homogeneity hypothesis. Tests were run for each ticker for each trading day of 2013, and averaged over the year. For calculating $n_{conv}$, the converge error threshold was $\epsilon = 1\times 10^{-10}$.}\label{tbl:pvalues}%
+\begin{adjustbox}{max width=\textwidth}%
+\begin{tabular}{@{} *{6}{r} r *{5}{r} @{}}%
 \toprule
  &  & \multicolumn{4}{c}{subintervals} & \hphantom{abc} & \multicolumn{4}{c}{subintervals} \\ 
 \cmidrule{3-6} \cmidrule{9-12}
@@ -165,89 +189,86 @@ $\Delta t_I$ & $n_{conv}$ & $K$ & 8 & 4 & 2 & & $n_{conv}$ & $K$ & 8 & 4 & 2 \\
 100ms & 1777 & 0.000 & 0.000 & 0.000 & 0.000 & &  3498 & 0.000 & 0.001 & 0.001 & 0.001 \\
 1000ms & 308 & 0.000 & 0.001 & 0.000 & 0.001 & &  771 & 0.000 & 0.001 & 0.002 & 0.002 \\
 10000ms & 87 & 0.000 & 0.000 & 0.002 & 0.010 & & 133 & 0.000 & 0.000 & 0.000 & 0.007 \\
-\bottomrule
-\end{tabular}
-\end{adjustbox}
-\caption[$p$-values for testing the time homogeneity hypothesis]{$\chi^2$-test $p$-values for testing the time homogeneity hypothesis. Tests were run for each ticker for each trading day of 2013, and averaged over the year. For calculating $n_{conv}$, the converge error threshold was $\epsilon = 1\times 10^{-10}$.}
-\label{tbl:pvalues}
-\end{table}
-Considering the standard cutoff $p$-value of 0.05, the cross-validation results show a strong case for the rejection of the homogeneity hypothesis. However, using a non-homogeneous model falls outside of the scope of this research project, and instead suggests possible extensions to this research wherein the trading day is broken down into subintervals to better account for fluctuations and patterns in trading activity - perhaps early morning, mid-day, and final hour of trading. The severity of proceeding with the homogeneity hypothesis is not known \textit{a priori}, and may instead emerge with the backtesting results done later in this chapter and in Chapter 4.
+\bottomrule%
+\end{tabular}%
+\end{adjustbox}%
+\end{table}%
+Considering the standard cutoff $p$-value of 0.05, the cross-validation results show a strong case for the rejection of the homogeneity hypothesis. However, using a nonhomogeneous model falls outside of the scope of this research project, and instead suggests possible extensions to this research wherein the trading day is broken down into subintervals to better account for fluctuations and patterns in trading activity; perhaps early morning, mid-day, and final hour of trading. The severity of proceeding with the homogeneity hypothesis is not known \textit{a priori}, and may instead emerge with the backtesting results done later in this chapter and in Chapter 4.
 
 \section{Predicting Future Price Changes}
-It is crucial to note that the value $\Delta S(t)$ contains the price change from time $t$ over the \textit{future} $\Delta t_S$ seconds - hence in real-time one cannot know the state of the Markov Chain. However, the analytic results do prove enlightening: from the resulting timeseries we estimate a generator matrix $\mat{G}$, and transform it into a one-step transition probability matrix $\mat{P} = e^{\mat{G}\Delta t_I}$. The entries of $\mat{P}$ are the conditional probabilities 
+It is crucial to note that the value $\Delta S(t)$ contains the price change from time $t$ over the \textit{future} $\Delta t_S$ seconds. Hence in real-time one cannot know the state of the Markov chain. However, the analytic results do prove enlightening: from the resulting timeseries we estimate a generator matrix $\mat{G}$, and transform it into a one-step transition probability matrix $\mat{P} = e^{\mat{G}\Delta t_I}$. The entries of $\mat{P}$ are the conditional probabilities 
 \begin{align}
-\mat{P}_{ij} & = \mathbb{P}\left[ \varphi( \rho_{[t-\Delta t_I, t]}, \Delta S_{[t,t+\Delta t_S]}) = j \; | \; \varphi( \rho_{[t-2\Delta t_I, t-\Delta t_I]}, \Delta S_{[t-\Delta t_I, t]} ) = i \right] \label{eq:POneStepUgly} \\
+P_{ij} & = \mathbb{P}\left[ \varphi( \rho_{[t-\Delta t_I, t]}, \Delta S_{[t,t+\Delta t_S]}) = j \; | \; \varphi( \rho_{[t-2\Delta t_I, t-\Delta t_I]}, \Delta S_{[t-\Delta t_I, t]} ) = i \right] \label{eq:POneStepUgly} \\
 \intertext{which can be expressed semantically as}
-& = \mathbb{P}\left[ \varphi( \rho_{curr}, \Delta S_{future}) = j \; | \; \varphi( \rho_{prev}, \Delta S_{curr} ) = i \right] \label{eq:POneStepNice} \\
-\intertext{Since we can easily decode the 1-dimensional Markov state back into two dimensions, we can think of $\mat{P}$ as being four-dimensional and re-write its entries as}
-& = \mathbb{P}\left[ \rho_{curr} = i,  \Delta S_{future} = j \; | \; \rho_{prev} = k, \Delta S_{curr} = m \right] \\
-& = \mathbb{P}\left[ \rho_{curr} = i,  \Delta S_{future} = j \; | \; B \right]
+P_{ij} & = \mathbb{P}\left[ \varphi( \rho_\text{curr}, \Delta S_\text{future}) = j \; | \; \varphi( \rho_\text{prev}, \Delta S_\text{curr} ) = i \right] \label{eq:POneStepNice} \\
+\intertext{Since we can easily decode the one-dimensional Markov state back into two dimensions, we can think of $\mat{P}$ as being four-dimensional and rewrite its entries as}
+& = \mathbb{P}\left[ \rho_\text{curr} = i,  \Delta S_\text{future} = j \; | \; \rho_\text{prev} = k, \Delta S_\text{curr} = m \right] \\
+& = \mathbb{P}\left[ \rho_\text{curr} = i,  \Delta S_\text{future} = j \; | \; B \right]
 \end{align}
-where we're using the shorthand $B = (\rho_{prev} = k, \Delta S_{curr} = m)$ to represent the states in the previous timestep. Applying Bayes' Rule,
+where we are using the shorthand $B = (\rho_\text{prev} = k, \Delta S_\text{curr} = m)$ to represent the states in the previous timestep. Applying Bayes' Rule,
 \begin{equation}\label{eq:POneStepBayes}
-\mathbb{P}\left[ \Delta S_{future} = j \; | \; B, \rho_{curr} = i \right] = \dfrac{\mathbb{P}\left[ \rho_{curr} = i, \Delta S_{future} = j \; | \; B \right]}{\mathbb{P}\left[ \rho_{curr} = i \; | \; B \right]}
+\mathbb{P}\left[ \Delta S_\text{future} = j \; | \; B, \rho_\text{curr} = i \right] = \dfrac{\mathbb{P}\left[ \rho_\text{curr} = i, \Delta S_\text{future} = j \; | \; B \right]}{\mathbb{P}\left[ \rho_\text{curr} = i \; | \; B \right]}
 \end{equation}
 where the right-hand-side numerator is each individual entry of the one-step probability matrix $\mat{P}$, and the denominator can be computed from $\mat{P}$ by
 \begin{equation}\label{eq:POneStepBayesDenom}
-\mathbb{P}\left[ \rho_{curr} = i \; | \; B \right] = \sum\limits_j \mathbb{P}\left[ \rho_{curr} = i,  \Delta S_{future} = j \; | \; B \right]
+\mathbb{P}\left[ \rho_\text{curr} = i \; | \; B \right] = \sum\limits_j \mathbb{P}\left[ \rho_\text{curr} = i,  \Delta S_\text{future} = j \; | \; B \right]
 \end{equation}
 The left-hand-side value in \eqref{eq:POneStepBayes} is the probability of seeing a given price change over the immediate future time interval conditional on past imbalances and the most recent price change, and therefore allows us to predict future price moves. We'll denote by $\mat{Q}$ the matrix containing all values given by \eqref{eq:POneStepBayes}.
 
 The $\mat{Q}$ matrix in \autoref{tbl:Qmatrix} was obtained using data for \texttt{MMM} from 2013-05-15, averaging imbalance and price change timewindows $\Delta t_I = \Delta t_S = 1000\text{ms}$, and $K=3$ imbalance bins.
-\begin{table}
-\centering
-\ra{1.2}
-\begin{tabular}{@{} r@{\hskip 1cm} *{9}{r} @{}}
+\begin{table}[hb]%
+\centering%
+\ra{1.2}%
+\caption[Probabilities of future price changes]{The $\mat{Q}$ matrix: conditional probabilities of future price changes, conditioned on current imbalance, current price change, and previous imbalance.}\label{tbl:Qmatrix}%
+\begin{tabular}{@{} r@{\hskip 1cm} *{9}{r} @{}}%
 \toprule
-& \multicolumn{3}{c}{$\Delta S_{curr} < 0$} & \multicolumn{3}{c}{$\Delta S_{curr} = 0$} & \multicolumn{3}{c}{$\Delta S_{curr} > 0$} \\
+& \multicolumn{3}{c}{$\Delta S_\text{curr} < 0$} & \multicolumn{3}{c}{$\Delta S_\text{curr} = 0$} & \multicolumn{3}{c}{$\Delta S_\text{curr} > 0$} \\
 \cmidrule(lr){2-4} \cmidrule(lr){5-7} \cmidrule(lr){8-10}
 \multicolumn{2}{r}{$\rho_{curr} = 1$} & 2 & 3 & 1 & 2 & 3 & 1 & 2 & 3 \\
 \midrule
-\multicolumn{10}{l}{$\Delta S_{future} < 0$} \\
-$\hphantom{abcd}\rho_{prev} = 1$ & \bf 0.53 & 0.15 & 0.12 & 0.05 & 0.10 & 0.14 & 0.08 & 0.13 & 0.14 \\
-$\rho_{prev} = 2$ & 0.10 & \bf 0.58 & 0.14 & 0.07 & 0.04 & 0.10 & 0.13 & 0.06 & 0.12 \\
-$\rho_{prev} = 3$ & 0.08 & 0.12 & \bf 0.52 & 0.09 & 0.06 & 0.03 & 0.11 & 0.10 & 0.05 \\[0.6ex]
-\multicolumn{10}{l}{$\Delta S_{future} = 0$} \\
-$\rho_{prev} = 1$ & 0.41 & 0.75 & 0.78 & \bf 0.91 & 0.84 & 0.79 & 0.42 & 0.79 & 0.77 \\
-$\rho_{prev} = 2$ & 0.79 & 0.36 & 0.71 & 0.83 & \bf 0.92 & 0.82 & 0.75 & 0.37 & 0.78 \\
-$\rho_{prev} = 3$ & 0.79 & 0.74 & 0.40 & 0.81 & 0.83 & \bf 0.91 & 0.70 & 0.76 & 0.39 \\[0.6ex]
-\multicolumn{10}{l}{$\Delta S_{future} > 0$} \\
-$\rho_{prev} = 1$ & 0.06 & 0.10 & 0.09 & 0.04 & 0.06 & 0.07 & \bf 0.50 & 0.09 & 0.09 \\
-$\rho_{prev} = 2$ & 0.10 & 0.06 & 0.15 & 0.10 & 0.04 & 0.08 & 0.12 & \bf 0.57 & 0.10 \\
-$\rho_{prev} = 3$ & 0.13 & 0.14 & 0.08 & 0.10 & 0.11 & 0.05 & 0.19 & 0.14 & \bf 0.56 \\
+\multicolumn{10}{l}{$\Delta S_\text{future} < 0$} \\
+$\hphantom{abcd}\rho_\text{prev} = 1$ & \bf 0.53 & 0.15 & 0.12 & 0.05 & 0.10 & 0.14 & 0.08 & 0.13 & 0.14 \\
+$\rho_\text{prev} = 2$ & 0.10 & \bf 0.58 & 0.14 & 0.07 & 0.04 & 0.10 & 0.13 & 0.06 & 0.12 \\
+$\rho_\text{prev} = 3$ & 0.08 & 0.12 & \bf 0.52 & 0.09 & 0.06 & 0.03 & 0.11 & 0.10 & 0.05 \\[0.6ex]
+\multicolumn{10}{l}{$\Delta S_\text{future} = 0$} \\
+$\rho_\text{prev} = 1$ & 0.41 & 0.75 & 0.78 & \bf 0.91 & 0.84 & 0.79 & 0.42 & 0.79 & 0.77 \\
+$\rho_\text{prev} = 2$ & 0.79 & 0.36 & 0.71 & 0.83 & \bf 0.92 & 0.82 & 0.75 & 0.37 & 0.78 \\
+$\rho_\text{prev} = 3$ & 0.79 & 0.74 & 0.40 & 0.81 & 0.83 & \bf 0.91 & 0.70 & 0.76 & 0.39 \\[0.6ex]
+\multicolumn{10}{l}{$\Delta S_\text{future} > 0$} \\
+$\rho_\text{prev} = 1$ & 0.06 & 0.10 & 0.09 & 0.04 & 0.06 & 0.07 & \bf 0.50 & 0.09 & 0.09 \\
+$\rho_\text{prev} = 2$ & 0.10 & 0.06 & 0.15 & 0.10 & 0.04 & 0.08 & 0.12 & \bf 0.57 & 0.10 \\
+$\rho_\text{prev} = 3$ & 0.13 & 0.14 & 0.08 & 0.10 & 0.11 & 0.05 & 0.19 & 0.14 & \bf 0.56 \\
 \bottomrule
-\end{tabular}
-\caption[Probabilities of future price changes]{The $\mat{Q}$ matrix: conditional probabilities of future price changes, conditioned on current imbalance, current price change, and previous imbalance.}
-\label{tbl:Qmatrix}
-\end{table}
+\end{tabular}%
+\end{table}%
 
-The three middle rows of \autoref{tbl:Qmatrix} contain the majority of values $>0.5$, showing that in most cases we are expecting no price change. The only other cases in which the probability of a price change is $>0.5$ show evidence of \textit{momentum}; for example, the value in row 1, column 1 can be interpreted as: if $\rho_{prev} = \rho_{curr} = 1$ and previously we saw a downward price change, then we expect to again see a downward price change. The bolded diagonal values in the table lend themselves to the empirical conclusion
+The three middle rows of \autoref{tbl:Qmatrix} contain the majority of values $>0.5$, showing that in most cases we are expecting no price change. The only other cases in which the probability of a price change is greater than $0.5$ show evidence of \textit{momentum}; for example, the value in row 1, column 1 can be interpreted as: if $\rho_\text{prev} = \rho_\text{curr} = 1$ and previously we saw a downward price change, then we expect to again see a downward price change. The bolded diagonal values in the table lend themselves to the empirical conclusion
 \begin{equation}\label{eq:EDAKeyInsight}
-\mathbb{P} \left[ \Delta S_{future} = \Delta S_{curr} \; | \; \rho_{curr} = \rho_{prev} \right] > 0.5
+\mathbb{P} \left[ \Delta S_\text{future} = \Delta S_\text{curr} \; | \; \rho_\text{curr} = \rho_\text{prev} \right] > 0.5
 \end{equation}
 
 \section{Naive Trading Strategies}
 Using the key insight drawn from \eqref{eq:EDAKeyInsight}, we implemented several naive trading strategies, descriptions of which follow:
 
-\paragraph{Naive Trading Strategy}  This strategy seeks to profit from expected price changes by using market orders. Using the conditional probabilities obtained from $\mat{Q}$, we will execute a buy (resp. sell) market order if the probability of an upward (resp. downward) price change is $> 0.5$. Pseudocode for this strategy is given in \autoref{algo:algo-naive}. In lines 4-6 we are forecasting a downward price move, and therefore sell one share with a market order at the best bid price. In lines 7-9, we are forecasting an upward price move, and buy one share with a market order at the best ask price. In lines 12-16 we have reached the end of the trading day, and liquidate our position at the at-the-touch price.
-\begin{algorithm}
+\paragraph{Naive Trading Strategy.}  This strategy seeks to profit from expected price changes by using market orders. Using the conditional probabilities obtained from $\mat{Q}$, we will execute a buy (respectively sell) market order if the probability of an upward (respectively downward) price change is $> 0.5$. Pseudocode for this strategy is given in \autoref{algo:algo-naive}. In lines 4-6 we are forecasting a downward price move, and therefore sell one share with a market order at the best bid price. In lines 7-9, we are forecasting an upward price move, and buy one share with a market order at the best ask price. In lines 12-16 we have reached the end of the trading day, and liquidate our position at the at-the-touch price.
+\begin{algorithm}[htb]
 	\caption{Naive Trading Strategy}
 	\input{Figs/Ch2/algo-naive.tex}
 	\label{algo:algo-naive}
 \end{algorithm}
 
 \clearpage
-\paragraph{Naive+ Trading Strategy} This strategy seeks to profit from no expected changes in price by using limit orders. If no change in midprice is expected then we'll post buy and sell limit orders at the touch. For every market order that arrives, we'll assume that our limit order is always filled, following which we will immediately repost whichever limit order was filled. Pseudocode for this strategy is given in \autoref{algo:algo-naive-plus}. In lines 11-13, since a sell market order is arriving, our buy limit order is being filled and we are paying the bid price. 
-\begin{algorithm}
+\paragraph{Naive+ Trading Strategy.} This strategy seeks to profit from no expected changes in price by using limit orders. If no change in midprice is expected then we'll post buy and sell limit orders at the touch. For every market order that arrives, we'll assume that our limit order is always filled, following which we will immediately repost whichever limit order was filled. Pseudocode for this strategy is given in \autoref{algo:algo-naive-plus}. In lines 11-13, since a sell market order is arriving, our buy limit order is being filled and we are paying the bid price. 
+\begin{algorithm}[htb]
 	\caption{Naive+ Trading Strategy}
 	\input{Figs/Ch2/algo-naiveplus.tex}
 	\label{algo:algo-naive-plus}
 \end{algorithm}
 
-\paragraph{Naive++ Trading Strategy} Like the Naive strategy, this strategy seeks to profit from expected price changes, but using limit orders (and therefore buying/selling at better prices). If we expect a downward (resp. upward) price change then we'll post an at-the-touch sell (resp. buy) limit order, which may be lifted by an agent who is executing a market order going against the price change momentum. 
+\paragraph{Naive++ Trading Strategy.} Like the Naive strategy, this strategy seeks to profit from expected price changes, but using limit orders (and therefore buying/selling at better prices). If we expect a downward (respectively upward) price change then we'll post an at-the-touch sell (respectively buy) limit order, which may be lifted by an agent who is executing a market order going against the price change momentum. 
 
 \section{Calibration and Backtesting}
-Backtesting these naive trading strategies required a choice of parameters for the price change observation period $\Delta t_S$, the imbalance averaging period $\Delta t_I$, and the number of imbalance bins $\#_{bins}$. We used a brute force calibration technique that, for each ticker and each day, traversed the potential parameter space searching for the highest number of timesteps at which \eqref{eq:EDAKeyInsight} could be used. We found that $\#_{bins} = 4$ provided the highest expected number of trades for most tickers. However, as we were using percentile bins symmetric around zero, we wanted to have $\#_{bins}$ as an odd number such that all behaviour around zero imbalance was treated equally; thus all backtesting was done with either $\#_{bins} = 3$ or $\#_{bins} = 5$. Additionally, we found empirically that calibration always yielded $\Delta t_S = \Delta t_I$, so this was taken as a given. The backtest for each ticker then consisted of first calibrating the value $\Delta t_I$ from the first day of data by maximizing the intra-day Sharpe ratio (average of returns divided by standard deviation of returns), then using the calibrated parameters to backtest the entire year.
+Backtesting these naive trading strategies required a choice of parameters for the price change observation period $\Delta t_S$, the imbalance averaging period $\Delta t_I$, and the number of imbalance bins $\#_{bins}$. We used a brute force calibration technique that, for each ticker and each day, traversed the potential parameter space searching for the highest number of timesteps at which \eqref{eq:EDAKeyInsight} could be used. We found that $\#_{bins} = 4$ provided the highest expected number of trades for most tickers. However, as we were using percentile bins symmetric around zero, we wanted to have $\#_{bins}$ as an odd number such that all behaviour around zero imbalance was treated equally; thus all backtesting was done with either $\#_{bins} = 3$ or $\#_{bins} = 5$. Additionally, we found empirically that calibration always yielded $\Delta t_S = \Delta t_I$, so this was taken as a given. The backtest for each ticker then consisted of first calibrating the value $\Delta t_I$ from the first day of data by maximizing the intraday risk-adjusted return (average of returns divided by standard deviation of returns), then using the calibrated parameters to backtest the entire year.
 
 \begin{figure}%
 \centering%
@@ -301,30 +322,29 @@ Time (h)
 
 \section{Conclusions from the Naive Trading Strategies}
 
-\autoref{fig:comp} plots the average daily performance of the naive strategies for four stocks listed on the NASDAQ. The performance is normalized via division by the initial stock price on each trading day. The Naive strategy on average lost revenue, the Naive+ strategy (at-the-touch limit orders when no change was expected) on average generated revenue, and the Naive++ strategy (using limit orders to adversely select agents that traded against the price change momentum) on average neither profited nor lost.
+\autoref{fig:comp} plots the average daily performance of the naive strategies for four stocks listed on the NASDAQ. The performance is normalized via division by the initial stock price on each trading day. The Naive strategy lost revenue on average, the Naive+ strategy (at-the-touch limit orders when no change was expected) generated revenue on average, and the Naive++ strategy (using limit orders to adversely select agents that traded against the price change momentum) neither profited nor lost on average.
 
-{\bf Why is the Naive strategy producing, on average, normalized losses?} On calibration, we see that our intra-day Sharpe ratio is around 0.01 or 0.02 when we choose our optimal parameters, so at the very least on the calibration date the strategy produces positive returns. The remainder of the calendar days are out-of-sample to the calibration, meaning the parameters are not specifically tuned to that data, and thus the parameters are (likely) not optimal. This adds evidence to rejecting the time homogeneity assumption, and in particular suggests that not every day can be modelled by the same Markov chain. The problem may be exaggerated by the fact that we're calibrating on the first trading day of the calendar year, when we might expect reduced, or at least non-representative, trading activity. Further, we are using midprices to obtain the $\mat{Q}$ probability matrix while ignoring the bid-ask spread. Thus predicting a ``price change'' may be insufficient when considering a monetizable opportunity, as we won't be able to profit off a predicted increase followed by a predicted decrease unless the interim mid-price move is greater than the bid-ask spread (assuming constant spread); this flaw affects trading on \texttt{FARO} in particular, which has a spread of about 15 cents.
+{\bf Why is the Naive strategy producing, on average, normalized losses?} On calibration, we see that our intraday risk-adjusted return is about 0.02 when we choose our optimal parameters, so at the very least on the calibration date the strategy produces positive returns. The remainder of the calendar days are out-of-sample to the calibration, meaning the parameters are not specifically tuned to that data, and thus the parameters are (likely) not optimal. This adds evidence to rejecting the time homogeneity assumption, and in particular suggests that not every day can be modeled by the same Markov chain. The problem may be exaggerated by the fact that we are calibrating on the first trading day of the calendar year, when we might expect reduced, or at least nonrepresentative, trading activity. Further, we are using midprices to obtain the $\mat{Q}$ probability matrix while ignoring the bid-ask spread. Thus predicting a ``price change'' may be insufficient when considering a monetizable opportunity as we won't be able to profit off a predicted increase followed by a predicted decrease unless the interim mid-price move is greater than the bid-ask spread (assuming constant spread); this flaw affects trading on \texttt{FARO} in particular, which has a spread of about 15 cents.
 
-{\bf Why do the Naive+ and Naive++ strategies outperform the Naive strategy?} This is particularly interesting since the probabilities are being obtained from the same matrix. The obvious difference between the successful and unsuccessful strategies is that the former (a) uses limit orders, and (b) executes when we predict a zero change, whereas the latter uses (a) market orders, and (b) executes when we predict non-zero changes.
+{\bf Why do the Naive+ and Naive++ strategies outperform the Naive strategy?} This is particularly interesting since the probabilities are being obtained from the same matrix. The obvious difference between the successful and unsuccessful strategies is that the former (a) uses limit orders, and (b) executes when we predict a zero change, whereas the latter (a) uses market orders, and (b) executes when we predict nonzero changes.
 
-(a) leads to a different transaction price being used: a stock purchase with a limit order is executed at the bid price, while a purchase with a market order is at the ask price. Since the asset is marked-to-market at the more conservative price, and the mid price doesn't move as a result of the transaction, then a limit order purchases the share for the same value at which it is marked-to-market, whereas a market order `crosses the spread' and loses value.
+In (a), the difference between limit orders and market orders leads to a different transaction price being used: a stock purchase with a limit order is executed at the bid price, while a purchase with a market order is at the ask price. Since the asset is marked-to-market at the more conservative price, and the mid price doesn't move as a result of the transaction, then a limit order purchases the share for the same value at which it is marked-to-market, whereas a market order `crosses the spread' and loses value.
 
-(b) seems to be the largest flaw in the Naive strategy, to which there are two factors. One, we are not predicting the magnitude of the price change, only whether it is zero or non-zero. Two, from the probabilities presented above, \emph{we will only predict a price change if we've already seen a price change}. Thus we're effectively reacting too late. \autoref{tbl:adverse} presents a hypothetical series of events demonstrating the adverse effects of this flaw. Since the strategy is reacting to an already observed price change, the adverse effect would be exacerbated if the initial price change at timestep 4 were larger. All these considerations suggest potential modifications to the strategies.
+In (b), executing when predicting nonzero changes seems to be the largest flaw in the Naive strategy, to which there are two factors. One, we are not predicting the magnitude of the price change, only whether it is zero or non-zero. Two, from the probabilities presented above, \emph{we will only predict a price change if we've already seen a price change}. Thus we're effectively reacting too late. \autoref{tbl:adverse} presents a hypothetical series of events demonstrating the adverse effects of this flaw. Since the strategy is reacting to an already observed price change, the adverse effect would be exacerbated if the initial price change at timestep 4 were larger. All these considerations suggest potential modifications to the strategies.
 
-\begin{table}
-\centering
-\ra{1.2}
-\begin{tabular}{@{} *{7}{c} @{}}
+\begin{table}%
+\centering%
+\ra{1.2}%
+\caption[Hypothetical timeline of adverse selection with market orders]{Hypothetical timeline of adverse selection with market orders.}\label{tbl:adverse}%
+\begin{tabular}{@{} *{7}{c} @{}}%
 \toprule
 $t$ & $I(t)$ & Bid/Ask & Prediction & Action & Inv & P\&L \\
 \midrule
-0 & 1 & \hphantom{1}9.99/10.01 & $\P[\Delta S_{future} = 0] > 0.5$ & None & 0 & 0 \\
-1 & 1 & 10.00/10.02 & $\P[\Delta S_{future} > 0] > 0.5$ & BUY @ 10.02 & 1 & -0.02 \\
-2 & 0 & 10.01/10.03 & $\P[\Delta S_{future} = 0] > 0.5$ & None & 1 & -0.01 \\
-3 & -1 & 10.01/10.03 & $\P[\Delta S_{future} = 0] > 0.5$ & None & 1 & -0.01 \\
-4 & -1 & 10.00/10.02 & $\P[\Delta S_{future} < 0] > 0.5$ & SELL @ 10.00 & 0 & -0.02 \\
+0 & 1 & \hphantom{1}9.99/10.01 & $\P[\Delta S_\text{future} = 0] > 0.5$ & None & 0 & 0 \\
+1 & 1 & 10.00/10.02 & $\P[\Delta S_\text{future} > 0] > 0.5$ & BUY @ 10.02 & 1 & -0.02 \\
+2 & 0 & 10.01/10.03 & $\P[\Delta S_\text{future} = 0] > 0.5$ & None & 1 & -0.01 \\
+3 & -1 & 10.01/10.03 & $\P[\Delta S_\text{future} = 0] > 0.5$ & None & 1 & -0.01 \\
+4 & -1 & 10.00/10.02 & $\P[\Delta S_\text{future} < 0] > 0.5$ & SELL @ 10.00 & 0 & -0.02 \\
 \bottomrule
-\end{tabular}
-\caption[Hypothetical timeline of adverse selection with market orders]{Hypothetical timeline of adverse selection with market orders.}
-\label{tbl:adverse}
-\end{table}
+\end{tabular}%
+\end{table}%

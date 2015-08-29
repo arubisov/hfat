@@ -4,12 +4,13 @@
 \definecolor{dscr_nFPC_plot_color}{rgb}{ 0.6980392 , 0.6705882 , 0.8235294}%
 \chapter{Results}
 
-In this chapter we explore the dynamics of the continuous time and discrete time models, and perform in-sample and out-of-sample backtests to compare the performance of the continuous and discrete time solutions to the stochastic optimal control problem. The dataset over which we calibrate and backtest is the NASDAQ Historical TotalView-ITCH, timestamped to the millisecond, and the backtests are conducted on the following stock tickers:
+In this chapter we explore the dynamics of the continuous time and discrete time models, and perform in-sample and out-of-sample backtests to compare the performance of the continuous and discrete time solutions to the stochastic optimal control problem. As a reminder, the dataset over which we calibrate and backtest is the NASDAQ Historical TotalView-ITCH, timestamped to the millisecond, and the backtests are conducted on the stock tickers listed in \autoref{tbl:backtesttickers}.
 
-\begin{table}[H]
-\centering
-\ra{1.2}
-\begin{tabular}{@{} rlr @{}}
+\begin{table}[H]%
+\centering%
+\ra{1.2}%
+\caption[Stocks used in the stochastic optimal control backtesting]{List of stocks used in this chapter for stochastic optimal control backtesting, along with the daily average trading volume of each. The chosen stocks are a good sample group of the population of stocks listed on the NASDAQ in that they span the spectrum of low liquidity to high liquidity stocks.}\label{tbl:backtesttickers}%
+\begin{tabular}{@{} rlr @{}}%
 \toprule
 Ticker & Company & Average Daily Volume \\
 \midrule
@@ -19,201 +20,52 @@ Ticker & Company & Average Daily Volume \\
 \texttt{INTC} & Intel Corporation & 30,000,000 \\
 \texttt{AAPL} & Apple Inc. & 50,000,000 \\
 \bottomrule
-\end{tabular}
-\label{tbl:backtesttickers}
-\end{table}
+\end{tabular}%
+\end{table}%
 
 \section{Calibration}
 
-All tests in this chapter were run using the following global set of parameters:
-\begin{center}
-\begin{tabular}{rll}
-time window for computing price change & $\Delta t_S$ & 1000ms \\
-time window for averaging order imbalance & $\Delta t_I$ & 1000ms \\
-number of imbalance bins & $\#_{bins}$ & 5 \\
-fill probability constant & $\kappa$ & 100 \\
-&& \\
-\multicolumn{3}{@{}p{\linewidth}@{}}{For each daily calibration, we then computed the remaining parameters using the following formulae:} \\
-&& \\
-infinitesimal generator matrix & $\mat{G}$ & \autoref{eq:MLEG} \\
-transition probability matrix & $\mat{P}$ & \autoref{eq:CTMCPG} \\
-market order arrival intensities & $\mu^\pm$ & \autoref{eq:MLElambda}
+All tests in this chapter were run using the global set of parameters found in \autoref{tbl:globalparams}. For each calibration, we then computed the remaining parameters using the formulae in \autoref{tbl:globalparamsformulae}.
+
+\begin{table}
+\centering%
+\ra{1.2}%
+\caption[Fixed parameters for backtesting]{List of global parameters used in this chapter for backtesting.}\label{tbl:globalparams}%
+\begin{tabular}{cll}
+\toprule
+Parameter & Value & Description \\
+\midrule
+$\Delta t_S$ & 1000ms & time window for computing price change \\
+$\Delta t_I$ & 1000ms & time window for averaging order imbalance \\
+$\#_{bins}$ & 5 & number of imbalance bins \\
+$\kappa$ & 100 & fill probability constant \\
+\bottomrule
 \end{tabular}
-\end{center}
+\end{table}
 
-Additionally, $\xi$ was computed as half of the simple average of the bid-ask spread observed during the trading day, rounded to the nearest half-cent; and the imbalance bins $\rho$ were computed as the partitioning of the interval $[-1,1]$ into percentile bins symmetric around zero, where the percentile interval was $100 \div \#_{bins}$.
+\begin{table}
+\centering%
+\ra{1.2}%
+\caption[Parameter formulae for backtesting]{Reference list of calculated parameter formulae for backtesting.}\label{tbl:globalparamsformulae}%
+\begin{tabular}{cll}
+\toprule
+Parameter & Equation & Description \\
+\midrule
+$\mat{G}$ & \autoref{eq:MLEG} & infinitesimal generator matrix \\
+$\mat{P}$ & \autoref{eq:CTMCPG} & transition probability matrix \\
+$\mu^\pm$ & \autoref{eq:MLElambda} & market order arrival intensities\\
+\bottomrule
+\end{tabular}
+\end{table}
 
-As was mentioned in Chapter 2, the exploratory data analysis done on the data made use of an unorthodox Markov chain, where its state at time $t$ was actually not determinable at time $t$ because the price change $\Delta S(t)$ was computed over the \emph{future} time interval $\Delta t_S$. (See \autoref{sec:2DCTMC}.) In the optimal stochastic control formulations, the Markov chain was defined instead such the price change was computed over the \emph{past} interval $\Delta t_S$. However, it was of interest to explore what results would be obtained if the calibration was still done using the non $\cF$-predictable method. A justification for doing so is that in a given Markov state $Z$, there is a state-dependent arrival rate of price updates, and there is a state-dependent distribution of jumps when a price update occurs. So that although the price change is measured over the future when calibrating, this really is a way of getting at the state-dependence of those price changes. In the following tests, this calibration method is denoted `w nFPC', standing for `with non-$\cF$-predictable calibration'.
+In addition, $\xi$ was computed as half of the simple average of the bid-ask spread observed during the trading day, rounded to the nearest half-cent; and the imbalance bins $\rho$ were calculated as to partition the interval $[-1,1]$ into percentile bins symmetric around zero, where the percentile interval was $100 / \#_{bins}$.
+
+As mentioned in Chapter 2, the exploratory data analysis done on the data made use of an unorthodox Markov chain, where its state at time $t$ was actually not determinable at time $t$ because the price change $\Delta S(t)$ was computed over the \emph{future} time interval $\Delta t_S$. (See \autoref{sec:2DCTMC}.) In the optimal stochastic control formulations, the Markov chain was defined instead such the price change was computed over the \emph{past} interval $\Delta t_S$. However, it is of interest to explore what results would be obtained if the calibration were still done using the non $\cF$-predictable method. A justification for doing so is that in a given Markov state $Z$, there is a state-dependent arrival rate of price updates, and there is a state-dependent distribution of jumps when a price update occurs. So although the price change is measured over the future when calibrating, this really is a way of getting at the state-dependence of those price changes. In the following tests, this calibration method is denoted `with nFPC', standing for `with non-$\cF$-predictable calibration'.
 
 \section{Dynamics of the Optimal Posting Depths}
 
-We have solved the same stochastic control problem using both continuous and discrete time, which have yielded different formulae for the optimal limit order posting depths. In this section we explore the calibrated results obtained on an in-sample backtest on \texttt{INTC}, calibrating on amalgamated data for the entire 2013 trading year. The dynamics of $\delta^\pm$ were obtained using a time-to-maturity of 600sec to best depict the behavior as we approached the end of day trading; as the time-to-maturity horizon increases, the postings depths tend to stabilize. 
-%\begin{figure}
-%\centering
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dp_cts_z1}
-%  \input{Figs/dp_cts_z1.tikz}
-%  \caption{Continuous Time}
-%\end{subfigure}%
-%\hfill%
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dp_dscr_z1}
-%  \input{Figs/dp_dscr_z1.tikz} 
-%  \caption{Discrete Time}
-%\end{subfigure}\\
-%\vspace{1cm}
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dp_cts_nFPC_z1}
-%  \input{Figs/dp_cts_nFPC_z1.tikz} 
-%  \caption{Continuous Time w/ nFPC}
-%\end{subfigure}%
-%\hfill%
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dp_dscr_nFPC_z1}
-%  \input{Figs/dp_dscr_nFPC_z1.tikz} 
-%  \caption{Discrete Time w/ nFPC}
-%\end{subfigure}\\
-%
-%\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-%  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
-%    Depth $\delta^+$}%
-%}}\hspace{0pt plus 1filll}\null
-%
-%Time (s)
-%
-%\vspace{1cm}
-%\begin{subfigure}{\linewidth}
-%  \centering
-%  \tikzsetnextfilename{deltalegend}
-%  \input{Figs/deltalegend.tikz} 
-%\end{subfigure}%
-%  \caption{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.}
-%  \label{fig:comp_dp_z1}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dp_cts_z8}
-%  \input{Figs/dp_cts_z8.tikz}
-%  \caption{Continuous Time}
-%\end{subfigure}%
-%\hfill%
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dp_dscr_z8}
-%  \input{Figs/dp_dscr_z8.tikz} 
-%  \caption{Discrete Time}
-%\end{subfigure}\\
-%\vspace{1cm}
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dp_cts_nFPC_z8}
-%  \input{Figs/dp_cts_nFPC_z8.tikz} 
-%  \caption{Continuous Time w/ nFPC}
-%\end{subfigure}%
-%\hfill%
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dp_dscr_nFPC_z8}
-%  \input{Figs/dp_dscr_nFPC_z8.tikz} 
-%  \caption{Discrete Time w/ nFPC}
-%\end{subfigure}\\
-%
-%\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-%  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
-%    Depth $\delta^+$}%
-%}}\hspace{0pt plus 1filll}\null
-%
-%Time (s)
-%
-%\vspace{1cm}
-%\begin{subfigure}{\linewidth}
-%  \centering
-%  \tikzsetnextfilename{deltalegend}
-%  \input{Figs/deltalegend.tikz} 
-%\end{subfigure}%
-%  \caption{Optimal buy depths $\delta^+$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.}
-%  \label{fig:comp_dp_z8}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dp_cts_z15}
-%  \input{Figs/dp_cts_z15.tikz}
-%  \caption{Continuous Time}
-%\end{subfigure}%
-%\hfill%
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dp_dscr_z15}
-%  \input{Figs/dp_dscr_z15.tikz} 
-%  \caption{Discrete Time}
-%\end{subfigure}\\
-%\vspace{1cm}
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dp_cts_nFPC_z15}
-%  \input{Figs/dp_cts_nFPC_z15.tikz} 
-%  \caption{Continuous Time w/ nFPC}
-%\end{subfigure}%
-%\hfill%
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dp_dscr_nFPC_z15}
-%  \input{Figs/dp_dscr_nFPC_z15.tikz} 
-%  \caption{Discrete Time w/ nFPC}
-%\end{subfigure}\\
-%
-%\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-%  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
-%    Depth $\delta^+$}%
-%}}\hspace{0pt plus 1filll}\null
-%
-%Time (s)
-%
-%\vspace{1cm}
-%\begin{subfigure}{\linewidth}
-%  \centering
-%  \tikzsetnextfilename{deltalegend}
-%  \input{Figs/deltalegend.tikz} 
-%\end{subfigure}%
-%  \caption{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.}
-%  \label{fig:comp_dp_z15}
-%\end{figure}
-%
-%\fxnote{So which of these plots do we like better? the 9 choices of q, or the colormap version of q?}
+In chapters 3 and 4 we have derived optimal stochastic controls for the same terminal wealth performance criterion using both continuous and discrete time, which have yielded different formulae for the optimal limit order posting depths. In this section we explore the calibrated results obtained on an in-sample backtest on \texttt{INTC}, calibrating on amalgamated data for the entire 2013 trading year. The dynamics of $\delta^\pm$ were obtained using a time-to-maturity of 600 seconds to best depict the behaviour as we approached the end of day trading; as the time-to-maturity horizon increases, the postings depths tend to stabilize. 
+
 \begin{figure}%
 \centering%
 \begin{subfigure}[b]{.4\linewidth}%
@@ -240,7 +92,7 @@ We have solved the same stochastic control problem using both continuous and dis
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{dp_colorbar/dp_cts_nFPC_z1}%
   \input{Figs/dp_colorbar/dp_cts_nFPC_z1.tikz}%
-  \caption{Continuous Time w/ nFPC}%
+  \caption{Continuous Time with nFPC}%
 \end{subfigure}%
 \hspace{1.5cm}%
 \begin{subfigure}[b]{.4\linewidth}%
@@ -249,15 +101,15 @@ We have solved the same stochastic control problem using both continuous and dis
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{dp_colorbar/dp_dscr_nFPC_z1}%
   \input{Figs/dp_colorbar/dp_dscr_nFPC_z1.tikz}%
-  \caption{Discrete Time w/ nFPC}%
+  \caption{Discrete Time with nFPC}%
 \end{subfigure}\\%
 %
 \leavevmode\smash{\makebox[0pt]{\hspace{-4em}% HORIZONTAL POSITION           
   \rotatebox[origin=l]{90}{\hspace{15em}% VERTICAL POSITION
-    Buy Limit Order Posting Depth $\delta^+$ (\$)}%
+    Buy Limit Order Posting Depth $\delta^+$ [\$]}%
 }}\hspace{0pt plus 1filll}\null%
 
-Time (s)
+Time [s]
 
 \vspace{1cm}%
 \begin{subfigure}{\linewidth}%
@@ -293,7 +145,7 @@ Time (s)
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{dp_colorbar/dp_cts_nFPC_z8}%
   \input{Figs/dp_colorbar/dp_cts_nFPC_z8.tikz}%
-  \caption{Continuous Time w/ nFPC}%
+  \caption{Continuous Time with nFPC}%
 \end{subfigure}%
 \hspace{1.5cm}%
 \begin{subfigure}[b]{.4\linewidth}%
@@ -302,15 +154,15 @@ Time (s)
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{dp_colorbar/dp_dscr_nFPC_z8}%
   \input{Figs/dp_colorbar/dp_dscr_nFPC_z8.tikz}%
-  \caption{Discrete Time w/ nFPC}%
+  \caption{Discrete Time with nFPC}%
 \end{subfigure}\\%
 %
 \leavevmode\smash{\makebox[0pt]{\hspace{-4em}% HORIZONTAL POSITION           
   \rotatebox[origin=l]{90}{\hspace{15em}% VERTICAL POSITION
-    Buy Limit Order Posting Depth $\delta^+$ (\$)}%
+    Buy Limit Order Posting Depth $\delta^+$ [\$]}%
 }}\hspace{0pt plus 1filll}\null%
 
-Time (s)
+Time [s]
 
 \vspace{1cm}%
 \begin{subfigure}{\linewidth}%
@@ -346,7 +198,7 @@ Time (s)
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{dp_colorbar/dp_cts_nFPC_z15}%
   \input{Figs/dp_colorbar/dp_cts_nFPC_z15.tikz}%
-  \caption{Continuous Time w/ nFPC}%
+  \caption{Continuous Time with nFPC}%
 \end{subfigure}%
 \hspace{1.5cm}%
 \begin{subfigure}[b]{.4\linewidth}%
@@ -355,15 +207,15 @@ Time (s)
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{dp_colorbar/dp_dscr_nFPC_z15}%
   \input{Figs/dp_colorbar/dp_dscr_nFPC_z15.tikz}%
-  \caption{Discrete Time w/ nFPC}%
+  \caption{Discrete Time with nFPC}%
 \end{subfigure}\\%
 %
 \leavevmode\smash{\makebox[0pt]{\hspace{-4em}% HORIZONTAL POSITION           
   \rotatebox[origin=l]{90}{\hspace{15em}% VERTICAL POSITION
-    Buy Limit Order Posting Depth $\delta^+$ (\$)}%
+    Buy Limit Order Posting Depth $\delta^+$ [\$]}%
 }}\hspace{0pt plus 1filll}\null%
 
-Time (s)
+Time [s]
 
 \vspace{1cm}%
 \begin{subfigure}{\linewidth}%
@@ -379,184 +231,20 @@ From the depth plots we can see that a symmetry that has emerged between $\delta
 In this calibration we have taken $\kappa=100$ and $\xi = 0.005$. From \eqref{eq:ctsBuycondition}, we thus know that a necessary condition for a buy market order to be executed is ${\delta^+}^* =  \frac{1}{\kappa} - 2 \xi = 0$.
 
 {\bf Markov State $Z=(-1,-1)$ (\autoref{fig:comp_dp_z1})} \\
-{\bf Cts versus Cts w nFPC:} For $q \geq 0$, both strategies post aggressive bid depths that suggest an inclination to buy. The nFPC strategy is less aggressive for $q<0$, posting closer to zero depth only for larger short positions.  \\
-{\bf Dscr versus Dscr w nFPC:} The behaviour of these two calibrations is very similar. Both models show a discontinuity in dynamics at $q=0$, where at $q=-1$ it is posting at maximal depth, at $q=0$ it jumps to approximately \$0.006, and at $q=1$ again jumps lower. Otherwise, the nFPC strategy posts slightly more aggressively only when $q=1$ or 2. \\
-{\bf Cts vs Dscr:} These models produce behaviours that are worlds apart. Whereas the Cts model seems to be saying that it wants to take this opportunity to go long, perhaps stocking up inventory while prices are low, the Dscr strategy suggests it's pulling out and avoiding purchasing. 
+{\bf Continuous versus Continuous with nFPC:} For $q \geq 0$, both strategies post aggressive bid depths that suggest an inclination to buy. The nFPC strategy is less aggressive for $q<0$, posting closer to zero depth only for larger short positions.  \\
+{\bf Discrete versus Discrete with nFPC:} The behaviour of these two calibrations is very similar. Both models show a discontinuity in dynamics at $q=0$, where at $q=-1$ it is posting at maximal depth, at $q=0$ it jumps to approximately \$0.006, and at $q=1$ again jumps lower. Otherwise, the nFPC strategy posts slightly more aggressively only when $q=1$ or 2. \\
+{\bf Continuous vs Discrete:} These models produce behaviours that are worlds apart. Whereas the Continuous model seems to be saying that it wants to take this opportunity to go long, perhaps stocking up inventory while prices are low, the Discrete strategy suggests it's pulling out and avoiding purchasing. 
 
 {\bf Markov State $Z=(0,0)$ (\autoref{fig:comp_dp_z8})}\\
 Here we see near identical model behaviour. Similarities or correlations in backtesting performance can likely be attributed to this behaviour, as the majority of the day is spent in a Markov state for which $\Delta S = 0$, as seen here. (Recall that $\rho$, by contrast, is computed via evenly spaced percentiles symmetric around zero, so that time spent in each imbalance state is evenly distributed.)
 
 {\bf Markov State $Z=(+1,+1)$ (\autoref{fig:comp_dp_z15})}\\
-{\bf Cts versus Cts w nFPC:} We see a nearly symmetric behaviour compared with the opposite Markov state. Here for $q \leq 0$, both strategies post maximal bid depths, suggesting a disinclination toward buying. The nFPC strategy is more aggressive for $q>0$ and small inventory positions.\\
-{\bf Dscr versus Dscr w nFPC:} Again these calibrations yield very similar behaviours, and as in the Cts case, it is near opposite to what was seen in the opposite Markov state.\\
-{\bf Cts vs Dscr:} As before, these two models display near opposite behaviours between each other. The Dscr model is posting aggressive depths near zero in an attempt to purchase, while the Cts model is posting deeper into the book to avoid purchasing.
+{\bf Continuous versus Continuous with nFPC:} We see a nearly symmetric behaviour compared with the opposite Markov state. Here for $q \leq 0$, both strategies post maximal bid depths, suggesting a disinclination toward buying. The nFPC strategy is more aggressive for $q>0$ and small inventory positions.\\
+{\bf Discrete versus Discrete with nFPC:} Again these calibrations yield very similar behaviours, and as in the Continuous case, it is near opposite to what was seen in the opposite Markov state.\\
+{\bf Continuous vs Discrete:} As before, these two models display near opposite behaviours between each other. The Discrete model is posting aggressive depths near zero in an attempt to purchase, while the Continuous model is posting deeper into the book to avoid purchasing.
 
-Finally, we note that we see relative stability in the posting depths at a time horizon of 600 seconds. This is consistent with the findings in \autoref{tbl:pvalues}, where we saw that the transition probability matrix $\mat{P}(t)$ converged for $\texttt{INTC}$ to an error threshold of $10^{-10}$ within 771 timesteps of 1s each.
+Finally, we note that we see relative stability in the posting depths at a time horizon of 600 seconds. This is consistent with the findings in \autoref{tbl:pvalues}, where we saw that the transition probability matrix $\mat{P}(t)$ converged for $\texttt{INTC}$ to an error threshold of $10^{-10}$ within 771 timesteps of 1 second each.
 
-%\begin{figure}
-%\centering
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dm_cts_z1}
-%  \input{Figs/dm_cts_z1.tikz}
-%  \caption{Continuous Time}
-%\end{subfigure}%
-%\hfill%
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dm_dscr_z1}
-%  \input{Figs/dm_dscr_z1.tikz} 
-%  \caption{Discrete Time}
-%\end{subfigure}\\
-%\vspace{1cm}
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dm_cts_nFPC_z1}
-%  \input{Figs/dm_cts_nFPC_z1.tikz} 
-%  \caption{Continuous Time w/ nFPC}
-%\end{subfigure}%
-%\hfill%
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dm_dscr_nFPC_z1}
-%  \input{Figs/dm_dscr_nFPC_z1.tikz} 
-%  \caption{Discrete Time w/ nFPC}
-%\end{subfigure}\\
-%
-%\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-%  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
-%    Depth $\delta^-$}%
-%}}\hspace{0pt plus 1filll}\null
-%
-%Time (s)
-%
-%\vspace{1cm}
-%\begin{subfigure}{\linewidth}
-%  \centering
-%  \tikzsetnextfilename{deltalegend}
-%  \input{Figs/deltalegend.tikz} 
-%\end{subfigure}%
-%  \caption{Optimal sell depths $\delta^{-}$ for Markov state $Z=(\rho = -1, \Delta S = -1)$, implying heavy imbalance in favor of sell pressure, and having previously seen a downward price change. We expect the midprice to fall.}
-%  \label{fig:comp_dm_z1}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dm_cts_z8}
-%  \input{Figs/dm_cts_z8.tikz}
-%  \caption{Continuous Time}
-%\end{subfigure}%
-%\hfill%
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dm_dscr_z8}
-%  \input{Figs/dm_dscr_z8.tikz} 
-%  \caption{Discrete Time}
-%\end{subfigure}\\
-%\vspace{1cm}
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dm_cts_nFPC_z8}
-%  \input{Figs/dm_cts_nFPC_z8.tikz} 
-%  \caption{Continuous Time w/ nFPC}
-%\end{subfigure}%
-%\hfill%
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dm_dscr_nFPC_z8}
-%  \input{Figs/dm_dscr_nFPC_z8.tikz} 
-%  \caption{Discrete Time w/ nFPC}
-%\end{subfigure}\\
-%
-%\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-%  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
-%    Depth $\delta^-$}%
-%}}\hspace{0pt plus 1filll}\null
-%
-%Time (s)
-%
-%\vspace{1cm}
-%\begin{subfigure}{\linewidth}
-%  \centering
-%  \tikzsetnextfilename{deltalegend}
-%  \input{Figs/deltalegend.tikz} 
-%\end{subfigure}%
-%  \caption{Optimal sell depths $\delta^-$ for Markov state $Z=(\rho = 0, \Delta S = 0)$, implying neutral imbalance and no previous price change. We expect no change in midprice.}
-%  \label{fig:comp_dm_z8}
-%\end{figure}
-%
-%\begin{figure}
-%\centering
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dm_cts_z15}
-%  \input{Figs/dm_cts_z15.tikz}
-%  \caption{Continuous Time}
-%\end{subfigure}%
-%\hfill%
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dm_dscr_z15}
-%  \input{Figs/dm_dscr_z15.tikz} 
-%  \caption{Discrete Time}
-%\end{subfigure}\\
-%\vspace{1cm}
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dm_cts_nFPC_z15}
-%  \input{Figs/dm_cts_nFPC_z15.tikz} 
-%  \caption{Continuous Time w/ nFPC}
-%\end{subfigure}%
-%\hfill%
-%\begin{subfigure}{.45\linewidth}
-%  \centering
-%  \setlength\figureheight{\linewidth} 
-%  \setlength\figurewidth{\linewidth}
-%  \tikzsetnextfilename{dm_dscr_nFPC_z15}
-%  \input{Figs/dm_dscr_nFPC_z15.tikz} 
-%  \caption{Discrete Time w/ nFPC}
-%\end{subfigure}\\
-%
-%\leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-%  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
-%    Depth $\delta^-$}%
-%}}\hspace{0pt plus 1filll}\null
-%
-%Time (s)
-%
-%\vspace{1cm}
-%\begin{subfigure}{\linewidth}
-%  \centering
-%  \tikzsetnextfilename{deltalegend}
-%  \input{Figs/deltalegend.tikz} 
-%\end{subfigure}%
-%  \caption{Optimal sell depths $\delta^{-}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.}
-%  \label{fig:comp_dm_z15}
-%\end{figure}
 \begin{figure}%
 \centering%
 \begin{subfigure}[b]{.4\linewidth}%
@@ -583,7 +271,7 @@ Finally, we note that we see relative stability in the posting depths at a time 
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{dp_colorbar/dm_cts_nFPC_z1}%
   \input{Figs/dp_colorbar/dm_cts_nFPC_z1.tikz}%
-  \caption{Continuous Time w/ nFPC}%
+  \caption{Continuous Time with nFPC}%
 \end{subfigure}%
 \hspace{1.5cm}%
 \begin{subfigure}[b]{.4\linewidth}%
@@ -592,15 +280,15 @@ Finally, we note that we see relative stability in the posting depths at a time 
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{dp_colorbar/dm_dscr_nFPC_z1}%
   \input{Figs/dp_colorbar/dm_dscr_nFPC_z1.tikz}%
-  \caption{Discrete Time w/ nFPC}%
+  \caption{Discrete Time with nFPC}%
 \end{subfigure}\\%
 %
 \leavevmode\smash{\makebox[0pt]{\hspace{-4em}% HORIZONTAL POSITION           
   \rotatebox[origin=l]{90}{\hspace{15em}% VERTICAL POSITION
-    Sell Limit Order Posting Depth $\delta^-$ (\$)}%
+    Sell Limit Order Posting Depth $\delta^-$ [\$]}%
 }}\hspace{0pt plus 1filll}\null%
 
-Time (s)
+Time [s]
 
 \vspace{1cm}%
 \begin{subfigure}{\linewidth}%
@@ -636,7 +324,7 @@ Time (s)
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{dp_colorbar/dm_cts_nFPC_z8}%
   \input{Figs/dp_colorbar/dm_cts_nFPC_z8.tikz}%
-  \caption{Continuous Time w/ nFPC}%
+  \caption{Continuous Time with nFPC}%
 \end{subfigure}%
 \hspace{1.5cm}%
 \begin{subfigure}[b]{.4\linewidth}%
@@ -645,15 +333,15 @@ Time (s)
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{dp_colorbar/dm_dscr_nFPC_z8}%
   \input{Figs/dp_colorbar/dm_dscr_nFPC_z8.tikz}%
-  \caption{Discrete Time w/ nFPC}%
+  \caption{Discrete Time with nFPC}%
 \end{subfigure}\\%
 %
 \leavevmode\smash{\makebox[0pt]{\hspace{-4em}% HORIZONTAL POSITION           
   \rotatebox[origin=l]{90}{\hspace{15em}% VERTICAL POSITION
-    Sell Limit Order Posting Depth $\delta^-$ (\$)}%
+    Sell Limit Order Posting Depth $\delta^-$ [\$]}%
 }}\hspace{0pt plus 1filll}\null%
 
-Time (s)
+Time [s]
 
 \vspace{1cm}%
 \begin{subfigure}{\linewidth}%
@@ -689,7 +377,7 @@ Time (s)
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{dp_colorbar/dm_cts_nFPC_z15}%
   \input{Figs/dp_colorbar/dm_cts_nFPC_z15.tikz}%
-  \caption{Continuous Time w/ nFPC}%
+  \caption{Continuous Time with nFPC}%
 \end{subfigure}%
 \hspace{1.5cm}%
 \begin{subfigure}[b]{.4\linewidth}%
@@ -698,15 +386,15 @@ Time (s)
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{dp_colorbar/dm_dscr_nFPC_z15}%
   \input{Figs/dp_colorbar/dm_dscr_nFPC_z15.tikz}%
-  \caption{Discrete Time w/ nFPC}%
+  \caption{Discrete Time with nFPC}%
 \end{subfigure}\\%
 %
 \leavevmode\smash{\makebox[0pt]{\hspace{-4em}% HORIZONTAL POSITION           
   \rotatebox[origin=l]{90}{\hspace{15em}% VERTICAL POSITION
-    Sell Limit Order Posting Depth $\delta^-$ (\$)}%
+    Sell Limit Order Posting Depth $\delta^-$ [\$]}%
 }}\hspace{0pt plus 1filll}\null%
 
-Time (s)
+Time [s]
 
 \vspace{1cm}%
 \begin{subfigure}{\linewidth}%
@@ -743,18 +431,17 @@ In \autoref{fig:ORCL_comp4stoch} we plot the normalized P\&L for the four strate
 \begin{table}[H]
 \centering
 \ra{1.2}
+\caption[Correlation matrix of stochastic optimal control returns]{Correlation matrix of returns for the four stochastic optimal control methods, showing they are uncorrelated.}\label{tbl:ORCL_comp4stoch_corr}
 \begin{tabular}{@{} r *{4}{c} @{}}
 \toprule
-& Cts & \cellbreak{t}{c}{Cts \\ w nFPC} & Dscr & \cellbreak{t}{c}{Dscr \\ w nFPC} \\
+& Continuous & \cellbreak{t}{c}{Continuous \\ with nFPC} & Discrete & \cellbreak{t}{c}{Discrete \\ with nFPC} \\
 \cmidrule{2-5}
-Cts          &  1.0000  & & & \\
-Cts w nFPC   & -0.0109  &  1.0000 &  & \\
-Dscr         & -0.0120  &  0.0122 &   1.0000 &  \\
-Dscr w nFPC  & -0.0015  &  0.0034 &  -0.0165 &   1.0000 \\
+Continuous          &  1.0000  & & & \\
+Continuous with nFPC   & -0.0109  &  1.0000 &  & \\
+Discrete         & -0.0120  &  0.0122 &   1.0000 &  \\
+Discrete with nFPC  & -0.0015  &  0.0034 &  -0.0165 &   1.0000 \\
 \bottomrule
 \end{tabular}
-\caption[Correlation matrix of stochastic optimal control returns]{Correlation matrix of returns for the four stochastic optimal control methods, showing they are uncorrelated.}
-\label{tbl:ORCL_comp4stoch_corr}
 \end{table}
 We find instead that the returns are co-integrated. On running the Engle-Granger cointegration test with statistics computed using an augmented Dickey-Fuller test of residuals, the $\tau$-test and $z$-test both returned $p$-values of 0.001, thus rejecting the null hypothesis of no co-integration. The co-integration relation plotted in \autoref{fig:cointeg_relation} displays stationarity, thus confirming the existence of a co-integration relation. This result allows us to conclude that although the optimal controls formulae and calibrations are different, there is a a fundamental similarity in the behaviour of the backtested strategies.
 
@@ -767,25 +454,25 @@ We find instead that the returns are co-integrated. On running the Engle-Granger
   \caption[Co-integration relation of the four stochastic control methods]{Co-integration relation of the four stochastic control methods.}
   \label{fig:cointeg_relation}
 \end{figure}
-From the inventory plot in \autoref{fig:ORCL_comp4stoch_inv} we see that the strategies avoid maintaining zero inventory. This is not surprising: in both the discrete and continuous cases we found that the value function ansatz $h(t,z,q)$ was non-negative, and was equal to zero at zero inventory. The interpretation is that there is no added value to having zero inventory, whereas non-zero inventory can at worst have zero value. Thus it is always profitable, from a value-function standpoint, to have non-zero inventory. Further, we see that the strategies rarely cross the zero-inventory barrier. This is likely attributed to the backtesting algorithm itself, which gives priority to executing buy market orders above sell market orders. It is likely that once the strategy enters either positive or negative inventory, the ansatz function $h$ rarely produces the circumstances to cross the inventory sign barrier, perhaps by virtue of the non-linear mark-to-market behaviour on either side of zero inventory.
+From the inventory plot in \autoref{fig:ORCL_comp4stoch_inv} we see that the strategies avoid maintaining zero inventory. This is not surprising: in both the discrete and continuous cases we found that the value function ansatz $h(t,z,q)$ was nonnegative, and was equal to zero at zero inventory. The interpretation is that there is no added value to having zero inventory, whereas nonzero inventory can at worst have zero value. Thus it is always profitable, from a value-function standpoint, to have non-zero inventory. Further, we see that the strategies rarely cross the zero-inventory barrier. This is likely attributed to the backtesting algorithm itself, which gives priority to executing buy market orders above sell market orders. It is likely that once the strategy enters either positive or negative inventory, the ansatz function $h$ rarely produces the circumstances to cross the inventory sign barrier, perhaps by virtue of the non-linear mark-to-market behaviour on either side of zero inventory.
 
-Concerning trade execution, the number of executed market orders and filled limit orders generated by each strategy are presented in \autoref{tbl:ORCL_comp4stoch_numt}. The surge in market orders seen for the Cts w nFPC strategy can be explained by the difference in the $\delta^\pm$ plots. As mentioned already, from the stochastic analysis chapter, we know that if $q < 0 $ and $\delta^+ =0$, or if $q > 0$ and $\delta^+ = 1/\kappa$, then we execute a buy MO. Likewise, if $q < 0 $ and $\delta^- =1/\kappa$, or if $q > 0$ and $\delta^- = 0$, then we execute a sell MO. In \autoref{fig:comp_dp_z1} we see that we have $\delta^+ = 0$ for almost all inventory values, and in \autoref{fig:comp_dp_z15} we have  $\delta^+ = 1/\kappa$ for almost all inventory values. This tells us that when the Markov chain state is in one of the non-neutral states, the Cts w nFPC strategy will execute market orders when possible, as it expects prices to move in the corresponding direction. Regarding overall number of trades, recall that the cost of market order execution was not included in the stochastic control problem. Thus, actual performance would have been negatively affected in proportion to the number of market orders listed.
-\begin{table}
+\begin{table}[htb]
 \centering
 \ra{1.2}
+\caption[Number of trades comparison of the four stochastic control methods]{Number of trades comparison of the four stochastic control methods.}\label{tbl:ORCL_comp4stoch_numt}
 \begin{tabular}{@{} r *{2}{c} @{}}
 \toprule
 & Market Orders & Limit Orders \\
 \midrule
-Cts          &  536 & 1280 \\
-Cts w nFPC   & 1010 & 1306 \\
-Dscr         &  559 & 1285 \\
-Dscr w nFPC  &  523 & 1287 \\
+Continuous          &  536 & 1280 \\
+Continuous with nFPC   & 1010 & 1306 \\
+Discrete         &  559 & 1285 \\
+Discrete with nFPC  &  523 & 1287 \\
 \bottomrule
 \end{tabular}
-\caption[Number of trades comparison of the four stochastic control methods]{Number of trades comparison of the four stochastic control methods.}
-\label{tbl:ORCL_comp4stoch_numt}
 \end{table}
+
+Concerning trade execution, the number of executed market orders and filled limit orders generated by each strategy are presented in \autoref{tbl:ORCL_comp4stoch_numt}. The surge in market orders seen for the Continuous with nFPC strategy can be explained by the difference in the $\delta^\pm$ plots. As mentioned already, from the stochastic analysis chapter, we know that if $q < 0 $ and $\delta^+ =0$, or if $q > 0$ and $\delta^+ = 1/\kappa$, then we execute a buy MO. Likewise, if $q < 0 $ and $\delta^- =1/\kappa$, or if $q > 0$ and $\delta^- = 0$, then we execute a sell MO. In \autoref{fig:comp_dp_z1} we see that we have $\delta^+ = 0$ for almost all inventory values, and in \autoref{fig:comp_dp_z15} we have  $\delta^+ = 1/\kappa$ for almost all inventory values. This tells us that when the Markov chain state is in one of the non-neutral states, the Continuous with nFPC strategy will execute market orders when possible, as it expects prices to move in the corresponding direction. Regarding overall number of trades, recall that the cost of market order execution was not included in the stochastic control problem. Thus, actual performance would have been negatively affected in proportion to the number of market orders listed.
 
 To better see how the strategies differ in behaviour, in the figures that follow we show a short sample path on a fine timescale spanning about 2 minutes. In \autoref{fig:samplepath_paths} we plot the midprice path (black line), the optimal posting depths on either side of the real bid/ask prices (gray lines), our execution of market orders (dark blue and dark green), and track incoming external market orders (light blue and light green) that either fill our limit orders (solid lines) or do not (dashed lines). \autoref{fig:samplepath_depths} plots just the optimal depths as they react to the changing Markov state, allowing a better comparison of the behaviours, as well as highlighting the almost-symmetric behaviour between $\delta^+$ and $\delta^-$. The left and right columns of \autoref{fig:samplepath_pnl_inv} show the effect on P\&L and inventory, respectively. 
 
@@ -815,7 +502,7 @@ To better see how the strategies differ in behaviour, in the figures that follow
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{samplepath_cts_nFPC_paths}%
   \input{Figs/samplepath_cts_nFPC_paths.tikz}%
-  \caption{Continuous Time w/ nFPC}%
+  \caption{Continuous Time with nFPC}%
 \end{subfigure}%
 \hspace{1.5cm}%
 \begin{subfigure}[b]{.4\linewidth}%
@@ -824,7 +511,7 @@ To better see how the strategies differ in behaviour, in the figures that follow
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{samplepath_dscr_nFPC_paths}%
   \input{Figs/samplepath_dscr_nFPC_paths.tikz}%
-  \caption{Discrete Time w/ nFPC}%
+  \caption{Discrete Time with nFPC}%
 \end{subfigure}\\%
 \leavevmode\smash{\makebox[0pt]{\hspace{-4em}% HORIZONTAL POSITION           
   \rotatebox[origin=l]{90}{\hspace{21em}% VERTICAL POSITION
@@ -869,7 +556,7 @@ Time (h)
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{samplepath_cts_nFPC_depths}%
   \input{Figs/samplepath_cts_nFPC_depths.tikz}%
-  \caption{Continuous Time w/ nFPC}%
+  \caption{Continuous Time with nFPC}%
 \end{subfigure}%
 \hspace{1.5cm}%
 \begin{subfigure}[b]{.4\linewidth}%
@@ -878,7 +565,7 @@ Time (h)
   \setlength\figurewidth{\linewidth}%
   \tikzsetnextfilename{samplepath_dscr_nFPC_depths}%
   \input{Figs/samplepath_dscr_nFPC_depths.tikz}%
-  \caption{Discrete Time w/ nFPC}%
+  \caption{Discrete Time with nFPC}%
 \end{subfigure}\\%
 \leavevmode\smash{\makebox[0pt]{\hspace{-4em}% HORIZONTAL POSITION           
   \rotatebox[origin=l]{90}{\hspace{16em}% VERTICAL POSITION
@@ -921,7 +608,7 @@ Time (h)
   \hspace{1.5cm}%
   %\tikzsetnextfilename{samplepath_cts_nFPC_inventory}%
   \input{Figs/samplepath_cts_nFPC_inventory.tikz}%
-  \caption{Continuous Time w/ nFPC}%
+  \caption{Continuous Time with nFPC}%
 \end{subfigure}\\%
 \vspace{1cm}%
 \begin{subfigure}[b]{\linewidth}%
@@ -931,7 +618,7 @@ Time (h)
   \hspace{1.5cm}%
   %\tikzsetnextfilename{samplepath_dscr_nFPC_inventory}%
   \input{Figs/samplepath_dscr_nFPC_inventory.tikz}%
-  \caption{Discrete Time w/ nFPC}%
+  \caption{Discrete Time with nFPC}%
 \end{subfigure}\\%
 \leavevmode\smash{\makebox[0pt]{\hspace{-4em}% HORIZONTAL POSITION           
   \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
@@ -1020,34 +707,34 @@ Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Re
 Naive & -0.879 & -0.808 & 413 & 0.47 & 0.07  \\ 
 Naive+ & 0.101 & 0.107 & 213 & 2.45 & 0.74  \\ 
 Naive++ & 0.002 & 0.021 & 7 & 0.17 & 0.50  \\ 
-Cont & -0.059 & -0.551 & 201 & 0.09 & 0.18  \\ 
-Dscr & -0.064 & -0.695 & 210 & -0.02 & 0.08  \\ 
-Cont w nFPC & -0.063 & -0.571 & 204 & 0.08 & 0.14  \\ 
-Dscr w nFPC & -0.060 & -0.662 & 209 & -0.03 & 0.09  \\[2ex]
+Continuous & -0.059 & -0.551 & 201 & 0.09 & 0.18  \\ 
+Discrete & -0.064 & -0.695 & 210 & -0.02 & 0.08  \\ 
+Continuous with nFPC & -0.063 & -0.571 & 204 & 0.08 & 0.14  \\ 
+Discrete with nFPC & -0.060 & -0.662 & 209 & -0.03 & 0.09  \\[2ex]
 \multicolumn{6}{l}{\texttt{NTAP}} \\
 Naive & -0.188 & -0.316 & 842 & -9.81 & 0.23 \\ 
 Naive+ & 0.388 & 0.169 & 3562 & -9.73 & 0.74 \\ 
 Naive++ & -0.005 & -0.012 & 157 & -0.90 & 0.54  \\ 
-Cont & -0.006 & -0.062 & 2265 & 0.40 & 0.56  \\ 
-Dscr & 0.099 & 0.767 & 1872 & 4.74 & 0.86  \\ 
-Cont w nFPC & -0.141 & -0.951 & 2897 & 0.65 & 0.14 \\ 
-Dscr w nFPC & 0.121 & 0.881 & 1738 & 2.82 & 0.89  \\[2ex]
+Continuous & -0.006 & -0.062 & 2265 & 0.40 & 0.56  \\ 
+Discrete & 0.099 & 0.767 & 1872 & 4.74 & 0.86  \\ 
+Continuous with nFPC & -0.141 & -0.951 & 2897 & 0.65 & 0.14 \\ 
+Discrete with nFPC & 0.121 & 0.881 & 1738 & 2.82 & 0.89  \\[2ex]
 \multicolumn{6}{l}{\texttt{ORCL}} \\
 Naive & -0.105 & -0.253 & 484 & 1.40 & 0.28  \\ 
 Naive+ & -0.034 & -0.011 & 4086 & -55.18 & 0.61 \\ 
 Naive++ & 0.002 & 0.006 & 132 & 0.61 & 0.52 \\ 
-Cont & 0.115 & 1.348 & 1874 & 1.94 & 0.92 \\ 
-Dscr & 0.135 & 1.620 & 1898 & 3.93 & 0.98 \\ 
-Cont w nFPC & -0.010 & -0.100 & 2455 & 1.32 & 0.48 \\ 
-Dscr w nFPC & 0.144 & 1.501 & 1759 & 2.85 & 0.97 \\[2ex]
+Continuous & 0.115 & 1.348 & 1874 & 1.94 & 0.92 \\ 
+Discrete & 0.135 & 1.620 & 1898 & 3.93 & 0.98 \\ 
+Continuous with nFPC & -0.010 & -0.100 & 2455 & 1.32 & 0.48 \\ 
+Discrete with nFPC & 0.144 & 1.501 & 1759 & 2.85 & 0.97 \\[2ex]
 \multicolumn{6}{l}{\texttt{INTC}} \\
 Naive & -0.082 & -0.228 & 258 & -5.21 & 0.33 \\ 
 Naive+ & 0.365 & 0.134 & 3962 & -32.50 & 0.63 \\ 
 Naive++ & -0.001 & -0.003 & 74 & -0.84 & 0.48 \\ 
-Cont & 0.214 & 2.159 & 1577 & 5.17 & 0.97 \\ 
-Dscr & 0.232 & 2.528 & 1642 & 4.48 & 0.98 \\ 
-Cont w nFPC & 0.114 & 1.218 & 1894 & 2.01 & 0.90 \\ 
-Dscr w nFPC &  0.226 & 2.202 & 1569 & 4.28 & 0.98 \\ 
+Continuous & 0.214 & 2.159 & 1577 & 5.17 & 0.97 \\ 
+Discrete & 0.232 & 2.528 & 1642 & 4.48 & 0.98 \\ 
+Continuous with nFPC & 0.114 & 1.218 & 1894 & 2.01 & 0.90 \\ 
+Discrete with nFPC &  0.226 & 2.202 & 1569 & 4.28 & 0.98 \\ 
 \bottomrule
 \end{tabular}
 \caption[In-sample backtesting performance using same-day calibration]{Averaged strategy performance results: in-sample backtesting using same-day calibration.}
@@ -1121,40 +808,40 @@ Trading Day Number of 2013
 \setlength{\tabcolsep}{9pt}
 \begin{tabular}{@{} *{7}{r} @{}}
 \toprule
-Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# MO \\ \hphantom{Risk Adj}} & \cellbreak{t}{r}{\# LO \\ \hphantom{Risk Adj}} & \cellbreak{t}{r}{Average \\ Inventory} & \cellbreak{t}{r}{\% Win \\ \hphantom{Risk Adj}} \\
+Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# MO} & \cellbreak{t}{r}{\# LO} & \cellbreak{t}{r}{Average \\ Invntry} & \cellbreak{t}{r}{\% Win} \\
 \midrule
 \multicolumn{7}{l}{\texttt{FARO}} \\ 
 Naive & -1.072 & -0.444 & 435 & 0 & 1.74 & 0.08 \\
 Naive+ & 0.045 & 0.046 & 0 & 213 & 2.26 & 0.74 \\
 Naive++ & -0.003 & -0.027 & 0 & 6 & 0.25 & 0.50 \\
-Cts & -0.060 & -0.565 & 53 & 149 & 0.08 & 0.20 \\
-Dscr & -0.076 & -0.764 & 80 & 133 & -0.07 & 0.07 \\
-Cts w nFPC & -0.065 & -0.590 & 56 & 149 & 0.09 & 0.17 \\
-Dscr w nFPC & -0.076 & -0.778 & 78 & 133 & 0.07 & 0.07 \\[2ex]
+Continuous & -0.060 & -0.565 & 53 & 149 & 0.08 & 0.20 \\
+Discrete & -0.076 & -0.764 & 80 & 133 & -0.07 & 0.07 \\
+Continuous with nFPC & -0.065 & -0.590 & 56 & 149 & 0.09 & 0.17 \\
+Discrete with nFPC & -0.076 & -0.778 & 78 & 133 & 0.07 & 0.07 \\[2ex]
 \multicolumn{7}{l}{\texttt{NTAP}} \\ 
 Naive & -0.303 & -0.316 & 854 & 0 & -10.96 & 0.20 \\
 Naive+ & 0.290 & 0.122 & 0 & 3537 & -13.83 & 0.73 \\
 Naive++ & -0.048 & -0.084 & 0 & 156 & -1.79 & 0.52 \\
-Cts & -0.016 & -0.165 & 830 & 1405 & 0.37 & 0.52 \\
-Dscr & 0.070 & 0.593 & 460 & 1388 & 5.06 & 0.79 \\
-Cts w nFPC & -0.156 & -0.987 & 1506 & 1425 & 0.70 & 0.09 \\
-Dscr w nFPC & 0.091 & 0.656 & 332 & 1401 & 3.16 & 0.85 \\[2ex]
+Continuous & -0.016 & -0.165 & 830 & 1405 & 0.37 & 0.52 \\
+Discrete & 0.070 & 0.593 & 460 & 1388 & 5.06 & 0.79 \\
+Continuous with nFPC & -0.156 & -0.987 & 1506 & 1425 & 0.70 & 0.09 \\
+Discrete with nFPC & 0.091 & 0.656 & 332 & 1401 & 3.16 & 0.85 \\[2ex]
 \multicolumn{7}{l}{\texttt{ORCL}} \\ 
 Naive & -0.112 & -0.248 & 492 & 0 & 3.66 & 0.28 \\
 Naive+ & 0.066 & 0.022 & 0 & 4049 & -50.06 & 0.64 \\
 Naive++ & 0.002 & 0.005 & 0 & 134 & 0.64 & 0.49 \\
-Cts & 0.098 & 1.181 & 545 & 1318 & 1.86 & 0.90 \\
-Dscr & 0.126 & 1.547 & 578 & 1310 & 4.01 & 0.97 \\
-Cts w nFPC & -0.013 & -0.130 & 1069 & 1365 & 1.39 & 0.47 \\
-Dscr w nFPC & 0.135 & 1.459 & 416 & 1338 & 3.16 & 0.96 \\[2ex]
+Continuous & 0.098 & 1.181 & 545 & 1318 & 1.86 & 0.90 \\
+Discrete & 0.126 & 1.547 & 578 & 1310 & 4.01 & 0.97 \\
+Continuous with nFPC & -0.013 & -0.130 & 1069 & 1365 & 1.39 & 0.47 \\
+Discrete with nFPC & 0.135 & 1.459 & 416 & 1338 & 3.16 & 0.96 \\[2ex]
 \multicolumn{7}{l}{\texttt{INTC}} \\ 
 Naive & -0.057 & -0.179 & 274 & 0 & -3.63 & 0.31 \\
 Naive+ & 0.375 & 0.138 & 0 & 3925 & -25.43 & 0.65 \\
 Naive++ & 0.013 & 0.055 & 0 & 77 & -0.47 & 0.53 \\
-Cts & 0.202 & 1.995 & 423 & 1139 & 4.76 & 0.98 \\
-Dscr & 0.226 & 2.494 & 501 & 1136 & 4.62 & 0.99 \\
-Cts w nFPC & 0.107 & 1.111 & 681 & 1187 & 1.64 & 0.87 \\
-Dscr w nFPC & 0.215 & 2.027 & 401 & 1156 & 3.78 & 0.99 \\
+Continuous & 0.202 & 1.995 & 423 & 1139 & 4.76 & 0.98 \\
+Discrete & 0.226 & 2.494 & 501 & 1136 & 4.62 & 0.99 \\
+Continuous with nFPC & 0.107 & 1.111 & 681 & 1187 & 1.64 & 0.87 \\
+Discrete with nFPC & 0.215 & 2.027 & 401 & 1156 & 3.78 & 0.99 \\
 \bottomrule
 \end{tabular}
 \caption[In-sample backtesting performance using week-offset calibration]{Averaged strategy performance results: in-sample backtesting using a one-week offset for calibration.}
@@ -1165,7 +852,7 @@ Dscr w nFPC & 0.215 & 2.027 & 401 & 1156 & 3.78 & 0.99 \\
 \subsection{Annual Calibration}
 The second type of out-of-sample backtesting done was to calibrate using data amalgamated from the entire 2013 trading year. This was a very rich calibration source, as it effectively ensured that every possible state of the Markov chain would have had sufficient observations. Further, this caused us to fix the imbalance bins $\rho$ for the entire year, rather than having bins (and hence what it means to be `heavy buy imbalance' and `neutral imbalance') vary each day. Performance values are given in \autoref{tbl:IS_annual}, and \autoref{fig:IS_annual_comp} compares the day-over-day performance of the various strategies. 
 
-Here we backtest only the more liquid of the stocks, \texttt{ORCL} and \texttt{INTC}. In comparing \autoref{tbl:IS_annual} with \autoref{tbl:IS_week}, we note some interesting observations. Again we see the most liquid stock, \texttt{INTC}, posting on average the better results using the strategies, suggesting that using a liquid stock is key.  (\texttt{INTC} started the year at \$21.38 and gained 21.42\% over the year, while \texttt{ORCL} started at \$34.69 and climbed 10.29\%. However, \texttt{NTAP} started at \$34.30 and gained 19.94\%, similar in performance to \texttt{INTC}, and yet performed substantially worse.) Whereas we have seen thus far that the nFPC strategies underperform the regular calibration, here the roles were reversed in terms of performance, number of market orders used, and average inventory held. Across the strategies we see stability in the number of limit orders used, which suggests that this isn't so much strategy dependent as it is externally dependent on outside agents submitting their market orders. In the case of \texttt{ORCL} we see that the Cts Stoch Ctrl strategy was particularly susceptible to the sharp downward spikes on days 55, 100, and 119, which corresponded to large sell-offs in the market. 
+Here we backtest only the more liquid of the stocks, \texttt{ORCL} and \texttt{INTC}. In comparing \autoref{tbl:IS_annual} with \autoref{tbl:IS_week}, we note some interesting observations. Again we see the most liquid stock, \texttt{INTC}, posting on average the better results using the strategies, suggesting that using a liquid stock is key.  (\texttt{INTC} started the year at \$21.38 and gained 21.42\% over the year, while \texttt{ORCL} started at \$34.69 and climbed 10.29\%. However, \texttt{NTAP} started at \$34.30 and gained 19.94\%, similar in performance to \texttt{INTC}, and yet performed substantially worse.) Whereas we have seen thus far that the nFPC strategies underperform the regular calibration, here the roles were reversed in terms of performance, number of market orders used, and average inventory held. Across the strategies we see stability in the number of limit orders used, which suggests that this isn't so much strategy dependent as it is externally dependent on outside agents submitting their market orders. In the case of \texttt{ORCL} we see that the Continuous Stoch Ctrl strategy was particularly susceptible to the sharp downward spikes on days 55, 100, and 119, which corresponded to large sell-offs in the market. 
 
 
 \begin{figure}
@@ -1211,18 +898,18 @@ Trading Day Number of 2013
 \setlength{\tabcolsep}{9pt}
 \begin{tabular}{@{} *{7}{r} @{}}
 \toprule
-Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# MO \\ \hphantom{Risk Adj}} & \cellbreak{t}{r}{\# LO \\ \hphantom{Risk Adj}} & \cellbreak{t}{r}{Average \\ Inventory} & \cellbreak{t}{r}{\% Win \\ \hphantom{Risk Adj}} \\
+Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# MO} & \cellbreak{t}{r}{\# LO} & \cellbreak{t}{r}{Average \\ Invntry} & \cellbreak{t}{r}{\% Win} \\
 \midrule
 \multicolumn{7}{l}{\texttt{ORCL}} \\ 
-Cts & -0.089 & -0.875 & 1540 & 1383 & 1.19 & 0.14  \\ 
-Dscr & 0.140 & 1.596 & 368 & 1344 & 0.46 & 0.96 \\ 
-Cts w nFPC & 0.113 & 1.327 & 476 & 1338 & 2.67 & 0.94 \\ 
-Dscr w nFPC & 0.118 & 1.735 & 590 & 1337 & 3.43 & 0.99 \\[2ex]
+Continuous & -0.089 & -0.875 & 1540 & 1383 & 1.19 & 0.14  \\ 
+Discrete & 0.140 & 1.596 & 368 & 1344 & 0.46 & 0.96 \\ 
+Continuous with nFPC & 0.113 & 1.327 & 476 & 1338 & 2.67 & 0.94 \\ 
+Discrete with nFPC & 0.118 & 1.735 & 590 & 1337 & 3.43 & 0.99 \\[2ex]
 \multicolumn{7}{l}{\texttt{INTC}} \\ 
-Cts & 0.065 & 0.743 & 888 & 1207 & 1.22 & 0.84 \\
-Dscr & 0.235 & 2.189 & 380 & 1170 & 1.19 & 0.99 \\
-Cts w nFPC & 0.209 & 2.030 & 396 & 1160 & 5.58 & 0.98 \\
-Dscr w nFPC & 0.197 & 2.588 & 576 & 1164 & 3.78 & 1.00 \\
+Continuous & 0.065 & 0.743 & 888 & 1207 & 1.22 & 0.84 \\
+Discrete & 0.235 & 2.189 & 380 & 1170 & 1.19 & 0.99 \\
+Continuous with nFPC & 0.209 & 2.030 & 396 & 1160 & 5.58 & 0.98 \\
+Discrete with nFPC & 0.197 & 2.588 & 576 & 1164 & 3.78 & 1.00 \\
 \bottomrule
 \end{tabular}
 \caption[In-sample backtesting performance using annual calibration]{Averaged strategy performance results: in-sample backtesting on 2013 data, using amalgamated annual 2013 data for calibration.}
@@ -1285,18 +972,18 @@ Trading Day Number of 2014
 \setlength{\tabcolsep}{9pt}
 \begin{tabular}{@{} *{7}{r} @{}}
 \toprule
-Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# MO \\ \hphantom{Risk Adj}} & \cellbreak{t}{r}{\# LO \\ \hphantom{Risk Adj}} & \cellbreak{t}{r}{Average \\ Inventory} & \cellbreak{t}{r}{\% Win \\ \hphantom{Risk Adj}} \\
+Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# MO} & \cellbreak{t}{r}{\# LO} & \cellbreak{t}{r}{Average \\ Invntry} & \cellbreak{t}{r}{\% Win} \\
 \midrule
 \multicolumn{7}{l}{\texttt{INTC}} \\ 
-Cts & 0.209 & 2.112 & 2118 & 1758 & 0.44 & 0.98 \\
-Dscr & 0.372 & 1.591 & 949 & 1770 & -5.89 & 0.98 \\
-Cts w nFPC & 0.483 & 2.364 & 704 & 1693 & 1.46 & 1.00 \\
-Dscr w nFPC & 0.515 & 2.033 & 490 & 1629 & 2.81 & 1.00 \\[2ex]
+Continuous & 0.209 & 2.112 & 2118 & 1758 & 0.44 & 0.98 \\
+Discrete & 0.372 & 1.591 & 949 & 1770 & -5.89 & 0.98 \\
+Continuous with nFPC & 0.483 & 2.364 & 704 & 1693 & 1.46 & 1.00 \\
+Discrete with nFPC & 0.515 & 2.033 & 490 & 1629 & 2.81 & 1.00 \\[2ex]
 \multicolumn{7}{l}{\texttt{AAPL}} \\ 
-Cts & 0.378 & 1.571 & 3853 & 6297 & -5.80 & 0.96 \\
-Dscr & 0.761 & 2.457 & 830 & 5566 & 4.05 & 1.00 \\
-Cts w nFPC & 0.710 & 2.479 & 1276 & 5689 & 2.93 & 1.00 \\
-Dscr w nFPC & 0.764 & 2.442 & 796 & 5559 & 3.85 & 1.00 \\
+Continuous & 0.378 & 1.571 & 3853 & 6297 & -5.80 & 0.96 \\
+Discrete & 0.761 & 2.457 & 830 & 5566 & 4.05 & 1.00 \\
+Continuous with nFPC & 0.710 & 2.479 & 1276 & 5689 & 2.93 & 1.00 \\
+Discrete with nFPC & 0.764 & 2.442 & 796 & 5559 & 3.85 & 1.00 \\
 \bottomrule
 \end{tabular}
 \caption[Out-of-sample backtesting performance using annual calibration]{Averaged strategy performance results: out-of-sample backtesting on 2014 data, using amalgamated annual 2013 data for calibration.}
@@ -1310,4 +997,4 @@ Dscr w nFPC & 0.764 & 2.442 & 796 & 5559 & 3.85 & 1.00 \\
 {\bf Trading \texttt{AAPL} would have generated revenue of \$1,655,850.}
 \end{center}
 
-The capital requirements would have been the full price of the shares, \$30 and \$100 each, multiplied by the maximum long/short inventory of $20 \times 100$ shares - thus \$260,000. This represents a return on investment (ROI) of 652\%.
+The capital requirements would have been the full price of the shares, \$30 and \$95 each, multiplied by the maximum long/short inventory of $20 \times 100$ shares - thus \$250,000. This represents a return on investment (ROI) of 782\%.
