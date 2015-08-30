@@ -41,7 +41,7 @@ Our Limit Order Fill Count & $L^{\pm}_t$ \\
 Note that $L^-$, our sell limit order being filled, depends on $K^+$, an external buy order arriving. To determine the value of the constant $\kappa$, we consider the average volume available at the first few depths in relation to the distribution of volumes of incoming market orders; $\kappa$ can then be fitted to satisfy the relation.}  \vspace{6pt} \\ 
 Our Market Orders & $M^{\pm}_t$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{Our other controlled process. $M^+$ represents our executing a buy market order. In executing market orders, we assume that the volume of the order is small enough to achieve the best bid/ask price.}  \vspace{6pt} \\ 
-Our Market Order Execution Tmes & $\btau^\pm = \{ \tau^\pm_k : k = 1, \dots \}$ \\
+Our Market Order Execution Times & $\btau^\pm = \{ \tau^\pm_k : k = 1, \dots \}$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{An increasing sequence of $\cF$-stopping times, representing the time at which we execute market orders.} \vspace{6pt} \\ 
 Cash & $X^{\btau, \delta}_t$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A stochastic variable representing our cash, initially zero, that evolves according to
@@ -93,7 +93,7 @@ The function $\indicator$ in the above definition is the \emph{indicator functio
 \begin{equation}
 \indicator_A = \begin{cases} 1, & \text{if $A$ holds;} \\ 0, & \text{otherwise} \end{cases}
 \end{equation}
-\begin{thm}{\bf Dynamic Programming Equation for Optimal Stopping and Control.} \citep{STA4505} Assume that the value function $H(t,\bx)$ is once differentiable in $t$, all second-order derivatives in $\bx$ exist, and that \myfunction{G}{\R^m}{\R} is continuous. Then $H$ solves the quasivariational inequality
+\begin{thm}{\bf Dynamic Programming Equation for Optimal Stopping and Control.} \citep{STA4505} Assume that the value function $H(t,\bx)$ is once differentiable in $t$, all second-order derivatives in $\bx$ exist, and that \myfunction{G}{\R^m}{\R} is continuous. Then $H$ solves the quasi-variational inequality
 \begin{equation}\label{eq:thmDPE}
 \max \left\lbrace \partial_t H + \sup \limits_{\bu \in \cA_t} \cL^{\bu}_t H \; ; \; G - H \right\rbrace = 0
 \end{equation}

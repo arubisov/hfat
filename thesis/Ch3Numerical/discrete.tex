@@ -12,7 +12,7 @@ Midprice & $S_k$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A stochastic process that evolves in accordance with the Markov chain $\bz$.}  \vspace{6pt} \\ 
 Midprice Change & $\Delta S_k = \sgn(S_k - S_{k-1})$  \vspace{6pt} \\ 
 Imbalance \& Midprice Change & $\bz_k = (\rho_k, \Delta S_k)$ \\
-\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A discrete-time 2-dimensional time-homogenous Markov chain with transition probabilities $\bP_{ij}$.} \vspace{6pt} \\ 
+\multicolumn{2}{@{\qquad}p{\linewidth-2em}}{A discrete-time 2-dimensional time-homogeneous Markov chain with transition probabilities $\bP_{ij}$.} \vspace{6pt} \\ 
 Midprice Change when $\Delta S \neq 0$ & $\{ \eta_{0,\bz}, \eta_{1,\bz}, \dots \} \sim F_{\bz}$ \\
 \multicolumn{2}{@{\qquad}p{\linewidth-2em}}{Independent, identically-distributed random variables, where the distribution is dependent on the Markov chain state. This is the price change that accompanies a change in Markov chain state.} \vspace{6pt} \\ 
 Other Agent Market Orders & $K^{\pm}_k$ \\
@@ -231,7 +231,7 @@ For ease of notation, we'll write the probability of the $L_k^- = 1$ event as $p
 \partial_{\delta^-} \P [ L_k^- = 1]  & = -\kappa p(\delta^-) \\
 \partial_{\delta^-} \P [ L_k^- = 0] & = \kappa p(\delta^-)
 \end{align}
-Let's pre-compute some of the terms that we'll encounter in the supremum, namely the expectations of the random variables. To each we will assign an uppercase Greek letter as shorthand, as will be evident from the analysis.
+Let's pre-compute some of the terms that we'll encounter in the supremum, namely the expectations of the random variables. To each we will assign an upper-case Greek letter as shorthand, as will be evident from the analysis.
 \begin{align}
 \begin{split}
 \E [\sgn(q + L_k^+ - L_k^-)] & = \P[L_k^- = 1] \cdot \P[L_k^+ = 1] \cdot \sgn(q) \\

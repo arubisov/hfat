@@ -20,7 +20,7 @@ Ticker & Company & Average Daily Volume \\
 \end{table}%
 
 \section[Modelling Imbalance: Continuous Time Markov Chain]{Modelling Imbalance: \texorpdfstring{\\}{} Continuous Time Markov Chain}
-The aim of this research project is to use the LOB volume imbalance $I(t)$ in an algorithmic trading application; hence, a suitable choice of model for $I(t)$ must be made. Rather than modelling imbalance directly as a real-valued process, an alternative approach, and that which is used herein, is to discretize the imbalance value $I(t)$ into subintervals, or bins, and fit the resulting process to a continuous-time Markov chain.
+The aim of this research project is to use the LOB volume imbalance $I(t)$ in an algorithmic trading application; hence, a suitable choice of model for $I(t)$ must be made. Rather than modelling imbalance directly as a real-valued process, an alternative approach, and that which is used herein, is to discretise the imbalance value $I(t)$ into subintervals, or bins, and fit the resulting process to a continuous-time Markov chain.
 
 The following definitions and properties are adapted from \citet{STAT455}:
 \begin{defn}
@@ -98,7 +98,7 @@ as the maximum likelihood estimate. This has the simple and intuitive interpreta
 
 \subsection{Arrival Rates}
 
-Now we want to derive an estimate for the intensity of the Poisson process of market order arrivals conditional on being in state $k$. We'll look at just the buy market orders for some regime $k$, as the sell case is identical. Let the buy market order arrival times be indexed by $b_i$. Since we're assuming that the arrival process is Poisson with the same intensity throughout trials, we can consider the interarrival time of events conditional on being in state $k$. The MLE derivation then follows just as it did for the generator matrix.
+Now we want to derive an estimate for the intensity of the Poisson process of market order arrivals conditional on being in state $k$. We'll look at just the buy market orders for some regime $k$, as the sell case is identical. Let the buy market order arrival times be indexed by $b_i$. Since we're assuming that the arrival process is Poisson with the same intensity throughout trials, we can consider the interarrival time of events conditional on being in state $k$. The maximum likelihood derivation then follows just as it did for the generator matrix.
 \begin{align}
 \mathcal{L}(\lambda^{+}_k ; b_1, \dots, b_N) &= \prod\limits_{i=2}^{N} \lambda^{+}_k e^{-\lambda^{+}_k (b_{i} - b_{i-1})} \\
 &= (\lambda^{+}_k)^{N^{+}_k(T)} e^{-\lambda^{+}_k H_k(T)}
@@ -114,7 +114,7 @@ Solving gives
 \end{equation}
 as the maximum likelihood estimate. Again this has the intuitive interpretation that the estimated rate of arrivals while in state $k$ is equal to the number of observed arrivals while in $k$ divided by the total time spent in $k$. 
 
-\section{2-Dimensional CTMC}
+\section{Two-Dimensional CTMC}
 \label{sec:2DCTMC}
 Next we consider a CTMC $Z(t)$ that jointly models the imbalance bin $\rho(t)$ and the price change $\Delta S(t)$. The raw imbalance timeseries is very erratic, so to smooth it we take the time-weighted average of imbalance over the past time inteval $\Delta t_I$. We compute price change as the \emph{sign} of the change in midprice of the \emph{future} time interval $\Delta t_S$. These time intervals are illustrated in \autoref{fig:timewindows}.
 
@@ -134,7 +134,7 @@ For simplicity of computation, the pair $(\rho(t), \Delta S(t))$ is then reduced
 \begin{table}[H]%
 \centering%
 \ra{1.2}%
-\caption[1-dimensional encoding of 2-dimensional CTMC]{$\varphi(\rho(t),S(t))$: 1-dimensional encoding of 2-dimensional CTMC.}\label{tbl:onedimreduction}%
+\caption[One-dimensional encoding of two-dimensional CTMC]{$\varphi(\rho(t),S(t))$: One-dimensional encoding of two-dimensional CTMC.}\label{tbl:onedimreduction}%
 \begin{tabular}{@{} *{11}{c} @{}}%
 \toprule
 $Z(t)$ & Bin $\rho(t)$ & $\Delta S(t)$ & \phantom{abc} & $Z(t)$ & Bin $\rho(t)$ & $\Delta S(t)$ & \phantom{abc} & $Z(t)$ & Bin $\rho(t)$ & $\Delta S(t)$ \\
@@ -193,7 +193,7 @@ $\Delta t_I$ & $n_{conv}$ & $K$ & 8 & 4 & 2 & & $n_{conv}$ & $K$ & 8 & 4 & 2 \\
 \end{tabular}%
 \end{adjustbox}%
 \end{table}%
-Considering the standard cutoff $p$-value of 0.05, the cross-validation results show a strong case for the rejection of the homogeneity hypothesis. However, using a nonhomogeneous model falls outside of the scope of this research project, and instead suggests possible extensions to this research wherein the trading day is broken down into subintervals to better account for fluctuations and patterns in trading activity; perhaps early morning, mid-day, and final hour of trading. The severity of proceeding with the homogeneity hypothesis is not known \textit{a priori}, and may instead emerge with the backtesting results done later in this chapter and in Chapter 4.
+Considering the standard cut-off $p$-value of 0.05, the cross-validation results show a strong case for the rejection of the homogeneity hypothesis. However, using a nonhomogeneous model falls outside of the scope of this research project, and instead suggests possible extensions to this research wherein the trading day is broken down into subintervals to better account for fluctuations and patterns in trading activity; perhaps early morning, mid-day, and final hour of trading. The severity of proceeding with the homogeneity hypothesis is not known \textit{a priori}, and may instead emerge with the backtesting results done later in this chapter and in Chapter 4.
 
 \section{Predicting Future Price Changes}
 It is crucial to note that the value $\Delta S(t)$ contains the price change from time $t$ over the \textit{future} $\Delta t_S$ seconds. Hence in real-time one cannot know the state of the Markov chain. However, the analytic results do prove enlightening: from the resulting timeseries we estimate a generator matrix $\mat{G}$, and transform it into a one-step transition probability matrix $\mat{P} = e^{\mat{G}\Delta t_I}$. The entries of $\mat{P}$ are the conditional probabilities 
@@ -242,7 +242,7 @@ $\rho_\text{prev} = 3$ & 0.13 & 0.14 & 0.08 & 0.10 & 0.11 & 0.05 & 0.19 & 0.14 &
 \end{tabular}%
 \end{table}%
 
-The three middle rows of \autoref{tbl:Qmatrix} contain the majority of values $>0.5$, showing that in most cases we are expecting no price change. The only other cases in which the probability of a price change is greater than $0.5$ show evidence of \textit{momentum}; for example, the value in row 1, column 1 can be interpreted as: if $\rho_\text{prev} = \rho_\text{curr} = 1$ and previously we saw a downward price change, then we expect to again see a downward price change. The bolded diagonal values in the table lend themselves to the empirical conclusion
+The three middle rows of \autoref{tbl:Qmatrix} contain the majority of values $>0.5$, showing that in most cases we are expecting no price change. The only other cases in which the probability of a price change is greater than $0.5$ show evidence of \textit{momentum}; for example, the value in row 1, column 1 can be interpreted as: if $\rho_\text{prev} = \rho_\text{curr} = 1$ and previously we saw a downward price change, then we expect to again see a downward price change. The boldface diagonal values in the table lend themselves to the empirical conclusion
 \begin{equation}\label{eq:EDAKeyInsight}
 \mathbb{P} \left[ \Delta S_\text{future} = \Delta S_\text{curr} \; | \; \rho_\text{curr} = \rho_\text{prev} \right] > 0.5
 \end{equation}
@@ -324,7 +324,7 @@ Time (h)
 
 \autoref{fig:comp} plots the average daily performance of the naive strategies for four stocks listed on the NASDAQ. The performance is normalized via division by the initial stock price on each trading day. The Naive strategy lost revenue on average, the Naive+ strategy (at-the-touch limit orders when no change was expected) generated revenue on average, and the Naive++ strategy (using limit orders to adversely select agents that traded against the price change momentum) neither profited nor lost on average.
 
-{\bf Why is the Naive strategy producing, on average, normalized losses?} On calibration, we see that our intraday risk-adjusted return is about 0.02 when we choose our optimal parameters, so at the very least on the calibration date the strategy produces positive returns. The remainder of the calendar days are out-of-sample to the calibration, meaning the parameters are not specifically tuned to that data, and thus the parameters are (likely) not optimal. This adds evidence to rejecting the time homogeneity assumption, and in particular suggests that not every day can be modeled by the same Markov chain. The problem may be exaggerated by the fact that we are calibrating on the first trading day of the calendar year, when we might expect reduced, or at least nonrepresentative, trading activity. Further, we are using midprices to obtain the $\mat{Q}$ probability matrix while ignoring the bid-ask spread. Thus predicting a ``price change'' may be insufficient when considering a monetizable opportunity as we won't be able to profit off a predicted increase followed by a predicted decrease unless the interim mid-price move is greater than the bid-ask spread (assuming constant spread); this flaw affects trading on \texttt{FARO} in particular, which has a spread of about 15 cents.
+{\bf Why is the Naive strategy producing, on average, normalized losses?} On calibration, we see that our intraday risk-adjusted return is about 0.02 when we choose our optimal parameters, so at the very least on the calibration date the strategy produces positive returns. The remainder of the calendar days are out-of-sample to the calibration, meaning the parameters are not specifically tuned to that data, and thus the parameters are (likely) not optimal. This adds evidence to rejecting the time homogeneity assumption, and in particular suggests that not every day can be modelled by the same Markov chain. The problem may be exaggerated by the fact that we are calibrating on the first trading day of the calendar year, when we might expect reduced, or at least nonrepresentative, trading activity. Further, we are using midprices to obtain the $\mat{Q}$ probability matrix while ignoring the bid-ask spread. Thus predicting a ``price change'' may be insufficient when considering a monetisable opportunity as we won't be able to profit off a predicted increase followed by a predicted decrease unless the interim mid-price move is greater than the bid-ask spread (assuming constant spread); this flaw affects trading on \texttt{FARO} in particular, which has a spread of about 15 cents.
 
 {\bf Why do the Naive+ and Naive++ strategies outperform the Naive strategy?} This is particularly interesting since the probabilities are being obtained from the same matrix. The obvious difference between the successful and unsuccessful strategies is that the former (a) uses limit orders, and (b) executes when we predict a zero change, whereas the latter (a) uses market orders, and (b) executes when we predict nonzero changes.
 

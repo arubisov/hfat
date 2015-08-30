@@ -30,8 +30,8 @@
     point meta max=19,
     colormap={mymap}{[1pt] rgb(0pt)=(0,1,0); rgb(7pt)=(0,1,1); rgb(15pt)=(0,0,1); rgb(23pt)=(1,0,1); rgb(31pt)=(1,0,0); rgb(38pt)=(0,0,0)},
     colorbar horizontal,
-    colorbar style={width=15cm,xtick={{-15},{-10},{-5},{0},{5},{10},{15}}}
-    %colorbar style={separate axis lines,every outer x axis line/.append style={black},every x tick label/.append style={font=\color{black}},every outer y axis line/.append style={black},every y tick label/.append style={font=\color{black}},yticklabels={{-19},{-17},{-15},{-13},{-11},{-9},{-7},{-5},{-3},{-1},{1},{3},{5},{7},{9},{11},{13},{15},{17},{19}}}
+    colorbar style={width=15cm,xtick={{-15},{-10},{-5},{0},{5},{10},{15}},ylabel={Inventory Level $Q$}, y label style={at={(axis description cs:0.5,-1)},rotate=-90,anchor=north}}
+    %colorbar style={separate axis lines,every outer x axis line/.append style={black},every x tick label/.append style={font=\color{black}},every outer y axis line/.append style={black},every y tick label/.append style={font=\color{black}},yticklabels={{-19},{-17},{-15},{-13},{-11},{-9},{-7},{-5},{-3},{-1},{1},{3},{5},{7},{9},{11},{13},{15},{17},{19}},ylabel={Inventory Level $Q$}}
 ]%
     \addplot [draw=none] coordinates {(0,0)};
 \end{axis}

@@ -16,12 +16,12 @@ every outer x axis line/.append style={black},
 every x tick label/.append style={font=\color{black}},
 xmin=9.5,
 xmax=16,
-xlabel={Time (h)},
+xlabel={Time [h]},
 every outer y axis line/.append style={black},
 every y tick label/.append style={font=\color{black}},
 ymin=-0.1,
 ymax=0.25,
-ylabel={Normalized PnL},
+ylabel={Normalized P\&L [\$]},
 title={Strategy Performance using Optimal Stochastic Control},
 axis background/.style={fill=white},
 axis x line*=bottom,
@@ -1206,7 +1206,7 @@ legend style={legend cell align=left,align=left,draw=black,font=\small, legend p
 15.9891666666667	0.0695164836690324\\
 15.9947222222222	0.0658513744232272\\
 };
-\addlegendentry{Cts Stoch Ctrl};
+\addlegendentry{Continuous Stoch Ctrl};
 
 \addplot [color=dscr_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
@@ -2381,7 +2381,7 @@ legend style={legend cell align=left,align=left,draw=black,font=\small, legend p
 15.9891666666667	-0.0346089828130371\\
 15.9947222222222	-0.0357006922207798\\
 };
-\addlegendentry{Cts Stoch Ctrl w nFPC};
+\addlegendentry{Continuous Stoch Ctrl w nFPC};
 
 \addplot [color=cts_nFPC_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
@@ -3556,7 +3556,7 @@ legend style={legend cell align=left,align=left,draw=black,font=\small, legend p
 15.9891666666667	0.174829018509867\\
 15.9947222222222	0.176509773505735\\
 };
-\addlegendentry{Dscr Stoch Ctrl};
+\addlegendentry{Discrete Stoch Ctrl};
 
 \addplot [color=dscr_nFPC_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
@@ -4731,7 +4731,7 @@ legend style={legend cell align=left,align=left,draw=black,font=\small, legend p
 15.9891666666667	0.0801111199462783\\
 15.9947222222222	0.0804716536219057\\
 };
-\addlegendentry{Dscr Stoch Ctrl w nFPC};
+\addlegendentry{Discrete Stoch Ctrl w nFPC};
 
 \addplot [color=black,dashed,line width=1.5pt]
   table[row sep=crcr]{%

@@ -8,7 +8,7 @@
 \BOOKMARK [1][-]{section.2.2}{Maximum Likelihood Estimate of a Markov-Modulated Poisson Process}{chapter.2}% 8
 \BOOKMARK [2][-]{subsection.2.2.1}{Infinitesimal Generator Matrix}{section.2.2}% 9
 \BOOKMARK [2][-]{subsection.2.2.2}{Arrival Rates}{section.2.2}% 10
-\BOOKMARK [1][-]{section.2.3}{2-Dimensional CTMC}{chapter.2}% 11
+\BOOKMARK [1][-]{section.2.3}{Two-Dimensional CTMC}{chapter.2}% 11
 \BOOKMARK [2][-]{subsection.2.3.1}{Cross-Validation}{section.2.3}% 12
 \BOOKMARK [1][-]{section.2.4}{Predicting Future Price Changes}{chapter.2}% 13
 \BOOKMARK [1][-]{section.2.5}{Naive Trading Strategies}{chapter.2}% 14
@@ -34,4 +34,3 @@
 \BOOKMARK [2][-]{subsection.5.3.3}{Annual Calibration}{section.5.3}% 34
 \BOOKMARK [1][-]{section.5.4}{Out-of-Sample Backtesting}{chapter.5}% 35
 \BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 36
-\BOOKMARK [1][-]{section.6.1}{Summary and Future Work}{chapter.6}% 37

@@ -16,12 +16,12 @@ every outer x axis line/.append style={black},
 every x tick label/.append style={font=\color{black}},
 xmin=9.5,
 xmax=16,
-xlabel={Time (h)},
+xlabel={Time [h]},
 every outer y axis line/.append style={black},
 every y tick label/.append style={font=\color{black}},
 ymin=-20,
 ymax=20,
-ylabel={Inventory},
+ylabel={Inventory $Q$},
 title={Strategy Inventory using Optimal Stochastic Control},
 axis background/.style={fill=white},
 axis x line*=bottom,
@@ -1206,7 +1206,7 @@ legend style={legend cell align=left,align=left,draw=black,font=\small, legend p
 15.9891666666667	-11\\
 15.9947222222222	0\\
 };
-\addlegendentry{Cts Stoch Ctrl};
+\addlegendentry{Continuous Stoch Ctrl};
 
 \addplot [color=dscr_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
@@ -2381,7 +2381,7 @@ legend style={legend cell align=left,align=left,draw=black,font=\small, legend p
 15.9891666666667	3\\
 15.9947222222222	7\\
 };
-\addlegendentry{Cts Stoch Ctrl w nFPC};
+\addlegendentry{Continuous Stoch Ctrl w nFPC};
 
 \addplot [color=cts_nFPC_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
@@ -3556,7 +3556,7 @@ legend style={legend cell align=left,align=left,draw=black,font=\small, legend p
 15.9891666666667	2\\
 15.9947222222222	2\\
 };
-\addlegendentry{Dscr Stoch Ctrl};
+\addlegendentry{Discrete Stoch Ctrl};
 
 \addplot [color=dscr_nFPC_plot_color,solid,line width=1.5pt]
   table[row sep=crcr]{%
@@ -4731,7 +4731,7 @@ legend style={legend cell align=left,align=left,draw=black,font=\small, legend p
 15.9891666666667	-5\\
 15.9947222222222	-2\\
 };
-\addlegendentry{Dscr Stoch Ctrl w nFPC};
+\addlegendentry{Discrete Stoch Ctrl w nFPC};
 
 \end{axis}
 \end{tikzpicture}%

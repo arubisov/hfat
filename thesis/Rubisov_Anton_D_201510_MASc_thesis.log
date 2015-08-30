@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  29 AUG 2015 16:12
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  30 AUG 2015 18:17
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1209,7 +1209,7 @@ File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
 )
 \titlepgcrest=\box83
 
-<Figs/utias-logo-black.png, id=155, 441.43297pt x 552.1428pt>
+<Figs/utias-logo-black.png, id=151, 441.43297pt x 552.1428pt>
 File: Figs/utias-logo-black.png Graphic file (type png)
 
 <use Figs/utias-logo-black.png>
@@ -1313,9 +1313,9 @@ pa-tion in fi-nan-cial mar-kets evolved
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10.95> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 23.
 
-Overfull \hbox (9.5262pt too wide) in paragraph at lines 27--28
-[]\T1/ppl/m/n/12 In the lit-er-a-ture, LOBs are gen-er-ally mod-eled in one of 
-two ways: ei-ther by an economics-
+Overfull \hbox (13.01808pt too wide) in paragraph at lines 27--28
+[]\T1/ppl/m/n/12 In the lit-er-a-ture, LOBs are gen-er-ally mod-elled in one of
+ two ways: ei-ther by an economics-
  []
 
 LaTeX Font Info:    Font shape `U/msa/m/n' will be
@@ -1330,21 +1330,11 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 7.91925pt on input line 30.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 6.25204pt on input line 30.
-[11] [12 <./Figs/build/Ch1/LOB.pdf>] [13]
-LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 87.
- [14]
-Package hyperref Info: bookmark level for unknown fixme defaults to 0 on input 
-line 87.
-
-
-FiXme Warning: 'Gabe: lay out objective. perhaps thesis statement, proposed con
-tributions, thesis outline.' on input line 87.
-
-) [15]
+[11] [12 <./Figs/build/Ch1/LOB.pdf>] [13] [14]) [15]
 \openout2 = `Ch2Exploratory/exploratory.aux'.
 
- (./Ch2Exploratory/exploratory.tex
+
+(./Ch2Exploratory/exploratory.tex
 Chapter 2.
 LaTeX Font Info:    Try loading font information for T1+pcr on input line 13.
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
@@ -1524,21 +1514,15 @@ Chapter 5.
 ===== Image 'Figs/build/dp_colorbar/dp_dscr_nFPC_z15' is up-to-date. ======
 ) (./Figs/altdeltalegend.tikz
 ===== Image 'Figs/build/altdeltalegend' is up-to-date. ======
-)
-Overfull \hbox (1.13826pt too wide) in paragraph at lines 241--245
-\T1/ppl/b/n/12 Continuous vs Dis-crete: \T1/ppl/m/n/12 As be-fore, these two mo
-d-els dis-play near op-po-site be-haviours
- []
-
-[62] [63 <./Figs/build/dp_colorbar/dp_cts_z1.pdf> <./Figs/build/dp_colorbar/dp_
-dscr_z1.pdf> <./Figs/build/dp_colorbar/dp_cts_nFPC_z1.pdf> <./Figs/build/dp_col
-orbar/dp_dscr_nFPC_z1.pdf> <./Figs/build/altdeltalegend.pdf>] [64 <./Figs/build
-/dp_colorbar/dp_cts_z8.pdf> <./Figs/build/dp_colorbar/dp_dscr_z8.pdf> <./Figs/b
-uild/dp_colorbar/dp_cts_nFPC_z8.pdf> <./Figs/build/dp_colorbar/dp_dscr_nFPC_z8.
-pdf> <./Figs/build/altdeltalegend.pdf>] [65 <./Figs/build/dp_colorbar/dp_cts_z1
-5.pdf> <./Figs/build/dp_colorbar/dp_dscr_z15.pdf> <./Figs/build/dp_colorbar/dp_
-cts_nFPC_z15.pdf> <./Figs/build/dp_colorbar/dp_dscr_nFPC_z15.pdf> <./Figs/build
-/altdeltalegend.pdf>] (./Figs/dp_colorbar/dm_cts_z1.tikz
+) [62] [63 <./Figs/build/dp_colorbar/dp_cts_z1.pdf> <./Figs/build/dp_colorbar/d
+p_dscr_z1.pdf> <./Figs/build/dp_colorbar/dp_cts_nFPC_z1.pdf> <./Figs/build/dp_c
+olorbar/dp_dscr_nFPC_z1.pdf> <./Figs/build/altdeltalegend.pdf>] [64 <./Figs/bui
+ld/dp_colorbar/dp_cts_z8.pdf> <./Figs/build/dp_colorbar/dp_dscr_z8.pdf> <./Figs
+/build/dp_colorbar/dp_cts_nFPC_z8.pdf> <./Figs/build/dp_colorbar/dp_dscr_nFPC_z
+8.pdf> <./Figs/build/altdeltalegend.pdf>] [65 <./Figs/build/dp_colorbar/dp_cts_
+z15.pdf> <./Figs/build/dp_colorbar/dp_dscr_z15.pdf> <./Figs/build/dp_colorbar/d
+p_cts_nFPC_z15.pdf> <./Figs/build/dp_colorbar/dp_dscr_nFPC_z15.pdf> <./Figs/bui
+ld/altdeltalegend.pdf>] (./Figs/dp_colorbar/dm_cts_z1.tikz
 ===== Image 'Figs/build/dp_colorbar/dm_cts_z1' is up-to-date. ======
 ) (./Figs/dp_colorbar/dm_dscr_z1.tikz
 ===== Image 'Figs/build/dp_colorbar/dm_dscr_z1' is up-to-date. ======
@@ -1676,7 +1660,7 @@ egylegend.pdf>] [82] (./Figs/IS_annual_ORCL.tikz
 ===== Image 'Figs/build/strategylegend' is up-to-date. ======
 )
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <12> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 996.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 985.
 ) [85] [86 <./Figs/build/OOS_annual_INTC.pdf> <./Figs/build/OOS_annual_AAPL.pdf
 > <./Figs/build/strategylegend.pdf>]
 \openout2 = `Ch5Conclusion/conclusion.aux'.
@@ -1694,10 +1678,10 @@ Chapter 6.
 ])
 
 FiXme Summary: Number of notes: 0,
-(FiXme)        Number of warnings: 1,
+(FiXme)        Number of warnings: 0,
 (FiXme)        Number of errors: 0,
 (FiXme)        Number of fatal errors: 0,
-(FiXme)        Total: 1.
+(FiXme)        Total: 0.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 45.
 [91]
@@ -1711,17 +1695,17 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 45.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 45.
 Package rerunfilecheck Info: File `Rubisov_Anton_D_201510_MASc_thesis.out' has 
 not changed.
-(rerunfilecheck)             Checksum: ACDA3DC31B748456698290900AFB894E;2626.
+(rerunfilecheck)             Checksum: 3C238A5C6CB253005B6BAB70DCE25374;2558.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 45.
  ) 
 Here is how much of TeX's memory you used:
- 29257 strings out of 495028
- 612929 string characters out of 6181497
- 2844760 words of memory out of 7000000
- 31078 multiletter control sequences out of 15000+600000
- 89006 words of font info for 216 fonts, out of 8000000 for 9000
+ 29258 strings out of 495028
+ 613050 string characters out of 6181497
+ 2845196 words of memory out of 7000000
+ 31080 multiletter control sequences out of 15000+600000
+ 86116 words of font info for 214 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 65i,25n,81p,1781b,609s stack positions out of 5000i,500n,10000p,7000000b,80000s
+ 65i,25n,81p,1789b,609s stack positions out of 5000i,500n,10000p,7000000b,80000s
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exi
 st, replaced by a fixed one
 
@@ -1746,15 +1730,14 @@ onts/type1/public/mathpazo/fplmbb.pfb></usr/share/texlive/texmf-dist/fonts/type
 athpazo/fplmri.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrb8
 a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/s
 hare/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino
-/uplri8a.pfb>
-Output written on Rubisov_Anton_D_201510_MASc_thesis.pdf (91 pages, 2701066 byt
+/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+urw/palatino/uplri8a.pfb>
+Output written on Rubisov_Anton_D_201510_MASc_thesis.pdf (91 pages, 2700773 byt
 es).
 PDF statistics:
- 1878 PDF objects out of 2073 (max. 8388607)
+ 1877 PDF objects out of 2073 (max. 8388607)
  1657 compressed objects within 17 object streams
- 373 named destinations out of 1000 (max. 500000)
- 684 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 374 named destinations out of 1000 (max. 500000)
+ 676 words of extra memory for PDF output out of 10000 (max. 10000000)
 

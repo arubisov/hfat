@@ -64,7 +64,7 @@ As mentioned in Chapter 2, the exploratory data analysis done on the data made u
 
 \section{Dynamics of the Optimal Posting Depths}
 
-In chapters 3 and 4 we have derived optimal stochastic controls for the same terminal wealth performance criterion using both continuous and discrete time, which have yielded different formulae for the optimal limit order posting depths. In this section we explore the calibrated results obtained on an in-sample backtest on \texttt{INTC}, calibrating on amalgamated data for the entire 2013 trading year. The dynamics of $\delta^\pm$ were obtained using a time-to-maturity of 600 seconds to best depict the behaviour as we approached the end of day trading; as the time-to-maturity horizon increases, the postings depths tend to stabilize. 
+In Chapters 3 and 4 we derived optimal stochastic controls for the same terminal wealth performance criterion in both continuous and discrete time, which yielded different formulae for the optimal limit order posting depths. In this section we explore the divergence in the resulting dynamics as obtained in an in-sample backtest on \texttt{INTC}, calibrating on amalgamated data for the entire 2013 trading year. The dynamics of $\delta^\pm$ were obtained using a time-to-maturity of 600 seconds to best depict the behaviour as we approached the end of day trading; as the time-to-maturity horizon increases further, the postings depths tend to stabilize. 
 
 \begin{figure}%
 \centering%
@@ -226,22 +226,15 @@ Time [s]
   \caption[Optimal buy LO depths for buy pressure imbalance]{Optimal buy depths $\delta^{+}$ for Markov state $Z=(\rho = +1, \Delta S = +1)$, implying heavy imbalance in favor of buy pressure, and having previously seen an upward price change. We expect the midprice to rise.}\label{fig:comp_dp_z15}%
 \end{figure}
 
-From the depth plots we can see that a symmetry that has emerged between $\delta^+$ and $\delta^-$ in `opposite' Markov states. This is evident when comparing $\delta^+$ in $Z=(-1,-1)$ (\autoref{fig:comp_dp_z1}) with $\delta^-$ in $Z=(+1,+1)$ (\autoref{fig:comp_dm_z15}), $\delta^+$ in $Z=(0,0)$ (\autoref{fig:comp_dp_z8}) with $\delta^-$ in $Z=(0,0)$ (\autoref{fig:comp_dm_z8}), and $\delta^+$ in $Z=(+1,+1)$ (\autoref{fig:comp_dp_z15}) with $\delta^-$ in $Z=(-1,-1)$ (\autoref{fig:comp_dm_z1}). Thus, we focus the discussion here on the behavior of $\delta^+$.
+From the depth plots we can see that a symmetry that has emerged between $\delta^+$ and $\delta^-$ in `opposite' Markov states, where $Z=(-1,-1)$ is opposite $Z=(+1,+1)$, and  $Z=(0,0)$ is opposite itself. Therefore, compare \autoref{fig:comp_dp_z1} with \autoref{fig:comp_dm_z15}, \autoref{fig:comp_dp_z8} with \autoref{fig:comp_dm_z8}, and \autoref{fig:comp_dp_z15} with \autoref{fig:comp_dm_z1}. Thus, we focus the discussion here on the behaviour of $\delta^+$.
 
-In this calibration we have taken $\kappa=100$ and $\xi = 0.005$. From \eqref{eq:ctsBuycondition}, we thus know that a necessary condition for a buy market order to be executed is ${\delta^+}^* =  \frac{1}{\kappa} - 2 \xi = 0$.
+As expected, the plots all have a lower bound of $\delta^+=0$. In this calibration we have the fixed parameter $\kappa=100$ and the calibrated parameter $\xi = 0.005$. From \eqref{eq:ctsBuycondition}, we thus know that a necessary but not sufficient condition for a buy market order to be executed is ${\delta^+} =  \frac{1}{\kappa} - 2 \xi = 0$. With respect to the upper bound, both continuous time calibrations respect the $\frac{1}{\kappa}=0.1$ bound derived in \eqref{eq:deltaslowerboundcase1}. However, no such bound was found analytically in the discrete time case; indeed, we see in \autoref{fig:comp_dp_z1} that the discrete time upper bound does exceed this threshold. Nevertheless, it is interesting that the discrete depths still \emph{are} bounded, and that in \autoref{fig:comp_dp_z8} and \autoref{fig:comp_dp_z15} the same $\frac{1}{\kappa}$ upper bound is respected even in the absence of such an analytic result.
 
-{\bf Markov State $Z=(-1,-1)$ (\autoref{fig:comp_dp_z1})} \\
-{\bf Continuous versus Continuous with nFPC:} For $q \geq 0$, both strategies post aggressive bid depths that suggest an inclination to buy. The nFPC strategy is less aggressive for $q<0$, posting closer to zero depth only for larger short positions.  \\
-{\bf Discrete versus Discrete with nFPC:} The behaviour of these two calibrations is very similar. Both models show a discontinuity in dynamics at $q=0$, where at $q=-1$ it is posting at maximal depth, at $q=0$ it jumps to approximately \$0.006, and at $q=1$ again jumps lower. Otherwise, the nFPC strategy posts slightly more aggressively only when $q=1$ or 2. \\
-{\bf Continuous vs Discrete:} These models produce behaviours that are worlds apart. Whereas the Continuous model seems to be saying that it wants to take this opportunity to go long, perhaps stocking up inventory while prices are low, the Discrete strategy suggests it's pulling out and avoiding purchasing. 
+Each of the plots display consistent behaviour with respect to changes in the inventory level $q$. Posting depths increase and converge as $q$ increases from -20 to 0 (light green to purple), and again increase and converge as inventory increases from 0 to 20. However, there is a discontinuity at zero inventory; for example, in \autoref{fig:comp_dp_z8}, posting depths jump down from 0.01 at $q=-1$ to 0 at $q=1$.
 
-{\bf Markov State $Z=(0,0)$ (\autoref{fig:comp_dp_z8})}\\
-Here we see near identical model behaviour. Similarities or correlations in backtesting performance can likely be attributed to this behaviour, as the majority of the day is spent in a Markov state for which $\Delta S = 0$, as seen here. (Recall that $\rho$, by contrast, is computed via evenly spaced percentiles symmetric around zero, so that time spent in each imbalance state is evenly distributed.)
+Comparing the two calibration methods, wee see that the regular calibration remains stable for longer as time approaches maturity, showing considerable variation only at 400 seconds, whereas the nFPC calibration does so at about 200 seconds. Further, regular calibration results in posting depths that are concentrated slightly closer around the convergence levels. Otherwise, within both continuous and discrete time, the nFPC calibration produces near-identical results compared with the regular calibration method. 
 
-{\bf Markov State $Z=(+1,+1)$ (\autoref{fig:comp_dp_z15})}\\
-{\bf Continuous versus Continuous with nFPC:} We see a nearly symmetric behaviour compared with the opposite Markov state. Here for $q \leq 0$, both strategies post maximal bid depths, suggesting a disinclination toward buying. The nFPC strategy is more aggressive for $q>0$ and small inventory positions.\\
-{\bf Discrete versus Discrete with nFPC:} Again these calibrations yield very similar behaviours, and as in the Continuous case, it is near opposite to what was seen in the opposite Markov state.\\
-{\bf Continuous vs Discrete:} As before, these two models display near opposite behaviours between each other. The Discrete model is posting aggressive depths near zero in an attempt to purchase, while the Continuous model is posting deeper into the book to avoid purchasing.
+Comparing continuous time with discrete time, we see a very large divergence in behaviour. In \autoref{fig:comp_dp_z1}, the continuous control produces posting depths concentrated around zero, which suggests that acquiring stock is optimal, whereas the discrete control is posting substantially deeper into the limit order book to avoid purchasing. In \autoref{fig:comp_dp_z8} we see near-identical model behaviour. Since the majority of the day is spent in a Markov state for which $\Delta S = 0$, as seen here, any similarities or correlations in backtesting performance can likely be attributed to the similar behaviour observed in this Markov state. (Recall that $\rho$, by contrast, is computed via evenly spaced percentiles symmetric around zero, so that time spent in each imbalance state is evenly distributed.) In \autoref{fig:comp_dp_z15} the two models display near opposite behaviours to one another, mirroring what was seen in \autoref{fig:comp_dp_z1}. Here the discrete model is posting at depths near zero, mimicking the behaviour of the Naive++ strategy by suggesting that purchasing is optimal, while the continuous model is posting deeper into the book to avoid purchasing.
 
 Finally, we note that we see relative stability in the posting depths at a time horizon of 600 seconds. This is consistent with the findings in \autoref{tbl:pvalues}, where we saw that the transition probability matrix $\mat{P}(t)$ converged for $\texttt{INTC}$ to an error threshold of $10^{-10}$ within 771 timesteps of 1 second each.
 
@@ -427,7 +420,7 @@ Time [s]
 \end{subfigure}%
 \caption[Comparison of the four stochastic optimal control methods]{Comparison of the four stochastic optimal control methods.}%
 \end{figure}
-In \autoref{fig:ORCL_comp4stoch} we plot the normalized P\&L for the four strategies, calibrated and backtested using data for \texttt{ORCL} from 2013-05-15. The performance plots display similarities in trajectory, as well as in the distinct spikes between 13h and 14.5h. Nevertheless the correlation of arithmetic returns, \autoref{tbl:ORCL_comp4stoch_corr}, shows that the strategies' returns were uncorrelated. Indeed, while the overall paths are similar, on close inspection the individual returns do show differing behaviour.
+In \autoref{fig:ORCL_comp4stoch} we plot the normalized profit and loss (P\&L) for the four strategies, calibrated and backtested using data for \texttt{ORCL} on an arbitrary single day (2013-05-15). The performance plots display similarities in trajectory, as well as in the distinct spikes between 13 h and 14.5 h. Nevertheless the correlation of arithmetic returns, \autoref{tbl:ORCL_comp4stoch_corr}, shows that the strategies' returns were uncorrelated. Indeed, while the overall paths are similar, on close inspection the individual returns do show differing behaviour.
 \begin{table}[H]
 \centering
 \ra{1.2}
@@ -443,7 +436,7 @@ Discrete with nFPC  & -0.0015  &  0.0034 &  -0.0165 &   1.0000 \\
 \bottomrule
 \end{tabular}
 \end{table}
-We find instead that the returns are co-integrated. On running the Engle-Granger cointegration test with statistics computed using an augmented Dickey-Fuller test of residuals, the $\tau$-test and $z$-test both returned $p$-values of 0.001, thus rejecting the null hypothesis of no co-integration. The co-integration relation plotted in \autoref{fig:cointeg_relation} displays stationarity, thus confirming the existence of a co-integration relation. This result allows us to conclude that although the optimal controls formulae and calibrations are different, there is a a fundamental similarity in the behaviour of the backtested strategies.
+We find instead that the returns are cointegrated. On running the Engle-Granger cointegration test \citep{engle1987co} with statistics computed using an augmented Dickey-Fuller test of residuals \citep{dickey1979distribution}, the $\tau$-test and $z$-test both returned $p$-values of 0.001, thus rejecting the null hypothesis of no cointegration. The cointegration relation plotted in \autoref{fig:cointeg_relation} displays stationarity, thus confirming the existence of a cointegration relation. This result allows us to conclude that although the optimal controls formulae and calibrations are different, there is a a fundamental similarity in the behaviour of the backtested strategies.
 
 \begin{figure}[H]
   \centering
@@ -451,7 +444,7 @@ We find instead that the returns are co-integrated. On running the Engle-Granger
   \setlength\figurewidth{0.35\linewidth}
   \tikzsetnextfilename{cointeg_relation}
   \input{Figs/cointeg_relation.tikz}
-  \caption[Co-integration relation of the four stochastic control methods]{Co-integration relation of the four stochastic control methods.}
+  \caption[Cointegration relation of the four stochastic control methods]{Cointegration relation of the four stochastic control methods.}
   \label{fig:cointeg_relation}
 \end{figure}
 From the inventory plot in \autoref{fig:ORCL_comp4stoch_inv} we see that the strategies avoid maintaining zero inventory. This is not surprising: in both the discrete and continuous cases we found that the value function ansatz $h(t,z,q)$ was nonnegative, and was equal to zero at zero inventory. The interpretation is that there is no added value to having zero inventory, whereas nonzero inventory can at worst have zero value. Thus it is always profitable, from a value-function standpoint, to have non-zero inventory. Further, we see that the strategies rarely cross the zero-inventory barrier. This is likely attributed to the backtesting algorithm itself, which gives priority to executing buy market orders above sell market orders. It is likely that once the strategy enters either positive or negative inventory, the ansatz function $h$ rarely produces the circumstances to cross the inventory sign barrier, perhaps by virtue of the non-linear mark-to-market behaviour on either side of zero inventory.
@@ -515,10 +508,10 @@ To better see how the strategies differ in behaviour, in the figures that follow
 \end{subfigure}\\%
 \leavevmode\smash{\makebox[0pt]{\hspace{-4em}% HORIZONTAL POSITION           
   \rotatebox[origin=l]{90}{\hspace{21em}% VERTICAL POSITION
-    Price (\$)}%
+    Price [\$]}%
 }}\hspace{0pt plus 1filll}\null%
 
-Time (h)
+Time [h]
 
 \vspace{1cm}%
 \begin{subfigure}{\linewidth}%
@@ -569,10 +562,10 @@ Time (h)
 \end{subfigure}\\%
 \leavevmode\smash{\makebox[0pt]{\hspace{-4em}% HORIZONTAL POSITION           
   \rotatebox[origin=l]{90}{\hspace{16em}% VERTICAL POSITION
-    Limit Order Posting Depth (\$)}%
+    Limit Order Posting Depth [\$]}%
 }}\hspace{0pt plus 1filll}\null%
 
-Time (h)
+Time [h]
 
 \vspace{1cm}%
   \caption[Comparison of optimal posting depths on the sample path]{The optimal posting depths for each of the stochastic optimal control strategies, isolated from the sample paths in \autoref{fig:samplepath_paths}. Note the scale on the vertical axis: the values are positive and symmetric around zero, intended to show the tandem movements of the optimal posting depths.}\label{fig:samplepath_depths}%
@@ -622,13 +615,13 @@ Time (h)
 \end{subfigure}\\%
 \leavevmode\smash{\makebox[0pt]{\hspace{-4em}% HORIZONTAL POSITION           
   \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
-    Profit and Loss (P\&L) (\$)}%
+    Profit and Loss (P\&L) [\$]}%
 }}\smash{\makebox[0pt]{\hspace{2.05\linewidth}% HORIZONTAL POSITION           
   \rotatebox[origin=l]{90}{\hspace{23em}% VERTICAL POSITION
-	Inventory}%
+	Inventory $Q$}%
 }}\hspace{0pt plus 1filll}\null%
 
-Time (h)
+Time [h]
 
 \vspace{1cm}%
   \caption[Comparison of P\&L and inventory on the sample path]{Profit and loss and inventory levels resulting from each of the stochastic optimal control strategies, corresponding to the sample paths in \autoref{fig:samplepath_paths}.}\label{fig:samplepath_pnl_inv}%
@@ -638,9 +631,9 @@ Time (h)
 \section{In-Sample Backtesting}
 
 \subsection{Same-Day Calibration}
-The first in-sample backtest was done using same-day calibration: calibration was run for each ticker and each trading day of 2013, and each strategy was backtested using the same day's calibration. Each backtest would yield the end of day P\&L, average inventory held during the day, and the number of executed market orders and filled limit orders. In \autoref{tbl:IS_sameday} we show performance values for several metrics of interest, while \autoref{fig:IS_sameday_comp} compares the day-over-day performance of the various strategies. 
+The first in-sample backtest was done using same-day calibration: calibration was run for each ticker and each trading day of 2013, and each strategy was backtested using the same day's calibration. Each backtest would yield the end of day P\&L, average inventory held during the day, and the number of executed market orders and filled limit orders. \autoref{fig:IS_sameday_comp} compares the day-over-day performance of the four strategies, while in \autoref{tbl:IS_sameday} we show performance values for several metrics of interest; in particular, risk-adjusted return is calculated by dividing the average end-of-day return by the standard deviation of end-of-day returns.
 
-Since we are calibrating and backtesting using the same underlying data, the calibration should be best attuned to the price dynamics for that particular day, and hence we expect the performance using same-day calibration to exceed that of the weekly offset calibration and the annual calibration (detailed in the sections that follow). Looking at the \% Win column in \autoref{tbl:IS_sameday} we see that trading on \texttt{FARO} seldom produces positive P\&L. This is not surprising and was mentioned at the conclusion of the exploratory data analysis chapter: \texttt{FARO} is illiquid, with daily average volume of about 200,000, and its bid-ask spread is about \$0.20 on average. As executing market orders results in `crossing the spread', the wide bid-ask spread makes it not profitable to execute market orders. Because our optimal strategies still force us to post limit orders at depths between 0 and $1/\kappa = \$0.01$, the most probable occurrence is that our limit orders are lifted adversely. The strategies exhibit weak regularity of profits when run on \texttt{NTAP}, suggesting that its average daily volume of about 4,000,000 is at the threshold required to generate revenue. The strategies performed best when run on the stocks with highest liquidity, \texttt{ORCL} and \texttt{NTAP}, which have average volumes around 15,000,000 and 30,000,000 respectively. Positive end of day P\&L was produced more than 90\% of the time, with an average daily return between 0.1 and 0.2 times the initial stock price. The discrete time controller on averaged outperformed its continuous time counterpart; in particular, in the case of \texttt{INTC}, a Sharpe ratio of 2.5 was attained.
+Since we are calibrating and backtesting using the same underlying data, the calibration should be best attuned to the price dynamics for that particular day, and hence we expect the performance using same-day calibration to exceed that of the weekly offset calibration and the annual calibration (detailed in the sections that follow). Looking at the \% Win column in \autoref{tbl:IS_sameday} we see that trading on \texttt{FARO} seldom produces positive P\&L. This is not surprising and was mentioned at the conclusion of the exploratory data analysis chapter: \texttt{FARO} is illiquid, with daily average volume of about 200,000, and its bid-ask spread is about \$0.20 on average. As executing market orders results in `crossing the spread', the wide bid-ask spread makes it not profitable to execute market orders. Because our optimal strategies still force us to post limit orders at depths between 0 and $1/\kappa = \$0.01$, the most probable occurrence is that our limit orders are lifted adversely. The strategies exhibit weak regularity of profits when run on \texttt{NTAP}, suggesting that its average daily volume of about 4,000,000 is at the threshold required to generate revenue. The strategies performed best when run on the stocks with highest liquidity, \texttt{ORCL} and \texttt{NTAP}, which have average volumes around 15,000,000 and 30,000,000 respectively. Positive end of day P\&L was produced more than 90\% of the time, with an average daily return between 0.1 and 0.2 times the initial stock price. The discrete time controller on averaged outperformed its continuous time counterpart; in particular, in the case of \texttt{INTC}, a risk-adjusted return of 2.5 was attained.
 
 \begin{figure}
 \centering
@@ -677,7 +670,7 @@ Since we are calibrating and backtesting using the same underlying data, the cal
 \end{subfigure}\\
 
 \leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+  \rotatebox[origin=l]{90}{\hspace{17em}% VERTICAL POSITION
     Normalized P\&L}%
 }}\hspace{0pt plus 1filll}\null
 
@@ -698,6 +691,7 @@ Trading Day Number of 2013
 \begin{table}
 \centering
 \ra{1.1}
+\caption[In-sample backtesting performance using same-day calibration]{Averaged strategy performance results: in-sample backtesting using same-day calibration.}\label{tbl:IS_sameday}
 \setlength{\tabcolsep}{9pt}
 \begin{tabular}{@{} *{6}{r} @{}}
 \toprule
@@ -737,15 +731,13 @@ Continuous with nFPC & 0.114 & 1.218 & 1894 & 2.01 & 0.90 \\
 Discrete with nFPC &  0.226 & 2.202 & 1569 & 4.28 & 0.98 \\ 
 \bottomrule
 \end{tabular}
-\caption[In-sample backtesting performance using same-day calibration]{Averaged strategy performance results: in-sample backtesting using same-day calibration.}
-\label{tbl:IS_sameday}
 \end{table}
 
 \FloatBarrier
 \subsection{Week Offset Calibration}
-The next type of in-sample backtesting done was to calibrate for each ticker and each trading day of 2013, and to use the results to backtest on the date given by the calibration date shifted forward 7 days. Thus, the calibration obtained on Monday, January 2, 2013 would be used to backtest on Monday, January 9, 2013. Performance values are given in \autoref{tbl:IS_week}, and \autoref{fig:IS_week_comp} compares the day-over-day performance of the various strategies. 
+The next type of in-sample backtesting done was to calibrate for each ticker and each trading day of 2013, and to use the results to backtest on the date given by the calibration date shifted forward 7 days. For example, the calibration obtained on Monday, January 2, 2013 would be used to backtest on Monday, January 9, 2013. Performance values are given in \autoref{tbl:IS_week}, and \autoref{fig:IS_week_comp} compares the day-over-day performance of the various strategies. 
 
-Most of the observations from the previous section apply here. Chiefly, the illiquid stock \texttt{FARO} produces negative P\&L and the low-liquidity stock \texttt{NTAP} approximately breaks even. As expected, the week offset calibration underperforms same-day calibration, but remarkably the difference is very small: in the case of \texttt{INTC}, the discrete time controller still generates a Sharpe ratio of approximately 2.5, and in this case only returned negative P\&L once during the trading year. 
+Most of the observations from the previous section apply here. Chiefly, the illiquid stock \texttt{FARO} produces negative P\&L and the low-liquidity stock \texttt{NTAP} approximately breaks even. As expected, the week offset calibration underperformed same-day calibration, but remarkably the difference is very small: in the case of \texttt{INTC}, the discrete time controller still generates a risk-adjusted return of approximately 2.5, and in this case only returned negative P\&L once during the trading year. 
 
 The similarity of the results can be interpreted in several ways. First, it is possible that trading behaviour is stable across days of the week, such that substituting one Monday for another yields a similar calibration. This is readily testable by calibrating on a given day and backtesting on the subsequent trading day, instead of a one-week offset. On the other hand, even with dissimilar data, it's possible that the calculation of $\delta^\pm$ is stable with respect to day-over-day fluctuations of data.
 
@@ -784,7 +776,7 @@ The similarity of the results can be interpreted in several ways. First, it is p
 \end{subfigure}\\
 
 \leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-  \rotatebox[origin=l]{90}{\hspace{20em}% VERTICAL POSITION
+  \rotatebox[origin=l]{90}{\hspace{17em}% VERTICAL POSITION
     Normalized P\&L}%
 }}\hspace{0pt plus 1filll}\null
 
@@ -805,6 +797,7 @@ Trading Day Number of 2013
 \begin{table}
 \centering
 \ra{1.1}
+\caption[In-sample backtesting performance using week-offset calibration]{Averaged strategy performance results: in-sample backtesting using a one-week offset for calibration.}\label{tbl:IS_week}
 \setlength{\tabcolsep}{9pt}
 \begin{tabular}{@{} *{7}{r} @{}}
 \toprule
@@ -844,15 +837,13 @@ Continuous with nFPC & 0.107 & 1.111 & 681 & 1187 & 1.64 & 0.87 \\
 Discrete with nFPC & 0.215 & 2.027 & 401 & 1156 & 3.78 & 0.99 \\
 \bottomrule
 \end{tabular}
-\caption[In-sample backtesting performance using week-offset calibration]{Averaged strategy performance results: in-sample backtesting using a one-week offset for calibration.}
-\label{tbl:IS_week}
 \end{table}
 
 \FloatBarrier
 \subsection{Annual Calibration}
 The second type of out-of-sample backtesting done was to calibrate using data amalgamated from the entire 2013 trading year. This was a very rich calibration source, as it effectively ensured that every possible state of the Markov chain would have had sufficient observations. Further, this caused us to fix the imbalance bins $\rho$ for the entire year, rather than having bins (and hence what it means to be `heavy buy imbalance' and `neutral imbalance') vary each day. Performance values are given in \autoref{tbl:IS_annual}, and \autoref{fig:IS_annual_comp} compares the day-over-day performance of the various strategies. 
 
-Here we backtest only the more liquid of the stocks, \texttt{ORCL} and \texttt{INTC}. In comparing \autoref{tbl:IS_annual} with \autoref{tbl:IS_week}, we note some interesting observations. Again we see the most liquid stock, \texttt{INTC}, posting on average the better results using the strategies, suggesting that using a liquid stock is key.  (\texttt{INTC} started the year at \$21.38 and gained 21.42\% over the year, while \texttt{ORCL} started at \$34.69 and climbed 10.29\%. However, \texttt{NTAP} started at \$34.30 and gained 19.94\%, similar in performance to \texttt{INTC}, and yet performed substantially worse.) Whereas we have seen thus far that the nFPC strategies underperform the regular calibration, here the roles were reversed in terms of performance, number of market orders used, and average inventory held. Across the strategies we see stability in the number of limit orders used, which suggests that this isn't so much strategy dependent as it is externally dependent on outside agents submitting their market orders. In the case of \texttt{ORCL} we see that the Continuous Stoch Ctrl strategy was particularly susceptible to the sharp downward spikes on days 55, 100, and 119, which corresponded to large sell-offs in the market. 
+Here we backtest only the more liquid of the stocks, \texttt{ORCL} and \texttt{INTC}. In comparing \autoref{tbl:IS_annual} with \autoref{tbl:IS_week}, we note some interesting observations. Again we see the most liquid stock, \texttt{INTC}, posting on average the better results using the strategies, suggesting that using a liquid stock is key.  (\texttt{INTC} started the year at \$21.38 and gained 21.42\% over the year, while \texttt{ORCL} started at \$34.69 and climbed 10.29\%. However, \texttt{NTAP} started at \$34.30 and gained 19.94\%, similar in performance to \texttt{INTC}, and yet performed substantially worse.) Whereas we have seen thus far that the nFPC strategies underperform the regular calibration, here the roles were reversed in terms of performance, number of market orders used, and average inventory held. Across the strategies we see stability in the number of limit orders used, which suggests that this isn't so much strategy dependent as it is externally dependent on outside agents submitting their market orders. In the case of \texttt{ORCL} we see that the continuous stochastic control strategy was particularly susceptible to the sharp downward spikes on days 55, 100, and 119, which corresponded to large sell-offs in the market. 
 
 
 \begin{figure}
@@ -874,7 +865,7 @@ Here we backtest only the more liquid of the stocks, \texttt{ORCL} and \texttt{I
 \end{subfigure}\\
 
 \leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-  \rotatebox[origin=l]{90}{\hspace{7em}% VERTICAL POSITION
+  \rotatebox[origin=l]{90}{\hspace{6em}% VERTICAL POSITION
     Normalized P\&L}%
 }}\hspace{0pt plus 1filll}\null
 
@@ -895,6 +886,7 @@ Trading Day Number of 2013
 \begin{table}
 \centering
 \ra{1.1}
+\caption[In-sample backtesting performance using annual calibration]{Averaged strategy performance results: in-sample backtesting on 2013 data, using amalgamated annual 2013 data for calibration.}\label{tbl:IS_annual}
 \setlength{\tabcolsep}{9pt}
 \begin{tabular}{@{} *{7}{r} @{}}
 \toprule
@@ -912,15 +904,13 @@ Continuous with nFPC & 0.209 & 2.030 & 396 & 1160 & 5.58 & 0.98 \\
 Discrete with nFPC & 0.197 & 2.588 & 576 & 1164 & 3.78 & 1.00 \\
 \bottomrule
 \end{tabular}
-\caption[In-sample backtesting performance using annual calibration]{Averaged strategy performance results: in-sample backtesting on 2013 data, using amalgamated annual 2013 data for calibration.}
-\label{tbl:IS_annual}
 \end{table}
 
 From the in-sample backtesting we draw several conclusions regarding the performance of the optimal control strategies:
 \begin{itemize}
 \item average return increases as the underlying stock liquidity increases;
 \item average return increases as the underlying stock bid-ask spread decreases;
-\item average return is stable and Sharpe ratio is improved when calibrating over a larger period of time, and is therefore preferred;
+\item average return is stable and risk-adjusted return is improved when calibrating over a larger period of time, and is therefore preferred;
 \item there is no clear victor between regular calibration and the nFPC method.
 \end{itemize}
 
@@ -948,7 +938,7 @@ For out-of-sample backtesting we move to using 2014 data that has hitherto remai
 \end{subfigure}\\
 
 \leavevmode\smash{\makebox[0pt]{\hspace{-7em}% HORIZONTAL POSITION           
-  \rotatebox[origin=l]{90}{\hspace{7em}% VERTICAL POSITION
+  \rotatebox[origin=l]{90}{\hspace{6em}% VERTICAL POSITION
     Normalized P\&L}%
 }}\hspace{0pt plus 1filll}\null
 
@@ -970,6 +960,7 @@ Trading Day Number of 2014
 \centering
 \ra{1.1}
 \setlength{\tabcolsep}{9pt}
+\caption[Out-of-sample backtesting performance using annual calibration]{Averaged strategy performance results: out-of-sample backtesting on 2014 data, using amalgamated annual 2013 data for calibration.}\label{tbl:OOS_annual}
 \begin{tabular}{@{} *{7}{r} @{}}
 \toprule
 Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# MO} & \cellbreak{t}{r}{\# LO} & \cellbreak{t}{r}{Average \\ Invntry} & \cellbreak{t}{r}{\% Win} \\
@@ -986,15 +977,13 @@ Continuous with nFPC & 0.710 & 2.479 & 1276 & 5689 & 2.93 & 1.00 \\
 Discrete with nFPC & 0.764 & 2.442 & 796 & 5559 & 3.85 & 1.00 \\
 \bottomrule
 \end{tabular}
-\caption[Out-of-sample backtesting performance using annual calibration]{Averaged strategy performance results: out-of-sample backtesting on 2014 data, using amalgamated annual 2013 data for calibration.}
-\label{tbl:OOS_annual}
 \end{table}
 
-\autoref{tbl:OOS_annual} shows the results of out-of-sample backtesting. The strategies post strong returns and Sharpe ratios, and provide positive returns on almost every day that was tested. The strategies were run assuming our trade volume was 1 stock for every market order or limit order executed. Thus, to quantify these results in dollar terms, we can do a back of the envelope calculation by assuming for each of the 249 trading days of 2014, we trade 100 shares at a time, and multiply the average return (0.4 and 0.7 for \texttt{INTC} and \texttt{AAPL}, respectively) by the average share price during the year (\$30 and \$95, respectively). Thus, we conclude:
+\autoref{tbl:OOS_annual} shows the results of out-of-sample backtesting. The strategies post strong returns and risk-adjusted returns, and provide positive returns on almost every day that was tested. The strategies were run assuming our trade volume was 1 stock for every market order or limit order executed. Thus, to quantify these results in dollar terms, we can do a back of the envelope calculation. For example, for the Discrete with nFPC strategy, we assume that we trade 100 shares at a time, and multiply the average return (0.515 and 0.764 for \texttt{INTC} and \texttt{AAPL}, respectively) by the average share price during the year (\$30 and \$95, respectively) by 249 (the total number of trading days in 2014). Thus, we conclude:
 
 \begin{center}
-{\bf Trading \texttt{INTC} would have generated revenue of \$298,800.} \par
-{\bf Trading \texttt{AAPL} would have generated revenue of \$1,655,850.}
+{\bf Trading \texttt{INTC} would have generated revenue of \$384,705.} \par
+{\bf Trading \texttt{AAPL} would have generated revenue of \$1,807,200.}
 \end{center}
 
-The capital requirements would have been the full price of the shares, \$30 and \$95 each, multiplied by the maximum long/short inventory of $20 \times 100$ shares - thus \$250,000. This represents a return on investment (ROI) of 782\%.
+The capital requirements would have been the full price of the shares, \$30 and \$95 each, multiplied by the maximum long/short inventory of $20 \times 100$ shares - thus \$250,000. This represents a return on investment (ROI) of 877\%.

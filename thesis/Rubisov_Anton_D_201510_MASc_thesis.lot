@@ -1,7 +1,7 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {2.1}{\ignorespaces Stocks used in the exploratory data analysis}}{16}{table.caption.7}
-\contentsline {table}{\numberline {2.2}{\ignorespaces 1-dimensional encoding of 2-dimensional CTMC}}{21}{table.caption.10}
+\contentsline {table}{\numberline {2.2}{\ignorespaces One-dimensional encoding of two-dimensional CTMC}}{21}{table.caption.10}
 \contentsline {table}{\numberline {2.3}{\ignorespaces $p$-values for testing the time homogeneity hypothesis}}{23}{table.caption.11}
 \contentsline {table}{\numberline {2.4}{\ignorespaces Probabilities of future price changes}}{26}{table.caption.12}
 \contentsline {table}{\numberline {2.5}{\ignorespaces Hypothetical timeline of adverse selection with market orders}}{31}{table.caption.17}
