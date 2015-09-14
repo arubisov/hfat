@@ -1,2 +1,168 @@
-    % system description - each variable.
-    % 
+% system description - each variable.
+\begin{frame}
+\frametitle{System Description}
+\begin{itemize}
+\item Imbalance Averaging Time $\Delta {t_{I}}$ \\
+    A constant, specifying the time window over which the imbalance ratio $I(t)$ will be averaged.
+\item Price Change Time $\Delta {t_{S}}$ \\
+    A constant, specifying the time window over which price changes will be computed.
+\item Number of Imbalance Bins $\#_{bins}$ \\ 
+    A constant, specifying the number of bins (spaced by percentiles, symmetric around zero) into which $I(t)$ will be sorted.
+\item Imbalance $\rho_t$ \\
+    The finite, discrete stochastic process that results from sorting $I(t)$ into the imbalance bins $\{1, \dots, \#_{bins} \}$, and which evolves in accordance with the CTMC $\bZ$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{System Description}
+\begin{itemize}
+\item Midprice $S_t$ \\
+    Stochastic process, evolves according to CTMC $\bZ$.
+\item Midprice Change $\Delta S_t = \sgn(S_t - S_{t-\Delta {t_{S}}})$
+\item Imbalance \& Midprice Change $\bZ_t = (\rho_t, \Delta S_t) $ \\
+    Continuous-time Markov chain with generator $\mat{G}$.
+\item Bid-Ask Half-Spread $\xi$ \\
+    Assumed constant. $2\xi$ is equal to the bid-ask spread.
+\item Midprice Change $\{ \eta_{0,\bz}, \eta_{1,\bz}, \dots \} \sim F_{\bz}$ \\
+    i.i.d. RVs, with distribution dependent on the Markov chain state.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{System Description}
+\begin{itemize}
+\item Other Agent Market Orders $K^{\pm}_t$ \\
+    Poisson processes with rate $\mu^{\pm}(\bZ_t)$. $K^+$ represents the arrival of another agent's buy market order.
+\item Our Limit Order Posting Depth $\delta^{\pm}_t$ \\
+    One of our controlled $\cF$-predictable processes. $\delta^+$ dictates how deep on the buy side we will post our buy limit order; $\delta^+ = 0$ implies at-the-touch.
+\item Our Limit Order Fill Count $L^{\pm}_t$ \\
+    Counting processes (not Poisson), satisfying
+    \[ \P [\d L^{\pm}_t = 1 \, | \, \d K^{\mp}_t = 1] = e^{-\kappa \delta^{\pm}_t} \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{System Description}
+\begin{itemize}
+\item Fill Probability Constant $\kappa$ \\
+    Fitted to satisfy the above relation, by considering the avg vol available at the first few depths relative to distribution of volumes of incoming market orders
+\item Our Market Orders $M^{\pm}_t$ \\
+    $M^+$ represents our buy market order. Assume we achieve the best bid/ask price.
+\item Our Market Order Execution Times $\btau^\pm = \{ \tau^\pm_k : k = 1, \dots \}$ \\
+    An increasing sequence of $\cF$-stopping times.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{System Description}
+\begin{itemize}
+\item Cash $X^{\btau, \delta}_t$ \\
+    A stochastic variable representing our cash, initially zero, that evolves according to
+\[ \begin{aligned}
+\d X^{\btau, \delta}_t = & \underbrace{(S_t + \xi + \delta^{-}_t) \d L^{-}_t}_{\text{sell limit order}} - \underbrace{(S_t - \xi - \delta^{+}_t) \d L^{+}_t}_{\text{buy limit order}} \\
+                         & + \underbrace{(S_t - \xi) \d M^{-}_t}_{\text{sell market order}} - \underbrace{(S_t + \xi) \d M^{+}_t}_{\text{buy market order}}
+\end{aligned} \]
+\item Inventory $Q^{\btau, \delta}_t$ \\
+    A stochastic process representing our assets, initially zero, that satisfies
+\[ Q^{\btau, \delta}_0 = 0, \qquad Q^{\btau, \delta}_t = L^+_t + M^+_t - L^-_t - M^-_t \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Terminal Wealth}
+Call $W^{\btau, \delta}_t$ our net present value (NPV) at time $t$.
+Hence $W^{\btau, \delta}_T$ at terminal time $T$ is our `terminal wealth.' 
+
+At $T$, we:
+\begin{itemize}
+\item finish each trading day with zero inventory (avoid overnight positional risk)
+\item submit a market order (of a possibly large volume) to liquidate remaining stock
+\item price achieved will be $S - \xi \sgn Q - \alpha Q$
+\begin{itemize}
+\item $\xi \sgn Q$ represents crossing the spread
+\item $\alpha$ is a penalty constant
+\item $\alpha Q$ represents receiving a worse price linearly in $Q$ due to walking the book
+\end{itemize}
+\end{itemize}
+
+Hence, $W^{\btau, \delta}_t$ satisfies:
+\[
+W^{\btau, \delta}_t = \underbrace{\vphantom{\left( Q^{\btau, \delta}_t) \right)}X^{\btau, \delta}_t}_{\text{cash}}+ \underbrace{Q^{\btau, \delta}_t \left( S_t - \xi \sgn(Q^{\btau, \delta}_t) \right)}_{\text{book value of assets}} - \underbrace{\alpha \left( Q^{\btau, \delta}_t \right)^2}_{\text{liquidation penalty}}
+\]
+\end{frame}
+
+% perf crit and value func
+\begin{frame}
+\frametitle{Dynamic Programming Value Function}
+Our performance criterion will be to maximize terminal wealth:
+\[
+H^{\btau, \delta}(t,x,s,\bz,q) = \E_{t,x,s,z,q} \left[ W_T^{\btau, \delta} \right]\vphantom{\int\limits_t^T}
+\]
+
+The \emph{value function} is given by
+\[
+H(t,x,s,\bz,q) = \sup\limits_{\btau \in \mathcal{T}_{[t,T]}} \sup\limits_{\delta \in \cA_{[t,T]}} H^{\btau, \delta}(t,x,s,\bz,q)
+\]
+
+Admissible trading strategies is the product of the set $\mathcal{T}$ of all $\cF$-stopping times, with the set $\cA$ of all $\cF$-predictable, bounded-from-below depths $\delta \geq 0$.
+\begin{itemize}
+\item recognizing $\tau$ does not require knowledge of the future
+\item $\delta$ cannot `see into the future'; measurable with respect to information at an earlier time
+\end{itemize}
+\end{frame}
+
+% solve dH...
+\begin{frame}
+\frametitle{}
+\end{frame}
+
+% comp proc for Markov chain
+\begin{frame}
+\frametitle{}
+\end{frame}
+
+% inf gen
+\begin{frame}
+\frametitle{}
+\end{frame}
+
+% resulting DPE w/ bdry cond
+\begin{frame}
+\frametitle{}
+\end{frame}
+
+% ansatz
+\begin{frame}
+\frametitle{}
+\end{frame}
+
+% simplified inf gen with sgn
+\begin{frame}
+\frametitle{}
+\end{frame}
+
+% opt posting d+ and floored d+
+\begin{frame}
+\frametitle{}
+\end{frame}
+
+% final DPE
+\begin{frame}
+\frametitle{}
+\end{frame}
+
+%%% INTERPRET DPE
+% MO conditions
+\begin{frame}
+\frametitle{}
+\end{frame}
+
+% continuation region conditions
+\begin{frame}
+\frametitle{}
+\end{frame}
+
+% bounds on d+/-
+\begin{frame}
+\frametitle{}
+\end{frame}

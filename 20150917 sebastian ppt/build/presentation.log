@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.3)  14 SEP 2015 17:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.8.3)  14 SEP 2015 18:51
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -759,6 +759,14 @@ Package caption Info: Hyperref support is turned off
 Package: subcaption 2013/02/03 v1.1-62 Sub-captions (AR)
 \c@subfigure=\count158
 \c@subtable=\count159
+)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2014/10/28 v1.1c Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup6
+\symboldletters=\mathgroup7
+\symboldsymbols=\mathgroup8
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
+LaTeX Info: Redefining \bm on input line 207.
 ))
 (build/presentation.aux)
 \openout1 = `presentation.aux'.
@@ -851,15 +859,11 @@ LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 3.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 3.
-\symnumbers=\mathgroup6
-\sympureletters=\mathgroup7
+\symnumbers=\mathgroup9
+\sympureletters=\mathgroup10
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
 (Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 3.
 LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 3.
-LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 3.
-LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 3.
 LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 3.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
 (Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 3.
@@ -953,7 +957,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 17.
 (/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<frames/figs/timewindows.pdf, id=58, 318.01007pt x 93.62779pt>
+<frames/figs/timewindows.pdf, id=68, 318.01007pt x 93.62779pt>
 File: frames/figs/timewindows.pdf Graphic file (type pdf)
 
 <use frames/figs/timewindows.pdf>
@@ -991,7 +995,7 @@ Overfull \vbox (45.72556pt too high) detected at line 66
 ] [9
 
 ]
-<frames/figs/FARO_naive_strat_comp.pdf, id=154, 224.2789pt x 220.11435pt>
+<frames/figs/FARO_naive_strat_comp.pdf, id=170, 224.2789pt x 220.11435pt>
 File: frames/figs/FARO_naive_strat_comp.pdf Graphic file (type pdf)
 
 <use frames/figs/FARO_naive_strat_comp.pdf>
@@ -1003,7 +1007,7 @@ Overfull \hbox (112.7452pt too wide) in paragraph at lines 131--131
 [][] 
  []
 
-<frames/figs/NTAP_naive_strat_comp.pdf, id=155, 224.2789pt x 220.10832pt>
+<frames/figs/NTAP_naive_strat_comp.pdf, id=171, 224.2789pt x 220.10832pt>
 File: frames/figs/NTAP_naive_strat_comp.pdf Graphic file (type pdf)
 
 <use frames/figs/NTAP_naive_strat_comp.pdf>
@@ -1015,7 +1019,7 @@ Overfull \hbox (112.7452pt too wide) in paragraph at lines 131--131
 [][] 
  []
 
-<frames/figs/ORCL_naive_strat_comp.pdf, id=156, 224.2789pt x 220.10832pt>
+<frames/figs/ORCL_naive_strat_comp.pdf, id=172, 224.2789pt x 220.10832pt>
 File: frames/figs/ORCL_naive_strat_comp.pdf Graphic file (type pdf)
 
 <use frames/figs/ORCL_naive_strat_comp.pdf>
@@ -1027,7 +1031,7 @@ Overfull \hbox (112.7452pt too wide) in paragraph at lines 131--131
 [][] 
  []
 
-<frames/figs/INTC_naive_strat_comp.pdf, id=157, 224.2789pt x 220.10832pt>
+<frames/figs/INTC_naive_strat_comp.pdf, id=173, 224.2789pt x 220.10832pt>
 File: frames/figs/INTC_naive_strat_comp.pdf Graphic file (type pdf)
 
 <use frames/figs/INTC_naive_strat_comp.pdf>
@@ -1039,7 +1043,7 @@ Overfull \hbox (112.7452pt too wide) in paragraph at lines 131--131
 [][] 
  []
 
-<frames/figs/naivestratlegend.pdf, id=158, 221.16426pt x 18.36261pt>
+<frames/figs/naivestratlegend.pdf, id=174, 221.16426pt x 18.36261pt>
 File: frames/figs/naivestratlegend.pdf Graphic file (type pdf)
 
 <use frames/figs/naivestratlegend.pdf>
@@ -1059,8 +1063,40 @@ _comp.pdf> <./frames/figs/naivestratlegend.pdf>] [11
 ] [12
 
 ])
-(./frames/frame-3-ctsstoch.tex) (./frames/frame-4-dscrstoch.tex)
-(./frames/frame-5-results.tex) (./frames/frame-6-futurework.tex)
+(./frames/frame-3-ctsstoch.tex [13
+
+] [14
+
+]
+
+LaTeX Warning: Command \d invalid in math mode on input line 44.
+
+
+LaTeX Warning: Command \d invalid in math mode on input line 44.
+
+[15
+
+] [16
+
+]
+
+LaTeX Warning: Command \d invalid in math mode on input line 69.
+
+
+LaTeX Warning: Command \d invalid in math mode on input line 69.
+
+
+LaTeX Warning: Command \d invalid in math mode on input line 69.
+
+
+LaTeX Warning: Command \d invalid in math mode on input line 69.
+
+[17
+
+] [18
+
+]) (./frames/frame-4-dscrstoch.tex) (./frames/frame-5-results.tex)
+(./frames/frame-6-futurework.tex)
 \tf@nav=\write6
 \openout6 = `presentation.nav'.
 
@@ -1072,8 +1108,7 @@ _comp.pdf> <./frames/figs/naivestratlegend.pdf>] [11
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 26.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 26.
-
-(build/presentation.aux)
+ (build/presentation.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 26.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 26.
 Package rerunfilecheck Info: File `presentation.out' has not changed.
@@ -1089,33 +1124,38 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 26.
  ) 
 Here is how much of TeX's memory you used:
- 17484 strings out of 495109
- 337603 string characters out of 6182810
- 404151 words of memory out of 5000000
- 20164 multiletter control sequences out of 15000+600000
- 21733 words of font info for 79 fonts, out of 8000000 for 9000
+ 17595 strings out of 495109
+ 338718 string characters out of 6182810
+ 406387 words of memory out of 5000000
+ 20251 multiletter control sequences out of 15000+600000
+ 24503 words of font info for 88 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 48i,15n,59p,412b,548s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
-></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb>
-</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></
-usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></us
-r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/
-local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/l
-ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/lo
-cal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/loca
-l/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/loc
-al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/loc
-al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/loca
-l/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local
-/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/
-texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/lo
-cal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr
-/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on build/presentation.pdf (12 pages, 285318 bytes).
+ 48i,19n,59p,412b,548s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
+></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
+</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
+/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb
+></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><
+/usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
+sr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></us
+r/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr
+/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/
+local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/
+local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/l
+ocal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/lo
+cal/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/loca
+l/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/
+texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/t
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/loc
+al/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/
+local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on build/presentation.pdf (18 pages, 339529 bytes).
 PDF statistics:
- 282 PDF objects out of 1000 (max. 8388607)
- 236 compressed objects within 3 object streams
- 28 named destinations out of 1000 (max. 500000)
- 95 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 388 PDF objects out of 1000 (max. 8388607)
+ 330 compressed objects within 4 object streams
+ 41 named destinations out of 1000 (max. 500000)
+ 103 words of extra memory for PDF output out of 10000 (max. 10000000)
 
