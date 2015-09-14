@@ -1,0 +1,5 @@
+Tagging a commit as being pretty special:
+git tag <optional commit hash> -a v1.2 -m 'Version 1.2'
+
+Listing commits with tags by hash:
+git show-ref -d --tags
