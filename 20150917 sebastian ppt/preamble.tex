@@ -5,16 +5,29 @@
 \institute{University of Toronto}
 \date{17 September 2015}
 \beamertemplatenavigationsymbolsempty
+\setbeamerfont{page number in head/foot}{size=\footnotesize}
+\setbeamertemplate{footline}[frame number]
 
 \usepackage{booktabs}
-\usepackage[compatibility=false]{caption}
-\usepackage{subcaption}
+\usepackage{adjustbox}
+\usepackage{subfig}
 \usepackage{bm} 			% Bold math fonts
+\usepackage{dsfont} 		% Doublestroke font
 
 \DeclareMathOperator{\sgn}{\mathrm{sgn}}
-\newcommand{\mat}[1]{\boldsymbol{#1}}
-\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+\renewcommand{\d}{\ensuremath{\,\mathrm{d}}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
 \newcommand{\bZ}{\bm{Z}}
 \newcommand{\bz}{\bm{z}}
 \newcommand{\btau}{\bm{\tau}}
 \newcommand{\cF}{\mathcal{F}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\indicator}{\mathds{1}}
+\newcommand{\mat}[1]{\boldsymbol{#1}}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+\newcommand\simcal[1]{\stackrel{\sim}{\smash{\mathcal{#1}}\rule{0pt}{1.2ex}}}
+
+\AtBeginSection[] {\begin{frame}
+    \frametitle{Roadmap} \tableofcontents[currentsection] \end{frame} }
