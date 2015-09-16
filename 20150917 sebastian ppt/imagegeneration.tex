@@ -1,0 +1,50 @@
+\documentclass{beamer}
+\input{preamble.tex}
+\usepackage{etex}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns}
+\usetikzlibrary{external} 		% Externalization library to avoid plot re-generation
+\tikzexternalize[prefix=frames/figs/] % activate
+\newdimen\LineSpace
+\tikzset{
+    line space/.code={\LineSpace=#1},
+    line space=5pt
+}
+\colorlet{buyLOcolor}{black!25}%
+\colorlet{sellLOcolor}{black!90}%
+\pgfdeclarepatternformonly[\LineSpace]{myhatch}{\pgfqpoint{-1pt}{-1pt}}{\pgfqpoint{\LineSpace}{\LineSpace}}{\pgfqpoint{\LineSpace}{\LineSpace}}%
+{
+    \pgfsetlinewidth{1pt}
+    \pgfpathmoveto{\pgfqpoint{0pt}{\LineSpace}}
+    \pgfpathlineto{\pgfqpoint{\LineSpace + 0.1pt}{-0.1pt}}
+    \pgfusepath{stroke}
+}
+\newlength\figureheight 
+\newlength\figurewidth
+\newcommand {\framedgraphic}[1] {
+	\adjustbox{max width=\textwidth}{#1}
+}
+\begin{document}
+
+\begin{frame}
+\frametitle{Limit-Order Book Imbalance}
+\begin{columns}[T] % align columns
+\begin{column}{.48\textwidth}
+%\centering
+\setlength\figureheight{\textwidth}%
+\setlength\figurewidth{\textwidth}%
+\tikzsetnextfilename{samplepath_cts_depths}%
+\input{frames/figs/samplepath_cts_depths.tikz}
+\end{column}%
+\hfill%
+\begin{column}{.48\textwidth}
+\centering
+\setlength\figureheight{\textwidth}%
+\setlength\figurewidth{\textwidth}%
+\tikzsetnextfilename{samplepath_dscr_depths}%
+\input{frames/figs/samplepath_dscr_depths.tikz}
+\end{column}%
+\end{columns}
+\end{frame}
+
+\end{document}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  14 SEP 2015 18:46
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  16 SEP 2015 19:10
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -798,6 +798,9 @@ LaTeX Info: Redefining \bm on input line 204.
 )
 (/usr/share/texlive/texmf-dist/tex/latex/doublestroke/dsfont.sty
 Package: dsfont 1995/08/01 v0.1 Double stroke roman fonts
+)
+(/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
+\bigstrutjot=\dimen218
 ))
 (build/presentation.aux)
 \openout1 = `presentation.aux'.
@@ -854,13 +857,13 @@ LaTeX Font Info:    ... okay on input line 3.
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count167
-\scratchdimen=\dimen218
+\scratchdimen=\dimen219
 \scratchbox=\box55
 \nofMPsegments=\count168
 \nofMParguments=\count169
 \everyMPshowfont=\toks42
 \MPscratchCnt=\count170
-\MPscratchDim=\dimen219
+\MPscratchDim=\dimen220
 \MPnumerator=\count171
 \makeMPintoPDFobject=\count172
 \everyMPtoPDFconversion=\toks43
@@ -1010,126 +1013,176 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
 (./frames/frame-1-background.tex) (build/presentation.toc) [4
 
 ]
-(./frames/frame-2-EDA.tex [5
-
-]
-LaTeX Font Info:    Try loading font information for U+msa on input line 17.
+(./frames/frame-2-EDA.tex
+LaTeX Font Info:    Try loading font information for U+msa on input line 7.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 17.
+LaTeX Font Info:    Try loading font information for U+msb on input line 7.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input 
-line 17.
+line 7.
 
 (/usr/share/texlive/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
 )
-<frames/figs/timewindows.pdf, id=139, 318.01007pt x 93.62779pt>
-File: frames/figs/timewindows.pdf Graphic file (type pdf)
+[5
 
-<use frames/figs/timewindows.pdf>
-Package pdftex.def Info: frames/figs/timewindows.pdf used on input line 17.
-(pdftex.def)             Requested size: 318.00928pt x 93.62755pt.
- [6
+] [6
 
- <./frames/figs/timewindows.pdf>] [7
+] <frames/figs/LOB4.pdf, id=152, 387.27084pt x 294.79936pt>
+File: frames/figs/LOB4.pdf Graphic file (type pdf)
 
-]
-[8
+<use frames/figs/LOB4.pdf>
+Package pdftex.def Info: frames/figs/LOB4.pdf used on input line 13.
+(pdftex.def)             Requested size: 387.26988pt x 294.79865pt.
+ [7
 
-]
-Overfull \vbox (1.20908pt too high) detected at line 67
+ <./frames/figs/LOB4.pdf>]
+<frames/figs/LOB4-formula.pdf, id=188, 387.27084pt x 294.79936pt>
+File: frames/figs/LOB4-formula.pdf Graphic file (type pdf)
+
+<use frames/figs/LOB4-formula.pdf>
+Package pdftex.def Info: frames/figs/LOB4-formula.pdf used on input line 13.
+(pdftex.def)             Requested size: 387.26988pt x 294.79865pt.
+ [8
+
+ <./frames/figs/LOB4-formula.pdf>]
+<frames/figs/imbalance1.pdf, id=225, 276.84428pt x 209.04097pt>
+File: frames/figs/imbalance1.pdf Graphic file (type pdf)
+
+<use frames/figs/imbalance1.pdf>
+Package pdftex.def Info: frames/figs/imbalance1.pdf used on input line 42.
+(pdftex.def)             Requested size: 276.8436pt x 209.04044pt.
+
+Overfull \vbox (11.6324pt too high) detected at line 42
  []
 
 [9
 
-] [10
+ <./frames/figs/imbalance1.pdf>]
+<frames/figs/imbalance2.pdf, id=259, 276.84428pt x 209.04097pt>
+File: frames/figs/imbalance2.pdf Graphic file (type pdf)
 
-] [11
+<use frames/figs/imbalance2.pdf>
+Package pdftex.def Info: frames/figs/imbalance2.pdf used on input line 42.
+(pdftex.def)             Requested size: 276.8436pt x 209.04044pt.
 
-]
-<frames/figs/FARO_naive_strat_comp.pdf, id=262, 224.2789pt x 220.11435pt>
-File: frames/figs/FARO_naive_strat_comp.pdf Graphic file (type pdf)
+Overfull \vbox (12.24072pt too high) detected at line 42
+ []
 
-<use frames/figs/FARO_naive_strat_comp.pdf>
-Package pdftex.def Info: frames/figs/FARO_naive_strat_comp.pdf used on input li
-ne 113.
-(pdftex.def)             Requested size: 97.59474pt x 83.65103pt.
+[10
 
-<frames/figs/NTAP_naive_strat_comp.pdf, id=263, 224.2789pt x 220.10832pt>
-File: frames/figs/NTAP_naive_strat_comp.pdf Graphic file (type pdf)
+ <./frames/figs/imbalance2.pdf>]
+<frames/figs/imbalance3.pdf, id=293, 276.84428pt x 209.04097pt>
+File: frames/figs/imbalance3.pdf Graphic file (type pdf)
 
-<use frames/figs/NTAP_naive_strat_comp.pdf>
-Package pdftex.def Info: frames/figs/NTAP_naive_strat_comp.pdf used on input li
-ne 113.
-(pdftex.def)             Requested size: 97.59474pt x 83.6521pt.
+<use frames/figs/imbalance3.pdf>
+Package pdftex.def Info: frames/figs/imbalance3.pdf used on input line 42.
+(pdftex.def)             Requested size: 276.8436pt x 209.04044pt.
 
-<frames/figs/ORCL_naive_strat_comp.pdf, id=264, 224.2789pt x 220.10832pt>
-File: frames/figs/ORCL_naive_strat_comp.pdf Graphic file (type pdf)
+Overfull \vbox (25.2324pt too high) detected at line 42
+ []
 
-<use frames/figs/ORCL_naive_strat_comp.pdf>
-Package pdftex.def Info: frames/figs/ORCL_naive_strat_comp.pdf used on input li
-ne 113.
-(pdftex.def)             Requested size: 97.59474pt x 83.6521pt.
+[11
 
-<frames/figs/INTC_naive_strat_comp.pdf, id=265, 224.2789pt x 220.10832pt>
-File: frames/figs/INTC_naive_strat_comp.pdf Graphic file (type pdf)
-
-<use frames/figs/INTC_naive_strat_comp.pdf>
-Package pdftex.def Info: frames/figs/INTC_naive_strat_comp.pdf used on input li
-ne 113.
-(pdftex.def)             Requested size: 97.59474pt x 83.6521pt.
-
-<frames/figs/naivestratlegend.pdf, id=266, 221.16426pt x 18.36261pt>
-File: frames/figs/naivestratlegend.pdf Graphic file (type pdf)
-
-<use frames/figs/naivestratlegend.pdf>
-Package pdftex.def Info: frames/figs/naivestratlegend.pdf used on input line 11
-3.
-(pdftex.def)             Requested size: 221.16371pt x 18.36255pt.
-
-Overfull \vbox (61.31871pt too high) detected at line 113
+ <./frames/figs/imbalance3.pdf>]
+Overfull \vbox (5.36269pt too high) detected at line 42
  []
 
 [12
 
- <./frames/figs/FARO_naive_strat_comp.pdf> <./frames/figs/NTAP_naive_strat_comp
-.pdf> <./frames/figs/ORCL_naive_strat_comp.pdf> <./frames/figs/INTC_naive_strat
-_comp.pdf> <./frames/figs/naivestratlegend.pdf>] [13
+] <frames/figs/timewindows.pdf, id=331, 318.01007pt x 93.62779pt>
+File: frames/figs/timewindows.pdf Graphic file (type pdf)
 
-] [14
+<use frames/figs/timewindows.pdf>
+Package pdftex.def Info: frames/figs/timewindows.pdf used on input line 54.
+(pdftex.def)             Requested size: 318.00928pt x 93.62755pt.
+ [13
 
-])
-(build/presentation.toc) [15
+ <./frames/figs/timewindows.pdf>] [14
 
-] (./frames/frame-3-ctsstoch.tex [16
+]
+[15
+
+]
+Overfull \vbox (1.20908pt too high) detected at line 104
+ []
+
+[16
 
 ] [17
 
 ] [18
 
 ]
+<frames/figs/FARO_naive_strat_comp.pdf, id=442, 224.2789pt x 220.11435pt>
+File: frames/figs/FARO_naive_strat_comp.pdf Graphic file (type pdf)
+
+<use frames/figs/FARO_naive_strat_comp.pdf>
+Package pdftex.def Info: frames/figs/FARO_naive_strat_comp.pdf used on input li
+ne 150.
+(pdftex.def)             Requested size: 97.59474pt x 83.65103pt.
+
+<frames/figs/NTAP_naive_strat_comp.pdf, id=443, 224.2789pt x 220.10832pt>
+File: frames/figs/NTAP_naive_strat_comp.pdf Graphic file (type pdf)
+
+<use frames/figs/NTAP_naive_strat_comp.pdf>
+Package pdftex.def Info: frames/figs/NTAP_naive_strat_comp.pdf used on input li
+ne 150.
+(pdftex.def)             Requested size: 97.59474pt x 83.6521pt.
+
+<frames/figs/ORCL_naive_strat_comp.pdf, id=444, 224.2789pt x 220.10832pt>
+File: frames/figs/ORCL_naive_strat_comp.pdf Graphic file (type pdf)
+
+<use frames/figs/ORCL_naive_strat_comp.pdf>
+Package pdftex.def Info: frames/figs/ORCL_naive_strat_comp.pdf used on input li
+ne 150.
+(pdftex.def)             Requested size: 97.59474pt x 83.6521pt.
+
+<frames/figs/INTC_naive_strat_comp.pdf, id=445, 224.2789pt x 220.10832pt>
+File: frames/figs/INTC_naive_strat_comp.pdf Graphic file (type pdf)
+
+<use frames/figs/INTC_naive_strat_comp.pdf>
+Package pdftex.def Info: frames/figs/INTC_naive_strat_comp.pdf used on input li
+ne 150.
+(pdftex.def)             Requested size: 97.59474pt x 83.6521pt.
+
+<frames/figs/naivestratlegend.pdf, id=446, 221.16426pt x 18.36261pt>
+File: frames/figs/naivestratlegend.pdf Graphic file (type pdf)
+
+<use frames/figs/naivestratlegend.pdf>
+Package pdftex.def Info: frames/figs/naivestratlegend.pdf used on input line 15
+0.
+(pdftex.def)             Requested size: 221.16371pt x 18.36255pt.
+
+Overfull \vbox (61.31871pt too high) detected at line 150
+ []
+
 [19
 
-] [20
+ <./frames/figs/FARO_naive_strat_comp.pdf> <./frames/figs/NTAP_naive_strat_comp
+.pdf> <./frames/figs/ORCL_naive_strat_comp.pdf> <./frames/figs/INTC_naive_strat
+_comp.pdf> <./frames/figs/naivestratlegend.pdf>] [20
 
 ] [21
 
-] [22
+])
+(build/presentation.toc) [22
 
-] [23
+] (./frames/frame-3-ctsstoch.tex [23
 
 ] [24
 
 ] [25
 
-] [26
+]
+[26
 
 ] [27
 
@@ -1139,22 +1192,629 @@ _comp.pdf> <./frames/figs/naivestratlegend.pdf>] [13
 
 ] [30
 
-] [31
+]
+Overfull \hbox (8.54462pt too wide) detected at line 135
+[] []
+ []
+
+[31
 
 ] [32
 
 ] [33
 
+] [34
+
+] [35
+
+]
+Overfull \hbox (21.43782pt too wide) detected at line 163
+[] []
+ []
+
+[36
+
+]
+Overfull \hbox (27.03703pt too wide) detected at line 180
+[] []
+ []
+
+[37
+
+] [38
+
+]
+LaTeX Font Info:    Try loading font information for U+dsrom on input line 208.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/doublestroke/Udsrom.fd
+File: Udsrom.fd 1995/08/01 v0.1 Double stroke roman font definitions
+)
+Overfull \hbox (34.60388pt too wide) detected at line 208
+[] []
+ []
+
+[39
+
+]
+Overfull \hbox (48.08235pt too wide) in paragraph at lines 223--223
+[]  
+ []
+
+
+Overfull \hbox (4.72543pt too wide) detected at line 223
+[][] \OT1/cmss/m/n/10.95 = [] []
+ []
+
+[40
+
+]
+Overfull \hbox (48.08235pt too wide) in paragraph at lines 223--223
+[]  
+ []
+
+
+Overfull \hbox (4.72543pt too wide) detected at line 223
+[][] \OT1/cmss/m/n/10.95 = [] []
+ []
+
+[41
+
+]
+Overfull \hbox (48.08235pt too wide) in paragraph at lines 223--223
+[]  
+ []
+
+
+Overfull \hbox (4.72543pt too wide) detected at line 223
+[][] \OT1/cmss/m/n/10.95 = [] []
+ []
+
+[42
+
+]
+Overfull \hbox (48.08235pt too wide) in paragraph at lines 223--223
+[]  
+ []
+
+
+Overfull \hbox (4.72543pt too wide) detected at line 223
+[][] \OT1/cmss/m/n/10.95 = [] []
+ []
+
+[43
+
+]
+Overfull \hbox (48.08235pt too wide) in paragraph at lines 223--223
+[]  
+ []
+
+
+Overfull \hbox (4.72543pt too wide) detected at line 223
+[][] \OT1/cmss/m/n/10.95 = [] []
+ []
+
+[44
+
+]
+Overfull \hbox (72.96645pt too wide) detected at line 237
+[] []
+ []
+
+[45
+
+] [46
+
+] [47
+
+] [48
+
+]) (build/presentation.toc) [49
+
+]
+(./frames/frame-4-dscrstoch.tex [50
+
+] [51
+
+] [52
+
+] [53
+
+] [54
+
+]
+Overfull \hbox (6.61282pt too wide) detected at line 137
+[] []
+ []
+
+
+Overfull \hbox (0.185pt too wide) in paragraph at lines 137--137
+[]  
+ []
+
+[55
+
+]
+Overfull \hbox (18.53236pt too wide) detected at line 162
+[] []
+ []
+
+[56
+
+]
+Overfull \hbox (123.99257pt too wide) detected at line 181
+[] []
+ []
+
+
+Overfull \hbox (123.99257pt too wide) detected at line 181
+[] []
+ []
+
+[57
+
+]
+Overfull \hbox (108.61563pt too wide) detected at line 198
+[] []
+ []
+
+
+Overfull \hbox (8.87877pt too wide) detected at line 198
+\OMS/cmsy/m/n/10.95 @\OT1/cmss/m/n/10.95 (\OT1/mathkerncmss/m/sl/10.95 q\OT1/cm
+ss/m/n/10.95 ) = [] \OT1/mathkerncmss/bx/sl/10.95 P[] []
+ []
+
+[58
+
+]
+Overfull \hbox (155.1026pt too wide) detected at line 215
+[] []
+ []
+
+[59
+
+] [60
+
+]) (build/presentation.toc) [61
+
+] (./frames/frame-5-results.tex [62
+
+]
+[63
+
+] [64
+
+]
+<frames/figs/timewindows-nfpc.pdf, id=1131, 316.12103pt x 88.58595pt>
+File: frames/figs/timewindows-nfpc.pdf Graphic file (type pdf)
+
+<use frames/figs/timewindows-nfpc.pdf>
+Package pdftex.def Info: frames/figs/timewindows-nfpc.pdf used on input line 79
+.
+(pdftex.def)             Requested size: 316.12025pt x 88.58572pt.
+
+<frames/figs/timewindows-reg.pdf, id=1132, 323.51666pt x 100.90398pt>
+File: frames/figs/timewindows-reg.pdf Graphic file (type pdf)
+
+<use frames/figs/timewindows-reg.pdf>
+Package pdftex.def Info: frames/figs/timewindows-reg.pdf used on input line 79.
+
+(pdftex.def)             Requested size: 323.51587pt x 100.90372pt.
+ [65
+
+ <./frames/figs/timewindows-nfpc.pdf> <./frames/figs/timewindows-reg.pdf>]
+<frames/figs/dp_cts_z1.pdf, id=1193, 229.64095pt x 205.66435pt>
+File: frames/figs/dp_cts_z1.pdf Graphic file (type pdf)
+
+<use frames/figs/dp_cts_z1.pdf>
+Package pdftex.def Info: frames/figs/dp_cts_z1.pdf used on input line 134.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dp_cts_nFPC_z1.pdf, id=1194, 229.64095pt x 205.66435pt>
+File: frames/figs/dp_cts_nFPC_z1.pdf Graphic file (type pdf)
+
+<use frames/figs/dp_cts_nFPC_z1.pdf>
+Package pdftex.def Info: frames/figs/dp_cts_nFPC_z1.pdf used on input line 134.
+
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dp_dscr_z1.pdf, id=1195, 229.64095pt x 205.66435pt>
+File: frames/figs/dp_dscr_z1.pdf Graphic file (type pdf)
+
+<use frames/figs/dp_dscr_z1.pdf>
+Package pdftex.def Info: frames/figs/dp_dscr_z1.pdf used on input line 134.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dp_dscr_nFPC_z1.pdf, id=1196, 229.64095pt x 205.66435pt>
+File: frames/figs/dp_dscr_nFPC_z1.pdf Graphic file (type pdf)
+
+<use frames/figs/dp_dscr_nFPC_z1.pdf>
+Package pdftex.def Info: frames/figs/dp_dscr_nFPC_z1.pdf used on input line 134
+.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dm_cts_z15.pdf, id=1197, 229.64095pt x 205.66435pt>
+File: frames/figs/dm_cts_z15.pdf Graphic file (type pdf)
+
+<use frames/figs/dm_cts_z15.pdf>
+Package pdftex.def Info: frames/figs/dm_cts_z15.pdf used on input line 134.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dm_cts_nFPC_z15.pdf, id=1198, 229.64095pt x 205.66435pt>
+File: frames/figs/dm_cts_nFPC_z15.pdf Graphic file (type pdf)
+
+<use frames/figs/dm_cts_nFPC_z15.pdf>
+Package pdftex.def Info: frames/figs/dm_cts_nFPC_z15.pdf used on input line 134
+.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dm_dscr_z15.pdf, id=1199, 229.64095pt x 205.66435pt>
+File: frames/figs/dm_dscr_z15.pdf Graphic file (type pdf)
+
+<use frames/figs/dm_dscr_z15.pdf>
+Package pdftex.def Info: frames/figs/dm_dscr_z15.pdf used on input line 134.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dm_dscr_nFPC_z15.pdf, id=1200, 229.64095pt x 205.66435pt>
+File: frames/figs/dm_dscr_nFPC_z15.pdf Graphic file (type pdf)
+
+<use frames/figs/dm_dscr_nFPC_z15.pdf>
+Package pdftex.def Info: frames/figs/dm_dscr_nFPC_z15.pdf used on input line 13
+4.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/altdeltalegend.pdf, id=1201, 427.18697pt x 57.2529pt>
+File: frames/figs/altdeltalegend.pdf Graphic file (type pdf)
+
+<use frames/figs/altdeltalegend.pdf>
+Package pdftex.def Info: frames/figs/altdeltalegend.pdf used on input line 134.
+
+(pdftex.def)             Requested size: 427.18591pt x 57.25275pt.
+ [66
+
+ <./frames/figs/dp_cts_z1.pdf> <./frames/figs/dp_cts_nFPC_z1.pdf> <./frames/fig
+s/dp_dscr_z1.pdf> <./frames/figs/dp_dscr_nFPC_z1.pdf> <./frames/figs/dm_cts_z15
+.pdf> <./frames/figs/dm_cts_nFPC_z15.pdf> <./frames/figs/dm_dscr_z15.pdf> <./fr
+ames/figs/dm_dscr_nFPC_z15.pdf> <./frames/figs/altdeltalegend.pdf>]
+<frames/figs/dp_cts_z8.pdf, id=1287, 229.64095pt x 205.66435pt>
+File: frames/figs/dp_cts_z8.pdf Graphic file (type pdf)
+
+<use frames/figs/dp_cts_z8.pdf>
+Package pdftex.def Info: frames/figs/dp_cts_z8.pdf used on input line 188.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dp_cts_nFPC_z8.pdf, id=1288, 229.64095pt x 205.66435pt>
+File: frames/figs/dp_cts_nFPC_z8.pdf Graphic file (type pdf)
+
+<use frames/figs/dp_cts_nFPC_z8.pdf>
+Package pdftex.def Info: frames/figs/dp_cts_nFPC_z8.pdf used on input line 188.
+
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dp_dscr_z8.pdf, id=1289, 229.64095pt x 205.66435pt>
+File: frames/figs/dp_dscr_z8.pdf Graphic file (type pdf)
+
+<use frames/figs/dp_dscr_z8.pdf>
+Package pdftex.def Info: frames/figs/dp_dscr_z8.pdf used on input line 188.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dp_dscr_nFPC_z8.pdf, id=1290, 229.64095pt x 205.66435pt>
+File: frames/figs/dp_dscr_nFPC_z8.pdf Graphic file (type pdf)
+
+<use frames/figs/dp_dscr_nFPC_z8.pdf>
+Package pdftex.def Info: frames/figs/dp_dscr_nFPC_z8.pdf used on input line 188
+.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dm_cts_z8.pdf, id=1291, 229.64095pt x 205.66435pt>
+File: frames/figs/dm_cts_z8.pdf Graphic file (type pdf)
+
+<use frames/figs/dm_cts_z8.pdf>
+Package pdftex.def Info: frames/figs/dm_cts_z8.pdf used on input line 188.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dm_cts_nFPC_z8.pdf, id=1292, 229.64095pt x 205.66435pt>
+File: frames/figs/dm_cts_nFPC_z8.pdf Graphic file (type pdf)
+
+<use frames/figs/dm_cts_nFPC_z8.pdf>
+Package pdftex.def Info: frames/figs/dm_cts_nFPC_z8.pdf used on input line 188.
+
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dm_dscr_z8.pdf, id=1293, 229.64095pt x 205.66435pt>
+File: frames/figs/dm_dscr_z8.pdf Graphic file (type pdf)
+
+<use frames/figs/dm_dscr_z8.pdf>
+Package pdftex.def Info: frames/figs/dm_dscr_z8.pdf used on input line 188.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dm_dscr_nFPC_z8.pdf, id=1294, 229.64095pt x 205.66435pt>
+File: frames/figs/dm_dscr_nFPC_z8.pdf Graphic file (type pdf)
+
+<use frames/figs/dm_dscr_nFPC_z8.pdf>
+Package pdftex.def Info: frames/figs/dm_dscr_nFPC_z8.pdf used on input line 188
+.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+File: frames/figs/altdeltalegend.pdf Graphic file (type pdf)
+ <use frames/figs/altdeltalegend.pdf>
+Package pdftex.def Info: frames/figs/altdeltalegend.pdf used on input line 188.
+
+(pdftex.def)             Requested size: 427.18591pt x 57.25275pt.
+
+[67
+
+ <./frames/figs/dp_cts_z8.pdf> <./frames/figs/dp_cts_nFPC_z8.pdf> <./frames/fig
+s/dp_dscr_z8.pdf> <./frames/figs/dp_dscr_nFPC_z8.pdf> <./frames/figs/dm_cts_z8.
+pdf> <./frames/figs/dm_cts_nFPC_z8.pdf> <./frames/figs/dm_dscr_z8.pdf> <./frame
+s/figs/dm_dscr_nFPC_z8.pdf>]
+<frames/figs/dp_cts_z15.pdf, id=1366, 229.64095pt x 205.66435pt>
+File: frames/figs/dp_cts_z15.pdf Graphic file (type pdf)
+
+<use frames/figs/dp_cts_z15.pdf>
+Package pdftex.def Info: frames/figs/dp_cts_z15.pdf used on input line 242.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dp_cts_nFPC_z15.pdf, id=1367, 229.64095pt x 205.66435pt>
+File: frames/figs/dp_cts_nFPC_z15.pdf Graphic file (type pdf)
+
+<use frames/figs/dp_cts_nFPC_z15.pdf>
+Package pdftex.def Info: frames/figs/dp_cts_nFPC_z15.pdf used on input line 242
+.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dp_dscr_z15.pdf, id=1368, 229.64095pt x 205.66435pt>
+File: frames/figs/dp_dscr_z15.pdf Graphic file (type pdf)
+
+<use frames/figs/dp_dscr_z15.pdf>
+Package pdftex.def Info: frames/figs/dp_dscr_z15.pdf used on input line 242.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dp_dscr_nFPC_z15.pdf, id=1369, 229.64095pt x 205.66435pt>
+File: frames/figs/dp_dscr_nFPC_z15.pdf Graphic file (type pdf)
+
+<use frames/figs/dp_dscr_nFPC_z15.pdf>
+Package pdftex.def Info: frames/figs/dp_dscr_nFPC_z15.pdf used on input line 24
+2.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dm_cts_z1.pdf, id=1370, 229.64095pt x 205.66435pt>
+File: frames/figs/dm_cts_z1.pdf Graphic file (type pdf)
+
+<use frames/figs/dm_cts_z1.pdf>
+Package pdftex.def Info: frames/figs/dm_cts_z1.pdf used on input line 242.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dm_cts_nFPC_z1.pdf, id=1371, 229.64095pt x 205.66435pt>
+File: frames/figs/dm_cts_nFPC_z1.pdf Graphic file (type pdf)
+
+<use frames/figs/dm_cts_nFPC_z1.pdf>
+Package pdftex.def Info: frames/figs/dm_cts_nFPC_z1.pdf used on input line 242.
+
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dm_dscr_z1.pdf, id=1372, 229.64095pt x 205.66435pt>
+File: frames/figs/dm_dscr_z1.pdf Graphic file (type pdf)
+
+<use frames/figs/dm_dscr_z1.pdf>
+Package pdftex.def Info: frames/figs/dm_dscr_z1.pdf used on input line 242.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+
+<frames/figs/dm_dscr_nFPC_z1.pdf, id=1373, 229.64095pt x 205.66435pt>
+File: frames/figs/dm_dscr_nFPC_z1.pdf Graphic file (type pdf)
+
+<use frames/figs/dm_dscr_nFPC_z1.pdf>
+Package pdftex.def Info: frames/figs/dm_dscr_nFPC_z1.pdf used on input line 242
+.
+(pdftex.def)             Requested size: 229.64037pt x 205.66385pt.
+File: frames/figs/altdeltalegend.pdf Graphic file (type pdf)
+ <use frames/figs/altdeltalegend.pdf>
+Package pdftex.def Info: frames/figs/altdeltalegend.pdf used on input line 242.
+
+(pdftex.def)             Requested size: 427.18591pt x 57.25275pt.
+
+[68
+
+ <./frames/figs/dp_cts_z15.pdf> <./frames/figs/dp_cts_nFPC_z15.pdf> <./frames/f
+igs/dp_dscr_z15.pdf> <./frames/figs/dp_dscr_nFPC_z15.pdf> <./frames/figs/dm_cts
+_z1.pdf> <./frames/figs/dm_cts_nFPC_z1.pdf> <./frames/figs/dm_dscr_z1.pdf> <./f
+rames/figs/dm_dscr_nFPC_z1.pdf>]
+<frames/figs/ORCL_comp4stoch.pdf, id=1444, 478.08011pt x 267.01355pt>
+File: frames/figs/ORCL_comp4stoch.pdf Graphic file (type pdf)
+
+<use frames/figs/ORCL_comp4stoch.pdf>
+Package pdftex.def Info: frames/figs/ORCL_comp4stoch.pdf used on input line 251
+.
+(pdftex.def)             Requested size: 478.07893pt x 267.01288pt.
+ [69
+
+ <./frames/figs/ORCL_comp4stoch.pdf>]
+<frames/figs/ORCL_comp4stoch_inv.pdf, id=1465, 470.01697pt x 267.01558pt>
+File: frames/figs/ORCL_comp4stoch_inv.pdf Graphic file (type pdf)
+
+<use frames/figs/ORCL_comp4stoch_inv.pdf>
+Package pdftex.def Info: frames/figs/ORCL_comp4stoch_inv.pdf used on input line
+ 258.
+(pdftex.def)             Requested size: 470.01581pt x 267.01492pt.
+ [70
+
+ <./frames/figs/ORCL_comp4stoch_inv.pdf>]
+<frames/figs/samplepath_cts_paths.pdf, id=1489, 187.09499pt x 167.48973pt>
+File: frames/figs/samplepath_cts_paths.pdf Graphic file (type pdf)
+
+<use frames/figs/samplepath_cts_paths.pdf>
+Package pdftex.def Info: frames/figs/samplepath_cts_paths.pdf used on input lin
+e 280.
+(pdftex.def)             Requested size: 187.09451pt x 167.48932pt.
+
+<frames/figs/samplepath_dscr_paths.pdf, id=1490, 187.09499pt x 167.48973pt>
+File: frames/figs/samplepath_dscr_paths.pdf Graphic file (type pdf)
+
+<use frames/figs/samplepath_dscr_paths.pdf>
+Package pdftex.def Info: frames/figs/samplepath_dscr_paths.pdf used on input li
+ne 280.
+(pdftex.def)             Requested size: 187.09451pt x 167.48932pt.
+
+<frames/figs/samplepathslegend.pdf, id=1491, 372.90115pt x 61.63728pt>
+File: frames/figs/samplepathslegend.pdf Graphic file (type pdf)
+
+<use frames/figs/samplepathslegend.pdf>
+Package pdftex.def Info: frames/figs/samplepathslegend.pdf used on input line 2
+80.
+(pdftex.def)             Requested size: 372.90024pt x 61.63712pt.
+
+Overfull \vbox (4.28839pt too high) detected at line 280
+ []
+
+[71
+
+ <./frames/figs/samplepath_cts_paths.pdf> <./frames/figs/samplepath_dscr_paths.
+pdf> <./frames/figs/samplepathslegend.pdf>]
+<frames/figs/samplepath_cts_depths.pdf, id=1535, 187.09499pt x 174.52704pt>
+File: frames/figs/samplepath_cts_depths.pdf Graphic file (type pdf)
+
+<use frames/figs/samplepath_cts_depths.pdf>
+Package pdftex.def Info: frames/figs/samplepath_cts_depths.pdf used on input li
+ne 299.
+(pdftex.def)             Requested size: 187.09451pt x 174.5266pt.
+
+<frames/figs/samplepath_dscr_depths.pdf, id=1536, 187.09499pt x 174.52704pt>
+File: frames/figs/samplepath_dscr_depths.pdf Graphic file (type pdf)
+
+<use frames/figs/samplepath_dscr_depths.pdf>
+Package pdftex.def Info: frames/figs/samplepath_dscr_depths.pdf used on input l
+ine 299.
+(pdftex.def)             Requested size: 187.09451pt x 174.5266pt.
+ [72
+
+ <./frames/figs/samplepath_cts_depths.pdf> <./frames/figs/samplepath_dscr_depth
+s.pdf>]
+<frames/figs/IS_sameday_FARO.pdf, id=1576, 248.35887pt x 242.88141pt>
+File: frames/figs/IS_sameday_FARO.pdf Graphic file (type pdf)
+
+<use frames/figs/IS_sameday_FARO.pdf>
+Package pdftex.def Info: frames/figs/IS_sameday_FARO.pdf used on input line 330
+.
+(pdftex.def)             Requested size: 248.35826pt x 242.88081pt.
+
+<frames/figs/IS_sameday_ORCL.pdf, id=1577, 248.35887pt x 242.88141pt>
+File: frames/figs/IS_sameday_ORCL.pdf Graphic file (type pdf)
+
+<use frames/figs/IS_sameday_ORCL.pdf>
+Package pdftex.def Info: frames/figs/IS_sameday_ORCL.pdf used on input line 330
+.
+(pdftex.def)             Requested size: 248.35826pt x 242.88081pt.
+
+<frames/figs/IS_sameday_NTAP.pdf, id=1578, 248.35887pt x 242.88141pt>
+File: frames/figs/IS_sameday_NTAP.pdf Graphic file (type pdf)
+
+<use frames/figs/IS_sameday_NTAP.pdf>
+Package pdftex.def Info: frames/figs/IS_sameday_NTAP.pdf used on input line 330
+.
+(pdftex.def)             Requested size: 248.35826pt x 242.88081pt.
+
+<frames/figs/IS_sameday_INTC.pdf, id=1579, 248.35887pt x 242.88141pt>
+File: frames/figs/IS_sameday_INTC.pdf Graphic file (type pdf)
+
+<use frames/figs/IS_sameday_INTC.pdf>
+Package pdftex.def Info: frames/figs/IS_sameday_INTC.pdf used on input line 330
+.
+(pdftex.def)             Requested size: 248.35826pt x 242.88081pt.
+
+<frames/figs/strategylegend.pdf, id=1580, 540.79941pt x 18.4961pt>
+File: frames/figs/strategylegend.pdf Graphic file (type pdf)
+
+<use frames/figs/strategylegend.pdf>
+Package pdftex.def Info: frames/figs/strategylegend.pdf used on input line 330.
+
+(pdftex.def)             Requested size: 540.7981pt x 18.49603pt.
+
+Overfull \vbox (10.16432pt too high) detected at line 330
+ []
+
+[73
+
+ <./frames/figs/IS_sameday_FARO.pdf> <./frames/figs/IS_sameday_ORCL.pdf> <./fra
+mes/figs/IS_sameday_NTAP.pdf> <./frames/figs/IS_sameday_INTC.pdf> <./frames/fig
+s/strategylegend.pdf>]
+Overfull \vbox (8.17674pt too high) detected at line 363
+ []
+
+[74
+
+] <frames/figs/IS_annual_ORCL.pdf, id=1653, 248.35887pt x 242.8804pt>
+File: frames/figs/IS_annual_ORCL.pdf Graphic file (type pdf)
+
+<use frames/figs/IS_annual_ORCL.pdf>
+Package pdftex.def Info: frames/figs/IS_annual_ORCL.pdf used on input line 391.
+
+(pdftex.def)             Requested size: 248.35826pt x 242.8798pt.
+
+<frames/figs/IS_annual_INTC.pdf, id=1654, 248.35887pt x 242.8804pt>
+File: frames/figs/IS_annual_INTC.pdf Graphic file (type pdf)
+
+<use frames/figs/IS_annual_INTC.pdf>
+Package pdftex.def Info: frames/figs/IS_annual_INTC.pdf used on input line 391.
+
+(pdftex.def)             Requested size: 248.35826pt x 242.8798pt.
+File: frames/figs/strategylegend.pdf Graphic file (type pdf)
+ <use frames/figs/strategylegend.pdf>
+Package pdftex.def Info: frames/figs/strategylegend.pdf used on input line 391.
+
+(pdftex.def)             Requested size: 540.7981pt x 18.49603pt.
+
+[75
+
+ <./frames/figs/IS_annual_ORCL.pdf> <./frames/figs/IS_annual_INTC.pdf>]
+[76
+
+] [77
+
+] <frames/figs/OOS_annual_INTC.pdf, id=1714, 248.35887pt x 242.8794pt>
+File: frames/figs/OOS_annual_INTC.pdf Graphic file (type pdf)
+
+<use frames/figs/OOS_annual_INTC.pdf>
+Package pdftex.def Info: frames/figs/OOS_annual_INTC.pdf used on input line 456
+.
+(pdftex.def)             Requested size: 248.35826pt x 242.87878pt.
+
+<frames/figs/OOS_annual_AAPL.pdf, id=1715, 248.35887pt x 242.8794pt>
+File: frames/figs/OOS_annual_AAPL.pdf Graphic file (type pdf)
+
+<use frames/figs/OOS_annual_AAPL.pdf>
+Package pdftex.def Info: frames/figs/OOS_annual_AAPL.pdf used on input line 456
+.
+(pdftex.def)             Requested size: 248.35826pt x 242.87878pt.
+File: frames/figs/strategylegend.pdf Graphic file (type pdf)
+ <use frames/figs/strategylegend.pdf>
+Package pdftex.def Info: frames/figs/strategylegend.pdf used on input line 456.
+
+(pdftex.def)             Requested size: 540.7981pt x 18.49603pt.
+
+[78
+
+ <./frames/figs/OOS_annual_INTC.pdf> <./frames/figs/OOS_annual_AAPL.pdf>]
+[79
+
+]
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 500.
+ [80
+
+]) (build/presentation.toc) [81
+
+] (./frames/frame-6-futurework.tex
+[82
+
+] [83
+
+] [84
+
+] [85
+
+]) (./frames/frame-7-endmatter.tex [86
+
+] [87
+
 ])
-(build/presentation.toc) [34
-
-] (./frames/frame-4-dscrstoch.tex)
-(build/presentation.toc) [35
-
-] (./frames/frame-5-results.tex)
-(build/presentation.toc) [36
-
-] (./frames/frame-6-futurework.tex)
 \tf@nav=\write6
 \openout6 = `presentation.nav'.
 
@@ -1164,12 +1824,12 @@ _comp.pdf> <./frames/figs/naivestratlegend.pdf>] [13
 \tf@snm=\write8
 \openout8 = `presentation.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 26.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 26.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 29.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 29.
 
 (build/presentation.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 26.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 26.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 29.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 29.
 Package rerunfilecheck Info: File `presentation.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
 
@@ -1177,45 +1837,55 @@ Package rerunfilecheck Info: File `presentation.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 26.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 29.
  ) 
 Here is how much of TeX's memory you used:
- 18150 strings out of 495028
- 334470 string characters out of 6181497
- 416370 words of memory out of 7000000
- 20765 multiletter control sequences out of 15000+600000
- 32467 words of font info for 98 fonts, out of 8000000 for 9000
+ 18686 strings out of 495028
+ 346063 string characters out of 6181497
+ 416656 words of memory out of 7000000
+ 21125 multiletter control sequences out of 15000+600000
+ 38263 words of font info for 120 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 72i,15n,105p,421b,586s stack positions out of 5000i,500n,10000p,7000000b,80000s
- </home/anton/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecso1200.720pk> </home/a
-nton/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecso0800.600pk> </home/anton/.texmf
--var/fonts/pk/ljfour/jknappen/ec/ecso1000.657pk></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmib10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cmextra/c
-mmib8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/ty
-pe1/public/amsfonts/cm/cmssi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
-t10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam
-10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.
-pfb>
-Output written on build/presentation.pdf (36 pages, 382016 bytes).
+ 72i,23n,105p,421b,630s stack positions out of 5000i,500n,10000p,7000000b,80000s
+ </home/anton/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecso0800.450pk> </home/a
+nton/.texmf-var/fonts/pk/ljfour/jknappen/ec/ecso1200.720pk> </home/anton/.texmf
+-var/fonts/pk/ljfour/jknappen/ec/ecso0800.600pk> </home/anton/.texmf-var/fonts/
+pk/ljfour/jknappen/ec/ecso1000.657pk></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cmextra/cmex8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmssbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmssi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss
+i12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi9.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/shar
+e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/doublestroke/dsrom10.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/doublestroke/dsrom8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/symbols/msam10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
+ic/amsfonts/symbols/msam7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/pal
+atino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8
+a.pfb>
+Output written on build/presentation.pdf (87 pages, 2645757 bytes).
 PDF statistics:
- 784 PDF objects out of 1000 (max. 8388607)
- 695 compressed objects within 7 object streams
- 80 named destinations out of 1000 (max. 500000)
- 127 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2034 PDF objects out of 2073 (max. 8388607)
+ 1813 compressed objects within 19 object streams
+ 183 named destinations out of 1000 (max. 500000)
+ 367 words of extra memory for PDF output out of 10000 (max. 10000000)
 

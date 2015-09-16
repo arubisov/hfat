@@ -1,7 +1,44 @@
 % introduce CTMC 
 \begin{frame}
-\frametitle{Modelling Imbalance}
+\frametitle{Limit-Order Book Imbalance}
+\emph{Imbalance} is a ratio of quoted limit order volumes between the bid and ask side.
+\pause
+\[ I(t) = \frac{V_{bid}(t) - V_{ask}(t)}{V_{bid}(t) + V_{ask}(t)} \in [-1,1] \]
+\end{frame}
 
+\begin{frame}
+\frametitle{Limit-Order Book Imbalance}
+\only<1>{\adjustimage{max size=\textwidth}{frames/figs/LOB4.pdf}}
+\only<2>{\adjustimage{max size=\textwidth}{frames/figs/LOB4-formula.pdf}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Limit-Order Book Imbalance}
+\only<1>{
+Resulting timeseries is noisy.
+\adjustimage{max size=\textwidth}{frames/figs/imbalance1.pdf}
+}
+\only<2>{
+Smooth it by averaging on a sliding window (1 s).
+\adjustimage{max size=\textwidth}{frames/figs/imbalance2.pdf}
+}
+\only<3>{
+Model as a continuous-time Markov chain $Z(t)$ with generator $G$.
+\adjustimage{max size=\textwidth}{frames/figs/imbalance3.pdf}
+}
+\only<4>{
+Model as a continuous-time Markov chain $Z(t)$ with generator $G$.
+\vspace{0.1\textwidth}%
+\[ \def\arraystretch{2}%
+Z = \left\lbrace \begin{array}{lll}
+5, & \rho \in [+\frac{3}{5},+1], & \text{buy-heavy} \\
+4, & \rho \in [+\frac{1}{5},+\frac{3}{5}], & \text{buy-biased} \\
+3, & \rho \in [-\frac{1}{5},+\frac{1}{5}), & \text{neutral} \\
+2, & \rho \in [-\frac{3}{5}, -\frac{1}{5}), & \text{sell-biased} \\
+1, & \rho \in [-1, -\frac{3}{5}), & \text{sell-heavy} 
+\end{array} \right. \]
+\vspace{0.1\textwidth}%
+}
 \end{frame}
 
 % introduce nFPC calibration   

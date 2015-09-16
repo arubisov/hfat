@@ -1,7 +1,7 @@
 \beamer@endinputifotherversion {3.36pt}
 \beamer@sectionintoc {2}{Background Information}{3}{0}{1}
 \beamer@sectionintoc {3}{Exploratory Data Analysis}{4}{0}{2}
-\beamer@sectionintoc {4}{Maximizing Wealth via Continuous-Time Stochastic Optimal Control}{15}{0}{3}
-\beamer@sectionintoc {5}{Maximizing Wealth via Discrete-Time Stochastic Optimal Control}{34}{0}{4}
-\beamer@sectionintoc {6}{Results}{35}{0}{5}
-\beamer@sectionintoc {7}{Future Work}{36}{0}{6}
+\beamer@sectionintoc {4}{Maximizing Wealth via Continuous-Time Stochastic Control}{22}{0}{3}
+\beamer@sectionintoc {5}{Maximizing Wealth via Discrete-Time Stochastic Control}{49}{0}{4}
+\beamer@sectionintoc {6}{Backtesting Results}{61}{0}{5}
+\beamer@sectionintoc {7}{Conclusion and Future Work}{81}{0}{6}

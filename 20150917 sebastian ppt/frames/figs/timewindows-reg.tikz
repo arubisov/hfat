@@ -1,0 +1,15 @@
+% Limit Order Book timeline by Anton
+%
+\colorlet{buyLOcolor}{black!25}%
+\colorlet{sellLOcolor}{black!90}%
+
+\begin{tikzpicture}
+    \draw [>=latex,->] (0,0) -- (10,0) node[draw=none,fill=none,shift=(right:0.5)] {time};
+    \draw[mark options={fill=black}, mark size=+3pt] plot[mark=*] coordinates {(1,0)} node[shift=(down:0.2), align=center, anchor=north east] {$t-\Delta t$};
+    \draw[mark options={fill=black}, mark size=+3pt] plot[mark=*] coordinates {(5,0)} node[shift=(down:0.5), align=center] {$t$};
+%%% BRACES
+	\draw [decorate, decoration = {brace, amplitude = 10pt}] (1.1,0.25) -- (4.9,0.25) node [black, midway, yshift = -0.6cm] {};
+	\node at (3,1) [anchor=south, text width=6cm, align=left, font=\footnotesize, align=center] {$\rho(t)$ unchanged.};		
+	\draw [decorate, decoration = {brace, mirror, amplitude = 10pt}] (1.1,-0.25) -- (4.9,-0.25) node [black, midway, yshift = -0.6cm] {}; 
+	\node at (3,-1) [anchor=north, text width=6cm, align=left, font=\footnotesize, align=center] {$\Delta S(t)$ calculated over the same past interval. \vphantom{$I(t)$}};		
+\end{tikzpicture}

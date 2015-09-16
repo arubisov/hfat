@@ -13,12 +13,19 @@
 \usepackage{subfig}
 \usepackage{bm} 			% Bold math fonts
 \usepackage{dsfont} 		% Doublestroke font
+\usepackage{multirow}
 
 \DeclareMathOperator{\sgn}{\mathrm{sgn}}
 \renewcommand{\d}{\ensuremath{\,\mathrm{d}}}
 \renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
 \newcommand{\E}{\mathbb{E}}
+\newcommand{\bP}{\bm{P}}
 \newcommand{\bZ}{\bm{Z}}
+\newcommand{\bj}{\bm{j}}
+\newcommand{\bu}{\bm{u}}
+\newcommand{\bw}{\bm{w}}
+\newcommand{\bx}{\bm{x}}
 \newcommand{\bz}{\bm{z}}
 \newcommand{\btau}{\bm{\tau}}
 \newcommand{\cF}{\mathcal{F}}
@@ -31,3 +38,8 @@
 
 \AtBeginSection[] {\begin{frame}
     \frametitle{Roadmap} \tableofcontents[currentsection] \end{frame} }
+
+% line break within a table cell
+% pass [c] or [b] to align with center or bottom of cell
+\newcommand{\cellbreak}[3]{%
+  \begin{tabular}[#1]{@{}#2@{}}#3\end{tabular}}

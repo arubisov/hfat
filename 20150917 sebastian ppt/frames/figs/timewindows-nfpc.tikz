@@ -1,0 +1,19 @@
+% Limit Order Book timeline by Anton
+%
+\colorlet{buyLOcolor}{black!25}%
+\colorlet{sellLOcolor}{black!90}%
+
+\begin{tikzpicture}
+    \draw [>=latex,->] (0,0) -- (10,0) node[draw=none,fill=none,shift=(right:0.5)] {time};
+    \draw[mark options={fill=black}, mark size=+3pt] plot[mark=*] coordinates {(1,0)} node[shift=(down:0.5), align=center] {$t-\Delta t$};
+    \draw[mark options={fill=black}, mark size=+3pt] plot[mark=*] coordinates {(5,0)} node[shift=(down:0.5), align=center] {$t$};
+    \draw[mark options={fill=black}, mark size=+3pt] plot[mark=*] coordinates {(9,0)} node[shift=(down:0.5), align=center] {$t+\Delta t$};
+    
+%%% BRACES
+
+	
+	\draw [decorate, decoration = {brace, amplitude = 10pt}] (1.1,0.25) -- (4.9,0.25) node [black, midway, yshift = -0.6cm] {};
+	\node at (2.5,1) [anchor=south, text width=5cm, align=left, font=\footnotesize] {$\rho(t)$ is the imbalance bin of the time-weighted average of $I(t)$ over this past interval.};		
+	\draw [decorate, decoration = {brace, amplitude = 10pt}] (5.1,0.25) -- (8.9,0.25) node [black, midway, yshift = -0.6cm] {}; 
+	\node at (5.5,1) [anchor=south west, text width=5cm, align=left, font=\footnotesize] {$\Delta S(t)$ is the sign of the midprice change over this future interval. \vphantom{$I(t)$}};		
+\end{tikzpicture}

@@ -1,0 +1,71 @@
+\begin{frame}
+\frametitle{Conclusion}
+\begin{itemize}
+\item 877\% ROI on \texttt{INTC} and \texttt{AAPL}
+\item Factor in colocation fees, data subscription fees...
+\item ROI down to 359\%
+\item Other high liquidity, low bid-ask spread stocks: \texttt{DELL}, \texttt{MSFT}
+\item \emph{Can we take this strategy to market?}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Future Work}
+\begin{itemize}
+\item Market order costs
+\begin{itemize}
+\item LOs are free but MOs have a cost of $c$
+\item presumed effect: upper bound on $\delta^\pm$ from $1/\kappa$ to $1/\kappa + c$.
+\item presumed effect: fewer market orders
+\end{itemize}
+\item Discrete posting depths in increments of 1 tick
+\begin{itemize}
+\item Current depths are continuous variables
+\item For most stocks, depth is in increments of \$0.01
+\item Can be solved by rounding...
+\end{itemize}
+\item Short-term price impact
+\begin{itemize}
+\item what effect does our trading have on the market?
+\item 100 shares per execution = 600k shares per day = 1\% daily vol
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Future Work}
+\begin{itemize}
+\item Accounting for non-homogeneity
+\begin{itemize}
+\item data is nonhomogeneous, both intra-day and inter-day
+\item calibrate first/last hour separately?
+\end{itemize}
+\item Backtesting engine: information latency
+\begin{itemize}
+\item minimizing latency is critical in high-frequency algorithmic trading
+\item currently we have immediate execution
+\item introduce simple 2-4 ms execution lag?
+\end{itemize}
+\item Backtesting engine: algorithm latency
+\begin{itemize}
+\item currently we feed a reconstructed LOB
+\item requires redesign to process live data feed
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Future Work}
+\begin{itemize}
+\item Backtesting engine: tracking LOB queue position
+\begin{itemize}
+\item $e^{-\kappa \delta}$ fill probability is highly flawed
+\begin{itemize}
+\item random numbers determine whether our orders get filled
+\item depth $\delta=0$ is guaranteed execution
+\end{itemize}
+\item implicit cancellation and reposting of orders
+\item queue position tracking adds a control of modifying/keeping existing order
+\end{itemize}
+\end{itemize}
+\end{frame}
