@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  16 SEP 2015 16:13
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  16 SEP 2015 23:58
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1228,39 +1228,58 @@ ick labels; missing features). Consider writing \pgfplotsset{compat=1.9} into y
 our preamble.
  on input line 27.
 
-(build/imagegeneration.nav) (./frames/figs/samplepath_cts_depths.tikz
+(build/imagegeneration.nav) (./frames/figs/LOB1.tikz
 ===== 'mode=convert with system call': Invoking 'pdflatex -shell-escape -halt-o
-n-error -interaction=batchmode -jobname "frames/figs/samplepath_cts_depths" "\d
-ef\tikzexternalrealjob{imagegeneration}\input{imagegeneration}"' ========
+n-error -interaction=batchmode -jobname "frames/figs/LOB1" "\def\tikzexternalre
+aljob{imagegeneration}\input{imagegeneration}"' ========
 \openout3 = `imagegeneration.auxlock'.
 
 runsystem(pdflatex -shell-escape -halt-on-error -interaction=batchmode -jobname
- "frames/figs/samplepath_cts_depths" "\def\tikzexternalrealjob{imagegeneration}
-\input{imagegeneration}")...executed.
-
-\openout3 = `imagegeneration.auxlock'.
-
-) (./frames/figs/samplepath_dscr_depths.tikz
-===== 'mode=convert with system call': Invoking 'pdflatex -shell-escape -halt-o
-n-error -interaction=batchmode -jobname "frames/figs/samplepath_dscr_depths" "\
-def\tikzexternalrealjob{imagegeneration}\input{imagegeneration}"' ========
-\openout3 = `imagegeneration.auxlock'.
-
-runsystem(pdflatex -shell-escape -halt-on-error -interaction=batchmode -jobname
- "frames/figs/samplepath_dscr_depths" "\def\tikzexternalrealjob{imagegeneration
-}\input{imagegeneration}")...executed.
+ "frames/figs/LOB1" "\def\tikzexternalrealjob{imagegeneration}\input{imagegener
+ation}")...executed.
 
 \openout3 = `imagegeneration.auxlock'.
 
 )
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
-(Font)              size <5> substituted on input line 48.
+(Font)              size <5> substituted on input line 39.
 
 [1{/home/anton/.texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
- <./frames/figs/samplepath_cts_depths.pdf> <./frames/figs/samplepath_dscr_depth
-s.pdf>]
+ <./frames/figs/LOB1.pdf>] (./frames/figs/LOB2.tikz
+===== 'mode=convert with system call': Invoking 'pdflatex -shell-escape -halt-o
+n-error -interaction=batchmode -jobname "frames/figs/LOB2" "\def\tikzexternalre
+aljob{imagegeneration}\input{imagegeneration}"' ========
+\openout3 = `imagegeneration.auxlock'.
+
+runsystem(pdflatex -shell-escape -halt-on-error -interaction=batchmode -jobname
+ "frames/figs/LOB2" "\def\tikzexternalrealjob{imagegeneration}\input{imagegener
+ation}")...executed.
+
+\openout3 = `imagegeneration.auxlock'.
+
+) [2
+
+ <./frames/figs/LOB2.pdf>] (./frames/figs/LOB3.tikz
+===== 'mode=convert with system call': Invoking 'pdflatex -shell-escape -halt-o
+n-error -interaction=batchmode -jobname "frames/figs/LOB3" "\def\tikzexternalre
+aljob{imagegeneration}\input{imagegeneration}"' ========
+\openout3 = `imagegeneration.auxlock'.
+
+runsystem(pdflatex -shell-escape -halt-on-error -interaction=batchmode -jobname
+ "frames/figs/LOB3" "\def\tikzexternalrealjob{imagegeneration}\input{imagegener
+ation}")...executed.
+
+\openout3 = `imagegeneration.auxlock'.
+
+) [3
+
+ <./frames/figs/LOB3.pdf>] (./frames/figs/LOB4.tikz
+===== Image 'frames/figs/LOB4' is up-to-date. ======
+) [4
+
+ <./frames/figs/LOB4.pdf>]
 \tf@nav=\write7
 \openout7 = `imagegeneration.nav'.
 
@@ -1270,12 +1289,11 @@ s.pdf>]
 \tf@snm=\write9
 \openout9 = `imagegeneration.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 50.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 50.
-
-(build/imagegeneration.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 50.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 50.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 41.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 41.
+ (build/imagegeneration.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 41.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 41.
 Package rerunfilecheck Info: File `imagegeneration.out' has not changed.
 (rerunfilecheck)             Checksum: <no file>.
 
@@ -1283,26 +1301,25 @@ Package rerunfilecheck Info: File `imagegeneration.out' has not changed.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 50.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 41.
  ) 
 Here is how much of TeX's memory you used:
- 27530 strings out of 495028
- 618251 string characters out of 6181497
- 796446 words of memory out of 7000000
- 30090 multiletter control sequences out of 15000+600000
+ 27544 strings out of 495028
+ 618307 string characters out of 6181497
+ 796484 words of memory out of 7000000
+ 30092 multiletter control sequences out of 15000+600000
  5458 words of font info for 20 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  72i,12n,105p,736b,609s stack positions out of 5000i,500n,10000p,7000000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/tex
-mf-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on build/imagegeneration.pdf (1 page, 59372 bytes).
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr
+/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/share/texli
+ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmss9.pfb>
+Output written on build/imagegeneration.pdf (4 pages, 69234 bytes).
 PDF statistics:
- 76 PDF objects out of 1000 (max. 8388607)
- 57 compressed objects within 1 object stream
- 3 named destinations out of 1000 (max. 500000)
- 59 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 131 PDF objects out of 1000 (max. 8388607)
+ 106 compressed objects within 2 object streams
+ 9 named destinations out of 1000 (max. 500000)
+ 69 words of extra memory for PDF output out of 10000 (max. 10000000)
 

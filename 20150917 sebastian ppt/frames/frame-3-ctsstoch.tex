@@ -138,7 +138,6 @@ on $\mathcal{D}$, where $\mathcal{D} = [0,T] \times \R^m$.
 \begin{frame}
 \frametitle{Compensated Markov Chain Process}
 To solve for $\cL^{\bu}_t Ht$ we need the compensated Markov chain process.
-\vspace{\baselineskip}
 For Poisson processes, this is
 \[ \d K^{\pm} = \d \simcal{K}^{\pm} + \mu^{\pm}(\bz) \d t \]
 %\vspace{\baselineskip}
@@ -154,11 +153,13 @@ For the CTMC:
 \begin{frame}
 \frametitle{Solving for the Infinitesimal Generator}
 \[
+\resizebox{\textwidth}{!}{$\displaystyle
 \begin{aligned}
 \cL^{\delta}_t H & = \mu^+(\bz) e^{ -\kappa \delta^{-}} \bigl[ H(t,x+(s+\xi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \\
 & \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} \bigl[ H(t,x-(s-\xi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \\
 & \quad + \sum_{\bj} G_{\bz,\bj} \E \left[ H(t,x,s+\eta_{0,\bj},\bj,q) - H(\cdot) \right]
 \end{aligned}
+$}
 \]
 \end{frame}
 
@@ -167,10 +168,12 @@ For the CTMC:
 \frametitle{Resulting Dynamic Programming Equation}
 Our dynamic programming equation simplifies to
 \[
+\resizebox{\textwidth}{!}{$\displaystyle
 \begin{aligned}
 0 = \max \biggl\lbrace \partial_t H + \sup \limits_{\bu \in \cA_t} \cL^{\bu}_t H \; ; \; & H(t,x-(s+\xi), s, \bz, q+1) - H(\cdot) \; ; \\
 &  H(t,x+(s-\xi), s, \bz, q-1) - H(\cdot) \biggr\rbrace
 \end{aligned}
+$}
 \]
 with boundary conditions
 \begin{align*}
@@ -199,11 +202,13 @@ h(t, \bz, 0) & = 0
 \begin{frame}
 \frametitle{Simplified Infinitesimal Generator}
 \[
+\resizebox{\textwidth}{!}{$\displaystyle
 \begin{aligned}
 \cL^{\delta}_t H & = \mu^+(\bz) e^{ -\kappa \delta^{-}} \bigl[ \delta^- + 2 \xi \cdot \indicator_{q \geq 1} + h(t,\bz,q-1) - h(t,\bz,q) \bigr] \\
 & \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} \bigl[ \delta^+ + 2 \xi \cdot \indicator_{q \leq -1} + h(t,\bz,q+1) - h(t,\bz,q) \bigr] \\
 & \quad + \sum_{\bj} G_{\bz,\bj} \left[q \E [\eta_{0,\bj}] +h(t,\bj,q) - h(t,\bz, q) \right]
 \end{aligned}
+$}
 \]
 \end{frame}
 
@@ -211,12 +216,16 @@ h(t, \bz, 0) & = 0
 \begin{frame}
 \frametitle{Optimal Posting Depth}
 To find the supremum over $\delta^+$, consider the first-order constraint:
-\begin{align*}
+\[
+\resizebox{\textwidth}{!}{$\displaystyle
+\begin{aligned}
 0 & = \partial_{\delta^+} \biggl[ e^{ -\kappa {\delta^+}^*} \bigl[ {\delta^+}^* +  2 \xi \cdot \indicator_{q \leq -1} + h(t,\bz,q+1) - h(t,\bz,q) \bigr] \biggr] \\
 & = -\kappa e^{ -\kappa {\delta^+}^*} \bigl[ {\delta^+}^* +2 \xi \cdot \indicator_{q \leq -1} + h(t,\bz,q+1) - h(t,\bz,q) \bigr] + e^{ -\kappa {\delta^+}^*} \\
 & = e^{ -\kappa \delta^{+}} \bigl[ -\kappa \bigl( {\delta^+}^* +2 \xi \cdot \indicator_{q \leq -1} + h(t,\bz,q+1) - h(t,\bz,q) \bigr) + 1 \bigr] \\
 & = -\kappa \bigl( {\delta^+}^* +2 \xi \cdot \indicator_{q \leq -1} + h(t,\bz,q+1) - h(t,\bz,q) \bigr) + 1 \\
-\end{align*}
+\end{aligned}
+$}
+\]
 
 Rearranging, and recalling we want non-negative posting depths, the optimal buy depth $\delta^*$ is given by:
 \[ {\delta^+}^* = \max \left\lbrace 0 \; ; \; \frac{1}{\kappa} - 2 \xi \cdot \indicator_{q \leq -1} - h(t,\bz,q+1) + h(t,\bz,q) \right\rbrace \] 
@@ -226,6 +235,7 @@ Rearranging, and recalling we want non-negative posting depths, the optimal buy 
 \begin{frame}
 \frametitle{Simplified Dynamic Programming Equation}
 \[
+\resizebox{\textwidth}{!}{$\displaystyle
 \begin{aligned}
 0 = \max \biggl\lbrace & \partial_t h + \mu^+(\bz) e^{ -\kappa {\delta^-}^*} \left( {\delta^-}^* + 2\xi \cdot \indicator_{q \geq 1} + h(t,\bz,q-1) - h(t,\bz,q) \right)  \\
 & \quad + \mu^-(\bz) e^{ -\kappa {\delta^+}^*} \left( {\delta^+}^* + 2 \xi \cdot \indicator_{q \leq -1} + h(t,\bz,q+1) - h(t,\bz,q) \right) \\
@@ -233,6 +243,7 @@ Rearranging, and recalling we want non-negative posting depths, the optimal buy 
 & -2 \xi \cdot \indicator_{q \geq 0} + h(t, \bz, q+1) - h(t,\bz,q)   \; ; \\
 & -2 \xi \cdot \indicator_{q \leq 0} + h(t, \bz, q-1) - h(t,\bz,q)  \biggr\rbrace
 \end{aligned}
+$}
 \]
 \end{frame}
 

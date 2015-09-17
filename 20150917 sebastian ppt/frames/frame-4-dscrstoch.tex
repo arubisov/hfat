@@ -145,6 +145,7 @@ with boundary condition $h_k(\bz,0) = 0$ and terminal condition $h_T(\bz,q) = -\
 
 The DPE simplifies to
 \[
+\resizebox{\textwidth}{!}{$\displaystyle
 \begin{aligned}
 0 & = \max \biggl\lbrace 
 %%% Only Limit Orders
@@ -158,6 +159,7 @@ The DPE simplifies to
 %%% Market Sell
 & \hphantom{{}={} \max \biggl\lbrace } -2\xi \cdot \indicator_{q \leq 0} + h_k(\bz,q-1) \biggr\rbrace
 \end{aligned}
+$}
 \]
 \end{frame}
 
@@ -166,17 +168,21 @@ The DPE simplifies to
 \frametitle{Optimal Posting Depth}
 To solve the supremum in the continuation region, again consider first-order condition and floor at zero. We obtain:
 \[
+\resizebox{\textwidth}{!}{$\displaystyle
 \begin{aligned}
 {\delta^-}^* & = \max \biggl\lbrace 0 \; ; \; \frac{1}{\kappa} + \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \geq 1} + \sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q-1) \bigr] \\
 & \hphantom{{}={}} -p(\delta^+) \left( 2 \xi \indicator_{q = 0} - \sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \bigr] \right) \biggr\rbrace
 \end{aligned}
+$}
 \]
 And similarly, the optimal buy posting depth is given by:
-\[ 
+\[
+\resizebox{\textwidth}{!}{$\displaystyle 
 \begin{aligned}
 {\delta^+}^* & = \max \biggl\lbrace 0 \; ; \; \frac{1}{\kappa} - \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \leq -1} + \sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q+1) \bigr] \\
 & \hphantom{{}={}} -p(\delta^-) \left( 2 \xi \indicator_{q = 0} - \sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \bigr] \right) \biggr\rbrace
 \end{aligned}
+$}
 \]
 \end{frame}
 
@@ -184,11 +190,13 @@ And similarly, the optimal buy posting depth is given by:
 \frametitle{Optimal Posting Depth}
 Substituting one into the other, the optimal depth sell order posting depth is
 \[
+\resizebox{\textwidth}{!}{$\displaystyle
 \begin{aligned}
 {\delta^-}^* & = \max \biggl\lbrace 0 \; ; \; \frac{1}{\kappa} + \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \geq 1} + \sum_{\bj} \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q-1) \biggr] \\
 & \hphantom{{}={}} - (1-e^{\mu^-(\bz) \Delta t})e^{-\kappa \max \bigl\lbrace 0 \; ; \; \frac{1}{\kappa} - \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \leq -1} + \sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q+1) \bigr]} \\
 & \hphantom{{}={} {}-{}} {}^{-(1-e^{\mu^+ (\bz) \Delta t})e^{-\kappa {\delta^-}^*} \left( 2 \xi \indicator_{q = 0} - \aleph(q) \right) \bigr\rbrace } \left( 2 \xi \indicator_{q = 0} - \aleph(q) \right) \biggr\rbrace
 \end{aligned}
+$}
 \]
 where
 \[ \aleph(q) = \sum_{\bj} \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \right] \]
@@ -204,8 +212,11 @@ where
 \begin{aligned}
 h_k(\bz,q) & = \max \biggl\lbrace 
 %%% Only Limit Orders
-q\E[\eta_{0,T(\bz, \omega)}] + \frac{1}{\kappa}(p({\delta^+}^*)+p({\delta^-}^*))  + \sum_{\bj} \bP_{\bz,\bj} h_{k+1}(\bj,q) \\ 
-& \hphantom{{}={} \max \biggl\lbrace {}+{}} + p({\delta^+}^*)p({\delta^-}^*)\sum_{\bj} \bP_{\bz,\bj} \left[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \right] \; ; \\
+q\E[\eta_{0,T(\bz, \omega)}] + \frac{1}{\kappa}(p({\delta^+}^*)+p({\delta^-}^*)) \\
+& \hphantom{{}={} \max \biggl\lbrace {}+{}} + \sum_{\bj} \bP_{\bz,\bj} h_{k+1}(\bj,q) \\ 
+& \hphantom{{}={} \max \biggl\lbrace {}+{}} + p({\delta^+}^*)p({\delta^-}^*)\sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q-1) \\
+& \hphantom{{}={} \max \biggl\lbrace {}+{} + p({\delta^+}^*)p({\delta^-}^*)\sum_{\bj} \bP_{\bz,\bj}} + h_{k+1}(\bj, q+1) \\
+& \hphantom{{}={} \max \biggl\lbrace {}+{} + p({\delta^+}^*)p({\delta^-}^*)\sum_{\bj} \bP_{\bz,\bj}} -2 h_{k+1}(\bj, q)  \bigr] \; ; \\
 %%% Market Buy
 & \hphantom{{}={} \max \biggl\lbrace } -2\xi \cdot \indicator_{q \geq 0} + h_k(\bz,q+1) \; ; \\
 %%% Market Sell

@@ -28,23 +28,14 @@
 
 \begin{frame}
 \frametitle{Limit-Order Book Imbalance}
-\begin{columns}[T] % align columns
-\begin{column}{.48\textwidth}
-%\centering
-\setlength\figureheight{\textwidth}%
-\setlength\figurewidth{\textwidth}%
-\tikzsetnextfilename{samplepath_cts_depths}%
-\input{frames/figs/samplepath_cts_depths.tikz}
-\end{column}%
-\hfill%
-\begin{column}{.48\textwidth}
-\centering
-\setlength\figureheight{\textwidth}%
-\setlength\figurewidth{\textwidth}%
-\tikzsetnextfilename{samplepath_dscr_depths}%
-\input{frames/figs/samplepath_dscr_depths.tikz}
-\end{column}%
-\end{columns}
+\tikzsetnextfilename{LOB1}%
+\only<1>{\framedgraphic{\input{frames/figs/LOB1.tikz}}\\}
+\tikzsetnextfilename{LOB2}%
+\only<2>{\framedgraphic{\input{frames/figs/LOB2.tikz}}\\}
+\tikzsetnextfilename{LOB3}%
+\only<3>{\framedgraphic{\input{frames/figs/LOB3.tikz}}\\}
+\tikzsetnextfilename{LOB4}%
+\only<4>{\framedgraphic{\input{frames/figs/LOB4.tikz}}\\}
 \end{frame}
 
 \end{document}

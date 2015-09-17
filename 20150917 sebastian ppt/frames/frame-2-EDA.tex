@@ -2,7 +2,6 @@
 \begin{frame}
 \frametitle{Limit-Order Book Imbalance}
 \emph{Imbalance} is a ratio of quoted limit order volumes between the bid and ask side.
-\pause
 \[ I(t) = \frac{V_{bid}(t) - V_{ask}(t)}{V_{bid}(t) + V_{ask}(t)} \in [-1,1] \]
 \end{frame}
 
@@ -66,7 +65,14 @@ called our \emph{one-step transition probability matrix}. Matrix entries give th
 \begin{frame}
 \frametitle{Predicting Future Price Change}
 Using Bayes' Rule, we can transform the $\mat{P}$ matrix to 
-\[ \mathbb{P}\left[ \Delta S_\text{future} = j \; | \; B, \rho_\text{curr} = i \right] = \dfrac{\mathbb{P}\left[ \rho_\text{curr} = i, \Delta S_\text{future} = j \; | \; B \right]}{\mathbb{P}\left[ \rho_\text{curr} = i \; | \; B \right]} \]
+\[ \mathbb{P}\left[ \Delta S_\text{future} = j \; | \; \substack{
+\rho_\text{curr} = i \\
+\rho_\text{prev} = k\\
+\Delta S_\text{curr} = m} \right] = \dfrac{\mathbb{P}\left[ \rho_\text{curr} = i, \Delta S_\text{future} = j \; | \; \substack{
+\rho_\text{prev} = k\\
+\Delta S_\text{curr} = m} \right]}{\mathbb{P}\left[ \rho_\text{curr} = i \; | \; \substack{
+\rho_\text{prev} = k\\
+\Delta S_\text{curr} = m} \right]} \]
 This allows us to predict future price moves.
 \vspace{\baselineskip}
 We'll call the collection of these probabilities the $\mat{Q}$ matrix.
@@ -106,6 +112,7 @@ $\rho_\text{prev} = 3$ & 0.13 & 0.14 & 0.08 & 0.10 & 0.11 & 0.05 & 0.19 & 0.14 &
 % present Naive strategies 1-3
 \begin{frame}
 \frametitle{Trading Strategies Informed by the $\mat{Q}$ Matrix}
+\setlength{\leftmargini}{50pt}
 \begin{itemize}
 \item[Naive] Use market orders to buy (sell) if price is predicted to move up (down).
 \item[Naive+] Post at-the-touch limit orders when zero price change is predicted.
