@@ -1,0 +1,66 @@
+    % photo of stock market before -- photo of after.
+\begin{frame}
+\frametitle{NYSE Circa 1968}
+\adjustimage{max size=\textwidth}{frames/figs/NYSE_traders_floor.jpg}
+{\tiny This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ppmsca.03199}
+\end{frame}
+
+\begin{frame}
+\frametitle{NASDAQ Circa Now}
+\adjustimage{max size=\textwidth}{frames/figs/NASDAQ.jpg}
+{\tiny © Copyright 2000, The Nasdaq Stock Market, Inc.
+Reprinted with the permission of The Nasdaq Stock Market, Inc.
+Photo credit: Peter Aaron/Esto }
+\end{frame}
+    
+    % slide on algo/HF trading
+\begin{frame}
+\frametitle{High-Frequency and Algorithmic Trading}
+Hallmarks of HF and Algo trading: algorithms, models, execution speed, timescale. \\
+\vspace{\baselineskip}
+Benefits: 
+\begin{itemize}
+\item reduction of human error 
+\item closes arbitration holes, producing fair markets
+\item digest large sets of data
+\end{itemize}
+\end{frame}
+    
+    % why do we care? show RenTech profits vs S&P.
+\begin{frame}
+\frametitle{Why Do We Care?}
+\adjustimage{max size=\textwidth}{frames/figs/medallion_returns.jpg}
+{\tiny Rubin, R. and Collins, M. (2015). How an exclusive hedge fund turbocharged its retirement plan. \textit{Bloomberg Business.}}
+\end{frame}
+
+    % introduce stat arb
+    
+    % transform ITCH data set into LOB
+\begin{frame}[t]
+\frametitle{Market Data Feeds}
+From the NASDAQ, we can subscribe to real-time data feeds showing order arrivals.
+
+\begin{center}
+\begin{table}
+\begin{tabular}{@{} *{5}{c} @{}}
+\toprule
+Time & Order ID & Event & Volume & Price \\
+\midrule
+\vdots & \vdots & \vdots & \vdots & \vdots \\
+39960699 &72408630 & 66 & 100 & 1107000 \\
+39960710 & 72408630 & 68 & 100 & 1107000 \\
+\vdots & \vdots & \vdots & \vdots & \vdots \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{center}
+\end{frame}
+        
+    % introduce LOB
+\begin{frame}
+\frametitle{Limit-Order Book}
+\only<1>{\adjustimage{max size=\textwidth}{frames/figs/LOB1.pdf}}
+\only<2>{\adjustimage{max size=\textwidth}{frames/figs/LOB2.pdf}}
+\only<3>{\adjustimage{max size=\textwidth}{frames/figs/LOB3.pdf}}
+\only<4>{\adjustimage{max size=\textwidth}{frames/figs/LOB4.pdf}}
+\end{frame}

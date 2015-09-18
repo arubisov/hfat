@@ -1,25 +1,25 @@
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Structure and mechanics of the limit-order book}}{12}{figure.caption.5}
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Structure and mechanics of the limit-order book}}{15}{figure.caption.6}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Hypothetical timeline of market orders and imbalance regime switches}}{18}{figure.caption.8}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Time intervals for time-weighted averaging of imbalance and for price change.\relax }}{21}{figure.caption.9}
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Comparison of the naive trading strategies}}{29}{figure.caption.16}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Hypothetical timeline of market orders and imbalance regime switches}}{21}{figure.caption.9}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Time intervals for time-weighted averaging of imbalance and for price change.\relax }}{24}{figure.caption.10}
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Comparison of the naive trading strategies}}{32}{figure.caption.17}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Optimal buy LO depths for sell pressure imbalance}}{63}{figure.caption.21}
-\contentsline {figure}{\numberline {5.2}{\ignorespaces Optimal buy LO depths for neutral imbalance}}{64}{figure.caption.22}
-\contentsline {figure}{\numberline {5.3}{\ignorespaces Optimal buy LO depths for buy pressure imbalance}}{65}{figure.caption.23}
-\contentsline {figure}{\numberline {5.4}{\ignorespaces Optimal sell LO depths for sell pressure imbalance}}{67}{figure.caption.24}
-\contentsline {figure}{\numberline {5.5}{\ignorespaces Optimal sell LO depths for neutral imbalance}}{68}{figure.caption.25}
-\contentsline {figure}{\numberline {5.6}{\ignorespaces Optimal sell LO depths for buy pressure imbalance}}{69}{figure.caption.26}
-\contentsline {figure}{\numberline {5.7}{\ignorespaces Comparison of the four stochastic optimal control methods}}{71}{figure.caption.27}
-\contentsline {figure}{\numberline {5.8}{\ignorespaces Cointegration relation of the four stochastic control methods}}{72}{figure.caption.29}
-\contentsline {figure}{\numberline {5.9}{\ignorespaces Detailed sample paths of the stochastic optimal control strategies}}{74}{figure.caption.31}
-\contentsline {figure}{\numberline {5.10}{\ignorespaces Comparison of optimal posting depths on the sample path}}{75}{figure.caption.32}
-\contentsline {figure}{\numberline {5.11}{\ignorespaces Comparison of P\&L and inventory on the sample path}}{76}{figure.caption.33}
-\contentsline {figure}{\numberline {5.12}{\ignorespaces In-sample backtesting performance using same-day calibration}}{78}{figure.caption.34}
-\contentsline {figure}{\numberline {5.13}{\ignorespaces In-sample backtesting performance using week-offset calibration}}{81}{figure.caption.36}
-\contentsline {figure}{\numberline {5.14}{\ignorespaces In-sample backtesting performance using annual calibration}}{84}{figure.caption.38}
-\contentsline {figure}{\numberline {5.15}{\ignorespaces Out-of-sample backtesting performance using annual calibration}}{86}{figure.caption.40}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Optimal buy LO depths for sell pressure imbalance}}{66}{figure.caption.22}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Optimal buy LO depths for neutral imbalance}}{67}{figure.caption.23}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Optimal buy LO depths for buy pressure imbalance}}{68}{figure.caption.24}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Optimal sell LO depths for sell pressure imbalance}}{70}{figure.caption.25}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Optimal sell LO depths for neutral imbalance}}{71}{figure.caption.26}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Optimal sell LO depths for buy pressure imbalance}}{72}{figure.caption.27}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Comparison of the four stochastic optimal control methods}}{74}{figure.caption.28}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Cointegration relation of the four stochastic control methods}}{75}{figure.caption.30}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Detailed sample paths of the stochastic optimal control strategies}}{77}{figure.caption.32}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Comparison of optimal posting depths on the sample path}}{78}{figure.caption.33}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Comparison of P\&L and inventory on the sample path}}{79}{figure.caption.34}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces In-sample backtesting performance using same-day calibration}}{81}{figure.caption.35}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces In-sample backtesting performance using week-offset calibration}}{84}{figure.caption.37}
+\contentsline {figure}{\numberline {5.14}{\ignorespaces In-sample backtesting performance using annual calibration}}{87}{figure.caption.39}
+\contentsline {figure}{\numberline {5.15}{\ignorespaces Out-of-sample backtesting performance using annual calibration}}{89}{figure.caption.41}
 \addvspace {10\p@ }

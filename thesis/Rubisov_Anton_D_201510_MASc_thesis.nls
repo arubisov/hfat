@@ -1,0 +1,91 @@
+\begin{thenomenclature} 
+
+ \nomgroup{A}
+
+  \item [{$\#_{bins}$}]\begingroup Number of states into which the smoothed imbalance is discretized\nomeqref {0}
+		\nompageref{12}
+  \item [{$\cF$}]\begingroup Filtration of a probability space\nomeqref {0}
+		\nompageref{12}
+  \item [{$\cL$}]\begingroup Infinitesimal generator operator\nomeqref {0}
+		\nompageref{12}
+  \item [{$\Delta S(t)$}]\begingroup Sign of the observed price change at time $t$\nomeqref {0}
+		\nompageref{12}
+  \item [{$\Delta t_I$}]\begingroup Size of rolling window for imbalance smoothing\nomeqref {0}
+		\nompageref{12}
+  \item [{$\Delta t_S$}]\begingroup Size of window for price change calculation\nomeqref {0}
+		\nompageref{12}
+  \item [{$\delta^\pm$}]\begingroup The depth at which we post a buy ($\delta^+$) and sell ($\delta^-$) limit order\nomeqref {0}
+		\nompageref{12}
+  \item [{$\eta_{0,\bz}$}]\begingroup Magnitude of the midprice change (a random variable)\nomeqref {0}
+		\nompageref{12}
+  \item [{$\indicator$}]\begingroup Indicator function\nomeqref {0}
+		\nompageref{12}
+  \item [{$\kappa$}]\begingroup Limit order fill probability constant\nomeqref {0}
+		\nompageref{12}
+  \item [{$\lambda^\pm$}]\begingroup Arrival rates of buy ($\lambda^+$) and sell ($\lambda^-$) orders\nomeqref {0}
+		\nompageref{12}
+  \item [{$\mat{G}$}]\begingroup Continuous-time Markov chain generator matrix\nomeqref {0}
+		\nompageref{12}
+  \item [{$\mat{P}$}]\begingroup Continuous-time Markov chain transition probability matrix\nomeqref {0}
+		\nompageref{12}
+  \item [{$\mu^\pm$}]\begingroup Rate of arrival of other agents' buy ($\mu^+$) and sell ($\mu^-$) market orders\nomeqref {0}
+		\nompageref{12}
+  \item [{$\partial_x$}]\begingroup Partial derivative with respect to x\nomeqref {0}
+		\nompageref{12}
+  \item [{$\rho(t)$}]\begingroup Imbalance ratio, smoothed by averaging over a rolling window\nomeqref {0}
+		\nompageref{12}
+  \item [{$\tau$}]\begingroup A stopping time at which we execute a market order\nomeqref {0}
+		\nompageref{12}
+  \item [{$\xi$}]\begingroup Bid-Ask Half-Spread\nomeqref {0}
+		\nompageref{12}
+  \item [{$H(t,x,s,\bz,q)$}]\begingroup Continuous-time value function\nomeqref {0}
+		\nompageref{12}
+  \item [{$H^{\btau,\delta^\pm}(t,x,s,\bz,q)$}]\begingroup Continuous-time performance criterion of the controls $\btau$ and $\delta^\pm$\nomeqref {0}
+		\nompageref{12}
+  \item [{$I(t)$}]\begingroup Imbalance ratio, raw\nomeqref {0}
+		\nompageref{12}
+  \item [{$K^\pm$}]\begingroup Other agents' buy ($K^+$) and sell ($K^-$) market orders\nomeqref {0}
+		\nompageref{12}
+  \item [{$L^\pm$}]\begingroup A counting process of how many of our buy ($L^+$) and sell ($L^-$) limit orders are filled\nomeqref {0}
+		\nompageref{12}
+  \item [{$M^\pm$}]\begingroup Execution of our buy ($M^+$) and sell ($M^-$) market orders\nomeqref {0}
+		\nompageref{12}
+  \item [{$Q_t^{\btau,\delta}$}]\begingroup Our inventory at time $t$ having used controls $\btau$ and $\delta$\nomeqref {0}
+		\nompageref{12}
+  \item [{$S(t)$}]\begingroup Midprice\nomeqref {0}\nompageref{12}
+  \item [{$V_k(x,s,\bz,q)$}]\begingroup Discrete-time value function\nomeqref {0}
+		\nompageref{12}
+  \item [{$V_k^{\delta^\pm}(x,s,\bz,q)$}]\begingroup Discrete-time performance criterion of the controls $\btau$ and $\delta^\pm$\nomeqref {0}
+		\nompageref{12}
+  \item [{$W_t^{\btau,\delta}$}]\begingroup Our wealth (cash, value of assets, and liquidation penalty) at time $t$ having used controls $\btau$ and $\delta$\nomeqref {0}
+		\nompageref{12}
+  \item [{$X_t^{\btau,\delta}$}]\begingroup Our cash at time $t$ having used controls $\btau$ and $\delta$\nomeqref {0}
+		\nompageref{12}
+  \item [{$Z(t)$}]\begingroup Continuous-time Markov chain variable\nomeqref {0}
+		\nompageref{12}
+  \item [{\texttt{AAPL}}]\begingroup Stock ticker for Apple Inc.\nomeqref {0}
+		\nompageref{12}
+  \item [{\texttt{FARO}}]\begingroup Stock ticker for FARO Technologies Inc.\nomeqref {0}
+		\nompageref{12}
+  \item [{\texttt{INTC}}]\begingroup Stock ticker for Intel Corporation\nomeqref {0}
+		\nompageref{12}
+  \item [{\texttt{MMM}}]\begingroup Stock ticker for 3M Company\nomeqref {0}
+		\nompageref{12}
+  \item [{\texttt{NTAP}}]\begingroup Stock ticker for NetApp, Inc.\nomeqref {0}
+		\nompageref{12}
+  \item [{\texttt{ORCL}}]\begingroup Stock ticker for Oracle Corporation\nomeqref {0}
+		\nompageref{12}
+  \item [{CTMC}]\begingroup Continuous-time Markov chain\nomeqref {0}
+		\nompageref{12}
+  \item [{DPE}]\begingroup Dynamic programming equation\nomeqref {0}
+		\nompageref{12}
+  \item [{ITCH}]\begingroup Market data feed provided by NASDAQ\nomeqref {0}
+		\nompageref{12}
+  \item [{LO}]\begingroup Limit order\nomeqref {0}\nompageref{12}
+  \item [{LOB}]\begingroup Limit-order book\nomeqref {0}\nompageref{12}
+  \item [{MO}]\begingroup Market order\nomeqref {0}\nompageref{12}
+  \item [{nFPC}]\begingroup Non-$\cF$-predictable calibration\nomeqref {0}
+		\nompageref{12}
+  \item [{P\&L}]\begingroup Profit and Loss\nomeqref {0}\nompageref{12}
+
+\end{thenomenclature}

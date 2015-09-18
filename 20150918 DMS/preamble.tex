@@ -1,0 +1,70 @@
+\usetheme{Goettingen}
+\usecolortheme{beaver}
+\title[Arbitrage with Order Imbalance]{Statistical Arbitrage Using Limit-Order Book Imbalance}
+\author{Anton D. Rubisov}
+\institute{	{University of Toronto Institute for Aerospace Studies}\\
+    {Faculty of Applied Science and Engineering}\\
+	{University of Toronto}}
+\date{17 September 2015}
+\beamertemplatenavigationsymbolsempty
+\setbeamerfont{page number in head/foot}{size=\scriptsize}
+\setbeamertemplate{footline}[frame number]
+
+\usepackage{booktabs}
+\usepackage{adjustbox}
+\usepackage{subfig}
+\usepackage{bm} 			% Bold math fonts
+\usepackage{dsfont} 		% Doublestroke font
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{tikz}
+
+\DeclareMathOperator{\sgn}{\mathrm{sgn}}
+\renewcommand{\d}{\ensuremath{\,\mathrm{d}}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\bP}{\bm{P}}
+\newcommand{\bZ}{\bm{Z}}
+\newcommand{\bj}{\bm{j}}
+\newcommand{\bu}{\bm{u}}
+\newcommand{\bw}{\bm{w}}
+\newcommand{\bx}{\bm{x}}
+\newcommand{\bz}{\bm{z}}
+\newcommand{\btau}{\bm{\tau}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\indicator}{\mathds{1}}
+\newcommand{\mat}[1]{\boldsymbol{#1}}
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}}
+\newcommand\simcal[1]{\stackrel{\sim}{\smash{\mathcal{#1}}\rule{0pt}{1.2ex}}}
+
+%\AtBeginSection[] {\begin{frame}
+%    \frametitle{Roadmap} \tableofcontents[currentsection] \end{frame} }
+    
+\makeatletter
+\AtBeginSection[]{{                    %notice the double brackets
+    \setbeamertemplate{footline}{}
+    \begin{frame}<beamer>[noframenumbering]
+        \frametitle{Roadmap} \tableofcontents[currentsection,hideothersubsections]
+    \end{frame}
+}}                                     %notice the double brackets
+\makeatother    
+
+% line break within a table cell
+% pass [c] or [b] to align with center or bottom of cell
+\newcommand{\cellbreak}[3]{%
+  \begin{tabular}[#1]{@{}#2@{}}#3\end{tabular}}
+  
+\definecolor{cts_plot_color}{rgb}{ 0.9019608 , 0.3803922 , 0.0039216}%
+\definecolor{dscr_plot_color}{rgb}{ 0.3686275 , 0.2352941 , 0.6000000}%
+\definecolor{cts_nFPC_plot_color}{rgb}{ 0.9921569 , 0.7215686 , 0.3882353}%
+\definecolor{dscr_nFPC_plot_color}{rgb}{ 0.6980392 , 0.6705882 , 0.8235294}%  
+  
+\newcommand{\drawlegendline}[1]{%
+\begin{tikzpicture}[baseline=-\the\dimexpr\fontdimen22\textfont2\relax]%
+\draw[#1,line width=2pt] (0,0.1)--(0.5,0.1);
+\end{tikzpicture}}
+
+\renewcommand{\maketitle}{\begin{frame}[plain]\titlepage\end{frame}}

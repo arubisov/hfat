@@ -1,20 +1,20 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {2.1}{\ignorespaces Stocks used in the exploratory data analysis}}{16}{table.caption.7}
-\contentsline {table}{\numberline {2.2}{\ignorespaces One-dimensional encoding of two-dimensional CTMC}}{21}{table.caption.10}
-\contentsline {table}{\numberline {2.3}{\ignorespaces $p$-values for testing the time homogeneity hypothesis}}{23}{table.caption.11}
-\contentsline {table}{\numberline {2.4}{\ignorespaces Probabilities of future price changes}}{26}{table.caption.12}
-\contentsline {table}{\numberline {2.5}{\ignorespaces Hypothetical timeline of adverse selection with market orders}}{31}{table.caption.17}
+\contentsline {table}{\numberline {2.1}{\ignorespaces Stocks used in the exploratory data analysis}}{19}{table.caption.8}
+\contentsline {table}{\numberline {2.2}{\ignorespaces One-dimensional encoding of two-dimensional CTMC}}{24}{table.caption.11}
+\contentsline {table}{\numberline {2.3}{\ignorespaces $p$-values for testing the time homogeneity hypothesis}}{26}{table.caption.12}
+\contentsline {table}{\numberline {2.4}{\ignorespaces Probabilities of future price changes}}{29}{table.caption.13}
+\contentsline {table}{\numberline {2.5}{\ignorespaces Hypothetical timeline of adverse selection with market orders}}{34}{table.caption.18}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces Stocks used in the stochastic optimal control backtesting}}{60}{table.caption.18}
-\contentsline {table}{\numberline {5.2}{\ignorespaces Fixed parameters for backtesting}}{61}{table.caption.19}
-\contentsline {table}{\numberline {5.3}{\ignorespaces Parameter formulae for backtesting}}{61}{table.caption.20}
-\contentsline {table}{\numberline {5.4}{\ignorespaces Correlation matrix of stochastic optimal control returns}}{70}{table.caption.28}
-\contentsline {table}{\numberline {5.5}{\ignorespaces Number of trades comparison of the four stochastic control methods}}{72}{table.caption.30}
-\contentsline {table}{\numberline {5.6}{\ignorespaces In-sample backtesting performance using same-day calibration}}{79}{table.caption.35}
-\contentsline {table}{\numberline {5.7}{\ignorespaces In-sample backtesting performance using week-offset calibration}}{82}{table.caption.37}
-\contentsline {table}{\numberline {5.8}{\ignorespaces In-sample backtesting performance using annual calibration}}{84}{table.caption.39}
-\contentsline {table}{\numberline {5.9}{\ignorespaces Out-of-sample backtesting performance using annual calibration}}{86}{table.caption.41}
+\contentsline {table}{\numberline {5.1}{\ignorespaces Stocks used in the stochastic optimal control backtesting}}{63}{table.caption.19}
+\contentsline {table}{\numberline {5.2}{\ignorespaces Fixed parameters for backtesting}}{64}{table.caption.20}
+\contentsline {table}{\numberline {5.3}{\ignorespaces Parameter formulae for backtesting}}{64}{table.caption.21}
+\contentsline {table}{\numberline {5.4}{\ignorespaces Correlation matrix of stochastic optimal control returns}}{73}{table.caption.29}
+\contentsline {table}{\numberline {5.5}{\ignorespaces Number of trades comparison of the four stochastic control methods}}{75}{table.caption.31}
+\contentsline {table}{\numberline {5.6}{\ignorespaces In-sample backtesting performance using same-day calibration}}{82}{table.caption.36}
+\contentsline {table}{\numberline {5.7}{\ignorespaces In-sample backtesting performance using week-offset calibration}}{85}{table.caption.38}
+\contentsline {table}{\numberline {5.8}{\ignorespaces In-sample backtesting performance using annual calibration}}{87}{table.caption.40}
+\contentsline {table}{\numberline {5.9}{\ignorespaces Out-of-sample backtesting performance using annual calibration}}{89}{table.caption.42}
 \addvspace {10\p@ }

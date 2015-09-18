@@ -236,6 +236,8 @@ Comparing the two calibration methods, wee see that the regular calibration rema
 
 Comparing continuous time with discrete time, we see a very large divergence in behaviour. In \autoref{fig:comp_dp_z1}, the continuous control produces posting depths concentrated around zero, which suggests that acquiring stock is optimal, whereas the discrete control is posting substantially deeper into the limit order book to avoid purchasing. In \autoref{fig:comp_dp_z8} we see near-identical model behaviour. Since the majority of the day is spent in a Markov state for which $\Delta S = 0$, as seen here, any similarities or correlations in backtesting performance can likely be attributed to the similar behaviour observed in this Markov state. (Recall that $\rho$, by contrast, is computed via evenly spaced percentiles symmetric around zero, so that time spent in each imbalance state is evenly distributed.) In \autoref{fig:comp_dp_z15} the two models display near opposite behaviours to one another, mirroring what was seen in \autoref{fig:comp_dp_z1}. Here the discrete model is posting at depths near zero, mimicking the behaviour of the Naive++ strategy by suggesting that purchasing is optimal, while the continuous model is posting deeper into the book to avoid purchasing.
 
+The continuous-time parameters in \autoref{fig:comp_dp_z1}, \autoref{fig:comp_dp_z15}, \autoref{fig:comp_dm_z1}, and \autoref{fig:comp_dm_z15} display spikes at the terminal time. A possible reason for this occurrence is a so-called \emph{face-lift}, wherein the left-limit of the solution differs from the terminal condition. In this case, we have the terminal condition that $h$ is equal to $-\alpha q^2$, whereas at all other times $h$ is strictly non-negative. It is precisely this difference that may result in the observed spike. As it is actually optimal to liquidate the position prior to reaching the terminal time (so as to avoid the terminal penalty), we would expect that any implementation would avoid posting orders at the instantaneous moment of the terminal time, if not earlier.
+
 Finally, we note that we see relative stability in the posting depths at a time horizon of 600 seconds. This is consistent with the findings in \autoref{tbl:pvalues}, where we saw that the transition probability matrix $\mat{P}(t)$ converged for $\texttt{INTC}$ to an error threshold of $10^{-10}$ within 771 timesteps of 1 second each.
 
 \begin{figure}%
@@ -698,37 +700,37 @@ Trading Day Number of 2013
 Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# Trades \\ \hphantom{Risk Adj}} & \cellbreak{t}{r}{Average \\ Inventory} & \cellbreak{t}{r}{\% Win \\ \hphantom{Risk Adj}} \\
 \midrule
 \multicolumn{6}{l}{\texttt{FARO}} \\
-Naive & -0.879 & -0.808 & 413 & 0.47 & 0.07  \\ 
-Naive+ & 0.101 & 0.107 & 213 & 2.45 & 0.74  \\ 
-Naive++ & 0.002 & 0.021 & 7 & 0.17 & 0.50  \\ 
-Continuous & -0.059 & -0.551 & 201 & 0.09 & 0.18  \\ 
-Discrete & -0.064 & -0.695 & 210 & -0.02 & 0.08  \\ 
-Continuous with nFPC & -0.063 & -0.571 & 204 & 0.08 & 0.14  \\ 
-Discrete with nFPC & -0.060 & -0.662 & 209 & -0.03 & 0.09  \\[2ex]
+Naive & -0.879 & -0.808 & 413 & 0.47 & 7\%  \\ 
+Naive+ & 0.101 & 0.107 & 213 & 2.45 & 74\%  \\ 
+Naive++ & 0.002 & 0.021 & 7 & 0.17 & 50\%  \\ 
+Continuous & -0.059 & -0.551 & 201 & 0.09 & 18\%  \\ 
+Discrete & -0.064 & -0.695 & 210 & -0.02 & 8\%  \\ 
+Continuous with nFPC & -0.063 & -0.571 & 204 & 0.08 & 14\%  \\ 
+Discrete with nFPC & -0.060 & -0.662 & 209 & -0.03 & 9\%  \\[2ex]
 \multicolumn{6}{l}{\texttt{NTAP}} \\
-Naive & -0.188 & -0.316 & 842 & -9.81 & 0.23 \\ 
-Naive+ & 0.388 & 0.169 & 3562 & -9.73 & 0.74 \\ 
-Naive++ & -0.005 & -0.012 & 157 & -0.90 & 0.54  \\ 
-Continuous & -0.006 & -0.062 & 2265 & 0.40 & 0.56  \\ 
-Discrete & 0.099 & 0.767 & 1872 & 4.74 & 0.86  \\ 
-Continuous with nFPC & -0.141 & -0.951 & 2897 & 0.65 & 0.14 \\ 
-Discrete with nFPC & 0.121 & 0.881 & 1738 & 2.82 & 0.89  \\[2ex]
+Naive & -0.188 & -0.316 & 842 & -9.81 & 23\% \\ 
+Naive+ & 0.388 & 0.169 & 3562 & -9.73 & 74\% \\ 
+Naive++ & -0.005 & -0.012 & 157 & -0.90 & 54\%  \\ 
+Continuous & -0.006 & -0.062 & 2265 & 0.40 & 56\%  \\ 
+Discrete & 0.099 & 0.767 & 1872 & 4.74 & 86\%  \\ 
+Continuous with nFPC & -0.141 & -0.951 & 2897 & 0.65 & 14\% \\ 
+Discrete with nFPC & 0.121 & 0.881 & 1738 & 2.82 & 89\%  \\[2ex]
 \multicolumn{6}{l}{\texttt{ORCL}} \\
-Naive & -0.105 & -0.253 & 484 & 1.40 & 0.28  \\ 
-Naive+ & -0.034 & -0.011 & 4086 & -55.18 & 0.61 \\ 
-Naive++ & 0.002 & 0.006 & 132 & 0.61 & 0.52 \\ 
-Continuous & 0.115 & 1.348 & 1874 & 1.94 & 0.92 \\ 
-Discrete & 0.135 & 1.620 & 1898 & 3.93 & 0.98 \\ 
-Continuous with nFPC & -0.010 & -0.100 & 2455 & 1.32 & 0.48 \\ 
-Discrete with nFPC & 0.144 & 1.501 & 1759 & 2.85 & 0.97 \\[2ex]
+Naive & -0.105 & -0.253 & 484 & 1.40 & 28\%  \\ 
+Naive+ & -0.034 & -0.011 & 4086 & -55.18 & 61\% \\ 
+Naive++ & 0.002 & 0.006 & 132 & 0.61 & 52\% \\ 
+Continuous & 0.115 & 1.348 & 1874 & 1.94 & 92\% \\ 
+Discrete & 0.135 & 1.620 & 1898 & 3.93 & 98\% \\ 
+Continuous with nFPC & -0.010 & -0.100 & 2455 & 1.32 & 48\% \\ 
+Discrete with nFPC & 0.144 & 1.501 & 1759 & 2.85 & 97\% \\[2ex]
 \multicolumn{6}{l}{\texttt{INTC}} \\
-Naive & -0.082 & -0.228 & 258 & -5.21 & 0.33 \\ 
-Naive+ & 0.365 & 0.134 & 3962 & -32.50 & 0.63 \\ 
-Naive++ & -0.001 & -0.003 & 74 & -0.84 & 0.48 \\ 
-Continuous & 0.214 & 2.159 & 1577 & 5.17 & 0.97 \\ 
-Discrete & 0.232 & 2.528 & 1642 & 4.48 & 0.98 \\ 
-Continuous with nFPC & 0.114 & 1.218 & 1894 & 2.01 & 0.90 \\ 
-Discrete with nFPC &  0.226 & 2.202 & 1569 & 4.28 & 0.98 \\ 
+Naive & -0.082 & -0.228 & 258 & -5.21 & 33\% \\ 
+Naive+ & 0.365 & 0.134 & 3962 & -32.50 & 63\% \\ 
+Naive++ & -0.001 & -0.003 & 74 & -0.84 & 48\% \\ 
+Continuous & 0.214 & 2.159 & 1577 & 5.17 & 97\% \\ 
+Discrete & 0.232 & 2.528 & 1642 & 4.48 & 98\% \\ 
+Continuous with nFPC & 0.114 & 1.218 & 1894 & 2.01 & 90\% \\ 
+Discrete with nFPC &  0.226 & 2.202 & 1569 & 4.28 & 98\% \\ 
 \bottomrule
 \end{tabular}
 \end{table}
@@ -804,37 +806,37 @@ Trading Day Number of 2013
 Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# MO} & \cellbreak{t}{r}{\# LO} & \cellbreak{t}{r}{Average \\ Invntry} & \cellbreak{t}{r}{\% Win} \\
 \midrule
 \multicolumn{7}{l}{\texttt{FARO}} \\ 
-Naive & -1.072 & -0.444 & 435 & 0 & 1.74 & 0.08 \\
-Naive+ & 0.045 & 0.046 & 0 & 213 & 2.26 & 0.74 \\
-Naive++ & -0.003 & -0.027 & 0 & 6 & 0.25 & 0.50 \\
-Continuous & -0.060 & -0.565 & 53 & 149 & 0.08 & 0.20 \\
-Discrete & -0.076 & -0.764 & 80 & 133 & -0.07 & 0.07 \\
-Continuous with nFPC & -0.065 & -0.590 & 56 & 149 & 0.09 & 0.17 \\
-Discrete with nFPC & -0.076 & -0.778 & 78 & 133 & 0.07 & 0.07 \\[2ex]
+Naive & -1.072 & -0.444 & 435 & 0 & 1.74 & 8\% \\
+Naive+ & 0.045 & 0.046 & 0 & 213 & 2.26 & 74\% \\
+Naive++ & -0.003 & -0.027 & 0 & 6 & 0.25 & 50\% \\
+Continuous & -0.060 & -0.565 & 53 & 149 & 0.08 & 20\% \\
+Discrete & -0.076 & -0.764 & 80 & 133 & -0.07 & 7\% \\
+Continuous with nFPC & -0.065 & -0.590 & 56 & 149 & 0.09 & 17\% \\
+Discrete with nFPC & -0.076 & -0.778 & 78 & 133 & 0.07 & 7\% \\[2ex]
 \multicolumn{7}{l}{\texttt{NTAP}} \\ 
-Naive & -0.303 & -0.316 & 854 & 0 & -10.96 & 0.20 \\
-Naive+ & 0.290 & 0.122 & 0 & 3537 & -13.83 & 0.73 \\
-Naive++ & -0.048 & -0.084 & 0 & 156 & -1.79 & 0.52 \\
-Continuous & -0.016 & -0.165 & 830 & 1405 & 0.37 & 0.52 \\
-Discrete & 0.070 & 0.593 & 460 & 1388 & 5.06 & 0.79 \\
-Continuous with nFPC & -0.156 & -0.987 & 1506 & 1425 & 0.70 & 0.09 \\
-Discrete with nFPC & 0.091 & 0.656 & 332 & 1401 & 3.16 & 0.85 \\[2ex]
+Naive & -0.303 & -0.316 & 854 & 0 & -10.96 & 20\% \\
+Naive+ & 0.290 & 0.122 & 0 & 3537 & -13.83 & 73\% \\
+Naive++ & -0.048 & -0.084 & 0 & 156 & -1.79 & 52\% \\
+Continuous & -0.016 & -0.165 & 830 & 1405 & 0.37 & 52\% \\
+Discrete & 0.070 & 0.593 & 460 & 1388 & 5.06 & 79\% \\
+Continuous with nFPC & -0.156 & -0.987 & 1506 & 1425 & 0.70 & 9\% \\
+Discrete with nFPC & 0.091 & 0.656 & 332 & 1401 & 3.16 & 85\% \\[2ex]
 \multicolumn{7}{l}{\texttt{ORCL}} \\ 
-Naive & -0.112 & -0.248 & 492 & 0 & 3.66 & 0.28 \\
-Naive+ & 0.066 & 0.022 & 0 & 4049 & -50.06 & 0.64 \\
-Naive++ & 0.002 & 0.005 & 0 & 134 & 0.64 & 0.49 \\
-Continuous & 0.098 & 1.181 & 545 & 1318 & 1.86 & 0.90 \\
-Discrete & 0.126 & 1.547 & 578 & 1310 & 4.01 & 0.97 \\
-Continuous with nFPC & -0.013 & -0.130 & 1069 & 1365 & 1.39 & 0.47 \\
-Discrete with nFPC & 0.135 & 1.459 & 416 & 1338 & 3.16 & 0.96 \\[2ex]
+Naive & -0.112 & -0.248 & 492 & 0 & 3.66 & 28\% \\
+Naive+ & 0.066 & 0.022 & 0 & 4049 & -50.06 & 64\% \\
+Naive++ & 0.002 & 0.005 & 0 & 134 & 0.64 & 49\% \\
+Continuous & 0.098 & 1.181 & 545 & 1318 & 1.86 & 90\% \\
+Discrete & 0.126 & 1.547 & 578 & 1310 & 4.01 & 97\% \\
+Continuous with nFPC & -0.013 & -0.130 & 1069 & 1365 & 1.39 & 47\% \\
+Discrete with nFPC & 0.135 & 1.459 & 416 & 1338 & 3.16 & 96\% \\[2ex]
 \multicolumn{7}{l}{\texttt{INTC}} \\ 
-Naive & -0.057 & -0.179 & 274 & 0 & -3.63 & 0.31 \\
-Naive+ & 0.375 & 0.138 & 0 & 3925 & -25.43 & 0.65 \\
-Naive++ & 0.013 & 0.055 & 0 & 77 & -0.47 & 0.53 \\
-Continuous & 0.202 & 1.995 & 423 & 1139 & 4.76 & 0.98 \\
-Discrete & 0.226 & 2.494 & 501 & 1136 & 4.62 & 0.99 \\
-Continuous with nFPC & 0.107 & 1.111 & 681 & 1187 & 1.64 & 0.87 \\
-Discrete with nFPC & 0.215 & 2.027 & 401 & 1156 & 3.78 & 0.99 \\
+Naive & -0.057 & -0.179 & 274 & 0 & -3.63 & 31\% \\
+Naive+ & 0.375 & 0.138 & 0 & 3925 & -25.43 & 65\% \\
+Naive++ & 0.013 & 0.055 & 0 & 77 & -0.47 & 53\% \\
+Continuous & 0.202 & 1.995 & 423 & 1139 & 4.76 & 98\% \\
+Discrete & 0.226 & 2.494 & 501 & 1136 & 4.62 & 99\% \\
+Continuous with nFPC & 0.107 & 1.111 & 681 & 1187 & 1.64 & 87\% \\
+Discrete with nFPC & 0.215 & 2.027 & 401 & 1156 & 3.78 & 99\% \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -893,15 +895,15 @@ Trading Day Number of 2013
 Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# MO} & \cellbreak{t}{r}{\# LO} & \cellbreak{t}{r}{Average \\ Invntry} & \cellbreak{t}{r}{\% Win} \\
 \midrule
 \multicolumn{7}{l}{\texttt{ORCL}} \\ 
-Continuous & -0.089 & -0.875 & 1540 & 1383 & 1.19 & 0.14  \\ 
-Discrete & 0.140 & 1.596 & 368 & 1344 & 0.46 & 0.96 \\ 
-Continuous with nFPC & 0.113 & 1.327 & 476 & 1338 & 2.67 & 0.94 \\ 
-Discrete with nFPC & 0.118 & 1.735 & 590 & 1337 & 3.43 & 0.99 \\[2ex]
+Continuous & -0.089 & -0.875 & 1540 & 1383 & 1.19 & 14\%  \\ 
+Discrete & 0.140 & 1.596 & 368 & 1344 & 0.46 & 96\% \\ 
+Continuous with nFPC & 0.113 & 1.327 & 476 & 1338 & 2.67 & 94\% \\ 
+Discrete with nFPC & 0.118 & 1.735 & 590 & 1337 & 3.43 & 99\% \\[2ex]
 \multicolumn{7}{l}{\texttt{INTC}} \\ 
-Continuous & 0.065 & 0.743 & 888 & 1207 & 1.22 & 0.84 \\
-Discrete & 0.235 & 2.189 & 380 & 1170 & 1.19 & 0.99 \\
-Continuous with nFPC & 0.209 & 2.030 & 396 & 1160 & 5.58 & 0.98 \\
-Discrete with nFPC & 0.197 & 2.588 & 576 & 1164 & 3.78 & 1.00 \\
+Continuous & 0.065 & 0.743 & 888 & 1207 & 1.22 & 84\% \\
+Discrete & 0.235 & 2.189 & 380 & 1170 & 1.19 & 99\% \\
+Continuous with nFPC & 0.209 & 2.030 & 396 & 1160 & 5.58 & 98\% \\
+Discrete with nFPC & 0.197 & 2.588 & 576 & 1164 & 3.78 & 100\% \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -966,15 +968,15 @@ Trading Day Number of 2014
 Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# MO} & \cellbreak{t}{r}{\# LO} & \cellbreak{t}{r}{Average \\ Invntry} & \cellbreak{t}{r}{\% Win} \\
 \midrule
 \multicolumn{7}{l}{\texttt{INTC}} \\ 
-Continuous & 0.209 & 2.112 & 2118 & 1758 & 0.44 & 0.98 \\
-Discrete & 0.372 & 1.591 & 949 & 1770 & -5.89 & 0.98 \\
-Continuous with nFPC & 0.483 & 2.364 & 704 & 1693 & 1.46 & 1.00 \\
-Discrete with nFPC & 0.515 & 2.033 & 490 & 1629 & 2.81 & 1.00 \\[2ex]
+Continuous & 0.209 & 2.112 & 2118 & 1758 & 0.44 & 98\% \\
+Discrete & 0.372 & 1.591 & 949 & 1770 & -5.89 & 98\% \\
+Continuous with nFPC & 0.483 & 2.364 & 704 & 1693 & 1.46 & 100\% \\
+Discrete with nFPC & 0.515 & 2.033 & 490 & 1629 & 2.81 & 100\% \\[2ex]
 \multicolumn{7}{l}{\texttt{AAPL}} \\ 
-Continuous & 0.378 & 1.571 & 3853 & 6297 & -5.80 & 0.96 \\
-Discrete & 0.761 & 2.457 & 830 & 5566 & 4.05 & 1.00 \\
-Continuous with nFPC & 0.710 & 2.479 & 1276 & 5689 & 2.93 & 1.00 \\
-Discrete with nFPC & 0.764 & 2.442 & 796 & 5559 & 3.85 & 1.00 \\
+Continuous & 0.378 & 1.571 & 3853 & 6297 & -5.80 & 96\% \\
+Discrete & 0.761 & 2.457 & 830 & 5566 & 4.05 & 100\% \\
+Continuous with nFPC & 0.710 & 2.479 & 1276 & 5689 & 2.93 & 100\% \\
+Discrete with nFPC & 0.764 & 2.442 & 796 & 5559 & 3.85 & 100\% \\
 \bottomrule
 \end{tabular}
 \end{table}

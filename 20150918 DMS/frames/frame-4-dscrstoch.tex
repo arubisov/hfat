@@ -1,0 +1,254 @@
+% system description - each variable.
+%\begin{frame}
+%\frametitle{System Description}
+%All names and variables are the same as in the continuous-time case. \\
+%\vspace{\baselineskip}
+%We will consider the embedded discrete time Markov chain determined by
+%\[ \mat{P} = e^{\mat{G}\Delta t} \]
+%for any time interval of size $\Delta t$. For our purposes, take $\Delta t = \Delta {t_{I}} = \Delta {t_{S}} = 1000\text{ ms}$
+%\end{frame}
+
+\begin{frame}
+\frametitle{System Description}
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{rl}
+\multirow{4}{*}{State $\vec{x}_{k} = \begin{pmatrix}
+x_k \\
+s_k \\
+\bz_k \\
+q_k 
+\end{pmatrix}$} & cash \\
+& stock price \\
+& Markov chain state, as above \\
+& inventory \\[4ex]
+\multirow{4}{*}{Control $\vec{u}_{k} = \begin{pmatrix}
+\delta_k^+ \\
+\delta_k^- \\
+M_k^+ \\
+M_k^-
+\end{pmatrix}$} & bid posting depth \\
+& ask posting depth \\
+& buy market order - binary control \\
+& sell market order - binary control \\[4ex]
+\multirow{3}{*}{
+Random $\vec{w}_{k} = \begin{pmatrix}
+K_k^+ \\
+K_k^- \\
+\omega_k
+\end{pmatrix}$}
+& other agent buy market orders \\
+& other agent sell market orders \\
+& random variable uniformly distributed on [0,1]
+\end{tabular}
+\end{adjustbox}
+\end{frame}
+
+\begin{frame}
+\frametitle{System Description}
+Impulse Control
+\[ \begin{pmatrix}
+x_{k} \\
+s_{k} \\
+\bz_{k} \\
+q_{k} 
+\end{pmatrix} = \begin{pmatrix}
+x_{k} \\
+s_{k} \\
+\bz_{k} \\
+q_{k}
+\end{pmatrix}
++ \begin{pmatrix}
+s_k - \xi \\
+0 \\
+0 \\
+-1
+\end{pmatrix}M_k^-
++ \begin{pmatrix}
+- (s_k + \xi) \\
+0 \\
+0 \\
+1
+\end{pmatrix} M_k^+ \]
+\vfill
+System Evolution
+\[ 
+\begin{aligned}
+\begin{pmatrix}
+x_{k+1} \\
+s_{k+1} \\
+\bz_{k+1} \\
+q_{k+1} 
+\end{pmatrix} = \begin{pmatrix}
+x_k \\
+s_{k} + \eta_{k+1,T(\bz_k, \omega_k)} \\
+T(\bz_k, \omega_k) \\
+q_{k}
+\end{pmatrix}
+& + \begin{pmatrix}
+s_k + \xi + \delta_k^- \\
+0 \\
+0 \\
+-1
+\end{pmatrix}L_k^- \\
+& + \begin{pmatrix}
+- (s_k - \xi - \delta_k^+) \\
+0 \\
+0 \\
+1
+\end{pmatrix} L_k^+ 
+\end{aligned}
+\]
+\end{frame}
+
+% fill probability
+\begin{frame}
+\frametitle{Fill Probability}
+Other agents' market orders are Poisson distributed, so
+\[ \P [ K_k^+ = 0] = \frac{e^{-\mu^+ (\bz) \Delta t} (\mu^+ (\bz) \Delta t)^0}{0!} = e^{-\mu^+ (\bz) \Delta t} \]
+and
+\[ \P [ K_k^+ > 0] = 1 - e^{-\mu^+ (\bz) \Delta t} \]
+\begin{itemize}
+\item assume the \textit{aggregate} of the orders walks the LOB to depth $p_k$
+\item if $p_k > \delta^-$, our sell limit order is lifted
+\item assume this occurs with probability $e^{-\kappa \delta^-}$.
+\end{itemize}
+\[ \E [ L_k^- ] = ( 1 - e^{-\mu^+ (\bz) \Delta t} ) e^{-\kappa \delta^-} = \underbrace{p(\delta^-)}_{\text{short-hand}} \]
+\end{frame}
+
+\begin{frame}
+\frametitle{Intro to Dynamic Programming}
+\adjustimage{max size=\textwidth}{frames/figs/dynamic-programming.png}
+{\tiny Made by Derrick Coetzee. Available under the Creative Commons CC0 1.0 Universal Public Domain Dedication.}
+\end{frame}
+
+% perf crit and value func
+\begin{frame}
+\frametitle{Dynamic Programming Value Function}
+Our performance criterion is our \emph{terminal wealth}:
+\[
+\begin{aligned}
+V&_k^{\delta^\pm} (x,s,\bz,q) = \E_{k,x,s,\bz,q} \left[ W_T^{\delta^\pm} \right] \\ 
+& = \E_{k,x,s,\bz,q}\bigl[ 
+\underbrace{\vphantom{\left( Q^{\btau, \delta}_t) \right)} X_T^{\delta^\pm}}_{\text{cash}}+ \underbrace{Q_T^{\delta^\pm}\left(S_T - \xi\sgn(Q_T^{\delta^\pm})\right)}_{\text{book value of assets}} - \underbrace{\vphantom{\left( Q^{\btau, \delta}_t) \right)}\alpha {(Q_T^{\delta^\pm})}^2}_{\text{penalty}} \bigr]
+\end{aligned}
+\]
+So that our dynamic programming equations are
+\begin{align*}
+V_T (x,s,\bz,q) & = x + q(s-\xi\sgn(q)) - \alpha q^2 \\
+\begin{split}
+V_k (x,s,\bz,q) & = \max \biggl\lbrace \sup_{\delta^\pm} \bigl\lbrace \E_{\bw} \left[ V_{k+1} (f((x,s,\bz,q),\bu,\bw_k) \right] \bigr\rbrace \; ; \\
+& \hphantom{{}={} \max \biggl\lbrace} V_k(x+s_k-\xi,s_k, \bz_k, q_k -1) \; ; \\
+& \hphantom{{}={} \max \biggl\lbrace} V_k(x-s_k-\xi,s_k, \bz_k, q_k +1) \biggr\rbrace
+\end{split}
+\end{align*}
+\end{frame}
+
+%% ansatz
+%\begin{frame}
+%\frametitle{Ansatz for Value Function $V$}
+%Introduce the same ansatz
+%\[ V_k (x,s,\bz,q) = x + q(s-\xi\sgn(q)) + h_k(\bz,q) \]
+%with boundary condition $h_k(\bz,0) = 0$ and terminal condition $h_T(\bz,q) = -\alpha q^2$. 
+%
+%The DPE simplifies to
+%\[
+%\resizebox{\textwidth}{!}{$\displaystyle
+%\begin{aligned}
+%0 & = \max \biggl\lbrace 
+%%%% Only Limit Orders
+%\sup_{\delta^\pm} \bigl\lbrace \E_{\bw} \bigl[
+%(s + \xi + \delta^-)L_k^- - (s - \xi - \delta^+)L_k^+ \\
+%& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + (L_k^+ - L_k^-) \bigl( s + \eta_{0,T(\bz, \omega)}  -\xi\sgn( q + L_k^+ - L_k^-)   \bigr) \\
+%& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + q\left( \eta_{0,T(\bz, \omega)}  -\xi \left( \sgn( q + L_k^+ - L_k^-) - \sgn(q) \right) \right) \\
+%& \hphantom{\sup_{\bu} \biggl\lbrace \E_{\bw} \biggl[ {}+{}} + h_{k+1}(T(\bz,\omega), q + L_k^+ - L_k^- ) -  h_k(\bz,q) \bigr] \bigr\rbrace \; ;\\
+%%%% Market Buy
+%& \hphantom{{}={} \max \biggl\lbrace } -2\xi \cdot \indicator_{q \geq 0} + h_k(\bz,q+1) \; ; \\
+%%%% Market Sell
+%& \hphantom{{}={} \max \biggl\lbrace } -2\xi \cdot \indicator_{q \leq 0} + h_k(\bz,q-1) \biggr\rbrace
+%\end{aligned}
+%$}
+%\]
+%\end{frame}
+%
+%% opt posting d+ and floored d+
+%\begin{frame}
+%\frametitle{Optimal Posting Depth}
+%To solve the supremum in the continuation region, again consider first-order condition and floor at zero. We obtain:
+%\[
+%\resizebox{\textwidth}{!}{$\displaystyle
+%\begin{aligned}
+%{\delta^-}^* & = \max \biggl\lbrace 0 \; ; \; \frac{1}{\kappa} + \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \geq 1} + \sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q-1) \bigr] \\
+%& \hphantom{{}={}} -p(\delta^+) \left( 2 \xi \indicator_{q = 0} - \sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \bigr] \right) \biggr\rbrace
+%\end{aligned}
+%$}
+%\]
+%And similarly, the optimal buy posting depth is given by:
+%\[
+%\resizebox{\textwidth}{!}{$\displaystyle 
+%\begin{aligned}
+%{\delta^+}^* & = \max \biggl\lbrace 0 \; ; \; \frac{1}{\kappa} - \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \leq -1} + \sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q+1) \bigr] \\
+%& \hphantom{{}={}} -p(\delta^-) \left( 2 \xi \indicator_{q = 0} - \sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \bigr] \right) \biggr\rbrace
+%\end{aligned}
+%$}
+%\]
+%\end{frame}
+
+\begin{frame}
+\frametitle{Optimal Posting Depth}
+Solve one depth numerically (here the optimal sell depth):
+\[
+\resizebox{\textwidth}{!}{$\displaystyle
+\begin{aligned}
+{\delta^-}^* & = \max \biggl\lbrace 0 \; ; \; \frac{1}{\kappa} + \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \geq 1} + \sum_{\bj} \bP_{\bz,\bj} \biggl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q-1) \biggr] \\
+& \hphantom{{}={}} - (1-e^{\mu^-(\bz) \Delta t})e^{-\kappa \max \bigl\lbrace 0 \; ; \; \frac{1}{\kappa} - \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \leq -1} + \sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q+1) \bigr]} \\
+& \hphantom{{}={} {}-{}} {}^{-(1-e^{\mu^+ (\bz) \Delta t})e^{-\kappa {\delta^-}^*} \left( 2 \xi \indicator_{q = 0} - \aleph(q) \right) \bigr\rbrace } \left( 2 \xi \indicator_{q = 0} - \aleph(q) \right) \biggr\rbrace
+\end{aligned}
+$}
+\]
+And substitute to solve for other depth:
+\[
+\resizebox{\textwidth}{!}{$\displaystyle 
+\begin{aligned}
+{\delta^+}^* & = \max \biggl\lbrace 0 \; ; \; \frac{1}{\kappa} - \E[\eta_{0,T(\bz, \omega)}] - 2 \xi \indicator_{q \leq -1} + \sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q) - h_{k+1}(\bj, q+1) \bigr] \\
+& \hphantom{{}={}} -p(\delta^-) \left( 2 \xi \indicator_{q = 0} - \sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q-1) + h_{k+1}(\bj, q+1) -2 h_{k+1}(\bj, q)  \bigr] \right) \biggr\rbrace
+\end{aligned}
+$}
+\]
+\end{frame}
+
+% final DPE
+\begin{frame}
+\frametitle{Simplified Dynamic Programming Equation}
+\[
+\begin{aligned}
+h_k(\bz,q) & = \max \biggl\lbrace 
+%%% Only Limit Orders
+q\E[\eta_{0,T(\bz, \omega)}] + \frac{1}{\kappa}(p({\delta^+}^*)+p({\delta^-}^*)) \\
+& \hphantom{{}={} \max \biggl\lbrace {}+{}} + \sum_{\bj} \bP_{\bz,\bj} h_{k+1}(\bj,q) \\ 
+& \hphantom{{}={} \max \biggl\lbrace {}+{}} + p({\delta^+}^*)p({\delta^-}^*)\sum_{\bj} \bP_{\bz,\bj} \bigl[ h_{k+1}(\bj, q-1) \\
+& \hphantom{{}={} \max \biggl\lbrace {}+{} + p({\delta^+}^*)p({\delta^-}^*)\sum_{\bj} \bP_{\bz,\bj}} + h_{k+1}(\bj, q+1) \\
+& \hphantom{{}={} \max \biggl\lbrace {}+{} + p({\delta^+}^*)p({\delta^-}^*)\sum_{\bj} \bP_{\bz,\bj}} -2 h_{k+1}(\bj, q)  \bigr] \; ; \\
+%%% Market Buy
+& \hphantom{{}={} \max \biggl\lbrace } -2\xi \cdot \indicator_{q \geq 0} + h_k(\bz,q+1) \; ; \\
+%%% Market Sell
+& \hphantom{{}={} \max \biggl\lbrace } -2\xi \cdot \indicator_{q \leq 0} + h_k(\bz,q-1) \biggr\rbrace
+\end{aligned}
+\]
+\begin{itemize}
+\item solve this numerically.
+\end{itemize}
+\end{frame}
+
+
+%%% INTERPRET DPE
+% MO conditions
+%\begin{frame}
+%\frametitle{Interpreting the DPE}
+%Again we have
+%\[ h_k(\bz,q) \overset{\text{\makebox[0pt]{sell if =}}}{\overset{\downarrow}{\leq}} h_k(\bz,q+1) \overset{\text{\makebox[0pt]{buy if =}}}{\overset{\downarrow}{\leq}} h_k(\bz,q) + 2\xi, \qquad q \geq 0 \]
+%\[ h_k(\bz,q) \underset{\text{\makebox[0pt]{buy if =}}}{\underset{\uparrow}{\leq}} h_k(\bz,q-1) \underset{\text{\makebox[0pt]{sell if =}}}{\underset{\uparrow}{\leq}} h_k(\bz,q) + 2\xi, \qquad q \leq 0 \]
+%\begin{itemize}
+%\item recalling $h_k(\bz,0) = 0$, again tells us $h$ non-negative everywhere
+%\item but no upper/lower bounds on ${\delta^\pm}^*$
+%\end{itemize}
+%\end{frame}
