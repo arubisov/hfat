@@ -1,0 +1,284 @@
+% system description - each variable.
+\begin{frame}
+\frametitle{System Description}
+\begin{itemize}
+\item Imbalance Averaging Time $\Delta {t_{I}}$ \\
+    A constant, specifying the time window over which the imbalance ratio $I(t)$ will be averaged.
+\item Price Change Time $\Delta {t_{S}}$ \\
+    A constant, specifying the time window over which price changes will be computed.
+\item Number of Imbalance Bins $\#_{bins}$ \\ 
+    A constant, specifying the number of bins (spaced by percentiles, symmetric around zero) into which $I(t)$ will be sorted.
+\item Imbalance $\rho_t$ \\
+    The finite, discrete stochastic process that results from sorting $I(t)$ into the imbalance bins $\{1, \dots, \#_{bins} \}$, and which evolves in accordance with the CTMC $\bZ$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{System Description}
+\begin{itemize}
+\item Midprice $S_t$ \\
+    Stochastic process, evolves according to CTMC $\bZ$.
+\item Midprice Change $\Delta S_t = \sgn(S_t - S_{t-\Delta {t_{S}}})$
+\item Imbalance \& Midprice Change $\bZ_t = (\rho_t, \Delta S_t) $ \\
+    Continuous-time Markov chain with generator $\mat{G}$.
+\item Bid-Ask Half-Spread $\xi$ \\
+    Assumed constant. $2\xi$ is equal to the bid-ask spread.
+\item Midprice Change $\{ \eta_{0,\bz}, \eta_{1,\bz}, \dots \} \sim F_{\bz}$ \\
+    i.i.d. RVs, with distribution dependent on the Markov chain state.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{System Description}
+\begin{itemize}
+\item Other Agent Market Orders $K^{\pm}_t$ \\
+    Poisson processes with rate $\mu^{\pm}(\bZ_t)$. $K^+$ represents the arrival of another agent's buy market order.
+\item Our Limit Order Posting Depth $\delta^{\pm}_t$ \\
+    One of our controlled $\cF$-predictable processes. $\delta^+$ dictates how deep on the buy side we will post our buy limit order; $\delta^+ = 0$ implies at-the-touch.
+\item Our Limit Order Fill Count $L^{\pm}_t$ \\
+    Counting processes (not Poisson), satisfying
+    \[ \P [\d L^{\pm}_t = 1 \, | \, \d K^{\mp}_t = 1] = e^{-\kappa \delta^{\pm}_t} \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{System Description}
+\begin{itemize}
+\item Fill Probability Constant $\kappa$ \\
+    Fitted to satisfy the above relation, by considering the avg vol available at the first few depths relative to distribution of volumes of incoming market orders
+\item Our Market Orders $M^{\pm}_t$ \\
+    $M^+$ represents our buy market order. Assume we achieve the best bid/ask price.
+\item Our Market Order Execution Times $\btau^\pm = \{ \tau^\pm_k : k = 1, \dots \}$ \\
+    An increasing sequence of $\cF$-stopping times.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{System Description}
+\begin{itemize}
+\item Cash $X^{\btau, \delta}_t$ \\
+    A stochastic variable representing our cash, initially zero, that evolves according to
+\[ \begin{aligned}
+\d X^{\btau, \delta}_t = & \underbrace{(S_t + \xi + \delta^{-}_t) \d L^{-}_t}_{\text{sell limit order}} - \underbrace{(S_t - \xi - \delta^{+}_t) \d L^{+}_t}_{\text{buy limit order}} \\
+                         & + \underbrace{(S_t - \xi) \d M^{-}_t}_{\text{sell market order}} - \underbrace{(S_t + \xi) \d M^{+}_t}_{\text{buy market order}}
+\end{aligned} \]
+\item Inventory $Q^{\btau, \delta}_t$ \\
+    A stochastic process representing our assets, initially zero, that satisfies
+\[ Q^{\btau, \delta}_0 = 0, \qquad Q^{\btau, \delta}_t = L^+_t + M^+_t - L^-_t - M^-_t \]
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Terminal Wealth}
+Call $W^{\btau, \delta}_t$ our net present value (NPV) at time $t$.
+Hence $W^{\btau, \delta}_T$ at terminal time $T$ is our `terminal wealth.' 
+
+At $T$, we:
+\begin{itemize}
+\item finish each trading day with zero inventory (avoid overnight positional risk)
+\item submit a market order (of a possibly large volume) to liquidate remaining stock
+\item price achieved will be $S - \xi \sgn Q - \alpha Q$
+\begin{itemize}
+\item $\xi \sgn Q$ represents crossing the spread
+\item $\alpha$ is a penalty constant
+\item $\alpha Q$ represents receiving a worse price linearly in $Q$ due to walking the book
+\end{itemize}
+\end{itemize}
+
+Hence, $W^{\btau, \delta}_t$ satisfies:
+\[
+W^{\btau, \delta}_t = \underbrace{\vphantom{\left( Q^{\btau, \delta}_t) \right)}X^{\btau, \delta}_t}_{\text{cash}}+ \underbrace{Q^{\btau, \delta}_t \left( S_t - \xi \sgn(Q^{\btau, \delta}_t) \right)}_{\text{book value of assets}} - \underbrace{\alpha \left( Q^{\btau, \delta}_t \right)^2}_{\text{liquidation penalty}}
+\]
+\end{frame}
+
+% perf crit and value func
+\begin{frame}
+\frametitle{Dynamic Programming Value Function}
+Our performance criterion will be to maximize terminal wealth:
+\[
+H^{\btau, \delta}(t,x,s,\bz,q) = \E_{t,x,s,z,q} \left[ W_T^{\btau, \delta} \right]\vphantom{\int\limits_t^T}
+\]
+
+The \emph{value function} is given by
+\[
+H(t,x,s,\bz,q) = \sup\limits_{\btau \in \mathcal{T}_{[t,T]}} \sup\limits_{\delta \in \cA_{[t,T]}} H^{\btau, \delta}(t,x,s,\bz,q)
+\]
+
+Admissible trading strategies is the product of the set $\mathcal{T}$ of all $\cF$-stopping times, with the set $\cA$ of all $\cF$-predictable, bounded-from-below depths $\delta \geq 0$.
+\begin{itemize}
+\item recognizing $\tau$ does not require knowledge of the future
+\item $\delta$ cannot `see into the future'; measurable with respect to information at an earlier time
+\end{itemize}
+\end{frame}
+
+% solve dH...
+\begin{frame}
+\frametitle{Dynamic Programming Equation}
+\begin{theorem}{\bf Dynamic Programming Equation for Optimal Stopping and Control.} \textit{(Cartea et al., 2015)} Assume that the value function $H(t,\bx)$ is once differentiable in $t$, all second-order derivatives in $\bx$ exist, and that $G : \R^m \rightarrow \R$ is continuous. Then $H$ solves the quasi-variational inequality
+\[
+\max \left\lbrace \partial_t H + \sup \limits_{\bu \in \cA_t} \cL^{\bu}_t H \; ; \; G - H \right\rbrace = 0
+\]
+on $\mathcal{D}$, where $\mathcal{D} = [0,T] \times \R^m$.
+\end{theorem}
+\end{frame}
+
+\begin{frame}
+\frametitle{Solving for the Infinitesimal Generator}
+\[
+\begin{aligned}
+& \d H (t,x,s,\bz,q) = \partial_t H \d t \\
+& \hphantom{\partial_t H} + \underbrace{e^{ -\kappa \delta^{-}} \bigl[ H(t,x+(s+\xi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \d K^+}_{\text{probability of our sell limit order being filled, times the change in value}} \\
+& \hphantom{\partial_t H} + \underbrace{e^{ -\kappa \delta^{+}} \bigl[ H(t,x-(s-\xi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \d K^-}_{\text{probability of our buy limit order being filled, times the change in value}} \\
+& \hphantom{\partial_t H} + \sum_{\bj} \underbrace{\E \left[ H(t,x,s+\eta_{0,\bj},\bj,q) - H(\cdot) \right] \d Z_{\bz,\bj}}_{\text{change in value resulting from a CTMC state switch}}
+\end{aligned}
+\]
+\end{frame}
+
+% comp proc for Markov chain
+\begin{frame}
+\frametitle{Compensated Markov Chain Process}
+To solve for $\cL^{\bu}_t Ht$ we need the compensated Markov chain process.
+For Poisson processes, this is
+\[ \d K^{\pm} = \d \simcal{K}^{\pm} + \mu^{\pm}(\bz) \d t \]
+%\vspace{\baselineskip}
+For the CTMC:
+\begin{itemize}
+\item Define $K_l(t)$ to be the number of jumps with $Z_s - Z_{s^-} = l$ up to time $t$ 
+\item Define $\beta_l(x) = G_{x,x+l}$
+\item Then the compensated process (a martingale) is \[ \simcal{K}_l(t) = K_l(t) - \int_0^t \beta_l(Z_s) \d s \]
+\end{itemize}
+\end{frame}
+
+% inf gen
+\begin{frame}
+\frametitle{Solving for the Infinitesimal Generator}
+\[
+\resizebox{\textwidth}{!}{$\displaystyle
+\begin{aligned}
+\cL^{\delta}_t H & = \mu^+(\bz) e^{ -\kappa \delta^{-}} \bigl[ H(t,x+(s+\xi+\delta^-),s,\bz,q-1) - H(\cdot) \bigr] \\
+& \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} \bigl[ H(t,x-(s-\xi-\delta^+),s,\bz,q+1) - H(\cdot) \bigr] \\
+& \quad + \sum_{\bj} G_{\bz,\bj} \E \left[ H(t,x,s+\eta_{0,\bj},\bj,q) - H(\cdot) \right]
+\end{aligned}
+$}
+\]
+\end{frame}
+
+% resulting DPE w/ bdry cond
+\begin{frame}
+\frametitle{Resulting Dynamic Programming Equation}
+Our dynamic programming equation simplifies to
+\[
+\resizebox{\textwidth}{!}{$\displaystyle
+\begin{aligned}
+0 = \max \biggl\lbrace \partial_t H + \sup \limits_{\bu \in \cA_t} \cL^{\bu}_t H \; ; \; & H(t,x-(s+\xi), s, \bz, q+1) - H(\cdot) \; ; \\
+&  H(t,x+(s-\xi), s, \bz, q-1) - H(\cdot) \biggr\rbrace
+\end{aligned}
+$}
+\]
+with boundary conditions
+\begin{align*}
+H(T, x, s, \bz, q) & = x + q(s - \xi \sgn (q)) - \alpha q^2 \\
+H(t, x, s, \bz, 0) & = x
+\end{align*}
+\end{frame}
+
+% ansatz
+\begin{frame}
+\frametitle{Ansatz for Value Function $H$}
+Introduce the ansatz 
+ \[ H(t, x, s, \bz, q) = x + q(s - \xi \sgn(q)) + h(t,\bz,q) \]
+\begin{itemize}
+\item separates out mark-to-market of the current position
+\item $h(t,\bz,q)$ captures value due to optimal trading
+\end{itemize}
+Boundary conditions on $h$ are
+\begin{align*}
+h(T, \bz, q) & = - \alpha q^2 \\
+h(t, \bz, 0) & = 0
+\end{align*}
+\end{frame}
+
+% simplified inf gen with sgn
+\begin{frame}
+\frametitle{Simplified Infinitesimal Generator}
+\[
+\resizebox{\textwidth}{!}{$\displaystyle
+\begin{aligned}
+\cL^{\delta}_t H & = \mu^+(\bz) e^{ -\kappa \delta^{-}} \bigl[ \delta^- + 2 \xi \cdot \indicator_{q \geq 1} + h(t,\bz,q-1) - h(t,\bz,q) \bigr] \\
+& \quad + \mu^-(\bz) e^{ -\kappa \delta^{+}} \bigl[ \delta^+ + 2 \xi \cdot \indicator_{q \leq -1} + h(t,\bz,q+1) - h(t,\bz,q) \bigr] \\
+& \quad + \sum_{\bj} G_{\bz,\bj} \left[q \E [\eta_{0,\bj}] +h(t,\bj,q) - h(t,\bz, q) \right]
+\end{aligned}
+$}
+\]
+\end{frame}
+
+% opt posting d+ and floored d+
+\begin{frame}
+\frametitle{Optimal Posting Depth}
+To find the supremum over $\delta^+$, consider the first-order constraint:
+\[
+\resizebox{\textwidth}{!}{$\displaystyle
+\begin{aligned}
+0 & = \partial_{\delta^+} \biggl[ e^{ -\kappa {\delta^+}^*} \bigl[ {\delta^+}^* +  2 \xi \cdot \indicator_{q \leq -1} + h(t,\bz,q+1) - h(t,\bz,q) \bigr] \biggr] \\
+& = -\kappa e^{ -\kappa {\delta^+}^*} \bigl[ {\delta^+}^* +2 \xi \cdot \indicator_{q \leq -1} + h(t,\bz,q+1) - h(t,\bz,q) \bigr] + e^{ -\kappa {\delta^+}^*} \\
+& = e^{ -\kappa \delta^{+}} \bigl[ -\kappa \bigl( {\delta^+}^* +2 \xi \cdot \indicator_{q \leq -1} + h(t,\bz,q+1) - h(t,\bz,q) \bigr) + 1 \bigr] \\
+& = -\kappa \bigl( {\delta^+}^* +2 \xi \cdot \indicator_{q \leq -1} + h(t,\bz,q+1) - h(t,\bz,q) \bigr) + 1 \\
+\end{aligned}
+$}
+\]
+
+Rearranging, and recalling we want non-negative posting depths, the optimal buy depth $\delta^*$ is given by:
+\[ {\delta^+}^* = \max \left\lbrace 0 \; ; \; \frac{1}{\kappa} - 2 \xi \cdot \indicator_{q \leq -1} - h(t,\bz,q+1) + h(t,\bz,q) \right\rbrace \] 
+\end{frame}
+
+% final DPE
+\begin{frame}
+\frametitle{Simplified Dynamic Programming Equation}
+\[
+\resizebox{\textwidth}{!}{$\displaystyle
+\begin{aligned}
+0 = \max \biggl\lbrace & \partial_t h + \mu^+(\bz) e^{ -\kappa {\delta^-}^*} \left( {\delta^-}^* + 2\xi \cdot \indicator_{q \geq 1} + h(t,\bz,q-1) - h(t,\bz,q) \right)  \\
+& \quad + \mu^-(\bz) e^{ -\kappa {\delta^+}^*} \left( {\delta^+}^* + 2 \xi \cdot \indicator_{q \leq -1} + h(t,\bz,q+1) - h(t,\bz,q) \right) \\
+& \quad + \sum_{\bj} G_{\bz,\bj} \left[ ql \E \left[ \eta_{0,\bj} \right] + h(t,\bj,q) - h(t,\bz,q) \right] \; ; \\
+& -2 \xi \cdot \indicator_{q \geq 0} + h(t, \bz, q+1) - h(t,\bz,q)   \; ; \\
+& -2 \xi \cdot \indicator_{q \leq 0} + h(t, \bz, q-1) - h(t,\bz,q)  \biggr\rbrace
+\end{aligned}
+$}
+\]
+\end{frame}
+
+%%% INTERPRET DPE
+% MO conditions
+\begin{frame}
+\frametitle{Interpreting the DPE - Market Orders}
+A buy market order will be executed at time $\tau^+_q$ whenever
+\[
+h(\tau^+_q, \bz, q+1) - h(\tau^+_q,\bz,q) = 2 \xi \cdot \indicator_{q \geq 0}
+\]
+and a sell market order whenever
+\[
+h(\tau^+_q, \bz, q-1) - h(\tau^+_q,\bz,q) = 2 \xi \cdot \indicator_{q \leq 0}
+\]
+\begin{itemize}
+\item $2\xi$ is the difference between purchase price and mark-to-market
+\item drives inventory back to zero when value unaffected
+\end{itemize}
+\end{frame}
+
+% continuation region conditions
+\begin{frame}
+\frametitle{Interpreting the DPE - Limit Orders}
+Combining continuation region inequalities:
+\[ h(t,\bz,q) \overset{\text{\makebox[0pt]{sell if =}}}{\overset{\downarrow}{\leq}} h(t,\bz,q+1) \overset{\text{\makebox[0pt]{buy if =}}}{\overset{\downarrow}{\leq}} h(t,\bz,q) + 2\xi, \qquad q \geq 0 \] 
+\[ h(t,\bz,q) \underset{\text{\makebox[0pt]{buy if =}}}{\underset{\uparrow}{\leq}} h(t,\bz,q-1) \underset{\text{\makebox[0pt]{sell if =}}}{\underset{\uparrow}{\leq}} h(t,\bz,q) + 2\xi, \qquad q \leq 0 \]
+\end{frame}
+
+% bounds on d+/-
+\begin{frame}
+\frametitle{Interpreting the DPE - Posting Depths}
+Substituting the previous inequalities into our posting depth formula, we obtain bounds on our depths
+\[ \frac{1}{\kappa} - 2\xi  \leq {\delta^\pm}^* \leq \frac{1}{\kappa} \]
+\begin{itemize}
+\item possible interpretation: if buy depth is `sufficiently' large, then actually optimal to sell instead
+\end{itemize}
+\end{frame}

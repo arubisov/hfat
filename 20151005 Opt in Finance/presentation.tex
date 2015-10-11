@@ -1,0 +1,35 @@
+\documentclass{beamer}
+\input{preamble.tex}
+\begin{document}
+	%\input{frames/frame-0-abstract.tex}
+    \maketitle
+    \addtocounter{framenumber}{-2}
+    \section*{Roadmap}
+    
+    {
+	\makeatletter \setbeamertemplate{footline}{} \makeatother
+    \frame{\frametitle{Roadmap} \tableofcontents}
+    }
+
+    \section{Background Information}
+    \input{frames/frame-1-background.tex}
+    
+    \section{Exploratory Data Analysis}
+    \input{frames/frame-2-EDA.tex}
+    
+    %\section{Maximizing Wealth via Continuous-Time Stochastic Control}
+    %\input{frames/frame-3-ctsstoch.tex}
+    
+    \section{Maximizing Wealth via Discrete-Time Stochastic Control}
+    \input{frames/frame-4-dscrstoch.tex}
+
+    \section{Backtesting Results}
+    \input{frames/frame-5-results.tex}
+    
+    \section{Conclusion and Future Work}
+    \input{frames/frame-6-futurework.tex}
+    
+    \section*{}
+    \input{frames/frame-7-endmatter.tex}
+    
+\end{document}

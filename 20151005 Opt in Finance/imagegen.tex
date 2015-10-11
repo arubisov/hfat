@@ -1,0 +1,45 @@
+\documentclass{beamer}
+\input{preamble.tex}
+\usepackage{etex}
+\usepackage{pgfplots}
+\usetikzlibrary{patterns}
+\usetikzlibrary{external} 		% Externalization library to avoid plot re-generation
+\tikzexternalize[prefix=frames/figs/] % activate
+\newdimen\LineSpace
+\tikzset{
+    line space/.code={\LineSpace=#1},
+    line space=5pt
+}
+\colorlet{buyLOcolor}{black!25}%
+\colorlet{sellLOcolor}{black!90}%
+\pgfdeclarepatternformonly[\LineSpace]{myhatch}{\pgfqpoint{-1pt}{-1pt}}{\pgfqpoint{\LineSpace}{\LineSpace}}{\pgfqpoint{\LineSpace}{\LineSpace}}%
+{
+    \pgfsetlinewidth{1pt}
+    \pgfpathmoveto{\pgfqpoint{0pt}{\LineSpace}}
+    \pgfpathlineto{\pgfqpoint{\LineSpace + 0.1pt}{-0.1pt}}
+    \pgfusepath{stroke}
+}
+\newlength\figureheight 
+\newlength\figurewidth
+\newcommand {\framedgraphic}[1] {
+	\adjustbox{max width=\textwidth}{#1}
+}
+\definecolor{cts_plot_color}{rgb}{ 0.9019608 , 0.3803922 , 0.0039216}%
+\definecolor{dscr_plot_color}{rgb}{ 0.3686275 , 0.2352941 , 0.6000000}%
+\definecolor{cts_nFPC_plot_color}{rgb}{ 0.9921569 , 0.7215686 , 0.3882353}%
+\definecolor{dscr_nFPC_plot_color}{rgb}{ 0.6980392 , 0.6705882 , 0.8235294}%
+\begin{document}
+
+\begin{frame}
+\frametitle{Limit-Order Book Imbalance}
+\tikzsetnextfilename{OOS_annual_AAPL}%
+\setlength\figureheight{.24\textwidth} 
+\setlength\figurewidth{.48\textwidth}
+\only<1>{\framedgraphic{\input{frames/figs/OOS_annual_AAPL.tikz}}\\}
+\tikzsetnextfilename{OOS_annual_INTC}%
+\setlength{\figureheight}{.24\textwidth}%
+\setlength{\figurewidth}{.48\textwidth}%
+\only<2>{\framedgraphic{\input{frames/figs/OOS_annual_INTC.tikz}}\\}
+\end{frame}
+
+\end{document}

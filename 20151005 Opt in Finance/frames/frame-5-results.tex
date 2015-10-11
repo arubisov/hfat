@@ -1,0 +1,554 @@
+% list of tickers
+\begin{frame}
+\frametitle{Data Set}
+Calibrate and backtest on the NASDAQ Historical TotalView-ITCH, timestamped to the millisecond
+
+\begin{table}[H]%
+\centering%
+\ra{1.2}%
+\begin{tabular}{@{} rlr @{}}%
+\toprule
+Ticker & Company & Average Daily Volume \\
+\midrule
+\texttt{FARO} & FARO Technologies Inc. & 200,000 \\
+\texttt{NTAP} & NetApp, Inc. & 4,000,000 \\
+\texttt{ORCL} & Oracle Corporation & 15,000,000 \\
+\texttt{INTC} & Intel Corporation & 30,000,000 \\
+\texttt{AAPL} & Apple Inc. & 50,000,000 \\
+\bottomrule
+\end{tabular}%
+\end{table}%
+\end{frame}
+
+% parameters (explain kappa)
+\begin{frame}
+\frametitle{Calibration}
+Global parameters for backtesting
+\begin{table}
+\centering%
+\ra{1.2}%
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{cll}
+\toprule
+Parameter & Value & Description \\
+\midrule
+$\Delta t_S$ & 1000ms & time window for computing price change \\
+$\Delta t_I$ & 1000ms & time window for averaging order imbalance \\
+$\#_{bins}$ & 5 & number of imbalance bins \\
+$\kappa$ & 100 & fill probability constant \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+$\kappa = 100$ implies:
+\begin{itemize}
+\item Orders posted at $\delta=0$ filled with probability $1$
+\item Orders posted at $\delta=\$0.01$ filled with probability $0.37$
+\item Orders posted at $\delta=\$0.02$ filled with probability $0.13$
+\item \dots
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Calibration}
+Calculated parameters for backtesting
+\begin{table}
+\centering%
+\ra{1.2}%
+\begin{tabular}{cl}
+\toprule
+Parameter & Equation \\
+\midrule
+$\mat{G}$ & infinitesimal generator matrix \\
+$\mat{P}$ & transition probability matrix \\
+$\mu^\pm$ & market order arrival intensities\\
+$H(t,x,s,\bz,q)$ & dynamic programming value function \\
+$\delta^\pm$ & limit order posting depths \\
+\bottomrule
+\end{tabular}
+\end{table}
+\end{frame}
+
+% two calibration types (duplicate the timeline for regular)
+\begin{frame}
+\frametitle{Two Calibration Frameworks}
+Non-$\cF$-predictable calibration
+\adjustimage{max size=\textwidth}{frames/figs/timewindows-nfpc.pdf}\par
+Regular calibration
+\adjustimage{max size=\textwidth}{frames/figs/timewindows-reg.pdf}
+\end{frame}
+
+% show deltas (cts/dscr only)
+\begin{frame}
+\frametitle{Dynamics of Posting Depths}
+\begin{columns}[T] % align columns
+\begin{column}{.48\textwidth}
+BUY Posting Depth $\delta^+$ $[\$]$\\
+at $Z=(\rho = 0, \Delta S = 0)$
+\end{column}%
+\hfill%
+\begin{column}{.48\textwidth}
+SELL Posting Depth $\delta^-$ $[\$]$\\
+at $Z=(\rho = 0, \Delta S = 0)$
+\end{column}%
+\end{columns}
+\vspace{\baselineskip}
+\begin{columns}[T] % align columns
+\begin{column}{.24\textwidth}
+\centering%
+\adjustimage{max size=\textwidth}{frames/figs/dp_cts_z8.pdf}\\
+{\scriptsize Continuous \par}
+\adjustimage{max size=\textwidth}{frames/figs/dp_cts_nFPC_z8.pdf}\\
+{\scriptsize Continuous nFPC \par}
+\end{column}%
+%\hfill%
+\begin{column}{.24\textwidth}
+\centering%
+\adjustimage{max size=\textwidth}{frames/figs/dp_dscr_z8.pdf}\\
+{\scriptsize Discrete \par}
+\adjustimage{max size=\textwidth}{frames/figs/dp_dscr_nFPC_z8.pdf}\\
+{\scriptsize Discrete nFPC \par}
+\end{column}%
+\hfill%
+\vrule{}
+\hfill%
+\begin{column}{.24\textwidth}
+\centering%
+\adjustimage{max size=\textwidth}{frames/figs/dm_cts_z8.pdf}\\
+{\scriptsize Continuous \par}
+\adjustimage{max size=\textwidth}{frames/figs/dm_cts_nFPC_z8.pdf}\\
+{\scriptsize Continuous nFPC \par}
+\end{column}%
+%\hfill%
+\begin{column}{.24\textwidth}
+\centering%
+\adjustimage{max size=\textwidth}{frames/figs/dm_dscr_z8.pdf}\\
+{\scriptsize Discrete \par}
+\adjustimage{max size=\textwidth}{frames/figs/dm_dscr_nFPC_z8.pdf}\\
+{\scriptsize Discrete nFPC \par}
+\end{column}%
+\end{columns}
+\centering
+{\vspace{0.5\baselineskip} \scriptsize Time [s] \par}
+\vspace{0.5\baselineskip}
+\adjustimage{max size=0.75\textwidth}{frames/figs/altdeltalegend.pdf}
+\end{frame}
+
+\begin{frame}
+\frametitle{Dynamics of Posting Depths}
+\begin{columns}[T] % align columns
+\begin{column}{.48\textwidth}
+BUY Posting Depth $\delta^+$ $[\$]$\\
+at $Z=(\rho = -1, \Delta S = -1)$
+\end{column}%
+\hfill%
+\begin{column}{.48\textwidth}
+SELL Posting Depth $\delta^-$ $[\$]$\\
+at $Z=(\rho = +1, \Delta S = +1)$
+\end{column}%
+\end{columns}
+\vspace{\baselineskip}
+\begin{columns}[T] % align columns
+\begin{column}{.24\textwidth}
+\centering%
+\adjustimage{max size=\textwidth}{frames/figs/dp_cts_z1.pdf}\\
+{\scriptsize Continuous \par}
+\adjustimage{max size=\textwidth}{frames/figs/dp_cts_nFPC_z1.pdf}\\
+{\scriptsize Continuous nFPC \par}
+\end{column}%
+%\hfill%
+\begin{column}{.24\textwidth}
+\centering%
+\adjustimage{max size=\textwidth}{frames/figs/dp_dscr_z1.pdf}\\
+{\scriptsize Discrete \par}
+\adjustimage{max size=\textwidth}{frames/figs/dp_dscr_nFPC_z1.pdf}\\
+{\scriptsize Discrete nFPC \par}
+\end{column}%
+\hfill%
+\vrule{}
+\hfill%
+\begin{column}{.24\textwidth}
+\centering%
+\adjustimage{max size=\textwidth}{frames/figs/dm_cts_z15.pdf}\\
+{\scriptsize Continuous \par}
+\adjustimage{max size=\textwidth}{frames/figs/dm_cts_nFPC_z15.pdf}\\
+{\scriptsize Continuous nFPC \par}
+\end{column}%
+%\hfill%
+\begin{column}{.24\textwidth}
+\centering%
+\adjustimage{max size=\textwidth}{frames/figs/dm_dscr_z15.pdf}\\
+{\scriptsize Discrete \par}
+\adjustimage{max size=\textwidth}{frames/figs/dm_dscr_nFPC_z15.pdf}\\
+{\scriptsize Discrete nFPC \par}
+\end{column}%
+\end{columns}
+\centering
+{\vspace{0.5\baselineskip} \scriptsize Time [s] \par}
+\vspace{0.5\baselineskip}
+\adjustimage{max size=0.75\textwidth}{frames/figs/altdeltalegend.pdf}
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Dynamics of Posting Depths}
+%\begin{columns}[T] % align columns
+%\begin{column}{.48\textwidth}
+%BUY Posting Depth $\delta^+$ $[\$]$\\
+%at $Z=(\rho = +1, \Delta S = +1)$
+%\end{column}%
+%\hfill%
+%\begin{column}{.48\textwidth}
+%SELL Posting Depth $\delta^+$ $[\$]$\\
+%at $Z=(\rho = -1, \Delta S = -1)$
+%\end{column}%
+%\end{columns}
+%\vspace{\baselineskip}
+%\begin{columns}[T] % align columns
+%\begin{column}{.24\textwidth}
+%\centering%
+%\adjustimage{max size=\textwidth}{frames/figs/dp_cts_z15.pdf}\\
+%{\scriptsize Continuous \par}
+%\adjustimage{max size=\textwidth}{frames/figs/dp_cts_nFPC_z15.pdf}\\
+%{\scriptsize Continuous nFPC \par}
+%\end{column}%
+%%\hfill%
+%\begin{column}{.24\textwidth}
+%\centering%
+%\adjustimage{max size=\textwidth}{frames/figs/dp_dscr_z15.pdf}\\
+%{\scriptsize Discrete \par}
+%\adjustimage{max size=\textwidth}{frames/figs/dp_dscr_nFPC_z15.pdf}\\
+%{\scriptsize Discrete nFPC \par}
+%\end{column}%
+%\hfill%
+%\vrule{}
+%\hfill%
+%\begin{column}{.24\textwidth}
+%\centering%
+%\adjustimage{max size=\textwidth}{frames/figs/dm_cts_z1.pdf}\\
+%{\scriptsize Continuous \par}
+%\adjustimage{max size=\textwidth}{frames/figs/dm_cts_nFPC_z1.pdf}\\
+%{\scriptsize Continuous nFPC \par}
+%\end{column}%
+%%\hfill%
+%\begin{column}{.24\textwidth}
+%\centering%
+%\adjustimage{max size=\textwidth}{frames/figs/dm_dscr_z1.pdf}\\
+%{\scriptsize Discrete \par}
+%\adjustimage{max size=\textwidth}{frames/figs/dm_dscr_nFPC_z1.pdf}\\
+%{\scriptsize Discrete nFPC \par}
+%\end{column}%
+%\end{columns}
+%\vspace{\baselineskip}
+%\centering
+%\adjustimage{max size=0.75\textwidth}{frames/figs/altdeltalegend.pdf}
+%\end{frame}
+
+% sample performance for ORCL
+\begin{frame}[t]
+\frametitle{Sample Strategy Performance}
+Single day performance for \texttt{ORCL} on 2013-05-15
+\begin{center}
+\adjustimage{max size=\textwidth}{frames/figs/ORCL_comp4stoch.pdf}
+\end{center}
+\end{frame}
+\begin{frame}[t]
+\frametitle{Sample Strategy Performance}
+Single day performance for \texttt{ORCL} on 2013-05-15
+\begin{center}
+\adjustimage{max size=\textwidth}{frames/figs/ORCL_comp4stoch_inv.pdf}\\
+\end{center}
+\end{frame}
+
+% show zoom-in performance (again only cts/dscr)
+\begin{frame}[t]
+\frametitle{Sample Strategy Performance}
+Single day performance for \texttt{ORCL} on 2013-05-15
+\begin{center}
+\begin{columns}[T] % align columns
+\begin{column}{.5\textwidth}
+\adjustimage{max size=\textwidth}{frames/figs/samplepath_cts_paths.pdf}\\
+{\centering\scriptsize Continuous \par}
+\end{column}%
+\hfill%
+\begin{column}{.5\textwidth}
+\adjustimage{max size=\textwidth}{frames/figs/samplepath_dscr_paths.pdf}\\
+{\centering\scriptsize Discrete \par}
+\end{column}%
+\end{columns}
+\centering
+\vspace{\baselineskip}
+\adjustimage{max size=\textwidth}{frames/figs/samplepathslegend.pdf}
+\end{center}
+\end{frame}
+
+% show zoom-in posting depths
+%\begin{frame}[t]
+%\frametitle{Sample Strategy Performance}
+%Single day performance for \texttt{ORCL} on 2013-05-15
+%\begin{center}
+%\begin{columns}[T] % align columns
+%\begin{column}{.5\textwidth}
+%\adjustimage{max size=\textwidth}{frames/figs/samplepath_cts_depths.pdf}\\
+%{\centering\scriptsize Continuous \par}
+%\end{column}%
+%\hfill%
+%\begin{column}{.5\textwidth}
+%\adjustimage{max size=\textwidth}{frames/figs/samplepath_dscr_depths.pdf}\\
+%{\centering\scriptsize Discrete \par}
+%\end{column}%
+%\end{columns}
+%\end{center}
+%\end{frame}
+
+% show same day calib, plots (all 4) and table (only 2)
+%\begin{frame}
+%\frametitle{In-Sample Backtesting: Same Day Calibration}
+%\begin{center}
+%\begin{columns}[T] % align columns
+%\begin{column}{.5\textwidth}
+%\centering
+%\adjustimage{max size=.6\textwidth}{frames/figs/IS_sameday_FARO.pdf}\\
+%\vspace{0.5cm}
+%\adjustimage{max size=.6\textwidth}{frames/figs/IS_sameday_ORCL.pdf}\\
+%\end{column}%
+%\hfill%
+%\begin{column}{.5\textwidth}
+%\centering
+%\adjustimage{max size=.6\textwidth}{frames/figs/IS_sameday_NTAP.pdf}\\
+%\vspace{0.5cm}
+%\adjustimage{max size=.6\textwidth}{frames/figs/IS_sameday_INTC.pdf}\\
+%\end{column}%
+%\end{columns}
+%
+%\leavevmode\smash{\makebox[0pt]{\hspace{2em}% HORIZONTAL POSITION           
+%  \rotatebox[origin=l]{90}{\hspace{5em}% VERTICAL POSITION
+%    {\scriptsize Normalized P\&L}}%
+%}}\hspace{0pt plus 1filll}\null
+%
+%{\scriptsize Trading Day Number of 2013 \par}
+%\vspace{0.5cm}
+%\adjustimage{max size=\textwidth}{frames/figs/strategylegend.pdf}
+%\end{center}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{In-Sample Backtesting: Same Day Calibration}
+%\begin{table}
+%\centering
+%\ra{1.1}
+%\setlength{\tabcolsep}{9pt}
+%\begin{adjustbox}{width=\textwidth}
+%\begin{tabular}{@{} *{6}{r} @{}}
+%\toprule
+%Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# Trades \\ \hphantom{Risk Adj}} & \cellbreak{t}{r}{Average \\ Inventory} & \cellbreak{t}{r}{\% Win \\ \hphantom{Risk Adj}} \\
+%\midrule
+%\multicolumn{6}{l}{\texttt{ORCL}} \\
+%Naive & -0.105 & -0.253 & 484 & 1.40 & 28\%  \\ 
+%Naive+ & -0.034 & -0.011 & 4086 & -55.18 & 61\% \\ 
+%Naive++ & 0.002 & 0.006 & 132 & 0.61 & 52\% \\ 
+%Continuous & 0.115 & 1.348 & 1874 & 1.94 & 92\% \\ 
+%Discrete & 0.135 & 1.620 & 1898 & 3.93 & 98\% \\ 
+%Continuous with nFPC & -0.010 & -0.100 & 2455 & 1.32 & 48\% \\ 
+%Discrete with nFPC & 0.144 & 1.501 & 1759 & 2.85 & 97\% \\[2ex]
+%\multicolumn{6}{l}{\texttt{INTC}} \\
+%Naive & -0.082 & -0.228 & 258 & -5.21 & 33\% \\ 
+%Naive+ & 0.365 & 0.134 & 3962 & -32.50 & 63\% \\ 
+%Naive++ & -0.001 & -0.003 & 74 & -0.84 & 48\% \\ 
+%Continuous & 0.214 & 2.159 & 1577 & 5.17 & 97\% \\ 
+%Discrete & 0.232 & 2.528 & 1642 & 4.48 & 98\% \\ 
+%Continuous with nFPC & 0.114 & 1.218 & 1894 & 2.01 & 90\% \\ 
+%Discrete with nFPC &  0.226 & 2.202 & 1569 & 4.28 & 98\% \\ 
+%\bottomrule
+%\end{tabular}
+%\end{adjustbox}
+%\end{table}
+%\end{frame}
+%
+%% show annual calib, 2 and 2
+%\begin{frame}
+%\frametitle{In-Sample Backtesting: Annual Calibration}
+%\begin{center}
+%\begin{columns}[T] % align columns
+%\hfill%
+%\begin{column}{.48\textwidth}
+%\centering
+%\adjustimage{max size=\textwidth}{frames/figs/IS_annual_ORCL.pdf}\\
+%\end{column}%
+%\begin{column}{.48\textwidth}
+%\centering
+%\adjustimage{max size=\textwidth}{frames/figs/IS_annual_INTC.pdf}\\
+%\end{column}%
+%\hfill%
+%\end{columns}
+%
+%\leavevmode\smash{\makebox[0pt]{\hspace{-1em}% HORIZONTAL POSITION           
+%  \rotatebox[origin=l]{90}{\hspace{3em}% VERTICAL POSITION
+%    {\scriptsize Normalized P\&L}}%
+%}}\hspace{0pt plus 1filll}\null
+%
+%{\scriptsize Trading Day Number of 2013 \par}
+%\vspace{0.5cm}
+%\adjustimage{max size=\textwidth}{frames/figs/strategylegend.pdf}
+%\end{center}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{In-Sample Backtesting: Annual Calibration}
+%\begin{table}
+%\centering
+%\ra{1.1}
+%\setlength{\tabcolsep}{9pt}
+%\begin{adjustbox}{width=\textwidth}
+%\begin{tabular}{@{} *{7}{r} @{}}
+%\toprule
+%Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# MO} & \cellbreak{t}{r}{\# LO} & \cellbreak{t}{r}{Average \\ Invntry} & \cellbreak{t}{r}{\% Win} \\
+%\midrule
+%\multicolumn{7}{l}{\texttt{ORCL}} \\ 
+%Continuous & -0.089 & -0.875 & 1540 & 1383 & 1.19 & 14\%  \\ 
+%Discrete & 0.140 & 1.596 & 368 & 1344 & 0.46 & 96\% \\ 
+%Continuous with nFPC & 0.113 & 1.327 & 476 & 1338 & 2.67 & 94\% \\ 
+%Discrete with nFPC & 0.118 & 1.735 & 590 & 1337 & 3.43 & 99\% \\[2ex]
+%\multicolumn{7}{l}{\texttt{INTC}} \\ 
+%Continuous & 0.065 & 0.743 & 888 & 1207 & 1.22 & 84\% \\
+%Discrete & 0.235 & 2.189 & 380 & 1170 & 1.19 & 99\% \\
+%Continuous with nFPC & 0.209 & 2.030 & 396 & 1160 & 5.58 & 98\% \\
+%Discrete with nFPC & 0.197 & 2.588 & 576 & 1164 & 3.78 & 100\% \\
+%\bottomrule
+%\end{tabular}
+%\end{adjustbox}
+%\end{table}
+%\end{frame}
+
+\begin{frame}
+\frametitle{In-Sample Backtesting: Conclusions}
+\begin{itemize}
+\item average return increases as the underlying stock liquidity increases;
+\item average return increases as the underlying stock bid-ask spread decreases;
+\item average return is stable and risk-adjusted return is improved when calibrating over a larger period of time, and is therefore preferred;
+\item there is no clear victor between regular calibration and the nFPC method.
+\end{itemize}
+\end{frame}
+
+% show OOS results
+%\begin{frame}
+%\frametitle{Out-Of-Sample Backtesting: Annual Calibration}
+%\begin{center}
+%\begin{columns}[T] % align columns
+%\hfill%
+%\begin{column}{.48\textwidth}
+%\centering
+%\adjustimage{max size=\textwidth}{frames/figs/OOS_annual_INTC.pdf}\\
+%\end{column}%
+%\begin{column}{.48\textwidth}
+%\centering
+%\adjustimage{max size=\textwidth}{frames/figs/OOS_annual_AAPL.pdf}\\
+%\end{column}%
+%\hfill%
+%\end{columns}
+%
+%\leavevmode\smash{\makebox[0pt]{\hspace{-1em}% HORIZONTAL POSITION           
+%  \rotatebox[origin=l]{90}{\hspace{3em}% VERTICAL POSITION
+%    {\scriptsize Normalized P\&L}}%
+%}}\hspace{0pt plus 1filll}\null
+%
+%{\scriptsize Trading Day Number of 2014 \par}
+%\vspace{0.5cm}
+%\adjustimage{max size=\textwidth}{frames/figs/strategylegend.pdf}
+%\end{center}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{Out-Of-Sample Backtesting: Annual Calibration}
+%\begin{table}
+%\centering
+%\ra{1.1}
+%\setlength{\tabcolsep}{9pt}
+%\begin{adjustbox}{width=\textwidth}
+%\begin{tabular}{@{} *{7}{r} @{}}
+%\toprule
+%Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# MO} & \cellbreak{t}{r}{\# LO} & \cellbreak{t}{r}{Average \\ Invntry} & \cellbreak{t}{r}{\% Win} \\
+%\midrule
+%\multicolumn{7}{l}{\texttt{INTC}} \\ 
+%Continuous & 0.209 & 2.112 & 2118 & 1758 & 0.44 & 98\% \\
+%Discrete & 0.372 & 1.591 & 949 & 1770 & -5.89 & 98\% \\
+%Continuous with nFPC & 0.483 & 2.364 & 704 & 1693 & 1.46 & 100\% \\
+%Discrete with nFPC & 0.515 & 2.033 & 490 & 1629 & 2.81 & 100\% \\[2ex]
+%\multicolumn{7}{l}{\texttt{AAPL}} \\ 
+%Continuous & 0.378 & 1.571 & 3853 & 6297 & -5.80 & 96\% \\
+%Discrete & 0.761 & 2.457 & 830 & 5566 & 4.05 & 100\% \\
+%Continuous with nFPC & 0.710 & 2.479 & 1276 & 5689 & 2.93 & 100\% \\
+%Discrete with nFPC & 0.764 & 2.442 & 796 & 5559 & 3.85 & 100\% \\
+%\bottomrule
+%\end{tabular}
+%\end{adjustbox}
+%\end{table}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Out-Of-Sample Backtesting: Annual Calibration}
+\begin{center}
+\begin{columns}[T] % align columns
+\hfill%
+\begin{column}{.48\textwidth}
+\centering
+\vspace*{-3ex}
+\adjustimage{max size=\textwidth}{frames/figs/OOS_annual_INTC.pdf}\\
+\end{column}%
+\begin{column}{.48\textwidth}
+\centering
+\vspace*{-3ex}
+\adjustimage{max size=\textwidth}{frames/figs/OOS_annual_AAPL.pdf}\\
+\end{column}%
+\hfill%
+\end{columns}
+
+\leavevmode\smash{\makebox[0pt]{\hspace{-1em}% HORIZONTAL POSITION           
+  \rotatebox[origin=l]{90}{\hspace{2em}% VERTICAL POSITION
+    {\tiny Normalized P\&L}}%
+}}\hspace{0pt plus 1filll}\null
+
+{\tiny Trading Day Number of 2014 \par}
+%\adjustimage{max size=\textwidth}{frames/figs/strategylegend.pdf}
+\vspace{-3ex}
+\begin{table}
+\centering
+\ra{1.1}
+\setlength{\tabcolsep}{9pt}
+\begin{adjustbox}{width=\textwidth}
+\begin{tabular}{@{} *{7}{r} @{}}
+\toprule
+Strategy & \cellbreak{t}{r}{Average \\ Return} & \cellbreak{t}{r}{Risk Adj \\ Return} & \cellbreak{t}{r}{\# MO} & \cellbreak{t}{r}{\# LO} & \cellbreak{t}{r}{Average \\ Invntry} & \cellbreak{t}{r}{\% Win} \\
+\midrule
+\multicolumn{7}{l}{\texttt{INTC}} \\ 
+Continuous \drawlegendline{cts_plot_color} & 0.209 & 2.112 & 2118 & 1758 & 0.44 & 98\% \\
+Discrete \drawlegendline{dscr_plot_color} & 0.372 & 1.591 & 949 & 1770 & -5.89 & 98\% \\
+Continuous with nFPC \drawlegendline{cts_nFPC_plot_color} & 0.483 & 2.364 & 704 & 1693 & 1.46 & 100\% \\
+Discrete with nFPC \drawlegendline{dscr_nFPC_plot_color} & 0.515 & 2.033 & 490 & 1629 & 2.81 & 100\% \\[2ex]
+\multicolumn{7}{l}{\texttt{AAPL}} \\ 
+Continuous \drawlegendline{cts_plot_color} & 0.378 & 1.571 & 3853 & 6297 & -5.80 & 96\% \\
+Discrete \drawlegendline{dscr_plot_color} & 0.761 & 2.457 & 830 & 5566 & 4.05 & 100\% \\
+Continuous with nFPC \drawlegendline{cts_nFPC_plot_color} & 0.710 & 2.479 & 1276 & 5689 & 2.93 & 100\% \\
+Discrete with nFPC \drawlegendline{dscr_nFPC_plot_color} & 0.764 & 2.442 & 796 & 5559 & 3.85 & 100\% \\
+\bottomrule
+\end{tabular}
+\end{adjustbox}
+\end{table}
+\end{center}
+\end{frame}
+
+% results statement!
+\begin{frame}
+\frametitle{Out-Of-Sample Backtesting: Annual Calibration}
+Back-of-the-envelope calculation: \par
+\vspace{\baselineskip}
+Trade 100 shares at a time $\times$ average strategy return \\
+$\times$ average share price $\times$ 249 (trading days)
+\begin{center}
+{\bf Trading \texttt{INTC} would have generated revenue of \$384,705.} \par
+{\bf Trading \texttt{AAPL} would have generated revenue of \$1,807,200.}
+\end{center}
+Capital requirements: 100 shares $\times$ average share price \\ $\times$ 20 (maximum inventory) $=$ \$250,000. 
+\begin{center}
+{\bf Return on investment (ROI) is 877\%.}
+\end{center}
+\end{frame}
