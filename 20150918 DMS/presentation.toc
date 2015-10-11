@@ -1,0 +1,6 @@
+\beamer@endinputifotherversion {3.36pt}
+\beamer@sectionintoc {2}{Background Information}{3}{0}{1}
+\beamer@sectionintoc {3}{Exploratory Data Analysis}{13}{0}{2}
+\beamer@sectionintoc {4}{Maximizing Wealth via Discrete-Time Stochastic Control}{25}{0}{3}
+\beamer@sectionintoc {5}{Backtesting Results}{33}{0}{4}
+\beamer@sectionintoc {6}{Conclusion and Future Work}{46}{0}{5}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  18 SEP 2015 18:06
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.8.11)  11 OCT 2015 11:30
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1329,12 +1329,13 @@ Overfull \hbox (10.2573pt too wide) in paragraph at lines 3--4
 pa-tion in fi-nan-cial mar-kets evolved
  []
 
-[12
+[1
 
 
 
 
-] [13] (./Figs/Ch1/LOB.tikz
+
+] [2] (./Figs/Ch1/LOB.tikz
 \LineSpace=\dimen264
 
 ===== Image 'Figs/build/Ch1/LOB' is up-to-date. ======
@@ -1359,13 +1360,13 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 7.91925pt on input line 30.
 LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 6.25204pt on input line 30.
-[14] [15 <./Figs/build/Ch1/LOB.pdf>] [16] [17]) [18]
+[3] [4 <./Figs/build/Ch1/LOB.pdf>] [5] [6]) [7]
 \openout2 = `Ch2Exploratory/exploratory.aux'.
 
 
 (./Ch2Exploratory/exploratory.tex
 Chapter 2.
-[19
+[8
 
 
 
@@ -1374,7 +1375,7 @@ LaTeX Font Info:    Try loading font information for U+fplmbb on input line 29.
 
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ufplmbb.fd
 File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
-) [20]
+) [9]
 (./Figs/Ch2/LOBtimeline.tikz
 ===== Image 'Figs/build/Ch2/LOBtimeline' is up-to-date. ======
 )
@@ -1388,13 +1389,13 @@ LaTeX Font Info:    Font shape `U/msb/m/n' will be
 (Font)              scaled to size 8.33606pt on input line 70.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 78.
- [21 <./Figs/build/Ch2/LOBtimeline.pdf>] [22] (./Figs/Ch2/timewindows.tikz
+ [10 <./Figs/build/Ch2/LOBtimeline.pdf>] [11] (./Figs/Ch2/timewindows.tikz
 ===== Image 'Figs/build/Ch2/timewindows' is up-to-date. ======
-) [23] [24 <./Figs/build/Ch2/timewindows.pdf>] [25] [26] [27]
+) [12] [13 <./Figs/build/Ch2/timewindows.pdf>] [14] [15] [16]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 255.
 
-(./Figs/Ch2/algo-naive.tex) [28] [29] (./Figs/Ch2/algo-naiveplus.tex) [30
+(./Figs/Ch2/algo-naive.tex) [17] [18] (./Figs/Ch2/algo-naiveplus.tex) [19
 
 ]
 (./Figs/Ch2/FARO_naive_strat_comp.tikz
@@ -1407,10 +1408,10 @@ put line 255.
 ===== Image 'Figs/build/Ch2/INTC_naive_strat_comp' is up-to-date. ======
 ) (./Figs/Ch2/naivestratlegend.tikz
 ===== Image 'Figs/build/Ch2/naivestratlegend' is up-to-date. ======
-) [31] [32 <./Figs/build/Ch2/FARO_naive_strat_comp.pdf> <./Figs/build/Ch2/NTAP_
+) [20] [21 <./Figs/build/Ch2/FARO_naive_strat_comp.pdf> <./Figs/build/Ch2/NTAP_
 naive_strat_comp.pdf> <./Figs/build/Ch2/ORCL_naive_strat_comp.pdf> <./Figs/buil
 d/Ch2/INTC_naive_strat_comp.pdf> <./Figs/build/Ch2/naivestratlegend.pdf>])
-[33] [34]
+[22] [23]
 \openout2 = `Ch3Numerical/continuous.aux'.
 
  (./Ch3Numerical/continuous.tex
@@ -1421,7 +1422,7 @@ Overfull \hbox (12.55014pt too wide) in paragraph at lines 6--7
 ded discrete-time Markov
  []
 
-[35
+[24
 
 
 
@@ -1435,7 +1436,7 @@ Overfull \hbox (9.0pt too wide) in alignment at lines 35--59
  [] [] 
  []
 
-[36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46]) [47]
+[25] [26] [27] [28] [29] [30] [31] [32] [33] [34] [35]) [36]
 \openout2 = `Ch3Numerical/discrete.aux'.
 
 
@@ -1456,11 +1457,11 @@ Overfull \hbox (9.0pt too wide) in alignment at lines 29--30
  [] [] 
  []
 
-[48
+[37
 
 
 
-] [49] [50] [51]
+] [38] [39] [40]
 Overfull \hbox (2.7399pt too wide) in paragraph at lines 143--144
 []$\OT1/zplm/m/n/12 ^^H[]\OML/zplm/m/it/12 ^^^[]\OT1/zplm/m/n/12 (\OML/zplm/m/i
 t/12 x\OT1/zplm/m/n/12 )$ \T1/ppl/m/it/12 is con-tin-u-ous in $\OML/zplm/m/it/1
@@ -1470,7 +1471,7 @@ t/12 x\OT1/zplm/m/n/12 )$ \T1/ppl/m/it/12 is con-tin-u-ous in $\OML/zplm/m/it/1
 v\OT1/zplm/m/n/12 )$ \T1/ppl/m/it/12 is uni-formly con-tin-u-ous and bounded
  []
 
-[52] [53] [54] [55] [56]
+[41] [42] [43] [44] [45]
 Overfull \hbox (3.795pt too wide) in paragraph at lines 338--338
 [] 
  []
@@ -1480,7 +1481,7 @@ Overfull \hbox (4.6358pt too wide) in paragraph at lines 358--358
 [] 
  []
 
-[57] [58] [59]
+[46] [47] [48]
 Overfull \hbox (19.05368pt too wide) in paragraph at lines 409--411
 \T1/ppl/m/n/12 For ease of no-ta-tion we'll write $\OMS/zplm/m/n/12 @\OT1/zplm/
 m/n/12 (\OML/zplm/m/it/12 q\OT1/zplm/m/n/12 ) = [][] \OML/cmm/b/it/12 P[] []$\T
@@ -1492,16 +1493,16 @@ Overfull \hbox (14.98181pt too wide) in paragraph at lines 434--434
 [] 
  []
 
-[60]) [61] [62]
+[49]) [50] [51]
 \openout2 = `Ch4Results/results.aux'.
 
  (./Ch4Results/results.tex
 Chapter 5.
-[63
+[52
 
 
 
-] [64] (./Figs/dp_colorbar/dp_cts_z1.tikz
+] [53] (./Figs/dp_colorbar/dp_cts_z1.tikz
 ===== Image 'Figs/build/dp_colorbar/dp_cts_z1' is up-to-date. ======
 ) (./Figs/dp_colorbar/dp_dscr_z1.tikz
 ===== Image 'Figs/build/dp_colorbar/dp_dscr_z1' is up-to-date. ======
@@ -1531,12 +1532,12 @@ Chapter 5.
 ===== Image 'Figs/build/dp_colorbar/dp_dscr_nFPC_z15' is up-to-date. ======
 ) (./Figs/altdeltalegend.tikz
 ===== Image 'Figs/build/altdeltalegend' is up-to-date. ======
-) [65] [66 <./Figs/build/dp_colorbar/dp_cts_z1.pdf> <./Figs/build/dp_colorbar/d
+) [54] [55 <./Figs/build/dp_colorbar/dp_cts_z1.pdf> <./Figs/build/dp_colorbar/d
 p_dscr_z1.pdf> <./Figs/build/dp_colorbar/dp_cts_nFPC_z1.pdf> <./Figs/build/dp_c
-olorbar/dp_dscr_nFPC_z1.pdf> <./Figs/build/altdeltalegend.pdf>] [67 <./Figs/bui
+olorbar/dp_dscr_nFPC_z1.pdf> <./Figs/build/altdeltalegend.pdf>] [56 <./Figs/bui
 ld/dp_colorbar/dp_cts_z8.pdf> <./Figs/build/dp_colorbar/dp_dscr_z8.pdf> <./Figs
 /build/dp_colorbar/dp_cts_nFPC_z8.pdf> <./Figs/build/dp_colorbar/dp_dscr_nFPC_z
-8.pdf> <./Figs/build/altdeltalegend.pdf>] [68 <./Figs/build/dp_colorbar/dp_cts_
+8.pdf> <./Figs/build/altdeltalegend.pdf>] [57 <./Figs/build/dp_colorbar/dp_cts_
 z15.pdf> <./Figs/build/dp_colorbar/dp_dscr_z15.pdf> <./Figs/build/dp_colorbar/d
 p_cts_nFPC_z15.pdf> <./Figs/build/dp_colorbar/dp_dscr_nFPC_z15.pdf> <./Figs/bui
 ld/altdeltalegend.pdf>] (./Figs/dp_colorbar/dm_cts_z1.tikz
@@ -1569,12 +1570,12 @@ ld/altdeltalegend.pdf>] (./Figs/dp_colorbar/dm_cts_z1.tikz
 ===== Image 'Figs/build/dp_colorbar/dm_dscr_nFPC_z15' is up-to-date. ======
 ) (./Figs/altdeltalegend.tikz
 ===== Image 'Figs/build/altdeltalegend' is up-to-date. ======
-) [69] [70 <./Figs/build/dp_colorbar/dm_cts_z1.pdf> <./Figs/build/dp_colorbar/d
+) [58] [59 <./Figs/build/dp_colorbar/dm_cts_z1.pdf> <./Figs/build/dp_colorbar/d
 m_dscr_z1.pdf> <./Figs/build/dp_colorbar/dm_cts_nFPC_z1.pdf> <./Figs/build/dp_c
-olorbar/dm_dscr_nFPC_z1.pdf> <./Figs/build/altdeltalegend.pdf>] [71 <./Figs/bui
+olorbar/dm_dscr_nFPC_z1.pdf> <./Figs/build/altdeltalegend.pdf>] [60 <./Figs/bui
 ld/dp_colorbar/dm_cts_z8.pdf> <./Figs/build/dp_colorbar/dm_dscr_z8.pdf> <./Figs
 /build/dp_colorbar/dm_cts_nFPC_z8.pdf> <./Figs/build/dp_colorbar/dm_dscr_nFPC_z
-8.pdf> <./Figs/build/altdeltalegend.pdf>] [72 <./Figs/build/dp_colorbar/dm_cts_
+8.pdf> <./Figs/build/altdeltalegend.pdf>] [61 <./Figs/build/dp_colorbar/dm_cts_
 z15.pdf> <./Figs/build/dp_colorbar/dm_dscr_z15.pdf> <./Figs/build/dp_colorbar/d
 m_cts_nFPC_z15.pdf> <./Figs/build/dp_colorbar/dm_dscr_nFPC_z15.pdf> <./Figs/bui
 ld/altdeltalegend.pdf>] (./Figs/ORCL_comp4stoch.tikz
@@ -1583,8 +1584,8 @@ ld/altdeltalegend.pdf>] (./Figs/ORCL_comp4stoch.tikz
 ===== Image 'Figs/build/ORCL_comp4stoch_inv' is up-to-date. ======
 ) (./Figs/cointeg_relation.tikz
 ===== Image 'Figs/build/cointeg_relation' is up-to-date. ======
-) [73] [74 <./Figs/build/ORCL_comp4stoch.pdf> <./Figs/build/ORCL_comp4stoch_inv
-.pdf>] [75 <./Figs/build/cointeg_relation.pdf>]
+) [62] [63 <./Figs/build/ORCL_comp4stoch.pdf> <./Figs/build/ORCL_comp4stoch_inv
+.pdf>] [64 <./Figs/build/cointeg_relation.pdf>]
 (./Figs/samplepath_cts_paths.tikz
 ===== Image 'Figs/build/samplepath_cts_paths' is up-to-date. ======
 ) (./Figs/samplepath_dscr_paths.tikz
@@ -1627,12 +1628,12 @@ te. ======
 ) (./Figs/samplepath_dscr_nFPC_inventory.tikz
 ===== Image 'Figs/build/Rubisov_Anton_D_201510_MASc_thesis-figure7' is up-to-da
 te. ======
-) [76] [77 <./Figs/build/samplepath_cts_paths.pdf> <./Figs/build/samplepath_dsc
+) [65] [66 <./Figs/build/samplepath_cts_paths.pdf> <./Figs/build/samplepath_dsc
 r_paths.pdf> <./Figs/build/samplepath_cts_nFPC_paths.pdf> <./Figs/build/samplep
-ath_dscr_nFPC_paths.pdf> <./Figs/build/samplepathslegend.pdf>] [78 <./Figs/buil
+ath_dscr_nFPC_paths.pdf> <./Figs/build/samplepathslegend.pdf>] [67 <./Figs/buil
 d/samplepath_cts_depths.pdf> <./Figs/build/samplepath_dscr_depths.pdf> <./Figs/
 build/samplepath_cts_nFPC_depths.pdf> <./Figs/build/samplepath_dscr_nFPC_depths
-.pdf>] [79 <./Figs/build/Rubisov_Anton_D_201510_MASc_thesis-figure0.pdf> <./Fig
+.pdf>] [68 <./Figs/build/Rubisov_Anton_D_201510_MASc_thesis-figure0.pdf> <./Fig
 s/build/Rubisov_Anton_D_201510_MASc_thesis-figure1.pdf> <./Figs/build/Rubisov_A
 nton_D_201510_MASc_thesis-figure2.pdf> <./Figs/build/Rubisov_Anton_D_201510_MAS
 c_thesis-figure3.pdf> <./Figs/build/Rubisov_Anton_D_201510_MASc_thesis-figure4.
@@ -1648,9 +1649,9 @@ _201510_MASc_thesis-figure7.pdf>] (./Figs/IS_sameday_FARO.tikz
 ===== Image 'Figs/build/IS_sameday_INTC' is up-to-date. ======
 ) (./Figs/strategylegend.tikz
 ===== Image 'Figs/build/strategylegend' is up-to-date. ======
-) [80] [81 <./Figs/build/IS_sameday_FARO.pdf> <./Figs/build/IS_sameday_NTAP.pdf
+) [69] [70 <./Figs/build/IS_sameday_FARO.pdf> <./Figs/build/IS_sameday_NTAP.pdf
 > <./Figs/build/IS_sameday_ORCL.pdf> <./Figs/build/IS_sameday_INTC.pdf> <./Figs
-/build/strategylegend.pdf>] [82] (./Figs/IS_week_FARO.tikz
+/build/strategylegend.pdf>] [71] (./Figs/IS_week_FARO.tikz
 ===== Image 'Figs/build/IS_week_FARO' is up-to-date. ======
 ) (./Figs/IS_week_NTAP.tikz
 ===== Image 'Figs/build/IS_week_NTAP' is up-to-date. ======
@@ -1660,15 +1661,15 @@ _201510_MASc_thesis-figure7.pdf>] (./Figs/IS_sameday_FARO.tikz
 ===== Image 'Figs/build/IS_week_INTC' is up-to-date. ======
 ) (./Figs/strategylegend.tikz
 ===== Image 'Figs/build/strategylegend' is up-to-date. ======
-) [83] [84 <./Figs/build/IS_week_FARO.pdf> <./Figs/build/IS_week_NTAP.pdf> <./F
+) [72] [73 <./Figs/build/IS_week_FARO.pdf> <./Figs/build/IS_week_NTAP.pdf> <./F
 igs/build/IS_week_ORCL.pdf> <./Figs/build/IS_week_INTC.pdf> <./Figs/build/strat
-egylegend.pdf>] [85] (./Figs/IS_annual_ORCL.tikz
+egylegend.pdf>] [74] (./Figs/IS_annual_ORCL.tikz
 ===== Image 'Figs/build/IS_annual_ORCL' is up-to-date. ======
 ) (./Figs/IS_annual_INTC.tikz
 ===== Image 'Figs/build/IS_annual_INTC' is up-to-date. ======
 ) (./Figs/strategylegend.tikz
 ===== Image 'Figs/build/strategylegend' is up-to-date. ======
-) [86] [87 <./Figs/build/IS_annual_ORCL.pdf> <./Figs/build/IS_annual_INTC.pdf> 
+) [75] [76 <./Figs/build/IS_annual_ORCL.pdf> <./Figs/build/IS_annual_INTC.pdf> 
 <./Figs/build/strategylegend.pdf>] (./Figs/OOS_annual_INTC.tikz
 ===== Image 'Figs/build/OOS_annual_INTC' is up-to-date. ======
 ) (./Figs/OOS_annual_AAPL.tikz
@@ -1678,17 +1679,17 @@ egylegend.pdf>] [85] (./Figs/IS_annual_ORCL.tikz
 )
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <12> not available
 (Font)              Font shape `T1/pcr/b/n' tried instead on input line 987.
-) [88] [89 <./Figs/build/OOS_annual_INTC.pdf> <./Figs/build/OOS_annual_AAPL.pdf
+) [77] [78 <./Figs/build/OOS_annual_INTC.pdf> <./Figs/build/OOS_annual_AAPL.pdf
 > <./Figs/build/strategylegend.pdf>]
 \openout2 = `Ch5Conclusion/conclusion.aux'.
 
  (./Ch5Conclusion/conclusion.tex
 Chapter 6.
-[90
+[79
 
 
 
-] [91]) [92] (./Rubisov_Anton_D_201510_MASc_thesis.bbl [93
+] [80]) [81] (./Rubisov_Anton_D_201510_MASc_thesis.bbl [82
 
 
 
@@ -1700,26 +1701,26 @@ FiXme Summary: Number of notes: 0,
 (FiXme)        Number of fatal errors: 0,
 (FiXme)        Total: 0.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 47.
-[94]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 47.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 49.
+[83]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 49.
  (./Rubisov_Anton_D_201510_MASc_thesis.aux (./Ch0Front/title.aux)
 (./Ch0Front/abstract.aux) (./Ch0Front/acknowledgement.aux)
 (./Ch0Front/nomenclature.aux) (./Ch1Introduction/introduction.aux)
 (./Ch2Exploratory/exploratory.aux) (./Ch3Numerical/continuous.aux)
 (./Ch3Numerical/discrete.aux) (./Ch4Results/results.aux)
 (./Ch5Conclusion/conclusion.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 47.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 47.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 49.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 49.
 Package rerunfilecheck Info: File `Rubisov_Anton_D_201510_MASc_thesis.out' has 
 not changed.
 (rerunfilecheck)             Checksum: D33A04FCF7634A6E643A9F7AAD7D24C9;2580.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 47.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 49.
  ) 
 Here is how much of TeX's memory you used:
  29352 strings out of 495028
- 614419 string characters out of 6181497
- 2847208 words of memory out of 7000000
+ 614420 string characters out of 6181497
+ 2847213 words of memory out of 7000000
  31156 multiletter control sequences out of 15000+600000
  86308 words of font info for 216 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -1751,7 +1752,7 @@ hare/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive
 /texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/urw/palatino/uplr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 urw/palatino/uplri8a.pfb>
-Output written on Rubisov_Anton_D_201510_MASc_thesis.pdf (94 pages, 2706726 byt
+Output written on Rubisov_Anton_D_201510_MASc_thesis.pdf (94 pages, 2706784 byt
 es).
 PDF statistics:
  1899 PDF objects out of 2073 (max. 8388607)

@@ -1,47 +1,47 @@
-\contentsline {chapter}{\numberline {1}Introduction}{12}{chapter.1}
-\contentsline {section}{\numberline {1.1}The Limit-Order Book}{14}{section.1.1}
-\contentsline {section}{\numberline {1.2}ITCH Data Set}{16}{section.1.2}
-\contentsline {section}{\numberline {1.3}Order Imbalance}{17}{section.1.3}
-\contentsline {section}{\numberline {1.4}Roadmap}{18}{section.1.4}
-\contentsline {chapter}{\numberline {2}Exploratory Data Analysis}{19}{chapter.2}
-\contentsline {section}{\numberline {2.1}Modelling Imbalance: Continuous Time Markov Chain}{19}{section.2.1}
-\contentsline {section}{\numberline {2.2}Maximum Likelihood Estimate of a Markov-Modulated Poisson Process}{21}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Infinitesimal Generator Matrix}{21}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}Arrival Rates}{22}{subsection.2.2.2}
-\contentsline {section}{\numberline {2.3}Two-Dimensional CTMC}{23}{section.2.3}
-\contentsline {subsection}{\numberline {2.3.1}Cross-Validation}{24}{subsection.2.3.1}
-\contentsline {section}{\numberline {2.4}Predicting Future Price Changes}{25}{section.2.4}
-\contentsline {section}{\numberline {2.5}Naive Trading Strategies}{28}{section.2.5}
-\contentsline {paragraph}{Naive Trading Strategy.}{28}{section*.14}
-\contentsline {paragraph}{Naive+ Trading Strategy.}{30}{section*.15}
-\contentsline {paragraph}{Naive++ Trading Strategy.}{30}{section*.16}
-\contentsline {section}{\numberline {2.6}Calibration and Backtesting}{31}{section.2.6}
-\contentsline {section}{\numberline {2.7}Conclusions from the Naive Trading Strategies}{31}{section.2.7}
-\contentsline {chapter}{\numberline {3}Maximizing Wealth via Continuous-Time Stochastic Control}{35}{chapter.3}
-\contentsline {section}{\numberline {3.1}System Description}{36}{section.3.1}
-\contentsline {section}{\numberline {3.2}Dynamic Programming}{39}{section.3.2}
-\contentsline {section}{\numberline {3.3}Maximizing Terminal Wealth}{40}{section.3.3}
-\contentsline {section}{\numberline {3.4}Interpreting the DPE}{45}{section.3.4}
-\contentsline {chapter}{\numberline {4}Maximizing Wealth via Discrete-Time Stochastic Control}{48}{chapter.4}
-\contentsline {section}{\numberline {4.1}System Description}{48}{section.4.1}
-\contentsline {section}{\numberline {4.2}Dynamic Programming}{51}{section.4.2}
-\contentsline {section}{\numberline {4.3}Maximizing Terminal Wealth}{52}{section.4.3}
-\contentsline {section}{\numberline {4.4}Simplifying and Interpreting the DPE}{60}{section.4.4}
-\contentsline {chapter}{\numberline {5}Results}{63}{chapter.5}
-\contentsline {section}{\numberline {5.1}Calibration}{63}{section.5.1}
-\contentsline {section}{\numberline {5.2}Dynamics of the Optimal Posting Depths}{64}{section.5.2}
-\contentsline {subsection}{\numberline {5.2.1}Comparing Optimal Control Performance}{73}{subsection.5.2.1}
-\contentsline {section}{\numberline {5.3}In-Sample Backtesting}{80}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Same-Day Calibration}{80}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Week Offset Calibration}{83}{subsection.5.3.2}
-\contentsline {subsection}{\numberline {5.3.3}Annual Calibration}{86}{subsection.5.3.3}
-\contentsline {section}{\numberline {5.4}Out-of-Sample Backtesting}{88}{section.5.4}
-\contentsline {chapter}{\numberline {6}Conclusion}{90}{chapter.6}
-\contentsline {paragraph}{Market order costs.}{90}{section*.43}
-\contentsline {paragraph}{Discrete posting depths in increments of 1 tick.}{91}{section*.44}
-\contentsline {paragraph}{Short term price impact.}{91}{section*.45}
-\contentsline {paragraph}{Accounting for non-homogeneity.}{91}{section*.46}
-\contentsline {paragraph}{Early cut-off with optimal liquidation.}{91}{section*.47}
-\contentsline {paragraph}{Backtesting engine: tracking LOB queue position.}{92}{section*.48}
-\contentsline {paragraph}{Backtesting engine: information latency.}{92}{section*.49}
-\contentsline {paragraph}{Backtesting engine: algorithm latency.}{92}{section*.50}
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}The Limit-Order Book}{3}{section.1.1}
+\contentsline {section}{\numberline {1.2}ITCH Data Set}{5}{section.1.2}
+\contentsline {section}{\numberline {1.3}Order Imbalance}{6}{section.1.3}
+\contentsline {section}{\numberline {1.4}Roadmap}{7}{section.1.4}
+\contentsline {chapter}{\numberline {2}Exploratory Data Analysis}{8}{chapter.2}
+\contentsline {section}{\numberline {2.1}Modelling Imbalance: Continuous Time Markov Chain}{8}{section.2.1}
+\contentsline {section}{\numberline {2.2}Maximum Likelihood Estimate of a Markov-Modulated Poisson Process}{10}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Infinitesimal Generator Matrix}{10}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Arrival Rates}{11}{subsection.2.2.2}
+\contentsline {section}{\numberline {2.3}Two-Dimensional CTMC}{12}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Cross-Validation}{13}{subsection.2.3.1}
+\contentsline {section}{\numberline {2.4}Predicting Future Price Changes}{14}{section.2.4}
+\contentsline {section}{\numberline {2.5}Naive Trading Strategies}{17}{section.2.5}
+\contentsline {paragraph}{Naive Trading Strategy.}{17}{section*.14}
+\contentsline {paragraph}{Naive+ Trading Strategy.}{19}{section*.15}
+\contentsline {paragraph}{Naive++ Trading Strategy.}{19}{section*.16}
+\contentsline {section}{\numberline {2.6}Calibration and Backtesting}{20}{section.2.6}
+\contentsline {section}{\numberline {2.7}Conclusions from the Naive Trading Strategies}{20}{section.2.7}
+\contentsline {chapter}{\numberline {3}Maximizing Wealth via Continuous-Time Stochastic Control}{24}{chapter.3}
+\contentsline {section}{\numberline {3.1}System Description}{25}{section.3.1}
+\contentsline {section}{\numberline {3.2}Dynamic Programming}{28}{section.3.2}
+\contentsline {section}{\numberline {3.3}Maximizing Terminal Wealth}{29}{section.3.3}
+\contentsline {section}{\numberline {3.4}Interpreting the DPE}{34}{section.3.4}
+\contentsline {chapter}{\numberline {4}Maximizing Wealth via Discrete-Time Stochastic Control}{37}{chapter.4}
+\contentsline {section}{\numberline {4.1}System Description}{37}{section.4.1}
+\contentsline {section}{\numberline {4.2}Dynamic Programming}{40}{section.4.2}
+\contentsline {section}{\numberline {4.3}Maximizing Terminal Wealth}{41}{section.4.3}
+\contentsline {section}{\numberline {4.4}Simplifying and Interpreting the DPE}{49}{section.4.4}
+\contentsline {chapter}{\numberline {5}Results}{52}{chapter.5}
+\contentsline {section}{\numberline {5.1}Calibration}{52}{section.5.1}
+\contentsline {section}{\numberline {5.2}Dynamics of the Optimal Posting Depths}{53}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Comparing Optimal Control Performance}{62}{subsection.5.2.1}
+\contentsline {section}{\numberline {5.3}In-Sample Backtesting}{69}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Same-Day Calibration}{69}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Week Offset Calibration}{72}{subsection.5.3.2}
+\contentsline {subsection}{\numberline {5.3.3}Annual Calibration}{75}{subsection.5.3.3}
+\contentsline {section}{\numberline {5.4}Out-of-Sample Backtesting}{77}{section.5.4}
+\contentsline {chapter}{\numberline {6}Conclusion}{79}{chapter.6}
+\contentsline {paragraph}{Market order costs.}{79}{section*.43}
+\contentsline {paragraph}{Discrete posting depths in increments of 1 tick.}{80}{section*.44}
+\contentsline {paragraph}{Short term price impact.}{80}{section*.45}
+\contentsline {paragraph}{Accounting for non-homogeneity.}{80}{section*.46}
+\contentsline {paragraph}{Early cut-off with optimal liquidation.}{80}{section*.47}
+\contentsline {paragraph}{Backtesting engine: tracking LOB queue position.}{81}{section*.48}
+\contentsline {paragraph}{Backtesting engine: information latency.}{81}{section*.49}
+\contentsline {paragraph}{Backtesting engine: algorithm latency.}{81}{section*.50}
